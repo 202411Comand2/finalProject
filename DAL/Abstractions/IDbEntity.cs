@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DAL.Abstractions
+﻿namespace DAL.Abstractions
 {
-	internal interface IDbEntity
+	public interface IDbEntity
 	{
+		public int GetPrimaryKey();
 	}
 }

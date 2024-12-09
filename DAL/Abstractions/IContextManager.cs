@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DAL.Abstractions
+﻿namespace DAL.Abstractions
 {
-	internal interface IContextManager
+	public interface IContextManager
 	{
+		public ApplicationDbContext CreateDatabaseContext();
 	}
 }
