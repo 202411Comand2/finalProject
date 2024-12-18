@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <Protobuf Include="Protos\Title.proto" GrpcServices="Server" />
+	  <Protobuf Include="Protos\crud.proto" GrpcServices="Server" />
+	  <Protobuf Include="Protos\TwoSteamClientSercer.proto" GrpcServices="Server" />
+	  <Protobuf Include="Protos\SteamClient.proto" GrpcServices="Server" />
+	  <Protobuf Include="Protos\SteamServer.proto" GrpcServices="Server" />
+	  <Protobuf Include="Protos\DateTimeMiting.proto" GrpcServices="Server" />
+	  <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
+	  <Protobuf Include="Protos\Translator.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.57.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.2" />
+  </ItemGroup>
+
+</Project>

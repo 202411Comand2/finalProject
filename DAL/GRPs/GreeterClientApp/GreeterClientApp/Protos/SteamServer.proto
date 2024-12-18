@@ -1,0 +1,27 @@
+syntax = "proto3";
+// тип используемого синтаксиса
+
+option csharp_namespace = "GrpcSteamService";
+//Название сервиса, которое будет использоваться с этим сервисом
+// потоковая передача только сервера
+
+
+package SteamS;
+
+
+
+// определение сервиса
+service Messenger {
+  // отправка сообщения
+   rpc ServerDataStream (Request) returns (stream Response);
+}
+ 
+// сообщение от клиента содержит name
+message Request {
+}
+ 
+// сообщение клиенту содержит message
+message Response {
+	string content = 1;
+}
+

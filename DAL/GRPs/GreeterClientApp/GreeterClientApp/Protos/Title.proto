@@ -1,0 +1,24 @@
+syntax = "proto3";
+// тип используемого синтаксиса
+
+option csharp_namespace = "GrpcServiceTitle";
+
+
+package Title;
+
+
+
+// определение сервиса
+service Messenger {
+  // отправка сообщения
+ rpc SendMessage (Request) returns (Response);
+}
+ 
+// сообщение от клиента содержит name
+message Request{}
+ 
+// сообщение клиенту содержит message
+message Response{ 
+    string content=1;
+}
+

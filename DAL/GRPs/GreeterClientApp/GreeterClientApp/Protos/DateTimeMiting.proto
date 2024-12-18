@@ -1,0 +1,31 @@
+syntax = "proto3";
+// тип используемого синтаксиса
+
+option csharp_namespace = "GrpcServiceDateTimeApp";
+//Название сервиса, которое будет использоваться с этим сервисом
+// импортируем нужные пакеты
+import "google/protobuf/duration.proto"; 
+import "google/protobuf/timestamp.proto";
+
+package DateTimeM;
+
+
+
+// определение сервиса
+service Inviter {
+  // отправка сообщения
+  rpc Invite  (Request) returns (Response);
+}
+ 
+// сообщение от клиента содержит name
+message Request {
+  string name = 1;;
+}
+ 
+// сообщение клиенту содержит message
+message Response {
+    string invitation = 1;
+    google.protobuf.Timestamp start = 2;
+    google.protobuf.Duration duration = 3;
+}
+

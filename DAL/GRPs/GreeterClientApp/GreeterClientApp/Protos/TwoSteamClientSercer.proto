@@ -1,0 +1,26 @@
+syntax = "proto3";
+// тип используемого синтаксиса
+
+option csharp_namespace = "GrpcServiceTwoSteam";
+
+
+package TwoSteam;
+
+
+
+// определение сервиса
+service Messenger {
+  // отправка сообщения
+  rpc DataStream (stream Request) returns (stream Response);
+}
+ 
+// сообщение от клиента содержит name
+message Request {
+ string content = 1;
+}
+ 
+// сообщение клиенту содержит message
+message Response {
+        string content=1;
+}
+
