@@ -1,0 +1,26 @@
+syntax = "proto3";
+// тип используемого синтаксиса
+
+option csharp_namespace = "GrpcServiceApp";
+//Название сервиса, которое будет использоваться с этим сервисом
+
+package Translates;
+
+
+/*Кастомный сервис*/
+
+// название сервиса
+service Translator  {
+  // определение метода SayHello, 
+  // который получает сообщение HelloRequest
+  // и отправляет сообщение HelloReply
+  rpc Translate (Request) returns (Response);
+}
+message Request{
+    string word  = 1;
+}
+// Имя сообщения
+message Response{
+     string word = 1;
+    string translation = 2;
+}
