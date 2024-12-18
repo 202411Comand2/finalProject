@@ -364,3 +364,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /Bot/Resources/strings.resx
 /DAL/Resources/strings.resx
+/DAL/Secrets.cs
