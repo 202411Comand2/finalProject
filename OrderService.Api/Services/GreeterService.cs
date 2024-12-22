@@ -1,7 +1,7 @@
 using Grpc.Core;
-using IdentityService;
+using OrderService.Api;
 
-namespace IdentityService.Services
+namespace OrderService.Api.Services
 {
 	public class GreeterService : Greeter.GreeterBase
 	{

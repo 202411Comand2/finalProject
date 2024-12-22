@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "IdentityService";
+option csharp_namespace = "OrderService.Api";
 
 package greet;
 

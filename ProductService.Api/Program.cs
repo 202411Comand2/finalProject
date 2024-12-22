@@ -1,6 +1,6 @@
-using IdentityService.Services;
+using ProductService.Api.Services;
 
-namespace IdentityService
+namespace ProductService.Api
 {
 	public class Program
 	{
