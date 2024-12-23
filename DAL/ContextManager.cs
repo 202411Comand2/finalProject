@@ -9,7 +9,7 @@ namespace DAL
 
 		public ContextManager()
 		{
-			// _connectionString = откуда-то мы берём этот connection string
+			_connectionString = Secrets.Server1;
 		}
 
 		public ApplicationDbContext CreateDatabaseContext()

@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+option csharp_namespace = "IdentityService.API";
+
+package greet;
+
+
+service IdentityApi {
+  // Creates new user
+  rpc CreateNewUser(CreateUserRequest) returns (CreateUserResponse);
+  // Updates existing user, return false if not found
+  rpc UpdateUser(UpdateUserRequest) returns (BaseIdentityResponse);
+  // Returns existing user
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
+  // Binding telegram account to user
+  rpc BindTelegram(AddTelegramIdRequest) returns (BaseIdentityResponse);
+  // Returns collection of employee of specified shop
+  rpc GetEmployee(GetEmployeeRequest) returns (stream GetEmployeeResponse);
+}
+
+message CreateUserRequest {
+  string name = 1;
+  string enteredPassword = 2;
+  string phone = 3;
+  string email = 4;
+}
+
+message CreateUserResponse{
+	bool success = 1;
+	int32 newId = 2;
+	string authTokenId = 3;
+}
+
+message UpdateUserRequest{
+	int32 id = 1;
+	string name = 2;
+	string password = 3;
+	string phone = 4;
+	string email = 5;
+	int32 telegramId = 6;
+	string authTokenId = 7;
+}
+
+message AddTelegramIdRequest{
+	int32 id = 1;
+	int32 telegramId = 2;
+	string authTokenId = 3;
+}
+
+message BaseIdentityResponse{
+	bool success = 1;
+	string newAuthTokenId = 2;
+}
+
+message GetUserRequest{
+	string authTokenId = 1;
+	int32 requestedUserId = 2;
+}
+
+message GetUserResponse{
+	int32 id = 1;
+	string name = 2;
+	string phone = 3;
+	string email = 4;
+	bool isTelegramBinded = 5;
+	string newAuthTokenId = 6;
+}
+
+message GetEmployeeRequest{
+	string authTokenId = 1;
+	int32 shopId = 2;
+}
+
+message GetEmployeeResponse{
+	int32 id = 1;
+	string name = 2;
+	string phone = 3;
+	string email = 4;
+	bool isDeleted = 5;
+}
