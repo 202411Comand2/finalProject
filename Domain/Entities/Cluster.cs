@@ -1,23 +1,55 @@
 ﻿using Domain.Abstractions;
-using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace FinalProjectEntityDataBase.Entities
 {
-	[Table("Clusters")]
-	public class Cluster : IDbEntity
-	{
-		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public int Id { get; set; }
-		[Required, MaxLength(30)] public string Name { get; set; }
-		public int ParentId { get; set; }
+    [Table("Clusters")]
+    public class Cluster : IDbEntity
+    {
+        /// <summary>
+        /// Id классификатора
+        /// </summary>
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
-		[ForeignKey(nameof(ParentId))]
-		public Cluster Parent { get; set; }
+        /// <summary>
+        /// Название категории классификатора
+        /// </summary>
+        [Required, MaxLength(30)]
+        public string Name { get; set; } = string.Empty;
 
-		public int GetPrimaryKey()
-		{
-			return Id;
-		}
-	}
+        /// <summary>
+        /// Id родителя классификатора (о - является корневым)
+        /// </summary>
+        public int ParentId { get; set; }
+
+        /// <summary>
+        /// Вернуть Id объекта
+        /// </summary>
+        /// <returns>Возвращает id объекта из бд</returns>
+        public int GetPrimaryKey()
+        {
+            return Id;
+        }
+
+        #region
+        /// <summary>
+        /// Ссылка на родителя
+        /// </summary>
+        [ForeignKey(nameof(ParentId))]
+        public Cluster Parent { get; set; }
+
+        /// <summary>
+        /// Коллекция продуктов
+        /// </summary>
+        public ICollection<Product> Products { get; set; } = new List<Product>();
+        #endregion
+
+    }
 }

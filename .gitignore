@@ -367,3 +367,4 @@ FodyWeavers.xsd
 /DAL/Secrets.cs
 /IdentityService.DAL/Secrets.cs
 /IdentityService.TestClient/IdentityService.TestClient.csproj
+/Test/Test.csproj

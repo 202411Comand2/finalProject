@@ -10,25 +10,32 @@ namespace DAL.Abstractions
         {
             _contextManager = manager;
         }
+
         public ApplicationDbContext CreateDatabaseContext()
         {
             return _contextManager.CreateDatabaseContext();
         }
-        public async Task<T> Get(int entityId)
+
+        /// <summary>
+        /// Получить объект
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
+        virtual public async Task<T> Get(int entityId)
         {
             using (var context = CreateDatabaseContext())
             {
                 return await context.Set<T>().FindAsync(entityId);
             }
         }
-        public async Task<IList<T>> GetAll()
+        virtual public async Task<IList<T>> GetAll()
         {
             using (var context = CreateDatabaseContext())
             {
                 return await context.Set<T>().ToListAsync();
             }
         }
-        public async Task<T> Add(T entity)
+        virtual public async Task<T> Add(T entity)
         {
             using (var context = CreateDatabaseContext())
             {
@@ -41,7 +48,7 @@ namespace DAL.Abstractions
             }
             return entity;
         }
-        public async Task<T> Update(T entity)
+        virtual public async Task<T> Update(T entity)
         {
             using (var context = CreateDatabaseContext())
             {
@@ -54,7 +61,14 @@ namespace DAL.Abstractions
             }
             return entity;
         }
-        public async Task<T> SaveOrUpdate(T entity)
+
+        /// <summary>
+        /// Обновить или создать
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        virtual public async Task<T> SaveOrUpdate(T entity)
         {
             var iDbEntity = entity as IDbEntity;
             if (iDbEntity == null) throw new ArgumentException("Entity should be IDbEntity type", "entity");
