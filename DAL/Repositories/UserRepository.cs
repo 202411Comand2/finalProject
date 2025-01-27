@@ -1,6 +1,5 @@
-﻿
-using DAL.Abstractions;
-using FinalProjectEntityDataBase.Entities;
+﻿using DAL.Abstractions;
+using Domain.Entities;
 
 namespace DAL.Repositories
 {
@@ -11,32 +10,9 @@ namespace DAL.Repositories
             
         }
 
-        //public override async Task<User> Add(User entity)
-        //{
-        //    // return base.Add(entity);
-        //    using (var context = CreateDatabaseContext()) 
-        //    {
-        //        var itemUser = await context.Users.AddAsync(entity);
-        //        await context.SaveChangesAsync();
-        //    }
-        //    return entity;
-        //}
-
-    }
-
-   public class TestRepository 
-    {
-        private UserRepository _userRepository;
-
-        public TestRepository() 
-        {
-            var sn = new ContextManager();
-            _userRepository = new UserRepository(sn);
-        }
-
-        public async Task <User> GetUser(int id)
-        {
-           return  await _userRepository.Get(id);
-        }
-    }
+		public override Task<User> Add(User entity)
+		{
+			return base.Add(entity);
+		}
+	}
 }

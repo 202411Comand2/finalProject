@@ -1,4 +1,4 @@
-﻿using FinalProjectEntityDataBase.Entities;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL

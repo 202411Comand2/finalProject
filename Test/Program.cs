@@ -1,6 +1,7 @@
-﻿using FinalProjectEntityDataBase.Entities;
+﻿using Domain.Entities;
 using DAL.Repositories;
 using DAL;
+
 namespace Test
 {
     internal class Program
