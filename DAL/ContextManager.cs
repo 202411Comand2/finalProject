@@ -32,7 +32,7 @@ namespace DAL
 			return new ApplicationDbContext(builder.UseNpgsql(_connectionString)
 				.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
 				.EnableSensitiveDataLogging(true)
-				.Options,flagCreateBD
+				.Options
 				);
 		}
 		
