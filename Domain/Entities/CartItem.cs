@@ -1,14 +1,8 @@
 ﻿using Domain.Abstractions;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography.X509Certificates;
 
-namespace FinalProjectEntityDataBase.Entities
+namespace Domain.Entities
 {
     /// <summary>
     /// 1 позиция товара в корзине
