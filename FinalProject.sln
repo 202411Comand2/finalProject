@@ -25,11 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityService.DAL", "Iden
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{F1996BBD-3371-46BF-89B1-544C5895A101}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Api", "OrderService.Api\OrderService.Api.csproj", "{DAC1F9C9-E2E6-47E9-B23E-D810DD59EE4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService.Api", "OrderService.Api\OrderService.Api.csproj", "{DAC1F9C9-E2E6-47E9-B23E-D810DD59EE4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductService.Api", "ProductService.Api\ProductService.Api.csproj", "{EA3E54DB-3418-47A6-B503-DD8EA27FE02E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService.Api", "ProductService.Api\ProductService.Api.csproj", "{EA3E54DB-3418-47A6-B503-DD8EA27FE02E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{390F1FB7-7B6C-40B4-8288-B3212B29EA03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{DD6FD724-3F74-4AF5-9915-0C498ACF960C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,10 @@ Global
 		{390F1FB7-7B6C-40B4-8288-B3212B29EA03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{390F1FB7-7B6C-40B4-8288-B3212B29EA03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{390F1FB7-7B6C-40B4-8288-B3212B29EA03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD6FD724-3F74-4AF5-9915-0C498ACF960C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD6FD724-3F74-4AF5-9915-0C498ACF960C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD6FD724-3F74-4AF5-9915-0C498ACF960C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD6FD724-3F74-4AF5-9915-0C498ACF960C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
