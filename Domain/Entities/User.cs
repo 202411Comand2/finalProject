@@ -26,8 +26,8 @@ namespace Domain.Entities
         /// <summary>
         /// Пароль пользователя
         /// </summary>
-        [Required, Column("password"), MaxLength(40)]
-        public string? Password { get; set; }
+        [Required, Column("password"), MaxLength(144)]
+        public byte[] Password { get; set; }
 
         /// <summary>
         /// Номер мобильного телефона пользователя

@@ -10,7 +10,7 @@ namespace IdentityService.DAL
 		private readonly string _connectionString;
         public IdentityDbContextManager()
         {
-			_connectionString = Secrets.UsersDatabase;
+			//_connectionString = Secrets.UsersDatabase;
         }
         public IdentityDbContext CreateDatabaseContext()
 		{

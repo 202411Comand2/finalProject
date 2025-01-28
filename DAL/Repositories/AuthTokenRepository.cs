@@ -1,5 +1,5 @@
 ﻿using DAL.Abstractions;
-using FinalProjectEntityDataBase.Entities;
+using Domain.Entities;
 
 
 namespace DAL.Repositories

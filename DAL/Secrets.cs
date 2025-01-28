@@ -2,6 +2,8 @@
 {
    static public class Secrets
    {
-      static public  readonly string Server1= @"Host=localhost;Port=5432;Database=;Username=;Password=";
-   }
+		internal const string Server1 = "Host=localhost;Port=5000;Username=admin;Password=admin;Database=SuperDeal;Include Error Detail=true;";
+		internal const string Server2 = "Host=localhost;Username=postgres;Password=YCZ1J7_Ww-;Database=SuperDeal;Include Error Detail=true;";
+		internal const string Server3 = "Host=localhost;Username=postgres;Password=admin;Database=SuperDeal;Include Error Detail=true;";
+	}
 }

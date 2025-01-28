@@ -30,7 +30,7 @@ namespace Test
                 User person = new User()
                 {
                     Name = $"Oleg{random.Next(0, 1000)}",
-                    Password = "1234Pasword",
+                    //Password = "1234Pasword",
                     Phone = "71234567899",
                     Email = "testEmail@Yndex.ru",
                     TelegramId = 0,
@@ -38,26 +38,7 @@ namespace Test
 
                 };
                 await UserRepository.Add(person);
-
-
-                //// context.Departments.AddRange(department, department2, department3, department4);
-                //context.Users.AddRange(person);
-                //// Можно добавить людей, а объекты по связи подвяжутся!!!!
-                //await context.SaveChangesAsync();
            
         }
-
-        //static async public Task GetAllUser()
-        //{
-        //    using (Context context = new Context(false))
-        //    {
-        //        foreach (User person in context.Users)
-        //        {
-        //            Console.ForegroundColor = ConsoleColor.Green;
-        //            Console.WriteLine($"Id {person.Id} name {person.Name} ");
-        //            Console.ForegroundColor = ConsoleColor.White;
-        //        }
-        //    }
-        //}
     }
 }

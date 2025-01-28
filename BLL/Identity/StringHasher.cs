@@ -1,9 +1,10 @@
-﻿using System.Security.Cryptography;
+﻿using BLL.Abstractions;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace BLL.Identity
 {
-	internal static class DataHasher
+	internal class StringHasher : IGenericDataHasher<string>
 	{
 		private static readonly byte _saltSize = 16;
 		private static readonly byte _hashSize = 128;
@@ -15,7 +16,7 @@ namespace BLL.Identity
 		/// <param name="value">Данные для хэширования</param>
 		/// <returns>Хэш в виде массива байтов</returns>
 		/// <exception cref="ArgumentNullException"></exception>
-		internal static byte[] Hash(string value)
+		public byte[] Hash(string value)
 		{
 			if (string.IsNullOrEmpty(value)) throw new ArgumentNullException("value");
 
@@ -49,7 +50,7 @@ namespace BLL.Identity
 		/// <returns>true при совпадении, false в остальных случаях</returns>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentException"></exception>
-		internal static bool Compare(string value, byte[] hash)
+		public bool Compare(string value, byte[] hash)
 		{
 			if (string.IsNullOrEmpty(value)) throw new ArgumentNullException("value");
 			if (hash == null) throw new ArgumentNullException("hash");
