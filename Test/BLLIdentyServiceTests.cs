@@ -30,6 +30,7 @@ namespace Test
             _log?.Invoke($"Created new user succesfuly: Id-{user.Id}, PW-{user.Password}, PH-{user.Phone} in {_stopwatch.ElapsedMilliseconds}ms");
             _stopwatch.Reset();
             NewUser = user;
+            _log?.Invoke($"NewUser password hash: {Convert.ToBase64String(user.Password)}");
         }
 
         public async Task CreateGuestTokenTest()

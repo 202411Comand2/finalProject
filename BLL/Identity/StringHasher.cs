@@ -38,7 +38,7 @@ namespace BLL.Identity
 
 			Array.Clear(valueBytes, 0, valueBytes.Length);
 			Array.Clear(salt, 0, salt.Length);
-			Array.Clear(result, 0, result.Length);
+			Array.Clear(hash, 0, hash.Length);
 
 			return result;
 		}
