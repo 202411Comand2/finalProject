@@ -19,7 +19,7 @@ namespace DAL
 		/// </summary>
 		public ContextManager()
 		{
-			_connectionString = Secrets.Server1;
+			_connectionString = Secrets.Server3;
 		}
 
 		/// <summary>
@@ -34,8 +34,6 @@ namespace DAL
 				.EnableSensitiveDataLogging(true)
 				.Options
 				);
-		}
-		
-		
+		}	
     }
 }
