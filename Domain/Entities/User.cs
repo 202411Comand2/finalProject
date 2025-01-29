@@ -21,8 +21,6 @@ namespace Domain.Entities
         /// </summary>
         [Required, Column("name"), MaxLength(40)]
         public string? Name { get; set; }
-
-
         /// <summary>
         /// Пароль пользователя
         /// </summary>
@@ -32,43 +30,28 @@ namespace Domain.Entities
         /// <summary>
         /// Номер мобильного телефона пользователя
         /// </summary>
-        [Required,Column("phone"),MaxLength(12)]
+        [Column("phone"),MaxLength(12)]
         public string? Phone { get; set; }
 
         /// <summary>
         /// Номер мобильно телефона
         /// </summary>
-        [Required,Column("email"), MaxLength(255)]
-        public string Email { get; set; }
+        [Column("email"), MaxLength(255)]
+        public string? Email { get; set; }
 
         /// <summary>
         /// Id телеграмма
         /// </summary>
-        [Required, Column("telegram_id")]
-        public long TelegramId { get; set; }
+        [Column("telegram_id")]
+        public long? TelegramId { get; set; }
 
         /// <summary>
         /// Пользователь удалён
         /// </summary>
         [Required, Column("is_delete")]
-        public bool IsDelete { get; set; } = false;
-
-
-        /// <summary>
-        /// Id таблицы, где хранятся избранные позиции пользователя
-        /// </summary>
-        [Column("favorite_id")]
-        public int FavoriteId { get; set; }
-
+        public bool IsDeleted { get; set; } = false;
 
         #region связи
-
-        // Внешний ключ для связи с Token
-        public int AuthTokenId { get; set; }
-
-        [ForeignKey(nameof(AuthTokenId))]
-        public AuthToken AuthToken { get; set; }
-
 
         /// <summary>
         /// Коллекция владельцев магазинов
@@ -103,13 +86,6 @@ namespace Domain.Entities
         public ICollection<Order> Orders { get; set; } = new List<Order>();
 
         #endregion
-
-
-
-
-
-
-
 
         /// <summary>
         /// Вернуть Id объекта
