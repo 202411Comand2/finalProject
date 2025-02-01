@@ -52,8 +52,8 @@ namespace Domain.Entities
 
         public int ShopId { get; set; }
 
-        [ForeignKey(nameof(ShopId))]
-        public Shop Shop { get; set; }
+        //[ForeignKey(nameof(ShopId))]
+        //public Shop Shop { get; set; }
 
 
         #endregion

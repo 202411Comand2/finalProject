@@ -10,13 +10,31 @@ namespace Test
         private static ContextManager _contextManager;
         private static BLLIdentyServiceTests _bllIdentityTests;
 
+        private static BLLShopServiceTest _bLLShopServiceTest;
+
         static async Task Main(string[] args)
         {
             _contextManager = new ContextManager();
             _bllIdentityTests = new BLLIdentyServiceTests(_contextManager, Log);
-            await _bllIdentityTests.CreateGuestTokenTest();
-            await _bllIdentityTests.CreateNewUserTest();
+
+
+           // await _bllIdentityTests.CreateGuestTokenTest();
+          //  await _bllIdentityTests.CreateNewUserTest();
+           await TestShop();
+           
         }
+
+        /// <summary>
+        /// Класс для шалости с магазином
+        /// </summary>
+        private static async Task TestShop() 
+        {
+            _contextManager = new ContextManager();
+            _bLLShopServiceTest = new BLLShopServiceTest(_contextManager);
+            // var s =  await _bLLShopServiceTest.CreateShopOwner();
+            var s1 = await _bLLShopServiceTest.CreateShop();
+        }
+
         public static void Log(string message)
         {
             Console.ForegroundColor = ConsoleColor.Blue;
