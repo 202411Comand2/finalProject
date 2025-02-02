@@ -14,13 +14,14 @@ namespace Test
 
         static async Task Main(string[] args)
         {
-            _contextManager = new ContextManager();
-            _bllIdentityTests = new BLLIdentyServiceTests(_contextManager, Log);
 
-
-           // await _bllIdentityTests.CreateGuestTokenTest();
-          //  await _bllIdentityTests.CreateNewUserTest();
-           await TestShop();
+            #region создание пользователя (Глеб)
+            //_contextManager = new ContextManager();
+            // _bllIdentityTests = new BLLIdentyServiceTests(_contextManager, Log);
+            // await _bllIdentityTests.CreateGuestTokenTest();
+            //  await _bllIdentityTests.CreateNewUserTest();
+            #endregion
+            await TestShop();
            
         }
 
@@ -31,8 +32,15 @@ namespace Test
         {
             _contextManager = new ContextManager();
             _bLLShopServiceTest = new BLLShopServiceTest(_contextManager);
-            // var s =  await _bLLShopServiceTest.CreateShopOwner();
-            var s1 = await _bLLShopServiceTest.CreateShop();
+
+             var s =  await _bLLShopServiceTest.CreateShopOwnerAndShop();
+            //Создать магазин
+
+              await _bLLShopServiceTest.TestGetShopUser();
+            // вывести колецию магазинов пользователя
+
+            await _bLLShopServiceTest.TestUpdateNameShop();
+            // обновить название магазина
         }
 
         public static void Log(string message)
