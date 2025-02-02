@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{DD6FD724-3F74-4AF5-9915-0C498ACF960C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcAPI", "GrpcAPI\GrpcAPI.csproj", "{D9133EF3-7AF7-4CA5-BC65-141B4690C32C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{DD6FD724-3F74-4AF5-9915-0C498ACF960C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD6FD724-3F74-4AF5-9915-0C498ACF960C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD6FD724-3F74-4AF5-9915-0C498ACF960C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9133EF3-7AF7-4CA5-BC65-141B4690C32C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9133EF3-7AF7-4CA5-BC65-141B4690C32C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9133EF3-7AF7-4CA5-BC65-141B4690C32C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9133EF3-7AF7-4CA5-BC65-141B4690C32C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
