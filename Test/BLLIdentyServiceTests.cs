@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Test
 {
+    
 	public class BLLIdentyServiceTests
 	{
 		private IdentityService _identityService;

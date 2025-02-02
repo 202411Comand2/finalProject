@@ -5,9 +5,7 @@ namespace DAL
 {
 	public class ApplicationDbContext : DbContext
 	{
-
-
-        #region Создание 
+        #region Tables 
         public DbSet<User> Users { get; set; }
         public DbSet<ShopOwner> ShopOwners { get; set; }
         public DbSet<AccessToken> AccessTokens { get; set; }
@@ -22,9 +20,7 @@ namespace DAL
         public DbSet<Shop> Shops { get; set; }
         #endregion
 
-
         public ApplicationDbContext(DbContextOptions options) : base(options) => Database.EnsureCreated();
-
         /// <summary>
         /// Создание контекста
         /// </summary>

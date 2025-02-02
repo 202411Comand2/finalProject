@@ -4,6 +4,8 @@ using DAL.Abstractions;
 using DAL.Repositories;
 using Domain.Entities;
 using Domain.Enums;
+using StackExchange.Redis;
+using System.Text.Json;
 
 namespace BLL.Identity
 {
@@ -12,14 +14,16 @@ namespace BLL.Identity
         private readonly UserRepository _userRepository;
         private readonly AccessTokenRepository _accessTokenRepository;
         private readonly IGenericDataHasher<string> _passwordHasher;
-        private List<AccessToken> _tokenCache; // Удалить после введения Redis
+        private readonly ConnectionMultiplexer _redisConnection;
+        private readonly IDatabase _cache;
 
         public IdentityService(IContextManager contextManager)
         {
             _userRepository = new UserRepository(contextManager);
             _accessTokenRepository = new AccessTokenRepository(contextManager);
             _passwordHasher = new StringHasher();
-            _tokenCache = new List<AccessToken>();
+            _redisConnection = ConnectionMultiplexer.Connect("localhost:6379,password=admin");
+            _cache = _redisConnection.GetDatabase();
         }
 
         public async Task<AccessToken> GetGuestToken(string deviceName, string deviceIp)
@@ -33,7 +37,7 @@ namespace BLL.Identity
             };
 
             var result = await _accessTokenRepository.Add(newToken);
-            _tokenCache.Add(result);
+            _cache.StringSet(result.Id.ToString(), JsonSerializer.Serialize(newToken), expiry: result.ExpireDate - DateTime.UtcNow);
             return result;
         }
         public async Task<User> CreateUser(string username, string password, string phone, AccessToken token)
@@ -78,16 +82,21 @@ namespace BLL.Identity
 			throw new NotImplementedException("Пока не сделал");
 		}
 
-        private AccessToken FindTokenInCache(int id)
+        private async Task<AccessToken> FindTokenInCache(int id)
         {
-            return _tokenCache.FirstOrDefault(x => x.Id == id);
+            var jsonToken = await _cache.StringGetAsync(id.ToString());
+            if (jsonToken.IsNullOrEmpty) return null;
+            return JsonSerializer.Deserialize<AccessToken>(jsonToken.ToString());
         }
         private async Task<bool> ValidateToken(AccessToken token)
         {
             if (token == null) return false;
 			if (token.ExpireDate < DateTime.UtcNow) { return false; }
-			var storedToken = FindTokenInCache(token.Id);
-            if (storedToken == null) { storedToken = await _accessTokenRepository.Get(token.Id); }
+			var storedToken = await FindTokenInCache(token.Id);
+            if (storedToken == null) 
+            {
+                storedToken = await _accessTokenRepository.Get(token.Id); 
+            }
             if (storedToken == null) { return false; }
             if (storedToken.Key != token.Key) { return false; }
             if (storedToken.ExpireDate != token.ExpireDate) { return false; }

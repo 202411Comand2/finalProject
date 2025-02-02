@@ -7,12 +7,7 @@ namespace DAL.Repositories
     {
         public UserRepository(IContextManager manager) : base(manager)
         {
-            
-        }
 
-		public override Task<User> Add(User entity)
-		{
-			return base.Add(entity);
-		}
+        }
 	}
 }
