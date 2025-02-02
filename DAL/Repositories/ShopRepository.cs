@@ -44,6 +44,28 @@ namespace DAL.Repositories
         }
 
         /// <summary>
+        /// Вернуть магазин по названию
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public async Task<Shop?> GetStoreByName(string name) 
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                var ob = await context.Shops
+                    .FirstOrDefaultAsync(p => p.Name == name);
+                if (ob != null)
+                {
+                    return ob;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
         /// Получить магазин по id
         /// </summary>
         /// <param name="GetShopId">id магазина</param>
@@ -80,33 +102,13 @@ namespace DAL.Repositories
 
         }
 
-
-
-        /// <summary>
-        /// Вернуть все магазина пользователя
-        /// </summary>
-        /// <param name="idUser">id пользователя</param>
-        /// <returns></returns>
-        public async Task<List<Shop>> GetShopUser(int idUser)
-        {
-            using (var context = CreateDatabaseContext())
-            {
-                return await (from o in context.ShopOwners
-
-                              join c in context.Shops on o.ShopId equals c.Id
-                              where o.UserId == idUser
-                              select c).ToListAsync();
-            }
-
-        }
-
         /// <summary>
         /// Проверить является ли пользователем владельцем магазина
         /// </summary>
         /// <param name="idUser"></param>
         /// <param name="nameShop"></param>
         /// <returns></returns>
-        public async Task<Shop> CheckOwnerShopUser(int idUser, int id)
+        public async Task<Shop?> CheckOwnerShopUser(int id)
         {
             var shop = await GetShopId(id);
             if (shop is not null)
@@ -117,8 +119,7 @@ namespace DAL.Repositories
                     var s = await (
                         from o in context.ShopOwners
                         join c in context.Shops on o.ShopId equals c.Id
-                        where o.UserId == idUser
-                              && c.Id == shop.Id
+                        where   c.Id == shop.Id
                         select c).FirstOrDefaultAsync();
                     return s;
                 }
@@ -135,28 +136,28 @@ namespace DAL.Repositories
         /// <param name="idUser"></param>
         /// <param name="nameShop"></param>
         /// <returns></returns>
-        public async Task<Shop> CheckOwnerShopUser(int idUser, string nameShop)
-        {
-            var idShop = await GetIdByStoreName(nameShop);
-            if (idShop != -1)
-            {
-                // Проверяем магазин на наличие в бд
-                using (var context = CreateDatabaseContext())
-                {
-                    var s = await (
-                        from o in context.ShopOwners
-                                  join c in context.Shops on o.ShopId equals c.Id
-                                  where o.UserId == idUser 
-                                        && c.Id == idShop
-                                  select c).FirstOrDefaultAsync();
-                    return s;
-                }
-            }
-            else
-            {
-                return null;
-            }
-        }
+        //public async Task<Shop> GetShop( string nameShop)
+        //{
+        //    var idShop = await GetIdByStoreName(nameShop);
+        //    if (idShop != -1)
+        //    {
+        //        return idShop;
+        //        // Проверяем магазин на наличие в бд
+        //        using (var context = CreateDatabaseContext())
+        //        {
+        //            var s = await (
+        //                from o in context.ShopOwners
+        //                          join c in context.Shops on o.ShopId equals c.Id
+        //                          where   c.Id == idShop
+        //                          select c).FirstOrDefaultAsync();
+        //            return s;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+        //}
 
     }
 }

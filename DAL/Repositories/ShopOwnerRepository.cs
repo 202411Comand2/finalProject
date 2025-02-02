@@ -22,17 +22,5 @@ namespace DAL.Repositories
             return base.Add(entity);
         }
 
-   
-
-        ////TODO спросить у ребят, где мы ищем пользователя в userRepository или в этом репозитории?
-        /// <summary>
-        /// Найти пользователя
-        /// </summary>
-        /// <param name="id">ID пользователя</param>
-        /// <returns></returns>
-        public Task<bool> SearchUser(int id) 
-        {
-            return null;
-        }
     }
 }

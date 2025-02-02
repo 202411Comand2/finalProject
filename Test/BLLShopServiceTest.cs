@@ -15,7 +15,7 @@ namespace Test
     internal class BLLShopServiceTest
     {
         private UserRepository _userRepository;
-        private ShopService _shopService;
+        private ProductService _productService;
         private ShopRepository _shopRepository;
         private ShopOwnerRepository _shopOwnerRepository;
 
@@ -39,7 +39,7 @@ namespace Test
 
         public BLLShopServiceTest(IContextManager cm)
         {
-            _shopService = new ShopService(cm);
+            _productService = new ProductService(cm);
             _userRepository = new UserRepository(cm);
             _shopRepository = new ShopRepository(cm);
             _shopOwnerRepository = new ShopOwnerRepository(cm);
@@ -48,66 +48,37 @@ namespace Test
         /// Создание Владельца магазина
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> CreateShopOwnerAndShop()
+        public async Task<bool> CreateShop()
         {
-            User user = await _userRepository.Get(1);
-            if (user == null)
-            {
-                return false;
-            }
+            //User user = await _userRepository.Get(1);
+            //if (user == null)
+            //{
+            //    return false;
+            //}
             Random rand = new Random();
-            string message = await _shopService.CreateOwnerShop(true, user, $"Название магазина{rand.Next(0, 10_000)}");
+            string message = await _productService.CreateShop( $"Название магазина{rand.Next(0, 10_000)}");
             ConsoleLog(message);
             // для теста получаем пользователя предполагаю, что пользователь будет приходить из вне
             //await addShop.CreateShopUser();
             return true;
         }
 
-        ///переделанная логика
         /// <summary>
-        /// Создание магазина
+        /// Удаление магазина
         /// </summary>
         /// <returns></returns>
-        //public async Task<bool> CreateShop() 
-        //{
-        //    ShopOwner shopOwner = await _shopOwnerRepository.Get(2);
-        //    if (shopOwner == null)
-        //    {
-        //        return false;
-        //    }
-        //    string message = await _shopService.CreateShop("Название магазина", shopOwner);
-        //    ConsoleLog(message);
-        //    return true;
-        //}
-
-        /// <summary>
-        /// Проверка на удаление магазина 
-        /// </summary>
-        /// <returns></returns>
-        public async Task testSearchNameShop()
+        public async Task testDeleteShop()
         {
             List<string> l = new List<string>() { "we", "12", "Название магазина" };
             foreach (string s in l)
             {
-                string message = await _shopService.DeleteShop(s, 0);
+                string message = await _productService.DeleteShop(s);
                 ConsoleLog(message);
 
             }
         }
 
-        /// <summary>
-        /// Вывести список магазинов пользователя
-        /// </summary>
-        /// <returns></returns>
-        public async Task TestGetShopUser()
-        {
-            int id = 1;
-            ConsoleLog($"Список магазинов пользователя под id: {id}");
-            foreach (var shopUser in await _shopService.GetShopUser(1))
-            {
-                ConsoleLog($"{shopUser.Id} {shopUser.Name}");
-            }
-        }
+    
 
         /// <summary>
         /// Изменить имя магазина
@@ -115,20 +86,19 @@ namespace Test
         /// <returns></returns>
         public async Task TestUpdateNameShop() 
         {
-            List<int>idListUser = new List<int>() { 1,1,1};
-            List<int> idListShop = new List<int>() { 5, 6, 3 };
-            List<string> newName = new List<string>() { "we", "12", "test" };
-            List<string> oldNameShop = new List<string>() { "we", "12", "test" };
+            List<int> idListShop = new List<int>() { 1, 2, 3 };
+            List<string> newName = new List<string>() { "we", "_-_", "1221212" };
+          
 
-            for (int i = 0; i < idListUser.Count; i++) 
+            for (int i = 0; i < idListShop.Count; i++) 
             {
-                string message = await _shopService.UpdateShopName(idListUser[i], idListShop[i], newName[i]);
-                ConsoleLog(message+$"\n {idListUser[i]} {idListShop[i]} { newName[i]}");
+                string message = await _productService.UpdateShopName( idListShop[i], newName[i]);
+                ConsoleLog(message+$"\n idListShop {idListShop[i]} { newName[i]}");
             }
 
-            string message1 = await _shopService.UpdateShopName(idListUser[1], "we", "Новое имя");
+            string message1 = await _productService.UpdateShopName( "we", "Новое имя");
             // тут меняем на новое имя через строку
-            ConsoleLog(message1 + $"\n {idListUser[1]} we  Новое имя");
+            ConsoleLog(message1 + $"\n  we  Новое имя");
         }
 
     }

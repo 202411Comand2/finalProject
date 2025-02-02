@@ -33,10 +33,10 @@ namespace Test
             _contextManager = new ContextManager();
             _bLLShopServiceTest = new BLLShopServiceTest(_contextManager);
 
-             var s =  await _bLLShopServiceTest.CreateShopOwnerAndShop();
+             var s =  await _bLLShopServiceTest.CreateShop();
             //Создать магазин
 
-              await _bLLShopServiceTest.TestGetShopUser();
+            //  await _bLLShopServiceTest.TestGetShopUser();
             // вывести колецию магазинов пользователя
 
             await _bLLShopServiceTest.TestUpdateNameShop();
