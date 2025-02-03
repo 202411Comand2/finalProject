@@ -162,7 +162,16 @@ namespace Test
             ConsoleLog(message);
         }
 
-
+        /// <summary>
+        /// Обновить позицию кластера в классификаторе
+        /// </summary>
+        /// <returns></returns>
+        public async Task TestUpdatePositionCluster()
+        {
+            string message = await _productService.UpdatePositionCluster(1,1);
+            ConsoleLog(message);
+          
+        }
         #endregion
     }
 

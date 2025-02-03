@@ -17,7 +17,7 @@ namespace BLL.Shop
     public class ProductService
     {
         private readonly ShopRepository _shopRepository;
-       // private readonly ShopOwnerRepository _shopOwnerRepository;
+        // private readonly ShopOwnerRepository _shopOwnerRepository;
         private readonly UserRepository _userRepository;
         private readonly ClusterRepository _clusterRepository;
 
@@ -30,7 +30,7 @@ namespace BLL.Shop
         public ProductService(IContextManager contextManager)
         {
             _shopRepository = new ShopRepository(contextManager);
-         //   _shopOwnerRepository = new ShopOwnerRepository(contextManager);
+            //   _shopOwnerRepository = new ShopOwnerRepository(contextManager);
             _userRepository = new UserRepository(contextManager);
             _clusterRepository = new ClusterRepository(contextManager);
 
@@ -59,7 +59,7 @@ namespace BLL.Shop
         /// <param name="idShop">id магазина</param>
         /// <param name="newNameShop">Новое название магазина</param>
         /// <returns></returns>
-        public async Task<string> UpdateShopName( int idShop, string newNameShop)
+        public async Task<string> UpdateShopName(int idShop, string newNameShop)
         {
             Domain.Entities.Shop? shopUser = await _shopRepository.Get(idShop);
             if (shopUser is null)
@@ -75,7 +75,7 @@ namespace BLL.Shop
                     await _shopRepository.Update(shopUser);
                     return $"Название магазина изменено c {oldNameShop} на {newNameShop}";
                 }
-                else 
+                else
                 {
                     return $"Название ''{newNameShop}'' занято!!!";
                 }
@@ -116,7 +116,7 @@ namespace BLL.Shop
         /// <param name="nameShop">Название магазина</param>
         /// <param name="idOwner">id владельца</param>
         /// <returns></returns>
-        public async Task<string> DeleteShop(string nameShop) 
+        public async Task<string> DeleteShop(string nameShop)
         {
             Domain.Entities.Shop? shop = await _shopRepository.GetStoreByName(nameShop);
             if (shop is null)
@@ -134,9 +134,9 @@ namespace BLL.Shop
         #endregion
 
         #region управление товаром
-        public async Task<string> AddProduct(int idShop, int л) 
+        public async Task<string> AddProduct(int idShop, int л)
         {
-            Product product =new Product();
+            Product product = new Product();
             return null;
         }
         #endregion
@@ -148,7 +148,7 @@ namespace BLL.Shop
         /// </summary>
         /// <param name="name">Имя кластера</param>
         /// <returns></returns>
-        public async Task<string> AddNewCluster(string name) 
+        public async Task<string> AddNewCluster(string name)
         {
             Cluster cluster = await _clusterRepository.GetNameCluster(name);
             if (cluster is null)
@@ -161,7 +161,7 @@ namespace BLL.Shop
                 var result = await _clusterRepository.Add(cluster);
                 return "Кластер создан";
             }
-            else 
+            else
             {
                 return "Не удалось создать в виду налиичя в системе уже сощетвующего класстера";
             }
@@ -210,7 +210,7 @@ namespace BLL.Shop
             if (clusterPerent is null)
             {
                 return "По указаному именни не нашёл родителя";
-            }    
+            }
             if (cluster is null)
             {
                 cluster = new Cluster
@@ -233,7 +233,7 @@ namespace BLL.Shop
         /// <param name="id">id кластера</param>
         /// <param name="newName">Новое имя кластера</param>
         /// <returns></returns>
-        public async Task<string> UpdateNameCluster(int id, string newName) 
+        public async Task<string> UpdateNameCluster(int id, string newName)
         {
             Cluster cluster = await _clusterRepository.Get(id);
             Cluster clusterNewName = await _clusterRepository.GetNameCluster(newName);
@@ -302,7 +302,7 @@ namespace BLL.Shop
             {
                 return "Не получилось удалить ввиду отсутствия id класетра";
             }
-            else 
+            else
             {
                 await _clusterRepository.Delete(cluster);
                 return "Кластер удалён";
@@ -332,15 +332,73 @@ namespace BLL.Shop
         }
 
         /// <summary>
-        ///  Изменение позиции кластера в иерахии
+        ///  Изменение позиции кластера в иерархии
         /// </summary>
         /// <param name="idCluster">id кластера, позицию которого нужно поменять в классификаторе</param>
-        /// <param name="idPerent">id родителя кластера, куда нужно вложить (-1 означает коронь) </param>
+        /// <param name="idParent">id родителя кластера, куда нужно вложить (-1 означает корень) </param>
         /// <returns></returns>
-        public async Task<string> UpdatePositionCluster(int idCluster, int idPerent) 
+        public async Task<string> UpdatePositionCluster(int idCluster, int idParent)
         {
-            
+            Cluster cluster = await _clusterRepository.Get(idCluster);
+            if (cluster is null)
+            {
+                return "Ошибка. Не найден кластер по id";
+            }
+            else
+            {
+                if (idParent == cluster.ParentId)
+                {
+                    return "Изменения не нужны, так как перемещения не произошло.";
+                }
+                cluster.ParentId = idParent;
+                await _clusterRepository.Update(cluster);
+                return "Изменения были приняты иерархия была изменена";
+            }
         }
+        /// <summary>
+        ///  Изменение позиции кластера в иерархии
+        /// </summary>
+        /// <param name="nameCluster">Название кластера</param>
+        /// <param name="idParent">id родителя кластера, куда нужно вложить (-1 означает корень) </param>
+        /// <returns></returns>
+        public async Task<string> UpdatePositionCluster(string nameCluster, int idParent)
+        {
+            Cluster cluster = await _clusterRepository.GetNameCluster(nameCluster);
+            if (cluster is null)
+            {
+                return "Ошибка. Не найден кластер по id";
+            }
+            else
+            {
+                if (idParent == cluster.ParentId)
+                {
+                    return "Изменения не нужны, так как перемещения не произошло.";
+                }
+                cluster.ParentId = idParent;
+                await _clusterRepository.Update(cluster);
+                return "Изменения были приняты иерархия была изменена";
+            }
+        }
+
+
+        /// <summary>
+        /// Получить корневые элементы кластера
+        /// </summary>
+        /// <returns></returns>
+        public async Task<string> GetRootElementsCluster() => throw new Exception("Не реализовано!!!"); 
+
+        /// <summary>
+        /// Получить все элементы кластера ?
+        /// </summary>
+        /// <returns></returns>
+        public async Task<string> GetTreeCluster() => throw new Exception("Не реализовано!!!"); 
+
+        /// <summary>
+        /// Получить дочерние элементы кластера
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<string> GetChildrenElementsCluster() => throw new Exception("Не реализовано!!!");
 
         #endregion
     }
