@@ -9,7 +9,6 @@ namespace Test
     {
         private static ContextManager _contextManager;
         private static BLLIdentyServiceTests _bllIdentityTests;
-
         private static BLLShopServiceTest _bLLShopServiceTest;
 
         static async Task Main(string[] args)
@@ -21,9 +20,12 @@ namespace Test
             // await _bllIdentityTests.CreateGuestTokenTest();
             //  await _bllIdentityTests.CreateNewUserTest();
             #endregion
-            await TestShop();
-           
+     //       await TestShop();
+            await TestCluster();
         }
+
+
+
 
         /// <summary>
         /// Класс для шалости с магазином
@@ -35,13 +37,23 @@ namespace Test
 
              var s =  await _bLLShopServiceTest.CreateShop();
             //Создать магазин
-
-            //  await _bLLShopServiceTest.TestGetShopUser();
-            // вывести колецию магазинов пользователя
-
             await _bLLShopServiceTest.TestUpdateNameShop();
             // обновить название магазина
+            await _bLLShopServiceTest.testDeleteShop();
+            // удалить магазин
         }
+        private static async Task TestCluster() 
+        {
+            _contextManager = new ContextManager();
+            _bLLShopServiceTest = new BLLShopServiceTest(_contextManager);
+            await _bLLShopServiceTest.TestAddCluster();
+            // добовление кластеров
+            await _bLLShopServiceTest.TestUpdateCluster();
+            // обновление название у кластера
+            await _bLLShopServiceTest.TestDeleteCluster();
+            // удаление кластера
+        }
+
 
         public static void Log(string message)
         {

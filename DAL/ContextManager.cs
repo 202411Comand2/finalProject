@@ -30,7 +30,7 @@ namespace DAL
 		{
 			var builder = new DbContextOptionsBuilder();
 			return new ApplicationDbContext(builder.UseNpgsql(_connectionString)
-				.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
+				//.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
 				.EnableSensitiveDataLogging(true)
 				.Options
 				);

@@ -19,6 +19,9 @@ namespace BLL.Shop
         private readonly ShopRepository _shopRepository;
        // private readonly ShopOwnerRepository _shopOwnerRepository;
         private readonly UserRepository _userRepository;
+        private readonly ClusterRepository _clusterRepository;
+
+        #region управление магазином Создание, изменение и удаление
 
         /// <summary>
         /// Конструктор класса 
@@ -29,6 +32,8 @@ namespace BLL.Shop
             _shopRepository = new ShopRepository(contextManager);
          //   _shopOwnerRepository = new ShopOwnerRepository(contextManager);
             _userRepository = new UserRepository(contextManager);
+            _clusterRepository = new ClusterRepository(contextManager);
+
         }
 
         /// <summary>
@@ -47,7 +52,6 @@ namespace BLL.Shop
             var result = await _shopRepository.Add(newShop);
             return "магазин создан";
         }
-
 
         /// <summary>
         /// Обновить название магазина
@@ -106,7 +110,6 @@ namespace BLL.Shop
             }
         }
 
-        
         /// <summary>
         /// Удаление магазина (скрытие магазина)
         /// </summary>
@@ -128,8 +131,217 @@ namespace BLL.Shop
                 return $"магазин ''{nameShop}'' был удалён ";
             }
         }
+        #endregion
 
+        #region управление товаром
+        public async Task<string> AddProduct(int idShop, int л) 
+        {
+            Product product =new Product();
+            return null;
+        }
+        #endregion
 
+        #region Управление кластером(классификатором)
 
+        /// <summary>
+        /// Добавить кластер(классификатор) корневой элемент
+        /// </summary>
+        /// <param name="name">Имя кластера</param>
+        /// <returns></returns>
+        public async Task<string> AddNewCluster(string name) 
+        {
+            Cluster cluster = await _clusterRepository.GetNameCluster(name);
+            if (cluster is null)
+            {
+                cluster = new Cluster
+                {
+                    Name = name,
+                    ParentId = -1,
+                };
+                var result = await _clusterRepository.Add(cluster);
+                return "Кластер создан";
+            }
+            else 
+            {
+                return "Не удалось создать в виду налиичя в системе уже сощетвующего класстера";
+            }
+        }
+
+        /// <summary>
+        /// Добавить кластер(классификатор) вложенный
+        /// </summary>
+        /// <param name="name">Имя кластера</param>
+        /// <param name="idPerent">Id perent(-1) корень, т.е. располагается на врехнем уровне</param>
+        /// <returns></returns>
+        public async Task<string> AddNewCluster(string name, int idPerent)
+        {
+            Cluster cluster = await _clusterRepository.GetNameCluster(name);
+            Cluster clusterPerent = await _clusterRepository.Get(idPerent);
+            if (clusterPerent is null)
+            {
+                return "По указаному id не нашёл родителя";
+            }
+            if (cluster is null)
+            {
+                cluster = new Cluster
+                {
+                    Name = name,
+                    ParentId = idPerent,
+                };
+                var result = await _clusterRepository.Add(cluster);
+                return "Кластер создан";
+            }
+            else
+            {
+                return "Не удалось создать в виду налиичя в системе уже сощетвующего класстера";
+            }
+        }
+
+        /// <summary>
+        /// Добавить кластер(классификатор) вложенный
+        /// </summary>
+        /// <param name="name">Имя кластера</param>
+        /// <param name="idPerent">Id perent(-1) корень, т.е. располагается на врехнем уровне</param>
+        /// <returns></returns>
+        public async Task<string> AddNewCluster(string name, string NamePerent)
+        {
+            Cluster cluster = await _clusterRepository.GetNameCluster(name);
+            Cluster clusterPerent = await _clusterRepository.GetNameCluster(NamePerent);
+            if (clusterPerent is null)
+            {
+                return "По указаному именни не нашёл родителя";
+            }    
+            if (cluster is null)
+            {
+                cluster = new Cluster
+                {
+                    Name = name,
+                    ParentId = clusterPerent.Id
+                };
+                var result = await _clusterRepository.Add(cluster);
+                return "Кластер создан";
+            }
+            else
+            {
+                return "Не удалось создать в виду налиичя в системе уже сощетвующего класстера";
+            }
+        }
+
+        /// <summary>
+        /// Обновить имя кластер
+        /// </summary>
+        /// <param name="id">id кластера</param>
+        /// <param name="newName">Новое имя кластера</param>
+        /// <returns></returns>
+        public async Task<string> UpdateNameCluster(int id, string newName) 
+        {
+            Cluster cluster = await _clusterRepository.Get(id);
+            Cluster clusterNewName = await _clusterRepository.GetNameCluster(newName);
+
+            if (cluster is null)
+            {
+                return "не получилось изменить название классификатора. Не получилось найти указанный кластер в базе";
+            }
+            else
+            {
+                if (clusterNewName is null)
+                {
+                    cluster.Name = newName;
+                    await _clusterRepository.Update(cluster);
+                    return "Кластер изменён";
+                }
+                else
+                {
+                    return "не получилось изменить название классификатора. Имя этого кластера занято!";
+                }
+            }
+        }
+
+        /// <summary>
+        /// Обновить кластер
+        /// </summary>
+        /// <param name="oldName">Старое имя кластера</param>
+        /// <param name="newName">Новое имя кластера</param>
+        /// <returns></returns>
+        public async Task<string> UpdateNameCluster(string oldName, string newName)
+        {
+            Cluster cluster = await _clusterRepository.GetNameCluster(oldName);
+            Cluster clusterNewName = await _clusterRepository.GetNameCluster(newName);
+
+            if (cluster is null)
+            {
+                return "не получилось изменить название классификатора. Не получилось найти указанный кластер в базе";
+            }
+            else
+            {
+
+                if (clusterNewName is null)
+                {
+                    cluster.Name = newName;
+                    await _clusterRepository.Update(cluster);
+                }
+                else
+                {
+                    return "не получилось изменить название классификатора. Имя этого кластера занято!";
+                }
+            }
+
+            return "Кластер изменён";
+        }
+
+        ////ToDO при удалении кластера нужно проверять какие продукты к ним прикрепдены?
+        /// <summary>
+        /// Удаление кластера
+        /// </summary>
+        /// <param name="idCluster">id кластера</param>
+        /// <returns></returns>
+        public async Task<string> DeleteCluster(int idCluster)
+        {
+            Cluster cluster = await _clusterRepository.Get(idCluster);
+            if (cluster is null)
+            {
+                return "Не получилось удалить ввиду отсутствия id класетра";
+            }
+            else 
+            {
+                await _clusterRepository.Delete(cluster);
+                return "Кластер удалён";
+
+            }
+
+        }
+
+        /// <summary>
+        /// Удаление кластера
+        /// </summary>
+        /// <param name="nameClaster">Название кластера</param>
+        /// <returns></returns>
+        public async Task<string> DeleteCluster(string nameClaster)
+        {
+            Cluster cluster = await _clusterRepository.GetNameCluster(nameClaster);
+            if (cluster is null)
+            {
+                return "Не получилось удалить ввиду отсутствия id класетра";
+            }
+            else
+            {
+                await _clusterRepository.Delete(cluster);
+                return "Кластер удалён";
+
+            }
+        }
+
+        /// <summary>
+        ///  Изменение позиции кластера в иерахии
+        /// </summary>
+        /// <param name="idCluster">id кластера, позицию которого нужно поменять в классификаторе</param>
+        /// <param name="idPerent">id родителя кластера, куда нужно вложить (-1 означает коронь) </param>
+        /// <returns></returns>
+        public async Task<string> UpdatePositionCluster(int idCluster, int idPerent) 
+        {
+            
+        }
+
+        #endregion
     }
 }

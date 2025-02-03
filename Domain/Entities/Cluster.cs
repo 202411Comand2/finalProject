@@ -37,8 +37,8 @@ namespace Domain.Entities
         /// <summary>
         /// Ссылка на родителя
         /// </summary>
-        [ForeignKey(nameof(ParentId))]
-        public Cluster Parent { get; set; }
+        //[ForeignKey(nameof(ParentId))]
+        //public Cluster Parent { get; set; }
 
         /// <summary>
         /// Коллекция продуктов
