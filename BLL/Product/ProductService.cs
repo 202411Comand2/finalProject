@@ -331,6 +331,9 @@ namespace BLL.Shop
             }
         }
 
+
+
+
         /// <summary>
         ///  Изменение позиции кластера в иерархии
         /// </summary>
@@ -350,9 +353,24 @@ namespace BLL.Shop
                 {
                     return "Изменения не нужны, так как перемещения не произошло.";
                 }
-                cluster.ParentId = idParent;
-                await _clusterRepository.Update(cluster);
-                return "Изменения были приняты иерархия была изменена";
+                if (idParent == -1)
+                {
+                    cluster.ParentId = -1;
+                    await _clusterRepository.Update(cluster);
+                    return "Изменения были приняты иерархия была изменена";
+                }
+
+                Cluster clusterPerent = await _clusterRepository.Get(idParent);
+                if (clusterPerent is not null)
+                {
+                    cluster.ParentId = idParent;
+                    await _clusterRepository.Update(cluster);
+                    return "Изменения были приняты иерархия была изменена";
+                }
+                else
+                {
+                    return "Ошибка. Родительский кластер не найден!";
+                }
             }
         }
         /// <summary>
@@ -364,6 +382,7 @@ namespace BLL.Shop
         public async Task<string> UpdatePositionCluster(string nameCluster, int idParent)
         {
             Cluster cluster = await _clusterRepository.GetNameCluster(nameCluster);
+            
             if (cluster is null)
             {
                 return "Ошибка. Не найден кластер по id";
@@ -374,31 +393,59 @@ namespace BLL.Shop
                 {
                     return "Изменения не нужны, так как перемещения не произошло.";
                 }
-                cluster.ParentId = idParent;
-                await _clusterRepository.Update(cluster);
-                return "Изменения были приняты иерархия была изменена";
+                if (idParent == -1) 
+                {
+                    cluster.ParentId = -1;
+                    await _clusterRepository.Update(cluster);
+                    return "Изменения были приняты иерархия была изменена";
+                }
+
+                Cluster clusterPerent = await _clusterRepository.Get(idParent);
+                if (clusterPerent is not null)
+                {
+                    cluster.ParentId = idParent;
+                    await _clusterRepository.Update(cluster);
+                    return "Изменения были приняты иерархия была изменена";
+                }
+                else
+                {
+                    return "Ошибка. Родительский кластер не найден!";
+                }
             }
         }
 
 
         /// <summary>
-        /// Получить корневые элементы кластера
+        /// Получить все элементы кластеров
         /// </summary>
-        /// <returns></returns>
-        public async Task<string> GetRootElementsCluster() => throw new Exception("Не реализовано!!!"); 
+        /// <returns>Коллекцию кластеров</returns>
+        public async Task<List<Cluster>> GetAllElementsCluster() => (List<Cluster>)await _clusterRepository.GetAll();
 
         /// <summary>
-        /// Получить все элементы кластера ?
+        /// Получить только корневые элементы кластера
         /// </summary>
-        /// <returns></returns>
-        public async Task<string> GetTreeCluster() => throw new Exception("Не реализовано!!!"); 
+        public async Task<List<Cluster>> GetRootElementsCluster() => await _clusterRepository.GetRootElementsClaster();
 
+
+        ////TODO что делать ошибку кидать или возращаться null
         /// <summary>
         /// Получить дочерние элементы кластера
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public async Task<string> GetChildrenElementsCluster() => throw new Exception("Не реализовано!!!");
+        public async Task<List<Cluster>> GetChildrenElementsCluster(int idCluster) 
+        {
+            Cluster cluster = await _clusterRepository.Get(idCluster);
+            if (cluster is null)
+            {
+                //если такого кластера нет
+                return null;
+            }
+            else 
+            {
+                return  await _clusterRepository.GeElementsClaster(idCluster);
+            }
+
+        }
 
         #endregion
     }

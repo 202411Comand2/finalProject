@@ -1,6 +1,7 @@
 ﻿using DAL.Abstractions;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 
 namespace DAL.Repositories
 {
@@ -23,7 +24,33 @@ namespace DAL.Repositories
                     .FirstOrDefaultAsync(p => p.Name == name);
                 return cluster;
             }
-            
         }
+
+        /// <summary>
+        /// Вернуть все корневые кластеры
+        /// </summary>
+        /// <returns>Коллецию кластеров</returns>
+        public async Task<List<Cluster>> GetRootElementsClaster() 
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                return await context.Clusters.Where(c => c.Id == -1).ToListAsync();
+            }
+        }
+
+        /// <summary>
+        /// Вернуть все дочерние элементы класстера по указаному id
+        /// </summary>
+        /// <param name="id">Id кластера у которого нужно вернуть всех его родителей</param>
+        /// <returns></returns>
+        public async Task<List<Cluster>> GeElementsClaster(int id)
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                return await context.Clusters.Where(c => c.ParentId == id).ToListAsync();
+            }
+        }
+
+
     }
 }
