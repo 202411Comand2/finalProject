@@ -17,11 +17,10 @@ namespace BLL.Shop
     public class ProductService
     {
         private readonly ShopRepository _shopRepository;
-        // private readonly ShopOwnerRepository _shopOwnerRepository;
         private readonly UserRepository _userRepository;
         private readonly ClusterRepository _clusterRepository;
-
-        #region управление магазином Создание, изменение и удаление
+        private readonly ProductRepository _productRepository;
+        private readonly CommentRepository _commentRepository;
 
         /// <summary>
         /// Конструктор класса 
@@ -30,12 +29,14 @@ namespace BLL.Shop
         public ProductService(IContextManager contextManager)
         {
             _shopRepository = new ShopRepository(contextManager);
-            //   _shopOwnerRepository = new ShopOwnerRepository(contextManager);
             _userRepository = new UserRepository(contextManager);
             _clusterRepository = new ClusterRepository(contextManager);
+            _productRepository = new ProductRepository(contextManager);
+            _commentRepository = new CommentRepository(contextManager);
 
         }
 
+        #region управление магазином Создание, изменение и удаление
         /// <summary>
         /// Добавить магазин
         /// </summary>
@@ -136,7 +137,16 @@ namespace BLL.Shop
         #region управление товаром
         public async Task<string> AddProduct(int idShop, int л)
         {
-            Product product = new Product();
+            Product product = new Product()
+            {
+                Price = 1005.8M,
+                Name = "test",
+                Barcode = 12345,
+                ModelNumber ="123455",
+                Description = "Description",
+
+            };
+             _productRepository.Add(product);
             return null;
         }
         #endregion
@@ -466,7 +476,8 @@ namespace BLL.Shop
         #endregion
 
         #region управление отзывами
-
+          
+        
         #endregion
     }
 }
