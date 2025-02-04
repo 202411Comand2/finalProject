@@ -331,9 +331,6 @@ namespace BLL.Shop
             }
         }
 
-
-
-
         /// <summary>
         ///  Изменение позиции кластера в иерархии
         /// </summary>
@@ -427,10 +424,11 @@ namespace BLL.Shop
         public async Task<List<Cluster>> GetRootElementsCluster() => await _clusterRepository.GetRootElementsClaster();
 
 
-        ////TODO что делать ошибку кидать или возращаться null
+        ////TODO что делать ошибку кидать или возвращаться null
         /// <summary>
         /// Получить дочерние элементы кластера
         /// </summary>
+        /// <param name="idCluster">Id кластера</param>
         /// <returns></returns>
         public async Task<List<Cluster>> GetChildrenElementsCluster(int idCluster) 
         {
@@ -444,8 +442,30 @@ namespace BLL.Shop
             {
                 return  await _clusterRepository.GeElementsClaster(idCluster);
             }
-
         }
+
+        /// <summary>
+        /// Получить дочерние элементы кластера
+        /// </summary>
+        /// <param name="nameCluster">Имя кластера</param>
+        /// <returns></returns>
+        public async Task<List<Cluster>> GetChildrenElementsCluster(string nameCluster)
+        {
+            Cluster cluster = await _clusterRepository.GetNameCluster(nameCluster);
+
+            if (cluster is null)
+            {//"Ошибка. Не найден кластер по имени"
+                return null;
+            }
+                return await _clusterRepository.GeElementsClaster(cluster.Id);
+            
+        }
+
+
+
+        #endregion
+
+        #region управление отзывами
 
         #endregion
     }

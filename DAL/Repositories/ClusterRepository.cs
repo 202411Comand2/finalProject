@@ -34,7 +34,7 @@ namespace DAL.Repositories
         {
             using (var context = CreateDatabaseContext())
             {
-                return await context.Clusters.Where(c => c.Id == -1).ToListAsync();
+                return await context.Clusters.Where(c => c.ParentId == -1).ToListAsync();
             }
         }
 

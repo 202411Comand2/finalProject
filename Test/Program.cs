@@ -52,6 +52,11 @@ namespace Test
             // обновление название у кластера
             await _bLLShopServiceTest.TestDeleteCluster();
             // удаление кластера
+            await _bLLShopServiceTest.TestUpdatePositionCluster();
+            //Обновление позиции кластера
+
+            await _bLLShopServiceTest.TestGetCluster();
+            //получить кластеры для построение иерархии
         }
 
 

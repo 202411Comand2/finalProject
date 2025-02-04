@@ -82,7 +82,6 @@ namespace Test
         }
 
 
-
         /// <summary>
         /// Изменить имя магазина
         /// </summary>
@@ -116,6 +115,20 @@ namespace Test
             // корневой элемент
             ConsoleLog(message);
 
+            for (int i = 0; i < 10; i++)
+            {
+
+                message = await _productService.AddNewCluster($"кластер1{i}");
+                // Дочерний элемент
+                ConsoleLog(message);
+            }
+            for (int i = 0; i < 10; i++)
+            {
+
+                message = await _productService.AddNewCluster($"кластер_Дочерний{i}", "кластер1");
+                // Дочерний элемент
+                ConsoleLog(message);
+            }
             message = await _productService.AddNewCluster("кластер1" , 1);
             // Дочерний элемент
             ConsoleLog(message);
@@ -168,10 +181,38 @@ namespace Test
         /// <returns></returns>
         public async Task TestUpdatePositionCluster()
         {
-            string message = await _productService.UpdatePositionCluster(1,1);
+            string message = await _productService.UpdatePositionCluster(2,10);
             ConsoleLog(message);
           
         }
+
+        /// <summary>
+        /// Получить кластеры по определённым условиям
+        /// </summary>
+        /// <returns></returns>
+        public async Task TestGetCluster() 
+        {
+            Console.WriteLine("\nПолучить все элементы кластеров:");
+            foreach (var item in await _productService.GetAllElementsCluster())
+            {
+                Console.WriteLine($"{item.Name} { item.ParentId}");
+            }
+
+            Console.WriteLine("\nПолучить только корневые элементы кластера:");
+            foreach (var item in await _productService.GetRootElementsCluster())
+            {
+                Console.WriteLine($"{item.Name} {item.ParentId}");
+            }
+            Console.WriteLine("\nПолучить дочерние элементы кластера:");
+            foreach (var item in await _productService.GetChildrenElementsCluster(2))
+            {
+                Console.WriteLine($"{item.Name} {item.ParentId}");
+            }
+        }
+        #endregion
+
+        #region Работа с отзывами
+
         #endregion
     }
 
