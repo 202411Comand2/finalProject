@@ -20,8 +20,9 @@ namespace Test
             // await _bllIdentityTests.CreateGuestTokenTest();
             //  await _bllIdentityTests.CreateNewUserTest();
             #endregion
-     //       await TestShop();
-     //       await TestCluster();
+            //       await TestShop();
+            //     await TestCluster();
+            await TestAddProduct();
         }
 
 
@@ -30,19 +31,24 @@ namespace Test
         /// <summary>
         /// Класс для шалости с магазином
         /// </summary>
-        private static async Task TestShop() 
+        private static async Task TestShop()
         {
             _contextManager = new ContextManager();
             _bLLShopServiceTest = new BLLShopServiceTest(_contextManager);
 
-             var s =  await _bLLShopServiceTest.CreateShop();
+            var s = await _bLLShopServiceTest.CreateShop();
             //Создать магазин
             await _bLLShopServiceTest.TestUpdateNameShop();
             // обновить название магазина
             await _bLLShopServiceTest.testDeleteShop();
             // удалить магазин
         }
-        private static async Task TestCluster() 
+
+        /// <summary>
+        /// Для тестирование кластера
+        /// </summary>
+        /// <returns></returns>
+        private static async Task TestCluster()
         {
             _contextManager = new ContextManager();
             _bLLShopServiceTest = new BLLShopServiceTest(_contextManager);
@@ -54,9 +60,19 @@ namespace Test
             // удаление кластера
             await _bLLShopServiceTest.TestUpdatePositionCluster();
             //Обновление позиции кластера
-
             await _bLLShopServiceTest.TestGetCluster();
             //получить кластеры для построение иерархии
+
+        }
+        /// <summary>
+        /// Тестирование добовление продукта магазина
+        /// </summary>
+        /// <returns></returns>
+        private static async Task TestAddProduct()
+        {
+            _contextManager = new ContextManager();
+            _bLLShopServiceTest = new BLLShopServiceTest(_contextManager);
+            await _bLLShopServiceTest.TestCreateProduct();
         }
 
 
@@ -91,7 +107,7 @@ namespace Test
 
         //        };
         //        //await UserRepository.Add(person);
-           
+
         //}
     }
 }

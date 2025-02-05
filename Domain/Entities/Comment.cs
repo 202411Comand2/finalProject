@@ -33,13 +33,13 @@ namespace Domain.Entities
         /// Дата создания комментария
         /// </summary>
         [Column("date_created")]
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// Содержит удалён ли комментарий?
         /// </summary>
         [Column("is_deleted")]
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
         /// <summary>
         /// Id ответы
@@ -68,7 +68,7 @@ namespace Domain.Entities
         {
             return Id;
         }
-        #region
+        #region связи
        
         [ForeignKey(nameof(ReplyId))]
         public CommentReply Replies { get; set; }

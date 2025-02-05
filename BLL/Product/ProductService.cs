@@ -21,6 +21,8 @@ namespace BLL.Shop
         private readonly ClusterRepository _clusterRepository;
         private readonly ProductRepository _productRepository;
         private readonly CommentRepository _commentRepository;
+        private readonly RatingRepository _ratingRepository;
+
 
         /// <summary>
         /// Конструктор класса 
@@ -33,6 +35,7 @@ namespace BLL.Shop
             _clusterRepository = new ClusterRepository(contextManager);
             _productRepository = new ProductRepository(contextManager);
             _commentRepository = new CommentRepository(contextManager);
+            _ratingRepository = new RatingRepository(contextManager);
 
         }
 
@@ -45,13 +48,17 @@ namespace BLL.Shop
         /// <returns></returns>
         public async Task<string> CreateShop(string name)
         {
+            if (await _shopRepository.GetIdByStoreName(name) != -1)
+            {
+                return "Не удалось создать магазин, так как магазин с таким именем есть в системе";
+            }
             Domain.Entities.Shop newShop = new Domain.Entities.Shop
             {
                 Name = name,
                 IsDelete = false,
             };
             var result = await _shopRepository.Add(newShop);
-            return "магазин создан";
+            return $"магазин создан {newShop.Id}";
         }
 
         /// <summary>
@@ -135,19 +142,53 @@ namespace BLL.Shop
         #endregion
 
         #region управление товаром
-        public async Task<string> AddProduct(int idShop, int л)
+        /// <summary>
+        /// Добавить продукт
+        /// </summary>
+        /// <param name="idShop">Id магазина</param>
+        /// <param name="IdCluster">Id кластер</param>
+        /// <returns></returns>
+        public async Task<string> AddProduct(int idShop, int IdCluster)
         {
+            Domain.Entities.Shop shop = await _shopRepository.Get(idShop);
+            Cluster cluster = await _clusterRepository.Get(IdCluster);
+
+            if (shop is null)
+            {
+                return "Ошибка магазин по id не найден";
+            }
+            if (cluster is null)
+            {
+                return "Ошибка кластер по id не найден";
+
+            }
+            Rating rating = new Rating()
+            {
+                ProductID = -1,
+                AmountOfComments = 0,
+                AverageRating = 0,
+            };
+
+            var s = await _ratingRepository.Add(rating);
+
+
             Product product = new Product()
             {
                 Price = 1005.8M,
                 Name = "test",
                 Barcode = 12345,
-                ModelNumber ="123455",
+                ModelNumber = "123455",
                 Description = "Description",
+                ClusterId = cluster.Id,
+                // Cluster = cluster, // надо указывать только ссылку
+                //  Shop = shop,
+                ShopId = shop.Id,
+                // Rating = s,
+                RatingId = rating.RatingId
 
             };
-             _productRepository.Add(product);
-            return null;
+            await _productRepository.Add(product);
+            return "Продукт прикрёплен к магазину и кластеру добавлен";
         }
         #endregion
 
@@ -169,7 +210,7 @@ namespace BLL.Shop
                     ParentId = -1,
                 };
                 var result = await _clusterRepository.Add(cluster);
-                return "Кластер создан";
+                return $"Кластер создан {cluster.Id}";
             }
             else
             {
@@ -380,6 +421,7 @@ namespace BLL.Shop
                 }
             }
         }
+
         /// <summary>
         ///  Изменение позиции кластера в иерархии
         /// </summary>
@@ -389,7 +431,7 @@ namespace BLL.Shop
         public async Task<string> UpdatePositionCluster(string nameCluster, int idParent)
         {
             Cluster cluster = await _clusterRepository.GetNameCluster(nameCluster);
-            
+
             if (cluster is null)
             {
                 return "Ошибка. Не найден кластер по id";
@@ -400,7 +442,7 @@ namespace BLL.Shop
                 {
                     return "Изменения не нужны, так как перемещения не произошло.";
                 }
-                if (idParent == -1) 
+                if (idParent == -1)
                 {
                     cluster.ParentId = -1;
                     await _clusterRepository.Update(cluster);
@@ -440,7 +482,7 @@ namespace BLL.Shop
         /// </summary>
         /// <param name="idCluster">Id кластера</param>
         /// <returns></returns>
-        public async Task<List<Cluster>> GetChildrenElementsCluster(int idCluster) 
+        public async Task<List<Cluster>> GetChildrenElementsCluster(int idCluster)
         {
             Cluster cluster = await _clusterRepository.Get(idCluster);
             if (cluster is null)
@@ -448,9 +490,9 @@ namespace BLL.Shop
                 //если такого кластера нет
                 return null;
             }
-            else 
+            else
             {
-                return  await _clusterRepository.GeElementsClaster(idCluster);
+                return await _clusterRepository.GeElementsClaster(idCluster);
             }
         }
 
@@ -467,8 +509,8 @@ namespace BLL.Shop
             {//"Ошибка. Не найден кластер по имени"
                 return null;
             }
-                return await _clusterRepository.GeElementsClaster(cluster.Id);
-            
+            return await _clusterRepository.GeElementsClaster(cluster.Id);
+
         }
 
 
@@ -476,8 +518,19 @@ namespace BLL.Shop
         #endregion
 
         #region управление отзывами
-          
-        
+
+        public async Task<string> AddComment(int idProduct, int shopId, int idUser, decimal productEvaluation)
+        {
+            Comment comment = new Comment()
+            {
+                Text = "",
+                Estimation = productEvaluation,
+                UserId = idUser,
+                ShopId = shopId
+            };
+            return null;
+        }
+
         #endregion
     }
 }
