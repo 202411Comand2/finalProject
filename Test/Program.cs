@@ -21,7 +21,7 @@ namespace Test
             //  await _bllIdentityTests.CreateNewUserTest();
             #endregion
      //       await TestShop();
-            await TestCluster();
+     //       await TestCluster();
         }
 
 
