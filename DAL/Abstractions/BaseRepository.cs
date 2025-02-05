@@ -43,7 +43,6 @@ namespace DAL.Abstractions
                 if (iDbEntity == null) throw new ArgumentException("Entity should be IDbEntity type", "entity");
 
                 await context.Set<T>().AddAsync(entity);
-
                 await context.SaveChangesAsync();
             }
             return entity;

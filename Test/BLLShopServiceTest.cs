@@ -105,6 +105,7 @@ namespace Test
         #endregion
 
         #region Работа с кластером
+        
         /// <summary>
         /// Создание элемента классификатора 
         /// </summary>
@@ -211,7 +212,23 @@ namespace Test
         }
         #endregion
 
+        #region работа с магазином просто для тестирования других сервисов
+        public async Task TestCreateProduct()
+        {
+            string message = await _productService.AddNewCluster("Кластер для тестирования");
+            ConsoleLog(message);
+            
+            message = await _productService.CreateShop("Магазин для тестирования");
+            ConsoleLog(message);
+           
+            message = await _productService.AddProduct(1, 1);
+            ConsoleLog(message);
+        }
+        #endregion
+
+
         #region Работа с отзывами
+
 
         #endregion
     }

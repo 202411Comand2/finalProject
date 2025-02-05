@@ -43,8 +43,8 @@ namespace Domain.Entities
         /// </summary>
         public int ProductID { get; set; }
 
-        [ForeignKey(nameof(ProductID))]
-        public Product Product { get; set; }
+        //[ForeignKey(nameof(ProductID))]
+        //public Product Product { get; set; }
 
         #endregion
     }
