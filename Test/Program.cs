@@ -65,7 +65,7 @@ namespace Test
 
         }
         /// <summary>
-        /// Тестирование добовление продукта магазина
+        /// Тестирование добавление продукта магазина
         /// </summary>
         /// <returns></returns>
         private static async Task TestAddProduct()
@@ -73,7 +73,6 @@ namespace Test
             _contextManager = new ContextManager();
             _bLLShopServiceTest = new BLLShopServiceTest(_contextManager);
             await _bLLShopServiceTest.TestCreateProduct();
-        }
 
 
         public static void Log(string message)

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using DAL.Abstractions;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using NpgsqlTypes;
 
 
 namespace Test
@@ -229,6 +230,7 @@ namespace Test
 
         #region Работа с отзывами
 
+        public async Task Test
 
         #endregion
     }

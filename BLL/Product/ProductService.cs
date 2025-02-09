@@ -48,10 +48,6 @@ namespace BLL.Shop
         /// <returns></returns>
         public async Task<string> CreateShop(string name)
         {
-            if (await _shopRepository.GetIdByStoreName(name) != -1)
-            {
-                return "Не удалось создать магазин, так как магазин с таким именем есть в системе";
-            }
             Domain.Entities.Shop newShop = new Domain.Entities.Shop
             {
                 Name = name,
@@ -150,28 +146,6 @@ namespace BLL.Shop
         /// <returns></returns>
         public async Task<string> AddProduct(int idShop, int IdCluster)
         {
-            Domain.Entities.Shop shop = await _shopRepository.Get(idShop);
-            Cluster cluster = await _clusterRepository.Get(IdCluster);
-
-            if (shop is null)
-            {
-                return "Ошибка магазин по id не найден";
-            }
-            if (cluster is null)
-            {
-                return "Ошибка кластер по id не найден";
-
-            }
-            Rating rating = new Rating()
-            {
-                ProductID = -1,
-                AmountOfComments = 0,
-                AverageRating = 0,
-            };
-
-            var s = await _ratingRepository.Add(rating);
-
-
             Product product = new Product()
             {
                 Price = 1005.8M,
@@ -179,12 +153,6 @@ namespace BLL.Shop
                 Barcode = 12345,
                 ModelNumber = "123455",
                 Description = "Description",
-                ClusterId = cluster.Id,
-                // Cluster = cluster, // надо указывать только ссылку
-                //  Shop = shop,
-                ShopId = shop.Id,
-                // Rating = s,
-                RatingId = rating.RatingId
 
             };
             await _productRepository.Add(product);
@@ -421,7 +389,6 @@ namespace BLL.Shop
                 }
             }
         }
-
         /// <summary>
         ///  Изменение позиции кластера в иерархии
         /// </summary>
@@ -518,19 +485,8 @@ namespace BLL.Shop
         #endregion
 
         #region управление отзывами
-
-        public async Task<string> AddComment(int idProduct, int shopId, int idUser, decimal productEvaluation)
-        {
-            Comment comment = new Comment()
-            {
-                Text = "",
-                Estimation = productEvaluation,
-                UserId = idUser,
-                ShopId = shopId
-            };
-            return null;
-        }
-
+          
+        
         #endregion
     }
 }
