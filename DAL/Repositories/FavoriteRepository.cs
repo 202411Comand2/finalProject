@@ -1,5 +1,6 @@
 ﻿using DAL.Abstractions;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -10,5 +11,19 @@ namespace DAL.Repositories
         {
 
         }
+        /// <summary>
+        /// Вернуть избранную позицию пользователя
+        /// </summary>
+        /// <param name="idUser">ID пользователя</param>
+        /// <param name="idProduct">ID продукта</param>
+        /// <returns>Возвращает избранную позицию пользователя</returns>
+        public async Task<Favorite?> GetFavoriteUser(int idUser, int idProduct)
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                return await context.Favorite.FirstOrDefaultAsync(p => p.UserId == idUser && p.IdProduct == idProduct);
+            }
+        }
+
     }
 }

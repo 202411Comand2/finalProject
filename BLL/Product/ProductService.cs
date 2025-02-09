@@ -3,13 +3,17 @@ using DAL.Repositories;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using System.Diagnostics.Metrics;
 
-namespace BLL.Shop
+namespace BLL.ProductService
 {
     /// <summary>
     /// Управление магазином сервис
@@ -21,6 +25,8 @@ namespace BLL.Shop
         private readonly ClusterRepository _clusterRepository;
         private readonly ProductRepository _productRepository;
         private readonly CommentRepository _commentRepository;
+        private readonly CommentReplyRepository _commentReplyRepository;
+        private readonly FavoriteRepository _favoriteRepository;
         private readonly RatingRepository _ratingRepository;
 
 
@@ -35,6 +41,8 @@ namespace BLL.Shop
             _clusterRepository = new ClusterRepository(contextManager);
             _productRepository = new ProductRepository(contextManager);
             _commentRepository = new CommentRepository(contextManager);
+            _commentReplyRepository = new CommentReplyRepository(contextManager);
+            _favoriteRepository = new FavoriteRepository(contextManager);
             _ratingRepository = new RatingRepository(contextManager);
 
         }
@@ -48,7 +56,11 @@ namespace BLL.Shop
         /// <returns></returns>
         public async Task<string> CreateShop(string name)
         {
-            Domain.Entities.Shop newShop = new Domain.Entities.Shop
+            if (await _shopRepository.GetIdByStoreName(name) != -1)
+            {
+                return "Не удалось создать магазин, так как магазин с таким именем есть в системе";
+            }
+            Shop newShop = new Shop
             {
                 Name = name,
                 IsDelete = false,
@@ -65,7 +77,7 @@ namespace BLL.Shop
         /// <returns></returns>
         public async Task<string> UpdateShopName(int idShop, string newNameShop)
         {
-            Domain.Entities.Shop? shopUser = await _shopRepository.Get(idShop);
+            Shop? shopUser = await _shopRepository.Get(idShop);
             if (shopUser is null)
             {
                 return "В бд такого магазина нет";
@@ -94,7 +106,7 @@ namespace BLL.Shop
         /// <returns></returns>
         public async Task<string> UpdateShopName(string nameOldShop, string newNameShop)
         {
-            Domain.Entities.Shop? shopUser = await _shopRepository.GetStoreByName(nameOldShop);
+            Shop? shopUser = await _shopRepository.GetStoreByName(nameOldShop);
             if (shopUser is null)
             {
                 return "В бд за вами такой магазин не закреплён";
@@ -122,7 +134,7 @@ namespace BLL.Shop
         /// <returns></returns>
         public async Task<string> DeleteShop(string nameShop)
         {
-            Domain.Entities.Shop? shop = await _shopRepository.GetStoreByName(nameShop);
+            Shop? shop = await _shopRepository.GetStoreByName(nameShop);
             if (shop is null)
             {
                 return "Произошла ошибка при удалении магазина";
@@ -146,6 +158,23 @@ namespace BLL.Shop
         /// <returns></returns>
         public async Task<string> AddProduct(int idShop, int IdCluster)
         {
+            Shop shop = await _shopRepository.Get(idShop);
+            Cluster cluster = await _clusterRepository.Get(IdCluster);
+            if (shop is null)
+            {
+                return "Ошибка магазин по id не найден";
+            }
+            if (cluster is null)
+            {
+                return "Ошибка кластер по id не найден";
+            }
+            Rating rating = new Rating()
+            {
+                ProductID = -1,
+                AmountOfComments = 0,
+                AverageRating = 0,
+            };
+            await _ratingRepository.Add(rating);
             Product product = new Product()
             {
                 Price = 1005.8M,
@@ -153,10 +182,13 @@ namespace BLL.Shop
                 Barcode = 12345,
                 ModelNumber = "123455",
                 Description = "Description",
+                ClusterId = cluster.Id,
+                ShopId = shop.Id,
+                RatingId = rating.RatingId
 
             };
             await _productRepository.Add(product);
-            return "Продукт прикрёплен к магазину и кластеру добавлен";
+            return "Продукт прикреплён к магазину и кластеру добавлен";
         }
         #endregion
 
@@ -178,11 +210,11 @@ namespace BLL.Shop
                     ParentId = -1,
                 };
                 var result = await _clusterRepository.Add(cluster);
-                return $"Кластер создан {cluster.Id}";
+                return $"Кластер создан {result.Id}";
             }
             else
             {
-                return "Не удалось создать в виду налиичя в системе уже сощетвующего класстера";
+                return "Не удалось создать в виду наличия в системе уже существующего кластера";
             }
         }
 
@@ -190,29 +222,29 @@ namespace BLL.Shop
         /// Добавить кластер(классификатор) вложенный
         /// </summary>
         /// <param name="name">Имя кластера</param>
-        /// <param name="idPerent">Id perent(-1) корень, т.е. располагается на врехнем уровне</param>
+        /// <param name="idParent">Id parent(-1) корень, т.е. располагается на верхнем уровне</param>
         /// <returns></returns>
-        public async Task<string> AddNewCluster(string name, int idPerent)
+        public async Task<string> AddNewCluster(string name, int idParent)
         {
             Cluster cluster = await _clusterRepository.GetNameCluster(name);
-            Cluster clusterPerent = await _clusterRepository.Get(idPerent);
-            if (clusterPerent is null)
+            Cluster clusterParent = await _clusterRepository.Get(idParent);
+            if (clusterParent is null)
             {
-                return "По указаному id не нашёл родителя";
+                return "По указанному id не нашёл родителя";
             }
             if (cluster is null)
             {
                 cluster = new Cluster
                 {
                     Name = name,
-                    ParentId = idPerent,
+                    ParentId = idParent,
                 };
                 var result = await _clusterRepository.Add(cluster);
                 return "Кластер создан";
             }
             else
             {
-                return "Не удалось создать в виду налиичя в системе уже сощетвующего класстера";
+                return "Не удалось создать в виду наличия в системе уже существующего кластера";
             }
         }
 
@@ -220,29 +252,29 @@ namespace BLL.Shop
         /// Добавить кластер(классификатор) вложенный
         /// </summary>
         /// <param name="name">Имя кластера</param>
-        /// <param name="idPerent">Id perent(-1) корень, т.е. располагается на врехнем уровне</param>
+        /// <param name="NameParent">Имя кластера</param>
         /// <returns></returns>
-        public async Task<string> AddNewCluster(string name, string NamePerent)
+        public async Task<string> AddNewCluster(string name, string NameParent)
         {
             Cluster cluster = await _clusterRepository.GetNameCluster(name);
-            Cluster clusterPerent = await _clusterRepository.GetNameCluster(NamePerent);
-            if (clusterPerent is null)
+            Cluster clusterParent = await _clusterRepository.GetNameCluster(NameParent);
+            if (clusterParent is null)
             {
-                return "По указаному именни не нашёл родителя";
+                return "По указанному имени не нашёл родителя";
             }
             if (cluster is null)
             {
                 cluster = new Cluster
                 {
                     Name = name,
-                    ParentId = clusterPerent.Id
+                    ParentId = clusterParent.Id
                 };
                 var result = await _clusterRepository.Add(cluster);
                 return "Кластер создан";
             }
             else
             {
-                return "Не удалось создать в виду налиичя в системе уже сощетвующего класстера";
+                return "Не удалось создать в виду наличия в системе уже существующего кластера";
             }
         }
 
@@ -308,7 +340,7 @@ namespace BLL.Shop
             return "Кластер изменён";
         }
 
-        ////ToDO при удалении кластера нужно проверять какие продукты к ним прикрепдены?
+        ////ToDO при удалении кластера нужно проверять какие продукты к ним прикреплены?
         /// <summary>
         /// Удаление кластера
         /// </summary>
@@ -319,7 +351,7 @@ namespace BLL.Shop
             Cluster cluster = await _clusterRepository.Get(idCluster);
             if (cluster is null)
             {
-                return "Не получилось удалить ввиду отсутствия id класетра";
+                return "Не получилось удалить ввиду отсутствия id кластера";
             }
             else
             {
@@ -333,14 +365,14 @@ namespace BLL.Shop
         /// <summary>
         /// Удаление кластера
         /// </summary>
-        /// <param name="nameClaster">Название кластера</param>
+        /// <param name="nameCluster">Название кластера</param>
         /// <returns></returns>
-        public async Task<string> DeleteCluster(string nameClaster)
+        public async Task<string> DeleteCluster(string nameCluster)
         {
-            Cluster cluster = await _clusterRepository.GetNameCluster(nameClaster);
+            Cluster cluster = await _clusterRepository.GetNameCluster(nameCluster);
             if (cluster is null)
             {
-                return "Не получилось удалить ввиду отсутствия id класетра";
+                return "Не получилось удалить ввиду отсутствия id кластера";
             }
             else
             {
@@ -376,8 +408,8 @@ namespace BLL.Shop
                     return "Изменения были приняты иерархия была изменена";
                 }
 
-                Cluster clusterPerent = await _clusterRepository.Get(idParent);
-                if (clusterPerent is not null)
+                Cluster clusterParent = await _clusterRepository.Get(idParent);
+                if (clusterParent is not null)
                 {
                     cluster.ParentId = idParent;
                     await _clusterRepository.Update(cluster);
@@ -416,8 +448,8 @@ namespace BLL.Shop
                     return "Изменения были приняты иерархия была изменена";
                 }
 
-                Cluster clusterPerent = await _clusterRepository.Get(idParent);
-                if (clusterPerent is not null)
+                Cluster clusterParent = await _clusterRepository.Get(idParent);
+                if (clusterParent is not null)
                 {
                     cluster.ParentId = idParent;
                     await _clusterRepository.Update(cluster);
@@ -485,8 +517,291 @@ namespace BLL.Shop
         #endregion
 
         #region управление отзывами
-          
-        
+
+        #region отзывы покупателей
+
+        /// <summary>
+        /// Получить все комментарии по продукту
+        /// </summary>
+        /// <param name="idProduct"></param>
+        /// <returns></returns>
+        public async Task<List<Comment>> GetCommentProduct(int idProduct) 
+        {
+            Product? product = await _productRepository.Get(idProduct);
+            if (product is not null) 
+            {
+                return await _commentRepository.GetAllCommentOnTheProduct(idProduct);
+            }   
+            return null;
+        }
+
+        ////TODO  как проверить, что пользователь купил товар и что он на него может оставить отзыв?
+        /// <summary>
+        /// Добавить отзыв на товар
+        /// </summary>
+        /// <param name="idUser">id пользователя</param>
+        /// <param name="idShop">id магазина</param>
+        /// <param name="idProduct">id продукта</param>
+        /// <param name="textComment">Текст комментария</param>
+        /// <returns></returns>
+        public async Task<string> AddNewComment(int idUser, int idShop, int idProduct, string textComment, decimal estimation)
+        {
+            Comment? comment = await _commentRepository.GetCommentUser(idUser, idProduct);
+            if (await _shopRepository.Get(idShop) is null) 
+            {
+                return "Ошибка. Отсутствует магазин!";
+            }
+            if (await _productRepository.Get(idProduct) is null)
+            {
+                return "Ошибка. Отсутствует продукт!";
+            }
+            if (await _userRepository.Get(idUser) is null) 
+            {
+                return "Ошибка. Отсутствует пользователь!";
+            }
+
+            if (comment is null)
+            {
+
+                CommentReply reply = new CommentReply()
+                {
+                    Text = "",
+                };
+                reply = await _commentReplyRepository.Add(reply);
+                comment = new Comment
+                {
+
+                    Estimation = estimation,
+                    Text = textComment,
+                    UserName = "null",
+                    UserId = idUser,
+                    ShopId = idShop,
+                    IdProduct = idProduct,
+                    IdReply = reply.Id
+                };
+
+                var result = await _commentRepository.Add(comment);
+                return $"Комментарий создан {comment.Id}";
+            }
+            else
+            {
+                return "Не удалось создать новый комментарий комментарий ввиду наличия";
+            }
+        }
+
+        /// <summary>
+        /// Обновление комментария
+        /// </summary>
+        /// <param name="idComment">id комментария</param>
+        /// <param name="textComment">Новый текст комментария</param>
+        /// <param name="estimation">Новая оценка комментария</param>
+        /// <returns></returns>
+        public async Task<string> UpdateComment(int idComment, string textComment, decimal estimation)
+        {
+            Comment? comment = await _commentRepository.Get(idComment);
+            if (comment is not null)
+            {
+
+                comment.Text = textComment;
+                comment.Estimation = estimation;
+                var result = await _commentRepository.Update(comment);
+                return $"Комментарий обновлён {comment.Id}";
+            }
+            else
+            {
+                return "Не удалось обновить комментарий из-за отсутствия его в бд";
+            }
+        }
+
+        /// <summary>
+        /// Удаление комментарий (скрыть IsDeleted = true)
+        /// </summary>
+        /// <param name="idComment">id комментария</param>
+        /// <returns></returns>
+        public async Task<string> DeleteComment(int idComment)
+        {
+            Comment? comment = await _commentRepository.Get(idComment);
+            if (comment is not null)
+            {
+
+                CommentReply commentReply = await _commentReplyRepository.Get(comment.IdReply);
+                comment.IsDeleted = true;
+                commentReply.IsDeleted = true;
+                await _commentRepository.Update(comment);
+                await _commentReplyRepository.Update(commentReply);
+                return "Комментарий удалён";
+            }
+            else
+            {
+                return "Не удалось удалить комментарий из-за отсутствия его в бд";
+            }
+        }
+        #endregion
+
+        #region отзывы продовцов по 2 перегрузки
+
+        /// <summary>
+        /// Добавить(Обновить) ответ на комментарий пользователя со стороны магазина (id комментария пользователя)
+        /// </summary>
+        /// <param name="idCommentUser">id комментария пользователя</param>
+        /// <param name="textComment">Текст комментария</param>
+        /// <returns></returns>
+        public async Task<string> AddNewOrUpdateCommentReplyIdCommentUser(int idCommentUser, string textComment)
+        {
+            Comment? comment = await _commentRepository.Get(idCommentUser);
+            if (comment is not null)
+            {
+                CommentReply commentReply = await _commentReplyRepository.Get(comment.IdReply);
+                commentReply.Text = textComment;
+                try
+                {
+                    await _commentReplyRepository.Update(commentReply);
+                    // если пользователь удалит комментарий, то ответный тоже будет удалён "каскадно",то в теории может упасть сервер
+                    return $"Создан комментарий ответ {commentReply.Id}";
+                }
+                catch
+                {
+                    return $"Создан комментарий ответ {commentReply.Id}";
+                }
+
+            }
+            else
+            {
+                return "Не удалось создать новый комментарий комментарий ввиду отсутствия пользовательского комментария";
+            }
+        }
+
+
+        /// <summary>
+        /// Добавить(Обновить) ответ на комментарий пользователя со стороны магазина (id комментария ответного)
+        /// </summary>
+        /// <param name="IdCommentReply">id комментария ответа</param>
+        /// <param name="textComment">Текст комментария</param>
+        /// <returns></returns>
+        public async Task<string> AddNewOrUpdateCommentReplyIdCommentReply(int IdCommentReply, string textComment)
+        {
+            CommentReply commentReply = await _commentReplyRepository.Get(IdCommentReply);
+            if (commentReply is not null)
+            {
+                commentReply.Text = textComment;
+                await _commentReplyRepository.Update(commentReply);
+                try
+                {
+                    await _commentReplyRepository.Update(commentReply);
+                    // если пользователь удалит комментарий, то ответный тоже будет удалён "каскадно",то в теории может упасть сервер
+                    return $"Создан комментарий ответ {commentReply.Id}";
+                }
+                catch
+                {
+                    return $"Создан комментарий ответ {commentReply.Id}";
+                }
+            }
+            else
+            {
+                return "Не удалось создать новый комментарий комментарий ввиду отсутствия пользовательского комментария";
+            }
+        }
+
+
+        /// <summary>
+        /// Удалить (скрыть IsDeleted = true) ответ на комментарий пользователя со стороны магазина (id комментария пользователя)
+        /// </summary>
+        /// <param name="idCommentUser">id комментария пользователя</param>
+        /// <returns></returns>
+        public async Task<string> DeleteCommentReplyIdCommentUser(int idCommentUser)
+        {
+            Comment? comment = await _commentRepository.Get(idCommentUser);
+            if (comment is not null)
+            {
+                CommentReply commentReply = await _commentReplyRepository.Get(comment.IdReply);
+
+                commentReply.IsDeleted = true;
+                await _commentReplyRepository.Update(commentReply);
+                return $"Комментарий удалён {commentReply.Id}";
+
+            }
+            else
+            {
+                return "Не удалось создать новый комментарий комментарий ввиду отсутствия пользовательского комментария";
+            }
+        }
+
+
+        /// <summary>
+        /// Удалить (скрыть IsDeleted = true) ответ на комментарий пользователя со стороны магазина (id комментария ответного)
+        /// </summary>
+        /// <param name="IdCommentReply">id комментария ответа</param>
+        /// <returns></returns>
+        public async Task<string> DeleteCommentReplyIdCommentReply(int IdCommentReply)
+        {
+            CommentReply? commentReply = await _commentReplyRepository.Get(IdCommentReply);
+            if (commentReply is not null)
+            {
+
+                commentReply.IsDeleted = true;
+                await _commentReplyRepository.Update(commentReply);
+                return $"Комментарий удалён {commentReply.Id}";
+
+
+            }
+            else
+            {
+                return "Не удалось удалить комментарий ввиду отсутствия";
+            }
+        }
+
+
+        #endregion
+
+        #endregion
+
+
+
+        #region Избранные позиции пользователя
+        /// <summary>
+        /// Добавить товар в избранное
+        /// </summary>
+        /// <param name="idUser">Id пользователя</param>
+        /// <param name="idProduct">Id продукта</param>
+        /// <returns></returns>
+        public async Task<string> AddFavoriteProduct(int idUser, int idProduct) 
+        {
+            User shop = await _userRepository.Get(idUser);
+            Product product = await _productRepository.Get(idProduct);
+            if (product is null) 
+            {
+                return "Ошибка. Товар не найден!";
+            }
+            if (shop is null)
+            {
+                return "Ошибка. Пользователь не найден!";
+            }
+            if( await _favoriteRepository.GetFavoriteUser(idUser, idProduct) is null) 
+            {
+                return "Ошибка. Указанная позиция в избранном уже состоит";
+            }
+            var _favorite = new Favorite()
+            {
+                UserId = idUser,
+                IdProduct = idProduct,
+
+            };
+            await _favoriteRepository.Add(_favorite);
+            return "Продукт прикреплён к магазину и кластеру добавлен";
+            
+        }
+        /// <summary>
+        /// Удалить товар из избранного
+        /// </summary>
+        /// <param name="idFavorite">Id избранной позиции</param>
+        /// <returns></returns>
+        public async Task<string> DeleteFavoriteProduct(int idFavorite)
+        {
+            Favorite favorite = await _favoriteRepository.Get(idFavorite);
+            await _favoriteRepository.Delete(favorite);
+            return "Удалалил из избранного";
+        }
+
         #endregion
     }
 }

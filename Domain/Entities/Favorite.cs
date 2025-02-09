@@ -19,17 +19,26 @@ namespace Domain.Entities
         [Column("user_id")]
         public int UserId { get; set; }
 
-
+        /// <summary>
+        /// id избранного пользователя
+        /// </summary>
+        [Column("id_product")]
+        public int IdProduct { get; set; }
+      
+        
         #region
 
         [ForeignKey(nameof(UserId))]
         public User User { get; set; }
 
+        [ForeignKey(nameof(IdProduct))]
+        public Product Product { get; set; }
+
 
         /// <summary>
         /// Коллекция избранных продуктов пользователем
         /// </summary>
-        public ICollection<Product> Products { get; set; } = new List<Product>();
+      //  public ICollection<Product> Products { get; set; } = new List<Product>();
         #endregion
 
         /// <summary>

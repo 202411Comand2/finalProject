@@ -1,5 +1,5 @@
 ﻿using BLL.Identity;
-using BLL.Shop;
+using BLL.ProductService;
 using DAL.Repositories;
 using System;
 using System.Collections.Generic;
@@ -139,7 +139,7 @@ namespace Test
             // Дочерний элемент
             ConsoleLog(message);
 
-            message = await _productService.AddNewCluster("кластертестирование string", "кластер");
+            message = await _productService.AddNewCluster("кластер тестирование string", "кластер");
             // Дочерний элемент
             ConsoleLog(message);
         }
@@ -169,7 +169,7 @@ namespace Test
         {
             string message = await _productService.DeleteCluster(1);
             ConsoleLog(message);
-            message = await _productService.DeleteCluster("кластертестирование string");
+            message = await _productService.DeleteCluster("кластер тестирование string");
             ConsoleLog(message);
             message = await _productService.DeleteCluster(100000);
             ConsoleLog(message);
@@ -213,16 +213,10 @@ namespace Test
         }
         #endregion
 
-        #region работа с магазином просто для тестирования других сервисов
+        #region работа с продуктами просто для тестирования других сервисов
         public async Task TestCreateProduct()
         {
-            string message = await _productService.AddNewCluster("Кластер для тестирования");
-            ConsoleLog(message);
-
-            message = await _productService.CreateShop("Магазин для тестирования");
-            ConsoleLog(message);
-
-            message = await _productService.AddProduct(1, 1);
+            var  message = await _productService.AddProduct(1, 2);
             ConsoleLog(message);
         }
         #endregion
@@ -230,8 +224,78 @@ namespace Test
 
         #region Работа с отзывами
 
-        public async Task Test
+        /// <summary>
+        /// Добавить комментарий
+        /// </summary>
+        /// <returns></returns>
+        public async Task TestAddComment() 
+        {
+            string message = await _productService.AddNewComment(1,1,1,"Комментарий", 4.3m);
+            ConsoleLog(message);
+        }
 
+        /// <summary>
+        /// Обновить комментарий
+        /// </summary>
+        /// <returns></returns>
+        public async Task TestUpdateComment() 
+        {
+            string message = await _productService.UpdateComment( 1, "Комментарий обновлённый", 4.3m);
+            ConsoleLog(message);
+            message = await _productService.UpdateComment(1, "Комментарий обновлённый ошибка", 4.3m);
+            ConsoleLog(message);
+        }
+        /// <summary>
+        /// Удаление(скрыть) комментария пользователя
+        /// </summary>
+        /// <returns></returns>
+        public async Task TestDeleteComment()
+        {
+            string message = await _productService.DeleteComment(1);
+            ConsoleLog(message);
+            message = await _productService.DeleteComment(1);
+            ConsoleLog(message);
+        }
+
+
+        /// <summary>
+        /// Добавить  ответ на комментарий пользователя со стороны магазина
+        /// </summary>
+        /// <returns></returns>
+        public async Task TestAddCommentReply()
+        {
+            string message = await _productService.AddNewOrUpdateCommentReplyIdCommentUser(1,"Ответный комментарий");
+            ConsoleLog(message);
+
+            message = await _productService.AddNewOrUpdateCommentReplyIdCommentReply(1, "Ответный комментарий со стороны Reply");
+            ConsoleLog(message);
+        }
+
+        /// <summary>
+        /// Удалить(скрыть) ответы на комментарии владельцев товара
+        /// </summary>
+        /// <returns></returns>
+        public async Task TestDeleteCommentReply()
+        {
+            string message = await _productService.AddNewOrUpdateCommentReplyIdCommentUser(1, "Ответный комментарий");
+            ConsoleLog(message);
+
+            message = await _productService.AddNewOrUpdateCommentReplyIdCommentReply(1, "Ответный комментарий со стороны Reply");
+            ConsoleLog(message);
+        }
+
+        /// <summary>
+        /// Получить все комментарии по товару
+        /// </summary>
+        /// <returns></returns>
+        public async Task GetAllComment()
+        {
+            foreach (var item in await _productService.GetCommentProduct(1))
+            {
+                ConsoleLog($"{item.Text} {item.IsDeleted}" );
+            }
+
+        }
         #endregion
     }
 

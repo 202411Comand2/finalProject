@@ -16,17 +16,24 @@ namespace Test
 
             #region создание пользователя (Глеб)
             //_contextManager = new ContextManager();
-            // _bllIdentityTests = new BLLIdentyServiceTests(_contextManager, Log);
-            // await _bllIdentityTests.CreateGuestTokenTest();
-            //  await _bllIdentityTests.CreateNewUserTest();
+            //_bllIdentityTests = new BLLIdentyServiceTests(_contextManager, Log);
+            //await _bllIdentityTests.CreateGuestTokenTest();
+            //await _bllIdentityTests.CreateNewUserTest();
             #endregion
-            //       await TestShop();
-            //     await TestCluster();
-            await TestAddProduct();
+            //await TestShop();
+            //await TestCluster();
+            //await TestProduct();
+            //await TestComment();
         }
 
 
+        private static async Task TestProduct() 
+        {
+            _contextManager = new ContextManager();
+            _bLLShopServiceTest = new BLLShopServiceTest(_contextManager);
+             await _bLLShopServiceTest.TestCreateProduct();
 
+        }
 
         /// <summary>
         /// Класс для шалости с магазином
@@ -43,12 +50,17 @@ namespace Test
             await _bLLShopServiceTest.testDeleteShop();
             // удалить магазин
         }
+       
+        /// <summary>
+        /// Тестирование кластера
+        /// </summary>
+        /// <returns></returns>
         private static async Task TestCluster() 
         {
             _contextManager = new ContextManager();
             _bLLShopServiceTest = new BLLShopServiceTest(_contextManager);
             await _bLLShopServiceTest.TestAddCluster();
-            // добовление кластеров
+            // добавление кластеров
             await _bLLShopServiceTest.TestUpdateCluster();
             // обновление название у кластера
             await _bLLShopServiceTest.TestDeleteCluster();
@@ -59,6 +71,30 @@ namespace Test
             //получить кластеры для построение иерархии
         }
 
+        /// <summary>
+        /// Тестирование комментариев
+        /// </summary>
+        /// <returns></returns>
+        private static async Task TestComment() 
+        {
+            _contextManager = new ContextManager();
+            _bLLShopServiceTest = new BLLShopServiceTest(_contextManager);
+            await _bLLShopServiceTest.TestAddComment();
+            // добавление отзыва
+            await _bLLShopServiceTest.TestUpdateComment();
+            // Обновлённый комментарий
+            await _bLLShopServiceTest.TestDeleteComment();
+            // удаление комментария
+            await _bLLShopServiceTest.TestAddCommentReply();
+            //ответные комментарии владельца товара
+            await _bLLShopServiceTest.TestDeleteCommentReply();
+            //удаление ответов на комментарий
+            await _bLLShopServiceTest.GetAllComment();
+            // получить всё комментарии по товару
+        }
+
+
+
 
         public static void Log(string message)
         {
@@ -66,32 +102,6 @@ namespace Test
             Console.WriteLine(message);
             Console.ForegroundColor = ConsoleColor.White;
         }
-        //static async public Task AddNewUser()
-        //{
-        //        Cart cart = new Cart()
-        //        {
-        //        };
-
-        //        AccessToken authToken = new AccessToken()
-        //        {
-        //            //TokenId = new Guid(),
-        //            DeviceName = "phone",
-        //            ExpireDate = DateTime.UtcNow.AddDays(1),
-        //        };
-
-        //        Random random = new Random();
-        //        User person = new User()
-        //        {
-        //            Name = $"Oleg{random.Next(0, 1000)}",
-        //            //Password = "1234Pasword",
-        //            Phone = "71234567899",
-        //            Email = "testEmail@Yndex.ru",
-        //            TelegramId = 0,
-        //            //AccessToken = authToken,
-
-        //        };
-        //        //await UserRepository.Add(person);
-
-        //}
+      
     }
 }
