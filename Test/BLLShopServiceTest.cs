@@ -105,12 +105,12 @@ namespace Test
         #endregion
 
         #region Работа с кластером
-        
+
         /// <summary>
         /// Создание элемента классификатора 
         /// </summary>
         /// <returns></returns>
-        public async Task TestAddCluster() 
+        public async Task TestAddCluster()
         {
             string message = await _productService.AddNewCluster("кластер");
             // корневой элемент
@@ -130,7 +130,7 @@ namespace Test
                 // Дочерний элемент
                 ConsoleLog(message);
             }
-            message = await _productService.AddNewCluster("кластер1" , 1);
+            message = await _productService.AddNewCluster("кластер1", 1);
             // Дочерний элемент
             ConsoleLog(message);
 
@@ -148,9 +148,9 @@ namespace Test
         /// Обновление кластера
         /// </summary>
         /// <returns></returns>
-        public async Task TestUpdateCluster() 
+        public async Task TestUpdateCluster()
         {
-            string message = await _productService.UpdateNameCluster(1 ,"кластер");
+            string message = await _productService.UpdateNameCluster(1, "кластер");
             ConsoleLog(message);
             message = await _productService.UpdateNameCluster(1, "test");
             ConsoleLog(message);
@@ -164,7 +164,7 @@ namespace Test
         /// Удаление кластера
         /// </summary>
         /// <returns></returns>
-        public async Task TestDeleteCluster() 
+        public async Task TestDeleteCluster()
         {
             string message = await _productService.DeleteCluster(1);
             ConsoleLog(message);
@@ -182,21 +182,21 @@ namespace Test
         /// <returns></returns>
         public async Task TestUpdatePositionCluster()
         {
-            string message = await _productService.UpdatePositionCluster(2,10);
+            string message = await _productService.UpdatePositionCluster(2, 10);
             ConsoleLog(message);
-          
+
         }
 
         /// <summary>
         /// Получить кластеры по определённым условиям
         /// </summary>
         /// <returns></returns>
-        public async Task TestGetCluster() 
+        public async Task TestGetCluster()
         {
             Console.WriteLine("\nПолучить все элементы кластеров:");
             foreach (var item in await _productService.GetAllElementsCluster())
             {
-                Console.WriteLine($"{item.Name} { item.ParentId}");
+                Console.WriteLine($"{item.Name} {item.ParentId}");
             }
 
             Console.WriteLine("\nПолучить только корневые элементы кластера:");
@@ -217,10 +217,10 @@ namespace Test
         {
             string message = await _productService.AddNewCluster("Кластер для тестирования");
             ConsoleLog(message);
-            
+
             message = await _productService.CreateShop("Магазин для тестирования");
             ConsoleLog(message);
-           
+
             message = await _productService.AddProduct(1, 1);
             ConsoleLog(message);
         }

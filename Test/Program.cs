@@ -31,24 +31,24 @@ namespace Test
         /// <summary>
         /// Класс для шалости с магазином
         /// </summary>
-        private static async Task TestShop() 
+        private static async Task TestShop()
         {
             _contextManager = new ContextManager();
             _bLLShopServiceTest = new BLLShopServiceTest(_contextManager);
 
-             var s =  await _bLLShopServiceTest.CreateShop();
+            var s = await _bLLShopServiceTest.CreateShop();
             //Создать магазин
             await _bLLShopServiceTest.TestUpdateNameShop();
             // обновить название магазина
             await _bLLShopServiceTest.testDeleteShop();
             // удалить магазин
         }
-        
+
         /// <summary>
         /// Для тестирование кластера
         /// </summary>
         /// <returns></returns>
-        private static async Task TestCluster() 
+        private static async Task TestCluster()
         {
             _contextManager = new ContextManager();
             _bLLShopServiceTest = new BLLShopServiceTest(_contextManager);
@@ -68,7 +68,7 @@ namespace Test
         /// Тестирование добовление продукта магазина
         /// </summary>
         /// <returns></returns>
-        private static async Task TestAddProduct() 
+        private static async Task TestAddProduct()
         {
             _contextManager = new ContextManager();
             _bLLShopServiceTest = new BLLShopServiceTest(_contextManager);
@@ -107,7 +107,7 @@ namespace Test
 
         //        };
         //        //await UserRepository.Add(person);
-           
+
         //}
     }
 }

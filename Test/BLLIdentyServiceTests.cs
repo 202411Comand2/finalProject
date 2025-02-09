@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Test
 {
-	public class BLLIdentyServiceTests
-	{
-		private IdentityService _identityService;
+    public class BLLIdentyServiceTests
+    {
+        private IdentityService _identityService;
         private Stopwatch _stopwatch;
         private Log? _log;
         public AccessToken Token { get; set; }
@@ -39,8 +39,8 @@ namespace Test
             var token = await _identityService.GetGuestToken("Какой-то пк", "000;000;000;000");
             _stopwatch.Stop();
 
-			_log?.Invoke($"Created new AccessToken succesfuly: Id-{token.Id}, Key-{Convert.ToBase64String(token.Key)}, Device-{token.DeviceName} CreatedAt{token.DateCreated}, Expires-{token.ExpireDate} in {_stopwatch.ElapsedMilliseconds}ms");
-		    _stopwatch.Reset();
+            _log?.Invoke($"Created new AccessToken succesfuly: Id-{token.Id}, Key-{Convert.ToBase64String(token.Key)}, Device-{token.DeviceName} CreatedAt{token.DateCreated}, Expires-{token.ExpireDate} in {_stopwatch.ElapsedMilliseconds}ms");
+            _stopwatch.Reset();
             Token = token;
         }
     }

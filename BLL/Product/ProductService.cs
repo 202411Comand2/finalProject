@@ -52,7 +52,7 @@ namespace BLL.Shop
             {
                 return "Не удалось создать магазин, так как магазин с таким именем есть в системе";
             }
-             Domain.Entities.Shop newShop = new Domain.Entities.Shop
+            Domain.Entities.Shop newShop = new Domain.Entities.Shop
             {
                 Name = name,
                 IsDelete = false,
@@ -150,10 +150,10 @@ namespace BLL.Shop
         /// <returns></returns>
         public async Task<string> AddProduct(int idShop, int IdCluster)
         {
-            Domain.Entities.Shop  shop = await _shopRepository.Get(idShop);
+            Domain.Entities.Shop shop = await _shopRepository.Get(idShop);
             Cluster cluster = await _clusterRepository.Get(IdCluster);
 
-            if (shop is null) 
+            if (shop is null)
             {
                 return "Ошибка магазин по id не найден";
             }
@@ -169,7 +169,7 @@ namespace BLL.Shop
                 AverageRating = 0,
             };
 
-            var s =   await _ratingRepository.Add(rating);
+            var s = await _ratingRepository.Add(rating);
 
 
             Product product = new Product()
@@ -177,14 +177,14 @@ namespace BLL.Shop
                 Price = 1005.8M,
                 Name = "test",
                 Barcode = 12345,
-                ModelNumber ="123455",
+                ModelNumber = "123455",
                 Description = "Description",
                 ClusterId = cluster.Id,
-               // Cluster = cluster, // надо указывать только ссылку
-              //  Shop = shop,
+                // Cluster = cluster, // надо указывать только ссылку
+                //  Shop = shop,
                 ShopId = shop.Id,
-               // Rating = s,
-                RatingId=rating.RatingId
+                // Rating = s,
+                RatingId = rating.RatingId
 
             };
             await _productRepository.Add(product);
@@ -421,7 +421,7 @@ namespace BLL.Shop
                 }
             }
         }
-    
+
         /// <summary>
         ///  Изменение позиции кластера в иерархии
         /// </summary>
@@ -431,7 +431,7 @@ namespace BLL.Shop
         public async Task<string> UpdatePositionCluster(string nameCluster, int idParent)
         {
             Cluster cluster = await _clusterRepository.GetNameCluster(nameCluster);
-            
+
             if (cluster is null)
             {
                 return "Ошибка. Не найден кластер по id";
@@ -442,7 +442,7 @@ namespace BLL.Shop
                 {
                     return "Изменения не нужны, так как перемещения не произошло.";
                 }
-                if (idParent == -1) 
+                if (idParent == -1)
                 {
                     cluster.ParentId = -1;
                     await _clusterRepository.Update(cluster);
@@ -482,7 +482,7 @@ namespace BLL.Shop
         /// </summary>
         /// <param name="idCluster">Id кластера</param>
         /// <returns></returns>
-        public async Task<List<Cluster>> GetChildrenElementsCluster(int idCluster) 
+        public async Task<List<Cluster>> GetChildrenElementsCluster(int idCluster)
         {
             Cluster cluster = await _clusterRepository.Get(idCluster);
             if (cluster is null)
@@ -490,9 +490,9 @@ namespace BLL.Shop
                 //если такого кластера нет
                 return null;
             }
-            else 
+            else
             {
-                return  await _clusterRepository.GeElementsClaster(idCluster);
+                return await _clusterRepository.GeElementsClaster(idCluster);
             }
         }
 
@@ -509,8 +509,8 @@ namespace BLL.Shop
             {//"Ошибка. Не найден кластер по имени"
                 return null;
             }
-                return await _clusterRepository.GeElementsClaster(cluster.Id);
-            
+            return await _clusterRepository.GeElementsClaster(cluster.Id);
+
         }
 
 
@@ -519,15 +519,16 @@ namespace BLL.Shop
 
         #region управление отзывами
 
-        public async Task<string> AddComment(int idProduct, int shopId, int idUser, decimal productEvaluation) 
+        public async Task<string> AddComment(int idProduct, int shopId, int idUser, decimal productEvaluation)
         {
             Comment comment = new Comment()
             {
-                Text ="",
-                Estimation= productEvaluation,
-                UserId= idUser,
+                Text = "",
+                Estimation = productEvaluation,
+                UserId = idUser,
                 ShopId = shopId
             };
+            return null;
         }
 
         #endregion
