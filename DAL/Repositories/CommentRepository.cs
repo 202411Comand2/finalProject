@@ -22,6 +22,25 @@ namespace DAL.Repositories
                return await context.Comments.Where(p => p.IdProduct == idProduct ).ToListAsync();
             }
         }
+        /// <summary>
+        /// Получить объект со связими
+        /// </summary>
+        /// <param name="idComment">id Комментария</param>
+        /// <returns></returns>
+        public async Task<Comment> GetWithInclude(int idComment) 
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                return await context.Comments
+                    .Include(c=>c.Product)
+                    .Include(d=>d.Replies)
+                    .Include(u=>u.User)
+                    .Include(s=>s.Shop)
+                    .Where(p => p.Id == idComment).FirstOrDefaultAsync();
+            }
+        }
+
+
 
         /// <summary>
         /// Вернуть отзыв на товар пользователя

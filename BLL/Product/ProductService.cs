@@ -171,7 +171,7 @@ namespace BLL.ProductService
             }
             Rating rating = new Rating()
             {
-                ProductID = -1,
+                //ProductID = -1,
                 AmountOfComments = 0,
                 AverageRating = 0,
             };
@@ -186,9 +186,21 @@ namespace BLL.ProductService
                 ClusterId = cluster.Id,
                 ShopId = shop.Id,
                 RatingId = rating.RatingId
-
             };
-            await _productRepository.Add(product);
+
+            var s = await _productRepository.Add(product);
+            // костыль обсудить!!!
+            //product.Cluster = cluster;
+            //product.Shop = shop;
+            //product.Rating = rating;
+            //var s1 = await _productRepository.Update(product);
+
+            //rating.ProductID = product.Id;
+            //await _productRepository.Update(product);
+            //Product ssss = await _productRepository.Get(product.Id);
+            //cluster.Products.Add(product);
+            //await _clusterRepository.Update(cluster);
+
             return "Продукт прикреплён к магазину и кластеру добавлен";
         }
         #endregion
@@ -578,8 +590,8 @@ namespace BLL.ProductService
                     UserId = idUser,
                     ShopId = idShop,
                     IdProduct = idProduct,
-                    Product = product,
-                  //  IdReply = reply.Id
+                   // Product = product,
+                    IdReply = reply.Id
                 };
                 var result = await _commentRepository.Add(comment);
                 await UpdateRatingProduct(comment, true, 0, false);
@@ -609,7 +621,7 @@ namespace BLL.ProductService
                 comment.Estimation = estimation;
 
                 var result = await _commentRepository.Update(comment);
-                await UpdateRatingProduct(comment, false, oldEstimation, false);
+                await UpdateRatingProduct(comment, true, oldEstimation, false);
                 return $"Комментарий обновлён {comment.Id}";
             }
             else
@@ -817,30 +829,19 @@ namespace BLL.ProductService
         /// Работа с рейнтингом товара
         /// </summary>
         /// <param name="comment">объект комментарий</param>
-        /// <param name="newEstimation">Новая оценка потребителя</param>
+        /// <param name="updataRating">Новая оценка потребителя</param>
         /// <param name="oldEstimation">Старая оценка</param>
         /// <param name="commentDelete">комментарий пользователя был удалён(скрыт)</param>
         /// <returns></returns>
-        private async Task<string> UpdateRatingProduct(Comment comment, bool newEstimation, decimal oldEstimation, bool commentDelete)
+        private async Task<string> UpdateRatingProduct(Comment comment, bool updataRating, decimal oldEstimation, bool commentDelete)
         {
             //если новая оценка, то пересчёт рейтинга делать не нужно
-
-            Rating rating;
-            Product product;
-            if (comment.Product is null)
-           {//создаё1м новый ретиг
-            //    rating = new Rating()
-            //    {
-            //        AmountOfComments = 1,
-            //        AverageRating = oldEstimation,
-            //    };
-            //    product = await _productRepository.Get(comment.IdProduct);
-            //    product.RatingId = rating.RatingId;
-            //    await _productRepository.Update(product);
-            }
-
-            if (comment.Product?.Rating is null)
-            {//значит, что кое кто не создал и не пробросил рейнтинг у товара
+            var comment1 = await _commentRepository.Get(comment.Id);
+            var product = await _productRepository.Get(comment.IdProduct);
+            Rating rating = await _ratingRepository.Get(product.RatingId);
+            
+            if (rating is null)
+            {
                 rating = new Rating()
                 {
                     AmountOfComments = 1,
@@ -848,11 +849,25 @@ namespace BLL.ProductService
                     ProductID = comment.Product.Id
                 };
                 await _ratingRepository.Add(rating);
-                product = await _productRepository.Get(comment.IdProduct);
-                product.RatingId = rating.RatingId;
-                await _productRepository.Update(product);
+                return "Создан новый рейтинг для продукта";
             }
-             product = await _productRepository.Get(comment.IdProduct);
+            if (commentDelete) 
+            {
+                rating = (await _productRepository.GetWithInclude(comment.IdProduct)).Rating;
+                rating.AverageRating = (rating.AverageRating * rating.AmountOfComments - oldEstimation + comment.Estimation) / rating.AmountOfComments;
+                await _ratingRepository.Update(rating);
+                return "Коментарий удалён, рейтинг обновлён";
+            }
+            if (updataRating)
+            {
+                rating = (await _productRepository.GetWithInclude(comment.IdProduct)).Rating;
+                rating.AverageRating = (rating.AverageRating * rating.AmountOfComments + comment.Estimation) / rating.AmountOfComments - 1;
+              
+                await _ratingRepository.Update(rating);
+                return "Коментарий удалён, рейтинг обновлён";
+
+            }
+
 
             return "";
         }

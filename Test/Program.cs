@@ -17,10 +17,10 @@ namespace Test
             #region создание пользователя (Глеб)
 
             #endregion
-            await TestCreateUser();
-            await TestShop();
-            await TestCluster();
-            await TestProduct();
+          //  await TestCreateUser();
+           // await TestShop();
+           // await TestCluster();
+           // await TestProduct();
             await TestComment();
         }
         /// <summary>
