@@ -17,10 +17,10 @@ namespace Test
             #region создание пользователя (Глеб)
 
             #endregion
-          //  await TestCreateUser();
-           // await TestShop();
-           // await TestCluster();
-           // await TestProduct();
+            await TestCreateUser();
+            await TestShop();
+            await TestCluster();
+            await TestProduct();
             await TestComment();
         }
         /// <summary>
@@ -106,8 +106,14 @@ namespace Test
             // получить всё комментарии по товару
         }
 
-
-
+        ///// <summary>
+        ///// Тестирование рейтинга
+        ///// </summary>
+        ///// <returns></returns>
+        //private static async Task TestRating() 
+        //{
+        
+        //}
 
         public static void Log(string message)
         {

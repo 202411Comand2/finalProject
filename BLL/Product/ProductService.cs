@@ -583,14 +583,12 @@ namespace BLL.ProductService
                 reply = await _commentReplyRepository.Add(reply);
                 comment = new Comment
                 {
-
                     Estimation = estimation,
                     Text = textComment,
                     UserName = "null",
                     UserId = idUser,
                     ShopId = idShop,
                     IdProduct = idProduct,
-                   // Product = product,
                     IdReply = reply.Id
                 };
                 var result = await _commentRepository.Add(comment);
@@ -845,7 +843,7 @@ namespace BLL.ProductService
                 rating = new Rating()
                 {
                     AmountOfComments = 1,
-                    AverageRating =0.0m,// oldEstimation,
+                    AverageRating = comment.Estimation,// oldEstimation,
                     ProductID = comment.Product.Id
                 };
                 await _ratingRepository.Add(rating);
@@ -860,8 +858,9 @@ namespace BLL.ProductService
             }
             if (updataRating)
             {
-                rating = (await _productRepository.GetWithInclude(comment.IdProduct)).Rating;
-                rating.AverageRating = (rating.AverageRating * rating.AmountOfComments + comment.Estimation) / rating.AmountOfComments - 1;
+                int coutComment = rating.AmountOfComments - 1 >= 0 ? 1 : rating.AmountOfComments - 1;
+                //rating = (await _productRepository.GetWithInclude(comment.IdProduct)).Rating;
+                rating.AverageRating = (rating.AverageRating * rating.AmountOfComments + comment.Estimation) / coutComment;
               
                 await _ratingRepository.Update(rating);
                 return "Коментарий удалён, рейтинг обновлён";
