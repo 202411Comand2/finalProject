@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Diagnostics.Metrics;
+using System.Text.RegularExpressions;
 
 namespace BLL.ProductService
 {
@@ -525,13 +526,13 @@ namespace BLL.ProductService
         /// </summary>
         /// <param name="idProduct"></param>
         /// <returns></returns>
-        public async Task<List<Comment>> GetCommentProduct(int idProduct) 
+        public async Task<List<Comment>> GetCommentProduct(int idProduct)
         {
             Product? product = await _productRepository.Get(idProduct);
-            if (product is not null) 
+            if (product is not null)
             {
                 return await _commentRepository.GetAllCommentOnTheProduct(idProduct);
-            }   
+            }
             return null;
         }
 
@@ -547,7 +548,7 @@ namespace BLL.ProductService
         public async Task<string> AddNewComment(int idUser, int idShop, int idProduct, string textComment, decimal estimation)
         {
             Comment? comment = await _commentRepository.GetCommentUser(idUser, idProduct);
-            if (await _shopRepository.Get(idShop) is null) 
+            if (await _shopRepository.Get(idShop) is null)
             {
                 return "Ошибка. Отсутствует магазин!";
             }
@@ -555,14 +556,14 @@ namespace BLL.ProductService
             {
                 return "Ошибка. Отсутствует продукт!";
             }
-            if (await _userRepository.Get(idUser) is null) 
+            if (await _userRepository.Get(idUser) is null)
             {
                 return "Ошибка. Отсутствует пользователь!";
             }
+                Product product = await _productRepository.Get(idProduct);
 
-            if (comment is null)
+                if (comment is null)
             {
-
                 CommentReply reply = new CommentReply()
                 {
                     Text = "",
@@ -577,10 +578,11 @@ namespace BLL.ProductService
                     UserId = idUser,
                     ShopId = idShop,
                     IdProduct = idProduct,
-                    IdReply = reply.Id
+                    Product = product,
+                  //  IdReply = reply.Id
                 };
-
                 var result = await _commentRepository.Add(comment);
+                await UpdateRatingProduct(comment, true, 0, false);
                 return $"Комментарий создан {comment.Id}";
             }
             else
@@ -602,9 +604,12 @@ namespace BLL.ProductService
             if (comment is not null)
             {
 
+                decimal oldEstimation = comment.Estimation;
                 comment.Text = textComment;
                 comment.Estimation = estimation;
+
                 var result = await _commentRepository.Update(comment);
+                await UpdateRatingProduct(comment, false, oldEstimation, false);
                 return $"Комментарий обновлён {comment.Id}";
             }
             else
@@ -629,6 +634,7 @@ namespace BLL.ProductService
                 commentReply.IsDeleted = true;
                 await _commentRepository.Update(comment);
                 await _commentReplyRepository.Update(commentReply);
+                await UpdateRatingProduct(comment, false, 0, true);
                 return "Комментарий удалён";
             }
             else
@@ -764,11 +770,11 @@ namespace BLL.ProductService
         /// <param name="idUser">Id пользователя</param>
         /// <param name="idProduct">Id продукта</param>
         /// <returns></returns>
-        public async Task<string> AddFavoriteProduct(int idUser, int idProduct) 
+        public async Task<string> AddFavoriteProduct(int idUser, int idProduct)
         {
             User shop = await _userRepository.Get(idUser);
             Product product = await _productRepository.Get(idProduct);
-            if (product is null) 
+            if (product is null)
             {
                 return "Ошибка. Товар не найден!";
             }
@@ -776,7 +782,7 @@ namespace BLL.ProductService
             {
                 return "Ошибка. Пользователь не найден!";
             }
-            if( await _favoriteRepository.GetFavoriteUser(idUser, idProduct) is null) 
+            if (await _favoriteRepository.GetFavoriteUser(idUser, idProduct) is null)
             {
                 return "Ошибка. Указанная позиция в избранном уже состоит";
             }
@@ -788,7 +794,7 @@ namespace BLL.ProductService
             };
             await _favoriteRepository.Add(_favorite);
             return "Продукт прикреплён к магазину и кластеру добавлен";
-            
+
         }
         /// <summary>
         /// Удалить товар из избранного
@@ -800,6 +806,55 @@ namespace BLL.ProductService
             Favorite favorite = await _favoriteRepository.Get(idFavorite);
             await _favoriteRepository.Delete(favorite);
             return "Удалалил из избранного";
+        }
+
+        #endregion
+
+
+        #region работа с рейтингом товара
+
+        /// <summary>
+        /// Работа с рейнтингом товара
+        /// </summary>
+        /// <param name="comment">объект комментарий</param>
+        /// <param name="newEstimation">Новая оценка потребителя</param>
+        /// <param name="oldEstimation">Старая оценка</param>
+        /// <param name="commentDelete">комментарий пользователя был удалён(скрыт)</param>
+        /// <returns></returns>
+        private async Task<string> UpdateRatingProduct(Comment comment, bool newEstimation, decimal oldEstimation, bool commentDelete)
+        {
+            //если новая оценка, то пересчёт рейтинга делать не нужно
+
+            Rating rating;
+            Product product;
+            if (comment.Product is null)
+           {//создаё1м новый ретиг
+            //    rating = new Rating()
+            //    {
+            //        AmountOfComments = 1,
+            //        AverageRating = oldEstimation,
+            //    };
+            //    product = await _productRepository.Get(comment.IdProduct);
+            //    product.RatingId = rating.RatingId;
+            //    await _productRepository.Update(product);
+            }
+
+            if (comment.Product?.Rating is null)
+            {//значит, что кое кто не создал и не пробросил рейнтинг у товара
+                rating = new Rating()
+                {
+                    AmountOfComments = 1,
+                    AverageRating =0.0m,// oldEstimation,
+                    ProductID = comment.Product.Id
+                };
+                await _ratingRepository.Add(rating);
+                product = await _productRepository.Get(comment.IdProduct);
+                product.RatingId = rating.RatingId;
+                await _productRepository.Update(product);
+            }
+             product = await _productRepository.Get(comment.IdProduct);
+
+            return "";
         }
 
         #endregion

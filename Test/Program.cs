@@ -15,18 +15,31 @@ namespace Test
         {
 
             #region создание пользователя (Глеб)
-            //_contextManager = new ContextManager();
-            //_bllIdentityTests = new BLLIdentyServiceTests(_contextManager, Log);
-            //await _bllIdentityTests.CreateGuestTokenTest();
-            //await _bllIdentityTests.CreateNewUserTest();
+
             #endregion
-            //await TestShop();
-            //await TestCluster();
-            //await TestProduct();
-            //await TestComment();
+            await TestCreateUser();
+            await TestShop();
+            await TestCluster();
+            await TestProduct();
+            await TestComment();
+        }
+        /// <summary>
+        /// Создание пользователя
+        /// </summary>
+        /// <returns></returns>
+        private static async Task TestCreateUser() 
+        {
+            _contextManager = new ContextManager();
+            _bllIdentityTests = new BLLIdentyServiceTests(_contextManager, Log);
+            await _bllIdentityTests.CreateGuestTokenTest();
+            await _bllIdentityTests.CreateNewUserTest();
         }
 
 
+        /// <summary>
+        /// Тестирование создание продукта
+        /// </summary>
+        /// <returns></returns>
         private static async Task TestProduct() 
         {
             _contextManager = new ContextManager();
