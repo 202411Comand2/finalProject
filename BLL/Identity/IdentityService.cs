@@ -16,8 +16,9 @@ namespace BLL.Identity
         private readonly IGenericDataHasher<string> _passwordHasher;
         private readonly ConnectionMultiplexer _redisConnection;
         private readonly IDatabase _cache;
+        private readonly IJwtTokenProvider _jwtTokenProvider;
 
-        public IdentityService(IContextManager contextManager)
+        public IdentityService(IContextManager contextManager, IJwtTokenProvider tokenProvider)
         {
             _userRepository = new UserRepository(contextManager);
             _accessTokenRepository = new AccessTokenRepository(contextManager);
