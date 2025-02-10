@@ -172,8 +172,8 @@ namespace BLL.ProductService
             Rating rating = new Rating()
             {
                 //ProductID = -1,
-                AmountOfComments = 0,
-                AverageRating = 0,
+                AmountOfComments = 1,
+                AverageRating = 5,
             };
             await _ratingRepository.Add(rating);
             Product product = new Product()
@@ -592,7 +592,7 @@ namespace BLL.ProductService
                     IdReply = reply.Id
                 };
                 var result = await _commentRepository.Add(comment);
-                await UpdateRatingProduct(comment, true, 0, false);
+                await UpdateRatingProduct(comment, "create", 0);
                 return $"Комментарий создан {comment.Id}";
             }
             else
@@ -613,13 +613,12 @@ namespace BLL.ProductService
             Comment? comment = await _commentRepository.Get(idComment);
             if (comment is not null)
             {
-
                 decimal oldEstimation = comment.Estimation;
                 comment.Text = textComment;
                 comment.Estimation = estimation;
 
                 var result = await _commentRepository.Update(comment);
-                await UpdateRatingProduct(comment, true, oldEstimation, false);
+                await UpdateRatingProduct(comment, "update", oldEstimation);
                 return $"Комментарий обновлён {comment.Id}";
             }
             else
@@ -644,7 +643,7 @@ namespace BLL.ProductService
                 commentReply.IsDeleted = true;
                 await _commentRepository.Update(comment);
                 await _commentReplyRepository.Update(commentReply);
-                await UpdateRatingProduct(comment, false, 0, true);
+                await UpdateRatingProduct(comment, "delete", 0);
                 return "Комментарий удалён";
             }
             else
@@ -824,46 +823,42 @@ namespace BLL.ProductService
         #region работа с рейтингом товара
 
         /// <summary>
-        /// Работа с рейнтингом товара
+        /// Работа с рейтингом товара
         /// </summary>
         /// <param name="comment">объект комментарий</param>
-        /// <param name="updataRating">Новая оценка потребителя</param>
+        /// <param name="ratingCommand">Команда рейтинга</param>
         /// <param name="oldEstimation">Старая оценка</param>
-        /// <param name="commentDelete">комментарий пользователя был удалён(скрыт)</param>
         /// <returns></returns>
-        private async Task<string> UpdateRatingProduct(Comment comment, bool updataRating, decimal oldEstimation, bool commentDelete)
+        private async Task<string> UpdateRatingProduct(Comment comment, string ratingCommand,  decimal oldEstimation)
         {
             //если новая оценка, то пересчёт рейтинга делать не нужно
             var comment1 = await _commentRepository.Get(comment.Id);
             var product = await _productRepository.Get(comment.IdProduct);
             Rating rating = await _ratingRepository.Get(product.RatingId);
-            
-            if (rating is null)
+
+            switch (ratingCommand)
             {
-                rating = new Rating()
-                {
-                    AmountOfComments = 1,
-                    AverageRating = comment.Estimation,// oldEstimation,
-                    ProductID = comment.Product.Id
-                };
-                await _ratingRepository.Add(rating);
-                return "Создан новый рейтинг для продукта";
-            }
-            if (commentDelete) 
-            {
-                rating = (await _productRepository.GetWithInclude(comment.IdProduct)).Rating;
-                rating.AverageRating = (rating.AverageRating * rating.AmountOfComments - oldEstimation + comment.Estimation) / rating.AmountOfComments;
-                await _ratingRepository.Update(rating);
-                return "Коментарий удалён, рейтинг обновлён";
-            }
-            if (updataRating)
-            {
-                int coutComment = rating.AmountOfComments - 1 >= 0 ? 1 : rating.AmountOfComments - 1;
-                //rating = (await _productRepository.GetWithInclude(comment.IdProduct)).Rating;
-                rating.AverageRating = (rating.AverageRating * rating.AmountOfComments + comment.Estimation) / coutComment;
-              
-                await _ratingRepository.Update(rating);
-                return "Коментарий удалён, рейтинг обновлён";
+                case "create":
+                    rating = new Rating()
+                    {
+                        AmountOfComments = 1,
+                        AverageRating = comment.Estimation,
+                        ProductID = product.Id
+                    };
+                    await _ratingRepository.Add(rating);
+                    return "Создан новый рейтинг для продукта";
+                case "update":
+                    decimal newRatingUser = oldEstimation - comment.Estimation;
+                    rating.AverageRating = (rating.AverageRating * rating.AmountOfComments + newRatingUser) / rating.AmountOfComments;
+                    await _ratingRepository.Update(rating);
+                    return "Комментарий удалён, рейтинг обновлён";
+                case "delete":
+                    int countComment = rating.AmountOfComments - 1 <= 1 ? 1 : rating.AmountOfComments - 1;
+                    // rating = (await _productRepository.Get(comment.IdProduct)).Rating;
+                    rating.AverageRating = (rating.AverageRating * rating.AmountOfComments - comment.Estimation) / countComment;
+                    rating.AmountOfComments--;
+                    await _ratingRepository.Update(rating);
+                    return "Комментарий удалён, рейтинг обновлён";
 
             }
 
@@ -872,5 +867,11 @@ namespace BLL.ProductService
         }
 
         #endregion
+
+
+        private decimal rating() 
+        {
+            return 0;
+        }
     }
 }
