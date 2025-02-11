@@ -19,10 +19,10 @@ namespace Domain.Entities
         /// true - пользователь является владельцем магазина, false - ограниченные права доступа
         /// </summary>
         [Required, Column("is_host")]   public bool IsHost { get; set; } = false;
-		/// <summary>
-		/// true - пользователь удалён, false - пользователь не удалён
-		/// </summary>
-		[Required, Column("is_delete")] public bool IsDeleted { get; set; } = false;
+        /// <summary>
+        /// true - пользователь удалён, false - пользователь не удалён
+        /// </summary>
+        [Required, Column("is_delete")] public bool IsDeleted { get; set; } = false;
         /// <summary>
         /// Id пользователя
         /// </summary>

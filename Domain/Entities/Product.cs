@@ -66,19 +66,20 @@ namespace Domain.Entities
 
         #region связи
         // Внешний ключ для связи с shopOwner
+        [Column("shop_id")]
         public int ShopId { get; set; }
 
-        [ForeignKey("ShopId")]
+        [ForeignKey(nameof(ShopId))]
         public Shop Shop { get; set; }
 
 
         // Внешний ключ для связи с ClusterId
         ///   public int ClusterId { get; set; }
 
-        [ForeignKey("ClusterId")]
+        [ForeignKey(nameof(ClusterId))]
         public Cluster Cluster { get; set; }
 
-        [ForeignKey("RatingId")]
+        [ForeignKey(nameof(RatingId))]
         public Rating Rating { get; set; }
         #endregion
 

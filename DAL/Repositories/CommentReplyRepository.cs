@@ -1,5 +1,6 @@
 ﻿using DAL.Abstractions;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -10,5 +11,9 @@ namespace DAL.Repositories
         {
 
         }
+       
+
+
+
     }
 }

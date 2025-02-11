@@ -40,10 +40,10 @@ namespace Domain.Entities
 
         #region связи
         // Внешний ключ для связи с shopOwner
-        public int ShopOwerId { get; set; }
+        //public int ShopOwerId { get; set; }
 
-        [ForeignKey(nameof(ShopOwerId))]
-        public ShopOwner shopOwner { get; set; }
+        //[ForeignKey(nameof(ShopOwerId))]
+        //public ShopOwner shopOwner { get; set; }
       
         /// <summary>
         /// Коллекция товара магазина

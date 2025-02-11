@@ -15,7 +15,7 @@ namespace Test
         private readonly string _newUserPassword = "password";
         private readonly string _newUserPhone = "+79999999999";
         private readonly string _newUserEmail = "gobob@bobmail.com";
-		private IdentityService _identityService;
+		    private IdentityService _identityService;
         public User NewUser1 { get; set; }
         public User NewUser2 { get; set; }
 
@@ -101,7 +101,7 @@ namespace Test
         public async Task LogInByPhoneTest()
         {
             var result = await _identityService.AuthUserByPhone(_newUserPhone, _newUserPassword);
-
+          
             Console.WriteLine(result);
         }
     }

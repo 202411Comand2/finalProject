@@ -33,20 +33,19 @@ namespace Domain.Entities
         /// Дата создания комментария
         /// </summary>
         [Column("date_created")]
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// Содержит удалён ли комментарий?
         /// </summary>
         [Column("is_deleted")]
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
         /// <summary>
         /// Id ответы
         /// </summary>
         [Column("reply_id")]
-        public int ReplyId { get; set; }
-
+        public int IdReply { get; set; }
 
         /// <summary>
         /// Имя пользователя
@@ -59,7 +58,18 @@ namespace Domain.Entities
         /// </summary>
         [Column("shop_id")]
         public int ShopId { get; set; }
+
+        /// <summary>
+        /// Id продукта
+        /// </summary>
+        [Column("id_product")]
+        public int IdProduct { get; set; }
        
+        /// <summary>
+        /// Id ответы
+        /// </summary>
+        [Column("user_id")]
+        public int UserId { get; set; }
         /// <summary>
         /// Вернуть Id объекта
         /// </summary>
@@ -68,20 +78,17 @@ namespace Domain.Entities
         {
             return Id;
         }
-        #region
-       
-        [ForeignKey(nameof(ReplyId))]
+        
+        #region связи
+
+        [ForeignKey(nameof(IdProduct))]
+        public Product Product { get; set; }
+
+        [ForeignKey(nameof(IdReply))]
         public CommentReply Replies { get; set; }
       
         [ForeignKey(nameof(ShopId))]
         public Shop Shop { get; set; }
-
-
-        /// <summary>
-        /// Id ответы
-        /// </summary>
-        [Column("user_id")]
-        public int UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public User User { get; set; }
@@ -89,7 +96,7 @@ namespace Domain.Entities
 
 
         /*
-         Comment.ReplyId' and 'Comment.UserName' are both mapped to column 'reply_id' in 'Comments', 
+         Comment.IdReply' and 'Comment.UserName' are both mapped to column 'reply_id' in 'Comments', 
             but the properties are contained within the same hierarchy. All properties on an entity type 
             must be mapped to unique different columns."
 

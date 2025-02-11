@@ -41,10 +41,10 @@ namespace Domain.Entities
         /// <summary>
         /// Id продукта
         /// </summary>
-        public int ProductID { get; set; }
+        public int? ProductID { get; set; }
 
         [ForeignKey(nameof(ProductID))]
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
 
         #endregion
     }

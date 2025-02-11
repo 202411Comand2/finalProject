@@ -18,7 +18,14 @@ namespace Domain.Entities
         /// </summary>
         [Required, MaxLength(400),Column("text")]
         public string Text { get; set; }
-      
+        
+        /// <summary>
+        /// Удалён ли комментарий
+        /// </summary>
+        [Column("is_deleted")]      
+        public bool IsDeleted { get; set; } = false;
+
+
         /// <summary>
         /// Вернуть Id объекта
         /// </summary>
@@ -28,11 +35,10 @@ namespace Domain.Entities
             return Id;
         }
 
-
         [Column("id_comment")]
         public int IdComment { get; set; }
 
-        [ForeignKey("IdComment")]
+        //[ForeignKey(nameof(IdComment))]
         public Comment comment { get; set; }
 
     }
