@@ -1,4 +1,5 @@
 ﻿using DAL.Abstractions;
+using DAL.ConfigSettings;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL
@@ -17,9 +18,9 @@ namespace DAL
 		/// <summary>
 		/// Строка подключения
 		/// </summary>
-		public ContextManager()
+		public ContextManager(ISecretsSettings secretsSettings)
 		{
-			_connectionString = Secrets.Server1;
+			_connectionString = secretsSettings.ConnectionString;
 		}
 
 		/// <summary>

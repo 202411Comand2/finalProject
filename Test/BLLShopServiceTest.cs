@@ -14,7 +14,7 @@ using NpgsqlTypes;
 
 namespace Test
 {
-    internal class BLLShopServiceTest
+    internal class BLLShopServiceTest : IBLLShopServiceTest
     {
         //private UserRepository _userRepository;
         private ProductService _productService;
@@ -71,7 +71,7 @@ namespace Test
         /// Удаление магазина
         /// </summary>
         /// <returns></returns>
-        public async Task testDeleteShop()
+        public async Task TestDeleteShop()
         {
             List<string> l = new List<string>() { "we", "12", "Название магазина" };
             foreach (string s in l)
