@@ -6,5 +6,6 @@ namespace BLL.Abstractions
 	public interface IJwtTokenProvider
 	{
 		public string GenerateToken(User user, UserRole role);
+		public string GenerateToken();
 	}
 }

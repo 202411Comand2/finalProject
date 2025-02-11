@@ -19,7 +19,7 @@ namespace DAL
 		/// </summary>
 		public ContextManager()
 		{
-			_connectionString = Secrets.Server3;
+			_connectionString = Secrets.Server1;
 		}
 
 		/// <summary>
@@ -30,7 +30,7 @@ namespace DAL
 		{
 			var builder = new DbContextOptionsBuilder();
 			return new ApplicationDbContext(builder.UseNpgsql(_connectionString)
-				.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
+				//.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
 				.EnableSensitiveDataLogging(true)
 				.Options
 				);

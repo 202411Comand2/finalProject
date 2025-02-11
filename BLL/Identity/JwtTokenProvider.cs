@@ -1,6 +1,7 @@
 ﻿using BLL.Abstractions;
 using Domain.Entities;
 using Domain.Enums;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,36 +10,38 @@ using System.Text;
 
 namespace BLL.Identity
 {
-	public class JwtTokenProvider : IJwtTokenProvider
+	public class JwtTokenProvider(IOptions<JwtOptions> options) : IJwtTokenProvider
 	{
-		public JwtTokenProvider()
-		{
-		}
+		private readonly JwtOptions _options = options.Value;
 
 		public string GenerateToken(User user, UserRole role)
 		{
-			var handler = new JwtSecurityTokenHandler();
+			Claim[] claims = [new("userId", user.Id.ToString()),
+				new("role", role.ToString())];
 
-			var sec = "examplesecret";
-			var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(sec));
-			var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+			return GenerateToken(claims);
+		}
 
-			var identity = new ClaimsIdentity(new GenericIdentity(user.Email), new[]
-			{
-				new Claim("id", user.Id.ToString()),
-				new Claim("name", user.Name),
-				new Claim("role", role.ToString()),
-				new Claim("phone", user.Phone)
-			});
-			var token = handler.CreateJwtSecurityToken(
-				subject: identity,
+		public string GenerateToken()
+		{
+			Claim[] claims = [new ("role", UserRole.Guest.ToString())];
+
+			return GenerateToken(claims);
+		}
+
+		private string GenerateToken(Claim[] claims)
+		{
+			var signingCredentials = new SigningCredentials(
+				new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)),
+				SecurityAlgorithms.HmacSha256);
+
+			var token = new JwtSecurityToken(
+				claims: claims,
 				signingCredentials: signingCredentials,
-				audience: "exampleAudience",
-				issuer: "exampleIssuer",
-				expires: DateTime.UtcNow.AddMinutes(30)
+				expires: DateTime.UtcNow.AddHours(_options.ExpiresHours)
 				);
-			
-			return handler.WriteToken(token);
+
+			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
 	}
 }

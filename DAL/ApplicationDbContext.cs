@@ -34,6 +34,15 @@ namespace DAL
                 Database.EnsureCreated(); // создание бд
             }
         }
-      
-    }
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+            modelBuilder.Entity<User>()
+                .HasIndex(e => e.Email)
+                .IsUnique();
+            modelBuilder.Entity<User>()
+                .HasIndex(p => p.Phone)
+                .IsUnique();
+		}
+	}
 }

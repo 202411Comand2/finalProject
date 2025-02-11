@@ -1,8 +1,8 @@
 ﻿namespace BLL.Abstractions
 {
-	internal interface IGenericDataHasher<T>
+	public interface IGenericDataHasher<T>
 	{
 		public byte[] Hash(T value);
-		public bool Compare(T value, byte[] hash);
+		public bool Verify(T value, byte[] hash);
 	}
 }
