@@ -1,5 +1,6 @@
 ﻿using DAL.Abstractions;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -7,12 +8,22 @@ namespace DAL.Repositories
     {
         public UserRepository(IContextManager manager) : base(manager)
         {
-            
+
         }
 
-		public override Task<User> Add(User entity)
-		{
-			return base.Add(entity);
-		}
+        public async Task<User> GetByEmail(string email)
+        {
+            using(var context = CreateDatabaseContext())
+            {
+                return await context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            }
+        }
+        public async Task<User> GetByPhone(string phone)
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                return await context.Users.FirstOrDefaultAsync(x => x.Phone == phone);
+            }
+        }
 	}
 }

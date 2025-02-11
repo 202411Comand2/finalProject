@@ -6,44 +6,49 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     /// <summary>
-    /// Аутификация
+    /// Токен авторизации
     /// </summary>
+    [Table("AccessTokens")]
     public class AccessToken : IDbEntity
     {
         /// <summary>
         /// Id пользователя
         /// </summary>
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int Id { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         /// <summary>
         /// Ключ токена
         /// </summary>
-        [Required] public byte[] Key { get; set; }
-        [Required] public UserRole[] Roles { get; set; }
+        [Required]                  public byte[] Key { get; set; }
         /// <summary>
-        /// Название устройства 
+        /// Роли пользователя
         /// </summary>
-        [Required, MaxLength(250)]  public string DeviceName { get; set; }
-        [Required, MaxLength(100)] public string DeviceIp { get; set; }
+        [Required]                  public UserRole[] Roles { get; set; } = new[] {UserRole.Guest};
+        /// <summary>
+        /// Название устройства, с которого выполнен вход
+        /// </summary>
+        [Required, MaxLength(100)]  public string? DeviceName { get; set; }
+        /// <summary>
+        /// Последний ip адрес устройства
+        /// </summary>
+        [Required, MaxLength(45)]   public string? DeviceIp { get; set; }
         /// <summary>
         /// Дата создания токена авторизации 
         /// </summary>
-        [Required]  public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+        [Required]                  public DateTime DateCreated { get; set; } = DateTime.UtcNow;
         /// <summary>
         /// Дата истечения срока действия токена 
         /// </summary>
-        [Required]
-        public DateTime ExpireDate { get; set; } = DateTime.UtcNow.AddMinutes(30);
-
+        [Required]                  public DateTime ExpireDate { get; set; } = DateTime.UtcNow.AddMinutes(30);
         /// <summary>
-        /// Связь много(токенов) к одну (пользователю)
+        /// Id связанного пользователя
         /// </summary>
-        public int? UserId { get; set; }
-        [ForeignKey(nameof(UserId))]
-        public User User { get; set; }
+                                    public int? UserId { get; set; }
+        /// <summary>
+        /// Связанный пользователь
+        /// </summary>
+        [ForeignKey(nameof(UserId))]public User? User { get; set; }
 
-		/// <summary>
-		/// Реализация интерфейса IDbEntity
-		/// </summary>
 		public int GetPrimaryKey()
 		{
 			return Id;

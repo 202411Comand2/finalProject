@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BLL.Identity
 {
-	internal class StringHasher : IGenericDataHasher<string>
+	public class StringHasher : IGenericDataHasher<string>
 	{
 		private static readonly byte _saltSize = 16;
 		private static readonly byte _hashSize = 128;
@@ -50,7 +50,7 @@ namespace BLL.Identity
 		/// <returns>true при совпадении, false в остальных случаях</returns>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentException"></exception>
-		public bool Compare(string value, byte[] hash)
+		public bool Verify(string value, byte[] hash)
 		{
 			if (string.IsNullOrEmpty(value)) throw new ArgumentNullException("value");
 			if (hash == null) throw new ArgumentNullException("hash");
