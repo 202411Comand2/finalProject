@@ -4,6 +4,7 @@ using DAL.Abstractions;
 using DAL.Repositories;
 using Domain.Entities;
 using Domain.Enums;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BLL.Identity
 {
@@ -12,33 +13,25 @@ namespace BLL.Identity
         private readonly UserRepository _userRepository;
         private readonly AccessTokenRepository _accessTokenRepository;
         private readonly IGenericDataHasher<string> _passwordHasher;
-        private List<AccessToken> _tokenCache; // Удалить после введения Redis
+        private readonly IJwtTokenProvider _jwtTokenProvider;
 
-        public IdentityService(IContextManager contextManager)
+        public IdentityService(
+            IContextManager contextManager, 
+            IJwtTokenProvider tokenProvider,
+            IGenericDataHasher<string> passwordHasher)
         {
             _userRepository = new UserRepository(contextManager);
             _accessTokenRepository = new AccessTokenRepository(contextManager);
-            _passwordHasher = new StringHasher();
-            _tokenCache = new List<AccessToken>();
+            _passwordHasher = passwordHasher;
+            _jwtTokenProvider = tokenProvider;
         }
 
-        public async Task<AccessToken> GetGuestToken(string deviceName, string deviceIp)
+        public async Task<string> GetGuestToken()
         {
-            var newToken = new AccessToken()
-            {
-                Key = _passwordHasher.Hash(deviceName),
-                DeviceName = deviceName,
-                DeviceIp = deviceIp,
-                Roles = new UserRole[] { UserRole.Guest }
-            };
-
-            var result = await _accessTokenRepository.Add(newToken);
-            _tokenCache.Add(result);
-            return result;
+            return _jwtTokenProvider.GenerateToken();
         }
-        public async Task<User> CreateUser(string username, string password, string phone, AccessToken token)
+        public async Task<User> RegisterByPhone(string username, string password, string phone)
         {
-            if (token.ExpireDate < DateTime.UtcNow) { throw new ArgumentException(nameof(token)); }
             var newUser = new User
             {
                 Name = username,
@@ -46,53 +39,57 @@ namespace BLL.Identity
                 Phone = phone
             };
             var result = await _userRepository.Add(newUser);
-			if (newUser.Id != 0)
-			{
-				token.Roles = new UserRole[] { UserRole.Guest, UserRole.User };
-				token.ExpireDate = DateTime.UtcNow.AddMinutes(30);
-				token.UserId = newUser.Id;
-				await _accessTokenRepository.Update(token);
-			}
 			return result;
 		}
+        public async Task<User> RegisterByEmail(string username, string password, string email)
+        {
+            var newUser = new User
+            {
+                Name = username,
+                Password = _passwordHasher.Hash(password),
+                Email = email
+            };
+            var result = await _userRepository.Add(newUser);
+            return result;
+        }
 
 		public async Task UpdateUser(User user)
         {
 			throw new NotImplementedException("Пока не сделал");
 		}
-        public async Task ChangePassword(AccessToken token, string newPassword)
-        {
-            if (!await ValidateToken(token)) throw new InvalidTokenException();
-
-		}
-        public async Task<AccessToken> AuthUserByPassword(string email, string password)
-		{
-			throw new NotImplementedException("Пока не сделал");
-		}
-		public async Task<AccessToken> AuthUserByEmail(string email, string password)
+        public async Task ChangePassword(string token, string newPassword)
         {
             throw new NotImplementedException("Пока не сделал");
-        }
-        public async Task<AccessToken> AuthUserByPhone(string phone, string password)
-        {
-			throw new NotImplementedException("Пока не сделал");
 		}
+		public async Task<string> AuthUserByEmail(string email, string password)
+        {
+            if (email.IsNullOrEmpty()) {throw new ArgumentNullException(nameof(email));}
+            if (password.IsNullOrEmpty()) {throw new ArgumentNullException(nameof(password));}
+            var user = await _userRepository.GetByEmail(email);
 
-        private AccessToken FindTokenInCache(int id)
-        {
-            return _tokenCache.FirstOrDefault(x => x.Id == id);
+            if (user is null) throw new InvalidCredentialsException();
+
+            var isPasswordValid = _passwordHasher.Verify(password, user.Password);
+            if (isPasswordValid)
+            {
+                return _jwtTokenProvider.GenerateToken(user, UserRole.User);
+            }
+            else throw new InvalidCredentialsException();
         }
-        private async Task<bool> ValidateToken(AccessToken token)
+        public async Task<string> AuthUserByPhone(string phone, string password)
         {
-            if (token == null) return false;
-			if (token.ExpireDate < DateTime.UtcNow) { return false; }
-			var storedToken = FindTokenInCache(token.Id);
-            if (storedToken == null) { storedToken = await _accessTokenRepository.Get(token.Id); }
-            if (storedToken == null) { return false; }
-            if (storedToken.Key != token.Key) { return false; }
-            if (storedToken.ExpireDate != token.ExpireDate) { return false; }
-            if (storedToken.DeviceName != token.DeviceName) { return false; }
-            return true;
-        }
+			if (phone.IsNullOrEmpty()) { throw new ArgumentNullException(nameof(phone)); }
+			if (password.IsNullOrEmpty()) { throw new ArgumentNullException(nameof(password)); }
+			var user = await _userRepository.GetByPhone(phone);
+
+			if (user is null) throw new InvalidCredentialsException();
+
+			var isPasswordValid = _passwordHasher.Verify(password, user.Password);
+			if (isPasswordValid)
+			{
+				return _jwtTokenProvider.GenerateToken(user, UserRole.User);
+			}
+			else throw new InvalidCredentialsException();
+		}
     }
 }

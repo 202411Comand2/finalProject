@@ -2,11 +2,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace Domain.Entities
 {
     /// <summary>
-    /// Владелец магазина
+    /// Пользователь с доступом к управлению магазином
     /// </summary>
     [Table("shop_owners")]
     public class ShopOwner:IDbEntity
@@ -16,53 +15,31 @@ namespace Domain.Entities
         /// </summary>
         [Key, Column("id"), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
         /// <summary>
-        /// Владелец магазина
+        /// true - пользователь является владельцем магазина, false - ограниченные права доступа
         /// </summary>
-        [Required, Column("is_host")]
-        public bool IsHost { get; set; } = false;
-      
-    
-
+        [Required, Column("is_host")]   public bool IsHost { get; set; } = false;
         /// <summary>
-        /// Пользователь удалён
+        /// true - пользователь удалён, false - пользователь не удалён
         /// </summary>
-        [Required, Column("is_delete")]
-        public bool IsDelete { get; set; } = false;
-
-
-        #region связи
-
-        ////ToDO я думаю, что тут не 1к1,  а много ко многим
+        [Required, Column("is_delete")] public bool IsDeleted { get; set; } = false;
         /// <summary>
         /// Id пользователя
         /// </summary>
-        [Required, Column("user_id")]
-        public int UserId { get; set; }
-       
-        [ForeignKey("UserId")]
-        public User? User { get; set; }
-
-        ///// <summary>
-        ///// Коллекция магазинов
-        ///// </summary>
-        //public ICollection<Shop> Shops { get; set; } = new List<Shop>();
-
-
-        public int ShopId { get; set; }
-
-        //[ForeignKey(nameof(ShopId))]
-        //public Shop Shop { get; set; }
-
-
-        #endregion
-
-
+        [Required]                      public int UserId { get; set; }
         /// <summary>
-        /// Вернуть Id объекта
+        /// Связанный пользователь
         /// </summary>
-        /// <returns>Возвращает id объекта из бд</returns>
+        [ForeignKey(nameof(UserId))]    public User? User { get; set; }
+        /// <summary>
+        /// Id связанного магазина
+        /// </summary>
+        [Required]                      public int ShopId { get; set; }
+        /// <summary>
+        /// Связанный магазин
+        /// </summary>
+        [ForeignKey(nameof(ShopId))]    public Shop Shop { get; set; }
+
         public int GetPrimaryKey()
         {
             return Id;

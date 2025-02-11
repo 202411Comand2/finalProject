@@ -19,7 +19,7 @@ namespace DAL
 		/// </summary>
 		public ContextManager()
 		{
-			_connectionString = Secrets.Server3;
+			_connectionString = Secrets.Server1;
 		}
 
 		/// <summary>

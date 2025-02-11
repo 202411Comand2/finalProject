@@ -13,7 +13,6 @@ namespace Test
 
         static async Task Main(string[] args)
         {
-
             #region создание пользователя (Глеб)
 
             #endregion
@@ -29,10 +28,14 @@ namespace Test
         /// <returns></returns>
         private static async Task TestCreateUser() 
         {
-            _contextManager = new ContextManager();
-            _bllIdentityTests = new BLLIdentyServiceTests(_contextManager, Log);
-            await _bllIdentityTests.CreateGuestTokenTest();
-            await _bllIdentityTests.CreateNewUserTest();
+            var bllTests = new BLLIdentyServiceTests();
+            await bllTests.CreateGuestTokenNotNullTest();
+            await bllTests.CreateNewUserByPhoneTest();
+            await bllTests.CreateNewUserByEmailTest();
+            await bllTests.LogInByPhoneTest();
+            await bllTests.LogInByEmailTest();
+            await bllTests.CreateNewUserWithSamePhoneTest();
+            await bllTests.CreateNewUserWithSameEmailTest();
         }
 
 
