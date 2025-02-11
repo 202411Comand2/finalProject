@@ -10,4 +10,9 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CG4.DataAccess" Version="2.0.139" />
+    <PackageReference Include="Cogito.Extensions.Configuration" Version="4.0.0" />
+  </ItemGroup>
+
 </Project>
