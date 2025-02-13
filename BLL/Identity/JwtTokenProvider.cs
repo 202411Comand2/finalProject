@@ -1,16 +1,15 @@
-﻿using BLL.Abstractions;
+﻿using BLL.Identity.Abstractions;
 using Domain.Entities;
 using Domain.Enums;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Principal;
 using System.Text;
 
 namespace BLL.Identity
 {
-	public class JwtTokenProvider(IOptions<JwtOptions> options) : IJwtTokenProvider
+    public class JwtTokenProvider(IOptions<JwtOptions> options) : IJwtTokenProvider
 	{
 		private readonly JwtOptions _options = options.Value;
 

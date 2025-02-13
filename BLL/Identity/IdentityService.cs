@@ -1,5 +1,6 @@
-﻿using BLL.Abstractions;
-using BLL.Exceptions;
+﻿using BLL.Identity.Abstractions;
+using BLL.Identity.Exceptions;
+using BLL.Identity.Extensions;
 using DAL.Abstractions;
 using DAL.Repositories;
 using Domain.Entities;
@@ -8,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace BLL.Identity
 {
-    public class IdentityService
+    public class IdentityService : IIdentityService
     {
         private readonly UserRepository _userRepository;
         private readonly AccessTokenRepository _accessTokenRepository;
@@ -29,6 +30,12 @@ namespace BLL.Identity
         public async Task<string> GetGuestToken()
         {
             return _jwtTokenProvider.GenerateToken();
+        }
+        public async Task<User> Register(string username, string password, string contact)
+        {
+            if (contact.IsEmail()) return await RegisterByEmail(username, password, contact);
+            else if (contact.IsPhoneNumber()) return await RegisterByPhone(username, password, contact);
+            else throw new InvalidContactInputException();
         }
         public async Task<User> RegisterByPhone(string username, string password, string phone)
         {
@@ -61,6 +68,12 @@ namespace BLL.Identity
         {
             throw new NotImplementedException("Пока не сделал");
 		}
+        public async Task<string> Login(string contact, string password)
+        {
+            if (contact.IsEmail()) return await AuthUserByEmail(contact, password);
+            else if (contact.IsPhoneNumber()) return await AuthUserByPhone(contact, password);
+            else throw new InvalidContactInputException();
+        }
 		public async Task<string> AuthUserByEmail(string email, string password)
         {
             if (email.IsNullOrEmpty()) {throw new ArgumentNullException(nameof(email));}
