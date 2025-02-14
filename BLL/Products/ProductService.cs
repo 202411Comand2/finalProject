@@ -49,6 +49,7 @@ namespace BLL.ProductService
         }
 
         #region управление магазином Создание, изменение и удаление
+       /*
         /// <summary>
         /// Добавить магазин
         /// </summary>
@@ -148,6 +149,7 @@ namespace BLL.ProductService
                 return $"магазин ''{nameShop}'' был удалён ";
             }
         }
+        */
         #endregion
 
         #region управление товаром
@@ -175,8 +177,9 @@ namespace BLL.ProductService
                 AmountOfComments = 1,
                 AverageRating = 5,
             };
+            
             await _ratingRepository.Add(rating);
-            Product product = new Product()
+            Domain.Entities.Product product = new Domain.Entities.Product()
             {
                 Price = 1005.8M,
                 Name = "test",
@@ -540,7 +543,7 @@ namespace BLL.ProductService
         /// <returns></returns>
         public async Task<List<Comment>> GetCommentProduct(int idProduct)
         {
-            Product? product = await _productRepository.Get(idProduct);
+            Domain.Entities.Product? product = await _productRepository.Get(idProduct);
             if (product is not null)
             {
                 return await _commentRepository.GetAllCommentOnTheProduct(idProduct);
@@ -572,8 +575,7 @@ namespace BLL.ProductService
             {
                 return "Ошибка. Отсутствует пользователь!";
             }
-                Product product = await _productRepository.Get(idProduct);
-
+                Domain.Entities.Product product = await _productRepository.Get(idProduct);
                 if (comment is null)
             {
                 CommentReply reply = new CommentReply()
@@ -782,7 +784,8 @@ namespace BLL.ProductService
         public async Task<string> AddFavoriteProduct(int idUser, int idProduct)
         {
             User shop = await _userRepository.Get(idUser);
-            Product product = await _productRepository.Get(idProduct);
+
+            Domain.Entities.Product product = await _productRepository.Get(idProduct);
             if (product is null)
             {
                 return "Ошибка. Товар не найден!";
