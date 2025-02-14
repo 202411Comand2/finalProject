@@ -437,6 +437,7 @@ namespace BLL.ProductService
                 }
             }
         }
+      
         /// <summary>
         ///  Изменение позиции кластера в иерархии
         /// </summary>
