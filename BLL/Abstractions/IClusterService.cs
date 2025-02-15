@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Abstractions
 {
-    public interface IClasterService
+    public interface IClusterService
     {
 
         /// <summary>
