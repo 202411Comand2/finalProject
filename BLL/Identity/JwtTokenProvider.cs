@@ -1,8 +1,6 @@
 ﻿using BLL.Identity.Abstractions;
 using Domain.Entities;
 using Domain.Enums;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,22 +13,41 @@ namespace BLL.Identity
 	{
 		private readonly JwtOptions _options = options.Value;
 
+		public string GenerateToken(User user, IList<ShopOwner> shopCredentials = null)
+		{
+			if (shopCredentials != null)
+			{
+				var claims = new List<Claim>(3 + shopCredentials.Count);
+				claims.Add(new Claim(_options.UsernameClaimName, user.Name));
+				claims.Add(new Claim(_options.UserIdClaimName, user.Id.ToString()));
+				claims.Add(new Claim(_options.UserRoleClaimName, UserRole.User.ToString()));
+				foreach(var cred in shopCredentials)
+				{
+					if(cred.IsHost)
+						claims.Add(new Claim("shopAccess", $"{cred.Id};{cred.ShopId};{UserRole.ShopOwner}"));
+					else
+						claims.Add(new Claim("shopAccess", $"{cred.Id};{cred.ShopId};{UserRole.ShopManager}"));
+				}
+				return GenerateToken(claims.ToArray(), 10);
+			}
+			else return GenerateToken(user, UserRole.User);
+		}
 		public string GenerateToken(User user, UserRole role)
 		{
-			Claim[] claims = [new("userId", user.Id.ToString()),
-				new("role", role.ToString())];
+			Claim[] claims = [new(_options.UserIdClaimName, user.Id.ToString()),
+				new(_options.UserRoleClaimName, role.ToString())];
 
 			return GenerateToken(claims);
 		}
 
 		public string GenerateToken()
 		{
-			Claim[] claims = [new ("role", UserRole.Guest.ToString())];
+			Claim[] claims = [new (options.Value.UserRoleClaimName, UserRole.Guest.ToString())];
 
 			return GenerateToken(claims);
 		}
 
-		private string GenerateToken(Claim[] claims)
+		private string GenerateToken(Claim[] claims, int expMinutes = 120)
 		{
 			var signingCredentials = new SigningCredentials(
 				new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)),
@@ -39,7 +56,7 @@ namespace BLL.Identity
 			var token = new JwtSecurityToken(
 				claims: claims,
 				signingCredentials: signingCredentials,
-				expires: DateTime.UtcNow.AddHours(_options.ExpiresHours)
+				expires: DateTime.UtcNow.AddMinutes(expMinutes)
 				);
 
 			return new JwtSecurityTokenHandler().WriteToken(token);
