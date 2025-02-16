@@ -5,15 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
- 
-namespace BLL.Abstractions
+
+namespace BLL.Products.Abstractions
 {
     /// <summary>
     /// Интерфейс магазина
     /// </summary>
     public interface IShopService
     {
-        
+
         /// <summary>
         /// Создание магазина
         /// </summary>

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Abstractions
+namespace BLL.Products.Abstractions
 {
     public interface IClusterService
     {
@@ -67,7 +67,7 @@ namespace BLL.Abstractions
         /// </summary>
         /// <param name="nameCluster">Название кластера</param>
         /// <returns></returns>
-        public Task<string> DeleteCluster(string nameCluster);
+        public Task<bool> DeleteCluster(string nameCluster);
 
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace BLL.Abstractions
         /// <param name="clusterId">id кластера, позицию которого нужно поменять в классификаторе</param>
         /// <param name="parentId">id родителя кластера, куда нужно вложить (-1 означает корень) </param>
         /// <returns></returns>
-        public Task<string> UpdatePositionCluster(int clusterId, int parentId);
+        public Task<bool> UpdatePositionCluster(int clusterId, int parentId);
 
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace BLL.Abstractions
         /// <param name="nameCluster">Название кластера</param>
         /// <param name="idParent">id родителя кластера, куда нужно вложить (-1 означает корень) </param>
         /// <returns></returns>
-        public Task<string> UpdatePositionCluster(string nameCluster, int parentId);
+        public Task<bool> UpdatePositionCluster(string nameCluster, int parentId);
 
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace BLL.Abstractions
         /// <summary>
         /// Получить только корневые элементы кластера
         /// </summary>
-        public  Task<List<Cluster>> GetRootElementsCluster();
+        public Task<List<Cluster>> GetRootElementsCluster();
 
 
         ////TODO что делать ошибку кидать или возвращаться null
@@ -114,8 +114,8 @@ namespace BLL.Abstractions
         /// </summary>
         /// <param name="nameCluster">Имя кластера</param>
         /// <returns></returns>
-        public  Task<List<Cluster>> GetChildrenElementsCluster(string nameCluster);
-       
+        public Task<List<Cluster>> GetChildrenElementsCluster(string nameCluster);
+
 
 
     }

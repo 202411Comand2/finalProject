@@ -1,5 +1,4 @@
-﻿using BLL.Abstractions;
-using Domain.Entities;
+﻿using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +8,7 @@ using Domain.Entities;
 using DAL.Repositories;
 using System.Xml.Linq;
 using DAL.Abstractions;
+using BLL.Products.Abstractions;
 
 
 namespace BLL.Products
@@ -16,11 +16,8 @@ namespace BLL.Products
     public class ClusterService : IClusterService
     {
         private readonly ClusterRepository _clusterRepository;
-        public ClusterService(IContextManager contextManager)
-        {
-            _clusterRepository = new ClusterRepository(contextManager);
-        }
-      
+        public ClusterService(IContextManager contextManager) => _clusterRepository = new ClusterRepository(contextManager);
+       
         public async Task<bool> AddNewCluster(string nameClaster)
         {
             Cluster cluster = await _clusterRepository.GetNameCluster(nameClaster);
@@ -80,62 +77,190 @@ namespace BLL.Products
                     ParentId = clusterParent.Id
                 };
                 var result = await _clusterRepository.Add(cluster);
-                return "Кластер создан";
+                return true;//Кластер создан
             }
             else
             {
-                return "Не удалось создать в виду наличия в системе уже существующего кластера";
+                return false;//Не удалось создать в виду наличия в системе уже существующего кластера
             }
         }
 
-        public Task<bool> DeleteCluster(int clusterId)
+        public async Task<bool> DeleteCluster(int clusterId)
         {
-            throw new NotImplementedException();
+            Cluster cluster = await _clusterRepository.Get(clusterId);
+            if (cluster is null)
+            {
+                return false;//Не получилось удалить ввиду отсутствия id кластера
+            }
+            else
+            {
+                await _clusterRepository.Delete(cluster);
+                return false; // Кластер удалён
+            }
         }
 
-        public Task<string> DeleteCluster(string nameCluster)
+        public async Task<bool> DeleteCluster(string nameCluster)
         {
-            throw new NotImplementedException();
+            Cluster cluster = await _clusterRepository.GetNameCluster(nameCluster);
+            if (cluster is null)
+            {
+                return false; // Не получилось удалить ввиду отсутствия id кластера
+            }
+            else
+            {
+                await _clusterRepository.Delete(cluster);
+                return true; // Кластер удалён
+
+            }
         }
 
-        public Task<List<Cluster>> GetAllElementsCluster()
+        public async Task<List<Cluster>> GetAllElementsCluster() =>(List<Cluster>) await _clusterRepository.GetAll();
+     
+        public async Task<List<Cluster>> GetChildrenElementsCluster(int clusterId)
         {
-            throw new NotImplementedException();
+            Cluster cluster = await _clusterRepository.Get(clusterId);
+            if (cluster is null)
+            {
+                //если такого кластера нет
+                return null;
+            }
+            else
+            {
+                return await _clusterRepository.GeElementsClaster(clusterId);
+            }
         }
 
-        public Task<List<Cluster>> GetChildrenElementsCluster(int clusterId)
+        public async Task<List<Cluster>> GetChildrenElementsCluster(string nameCluster)
         {
-            throw new NotImplementedException();
+            Cluster cluster = await _clusterRepository.GetNameCluster(nameCluster);
+
+            if (cluster is null)
+            {//"Ошибка. Не найден кластер по имени"
+                return null;
+            }
+            return await _clusterRepository.GeElementsClaster(cluster.Id);
         }
 
-        public Task<List<Cluster>> GetChildrenElementsCluster(string nameCluster)
+        public async Task<List<Cluster>> GetRootElementsCluster() => await _clusterRepository.GetRootElementsClaster();
+        
+
+        public async Task<bool> UpdateNameCluster(int clasterId, string newNameClaster)
         {
-            throw new NotImplementedException();
+            Cluster cluster = await _clusterRepository.Get(clasterId);
+            Cluster clusterNewName = await _clusterRepository.GetNameCluster(newNameClaster);
+
+            if (cluster is null)
+            {
+                return false; //не получилось изменить название классификатора. Не получилось найти указанный кластер в базе
+            }
+            else
+            {
+                if (clusterNewName is null)
+                {
+                    cluster.Name = newNameClaster;
+                    await _clusterRepository.Update(cluster);
+                    return true;// "Кластер изменён";
+                }
+                else
+                {
+                    return false;// "не получилось изменить название классификатора. Имя этого кластера занято!";
+                }
+            }
+        }
+        
+
+        public async  Task<bool> UpdateNameCluster(string oldNameClaster, string newNameClaster)
+        {
+            Cluster cluster = await _clusterRepository.GetNameCluster(oldNameClaster);
+            Cluster clusterNewName = await _clusterRepository.GetNameCluster(newNameClaster);
+
+            if (cluster is null)
+            {
+                return false;// "не получилось изменить название классификатора. Не получилось найти указанный кластер в базе";
+            }
+            else
+            {
+
+                if (clusterNewName is null)
+                {
+                    cluster.Name = newNameClaster;
+                    await _clusterRepository.Update(cluster);
+                    return true;//"Кластер изменён";
+                }
+                else
+                {
+                    return false;// "не получилось изменить название классификатора. Имя этого кластера занято!";
+                }
+            }
         }
 
-        public Task<List<Cluster>> GetRootElementsCluster()
+        public async Task<bool> UpdatePositionCluster(int clusterId, int parentId)
         {
-            throw new NotImplementedException();
+            Cluster cluster = await _clusterRepository.Get(clusterId);
+            if (cluster is null)
+            {
+                return false;//Ошибка. Не найден кластер по id
+            }
+            else
+            {
+                if (parentId == cluster.ParentId)
+                {
+                    return false;// "Изменения не нужны, так как перемещения не произошло.";
+                }
+                if (parentId == -1)
+                {
+                    cluster.ParentId = -1;
+                    await _clusterRepository.Update(cluster);
+                    return true;// "Изменения были приняты иерархия была изменена";
+                }
+
+                Cluster clusterParent = await _clusterRepository.Get(parentId);
+                if (clusterParent is not null)
+                {
+                    cluster.ParentId = parentId;
+                    await _clusterRepository.Update(cluster);
+                    return true; //"Изменения были приняты иерархия была изменена";
+                }
+                else
+                {
+                    return false;// "Ошибка. Родительский кластер не найден!";
+                }
+            }
         }
 
-        public Task<bool> UpdateNameCluster(int clasterId, string newNameClaster)
+        public async Task<bool> UpdatePositionCluster(string nameCluster, int parentId)
         {
-            throw new NotImplementedException();
-        }
+            Cluster cluster = await _clusterRepository.GetNameCluster(nameCluster);
 
-        public Task<bool> UpdateNameCluster(string oldNameClaster, string newNameClaster)
-        {
-            throw new NotImplementedException();
-        }
+            if (cluster is null)
+            {
+                return false;// "Ошибка. Не найден кластер по id";
+            }
+            else
+            {
+                if (parentId == cluster.ParentId)
+                {
+                    return true;// "Изменения не нужны, так как перемещения не произошло.";
+                }
+                if (parentId == -1)
+                {
+                    cluster.ParentId = -1;
+                    await _clusterRepository.Update(cluster);
+                    return true;// "Изменения были приняты иерархия была изменена";
+                }
 
-        public Task<string> UpdatePositionCluster(int clusterId, int parentId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> UpdatePositionCluster(string nameCluster, int parentId)
-        {
-            throw new NotImplementedException();
+                Cluster clusterParent = await _clusterRepository.Get(parentId);
+                if (clusterParent is not null)
+                {
+                    cluster.ParentId = parentId;
+                    await _clusterRepository.Update(cluster);
+                    return true;// "Изменения были приняты иерархия была изменена";
+                }
+                else
+                {
+                    return false;//"Ошибка. Родительский кластер не найден!";
+                }
+            }
         }
     }
 }

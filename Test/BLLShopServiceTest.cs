@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore.Query.Internal;
 using NpgsqlTypes;
 using BLL.Product;
 using BLL.Abstractions;
+using BLL.Products;
 
 
 namespace Test
@@ -21,6 +22,11 @@ namespace Test
         //private UserRepository _userRepository;
         private ProductService _productService;
         private ShopService _shopService; // Для создания магазина 
+        private ClusterService _clusterService;
+        private CommentService _commentService;
+        private CommentReplyService _commentReplyService;
+        private FavoriteProductService _favoriteProductService;
+
         //private ShopRepository _shopRepository;
         //private ShopOwnerRepository _shopOwnerRepository;
 
@@ -42,7 +48,7 @@ namespace Test
         /// <param name="word">Текст, который нужно отразить</param>
         private void ConsoleLogRed(string word)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(word);
             Console.ForegroundColor = ConsoleColor.White;
         }
@@ -54,6 +60,10 @@ namespace Test
         {
             _productService = new ProductService(cm);
             _shopService = new ShopService(cm);
+            _clusterService = new ClusterService(cm);
+            _commentService = new CommentService(cm);
+            _commentReplyService = new CommentReplyService(cm);
+            _favoriteProductService = new FavoriteProductService(cm);
             //_userRepository = new UserRepository(cm);
             //_shopRepository = new ShopRepository(cm);
             //_shopOwnerRepository = new ShopOwnerRepository(cm);
@@ -67,7 +77,7 @@ namespace Test
         /// <returns></returns>
         public async Task<bool> CreateShop()
         {
-            Random rand = new Random();
+            Random rand = new();
             for (int i = 0; i < 10; i++)
             {
                 string nameShop = $"Название магазина{rand.Next(0, 10_000)}";
@@ -90,7 +100,7 @@ namespace Test
         /// <returns></returns>
         public async Task TestDeleteShop()
         {
-            for (int i = 5; i < 5; i++) 
+            for (int i = 5; i < 5; i++)
             {
                 bool testDeleteObject = await _shopService.DeleteShop(i);
                 if (!testDeleteObject)
@@ -121,9 +131,9 @@ namespace Test
                 {
                     ConsoleLogGreen($"О великий, я успешно поменял название на {newName[i]}");
                 }
-                else 
+                else
                 {
-                   ConsoleLogRed($"Только не бейте, но мне не удалось изменить название вашего магазина на {newName[i]}");
+                    ConsoleLogRed($"Только не бейте, но мне не удалось изменить название вашего магазина на {newName[i]}");
                 }
             }
         }
@@ -137,35 +147,65 @@ namespace Test
         /// <returns></returns>
         public async Task TestAddCluster()
         {
-            string message = await _productService.AddNewCluster("кластер");
             // корневой элемент
-            ConsoleLogGreen(message);
+            if (await _clusterService.AddNewCluster("кластер"))
+            {
+                ConsoleLogGreen("Кластер создан");
+            }
+            else
+            {
+                ConsoleLogRed("Не удалось создать кластер");
+            }
+            Console.WriteLine("Попытка создать 10 кластеров (корневые элементы)");
+            for (int i = 0; i < 10; i++)
+            {
+                if (await _clusterService.AddNewCluster($"кластер1{i}"))
+                {
+                    ConsoleLogGreen($"Кластер создан,  название: кластер1{i}");
+                }
+                else
+                {
+                    ConsoleLogRed("Не удалось создать кластер, название: кластер1{i}");
+                }
+            }
+            Console.WriteLine("Попытка создать 10 кластеров (вложенных)");
 
             for (int i = 0; i < 10; i++)
             {
-
-                message = await _productService.AddNewCluster($"кластер1{i}");
-                // Дочерний элемент
-                ConsoleLogGreen(message);
+                if (await _clusterService.AddNewCluster($"кластер_Дочерний{i}", "кластер1"))
+                {
+                    ConsoleLogGreen("Кластер создан");
+                }
+                else
+                {
+                    ConsoleLogRed("Не удалось создать кластер");
+                }
             }
-            for (int i = 0; i < 10; i++)
+            Console.WriteLine("Испытания перегрузок кластера:");
+            if (await _clusterService.AddNewCluster("кластер1", 1))
             {
-
-                message = await _productService.AddNewCluster($"кластер_Дочерний{i}", "кластер1");
-                // Дочерний элемент
-                ConsoleLogGreen(message);
+                ConsoleLogGreen("Кластер создан");
             }
-            message = await _productService.AddNewCluster("кластер1", 1);
-            // Дочерний элемент
-            ConsoleLogGreen(message);
-
-            message = await _productService.AddNewCluster("кластер", 1);
-            // Дочерний элемент
-            ConsoleLogGreen(message);
-
-            message = await _productService.AddNewCluster("кластер тестирование string", "кластер");
-            // Дочерний элемент
-            ConsoleLogGreen(message);
+            else
+            {
+                ConsoleLogRed("Не удалось создать кластер");
+            }
+            if (await _clusterService.AddNewCluster("кластер", 1))
+            {
+                ConsoleLogGreen("Кластер создан");
+            }
+            else
+            {
+                ConsoleLogRed("Не удалось создать кластер");
+            }
+            if (await _clusterService.AddNewCluster("кластер тестирование string", "кластер"))
+            {
+                ConsoleLogGreen("Кластер создан");
+            }
+            else
+            {
+                ConsoleLogRed("Не удалось создать кластер");
+            }
         }
 
 
@@ -175,14 +215,33 @@ namespace Test
         /// <returns></returns>
         public async Task TestUpdateCluster()
         {
-            string message = await _productService.UpdateNameCluster(1, "кластер");
-            ConsoleLogGreen(message);
-            message = await _productService.UpdateNameCluster(1, "test");
-            ConsoleLogGreen(message);
-            message = await _productService.UpdateNameCluster(10, "test");
-            ConsoleLogGreen(message);
-            message = await _productService.UpdateNameCluster("test", "UpdateNameCluster");
-            ConsoleLogGreen(message);
+            Console.WriteLine("Попытка обновить кластер");
+          
+            if (await _clusterService.UpdateNameCluster(1, "кластер"))
+            {
+                ConsoleLogGreen("(id и новое имя) наименование кластера обновлено");
+            }
+            else
+            {
+                ConsoleLogRed("(id и новое имя) наименование кластера не обновлено");
+            }
+            if (await _clusterService.UpdateNameCluster(10, "кластер"))
+            {
+                ConsoleLogGreen("(id и новое имя) наименование кластера обновлено");
+            }
+            else
+            {
+                ConsoleLogRed("(id и новое имя) наименование кластера не обновлено");
+            }
+  
+            if (await _clusterService.UpdateNameCluster("test", "кластер"))
+            {
+                ConsoleLogGreen("(старое имя и новое имя) наименование кластера обновлено");
+            }
+            else
+            {
+                ConsoleLogRed("(старое имя и новое имя) наименование кластера не обновлено");
+            }
         }
 
         /// <summary>
@@ -191,14 +250,40 @@ namespace Test
         /// <returns></returns>
         public async Task TestDeleteCluster()
         {
-            string message = await _productService.DeleteCluster(1);
-            ConsoleLogGreen(message);
-            message = await _productService.DeleteCluster("кластер тестирование string");
-            ConsoleLogGreen(message);
-            message = await _productService.DeleteCluster(100000);
-            ConsoleLogGreen(message);
-            message = await _productService.DeleteCluster("Упадёт ли кластер или нет");
-            ConsoleLogGreen(message);
+            if (await _clusterService.DeleteCluster(1))
+            {
+                ConsoleLogGreen("(id) Кластер удалён id = 1");
+            }
+            else
+            {
+                ConsoleLogRed("(id) Кластер не удалён id = 1");
+            }
+            if (await _clusterService.DeleteCluster("кластер тестирование string"))
+            {
+                ConsoleLogGreen("(Наименование кластера) Кластер удалён Наименование = кластер тестирование string");
+            }
+            else
+            {
+                ConsoleLogRed("(Наименование кластера) Кластер не удалён Наименование = кластер тестирование string");
+            }
+
+            if (await _clusterService.DeleteCluster(100000))
+            {
+                ConsoleLogGreen("(id) Кластер удалён id = 100000");
+            }
+            else
+            {
+                ConsoleLogRed("(id) Кластер не удалён id = 100000");
+            }
+
+            if (await _clusterService.DeleteCluster("Упадёт ли кластер или нет"))
+            {
+                ConsoleLogGreen("(Наименование кластера) Кластер удалён Наименование = Упадёт ли кластер или нет");
+            }
+            else
+            {
+                ConsoleLogRed("(Наименование кластера) Кластер не удалён Наименование = Упадёт ли кластер или нет");
+            }
         }
 
         /// <summary>
@@ -207,8 +292,14 @@ namespace Test
         /// <returns></returns>
         public async Task TestUpdatePositionCluster()
         {
-            string message = await _productService.UpdatePositionCluster(2, 10);
-            ConsoleLogGreen(message);
+            if (await _clusterService.UpdatePositionCluster(2, 10))
+            {
+                ConsoleLogGreen("(id кластера, id родителя) Позиция кластера изменена ");
+            }
+            else
+            {
+                ConsoleLogGreen("(id кластера, id родителя) Позиция кластера не изменена");
+            }
 
         }
 
@@ -219,18 +310,19 @@ namespace Test
         public async Task TestGetCluster()
         {
             Console.WriteLine("\nПолучить все элементы кластеров:");
-            foreach (var item in await _productService.GetAllElementsCluster())
+            foreach (var item in await _clusterService.GetAllElementsCluster())
             {
                 Console.WriteLine($"{item.Name} {item.ParentId}");
+
             }
 
             Console.WriteLine("\nПолучить только корневые элементы кластера:");
-            foreach (var item in await _productService.GetRootElementsCluster())
+            foreach (var item in await _clusterService.GetRootElementsCluster())
             {
                 Console.WriteLine($"{item.Name} {item.ParentId}");
             }
             Console.WriteLine("\nПолучить дочерние элементы кластера:");
-            foreach (var item in await _productService.GetChildrenElementsCluster(2))
+            foreach (var item in await _clusterService.GetChildrenElementsCluster(2))
             {
                 Console.WriteLine($"{item.Name} {item.ParentId}");
             }
@@ -253,8 +345,14 @@ namespace Test
         /// <returns></returns>
         public async Task TestAddComment()
         {
-            string message = await _productService.AddNewComment(1, 1, 1, "Комментарий", 4.3m);
-            ConsoleLogGreen(message);
+            if (await _commentService.AddNewComment(1, 1, 1, "Комментарий", 4.3m))
+            {
+                ConsoleLogGreen($"О великий, коментарий создан ");
+            }
+            else
+            {
+                ConsoleLogRed($"Только не бейте, но коментарий не был создан");
+            }
         }
 
         /// <summary>
@@ -263,10 +361,22 @@ namespace Test
         /// <returns></returns>
         public async Task TestUpdateComment()
         {
-            string message = await _productService.UpdateComment(1, "Комментарий обновлённый", 4.3m);
-            ConsoleLogGreen(message);
-            message = await _productService.UpdateComment(1, "Комментарий обновлённый ошибка", 4.3m);
-            ConsoleLogGreen(message);
+            if (await _commentService.UpdateComment(1, "Комментарий обновлённый", 4.3m))
+            {
+                ConsoleLogGreen($"коментарий Обновлён");
+            }
+            else
+            {
+                ConsoleLogRed($"Коментарий Не Обновлён");
+            }
+            if (await _commentService.UpdateComment(1, "Комментарий обновлённый ошибка", 4.3m))
+            {
+                ConsoleLogGreen($"коментарий Обновлён");
+            }
+            else
+            {
+                ConsoleLogRed($"Коментарий Не Обновлён");
+            }
         }
         /// <summary>
         /// Удаление(скрыть) комментария пользователя
@@ -274,10 +384,23 @@ namespace Test
         /// <returns></returns>
         public async Task TestDeleteComment()
         {
-            string message = await _productService.DeleteComment(1);
-            ConsoleLogGreen(message);
-            message = await _productService.DeleteComment(1);
-            ConsoleLogGreen(message);
+            if( await _commentService.DeleteComment(1))
+            {
+                ConsoleLogGreen($"коментарий удалён");
+            }
+            else
+            {
+                ConsoleLogRed($"Коментарий Не удалён");
+            }
+
+            if (await _commentService.DeleteComment(1))
+            {
+                ConsoleLogGreen($"коментарий удалён");
+            }
+            else
+            {
+                ConsoleLogRed($"Коментарий Не удалён");
+            }
         }
 
 
@@ -287,11 +410,25 @@ namespace Test
         /// <returns></returns>
         public async Task TestAddCommentReply()
         {
-            string message = await _productService.AddNewOrUpdateCommentReplyIdCommentUser(1, "Ответный комментарий");
-            ConsoleLogGreen(message);
+            if (await _commentReplyService.AddReplyComment(1, "Ответный комментарий")) 
+            {
+                ConsoleLogGreen($"Ответный комментарий добавлен");
+            }
+            else
+            {
+                ConsoleLogRed($"Не получилось добавить ответный комментарий");
+            }
 
-            message = await _productService.AddNewOrUpdateCommentReplyIdCommentReply(1, "Ответный комментарий со стороны Reply");
-            ConsoleLogGreen(message);
+
+            if (await _commentReplyService.AddReplyComment(1, "Ответный комментарий со стороны Reply"))
+            {
+                ConsoleLogGreen($"Ответный комментарий добавлен");
+            }
+            else
+            {
+                ConsoleLogRed($"Не получилось добавить ответный комментарий");
+            }
+           
         }
 
         /// <summary>
@@ -300,11 +437,18 @@ namespace Test
         /// <returns></returns>
         public async Task TestDeleteCommentReply()
         {
-            string message = await _productService.AddNewOrUpdateCommentReplyIdCommentUser(1, "Ответный комментарий");
-            ConsoleLogGreen(message);
+            if (await _commentReplyService.DeleteCommentReply(2))
+            {
+                ConsoleLogGreen($"Удалён отвеный комментарий");
+            }
+            else
+            {
+                ConsoleLogRed($"Добавлен ответный комментарий");
+            }
+          
 
-            message = await _productService.AddNewOrUpdateCommentReplyIdCommentReply(1, "Ответный комментарий со стороны Reply");
-            ConsoleLogGreen(message);
+            //message = await _productService.AddNewOrUpdateCommentReplyIdCommentReply(1, "Ответный комментарий со стороны Reply");
+            //ConsoleLogGreen(message);
         }
 
         /// <summary>
@@ -313,7 +457,7 @@ namespace Test
         /// <returns></returns>
         public async Task GetAllComment()
         {
-            foreach (var item in await _productService.GetCommentProduct(1))
+            foreach (var item in await _commentService.GetCommentProduct(1))
             {
                 ConsoleLogGreen($"{item.Text} {item.IsDeleted}");
             }
@@ -322,7 +466,54 @@ namespace Test
         #endregion
 
 
-
+        #region тестирование избранных позиция магазина
+        /// <summary>
+        /// Добовление позиции в избраное
+        /// </summary>
+        /// <returns></returns>
+        public async Task TestAddFavoriteProduct()
+        {
+            if (await _favoriteProductService.AddFavoriteProduct(1, 1))
+            {
+                ConsoleLogGreen($"Позиция добавлнена в избранное");
+            }
+            else
+            {
+                ConsoleLogRed($"Позиция не добавлнена в избранное");
+            }
+            //if (await _favoriteProductService.AddFavoriteProduct(-1212, 12))
+            //{
+            //    ConsoleLogGreen($"Позиция добавлнена в избранное");
+            //}
+            //else
+            //{
+            //    ConsoleLogRed($"Позиция не добавлнена в избранное");
+            //}
+        }
+        /// <summary>
+        /// Удаление избраной позиции
+        /// </summary>
+        /// <returns></returns>
+        public async Task TestDeleteFavoriteProduct()
+        {
+            if (await _favoriteProductService.DeleteFavoriteProduct(1))
+            {
+                ConsoleLogGreen($"Позиция удалена избранного");
+            }
+            else
+            {
+                ConsoleLogRed($"Позиция не удалена из избранного");
+            }
+            if (await _favoriteProductService.DeleteFavoriteProduct(1111))
+            {
+                ConsoleLogGreen($"Позиция удалена избранного");
+            }
+            else
+            {
+                ConsoleLogRed($"Позиция не удалена из избранного");
+            }
+        }
+        #endregion
     }
 
 }

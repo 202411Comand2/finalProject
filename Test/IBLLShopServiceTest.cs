@@ -104,5 +104,20 @@ namespace Test
         public Task GetAllComment();
 
         #endregion
+
+        #region тестирование избранных позиция магазина
+        /// <summary>
+        /// Добовление позиции в избраное
+        /// </summary>
+        /// <returns></returns>
+        public  Task TestAddFavoriteProduct();
+     
+        /// <summary>
+        /// Удаление избраной позиции
+        /// </summary>
+        /// <returns></returns>
+        public  Task TestDeleteFavoriteProduct();
+       
+        #endregion
     }
 }

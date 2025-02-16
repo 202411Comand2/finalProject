@@ -1,5 +1,4 @@
-﻿using BLL.Abstractions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +7,7 @@ using Domain.Entities;
 using DAL.Repositories;
 using DAL.Abstractions;
 using System.Xml.Linq;
+using BLL.Products.Abstractions;
 
 
 namespace BLL.Product
@@ -28,7 +28,7 @@ namespace BLL.Product
             {
                 return null;
             }
-            Shop newShop = new Shop
+            Shop newShop = new()
             {
                 Name = shopeName,
                 IsDelete = false,
@@ -51,7 +51,7 @@ namespace BLL.Product
             else
             {
                 shop.IsDelete = true;
-                await _shopRepository.Update(shop);
+                await _shopRepository.DeleteShopWithProducts(shop);
                 return true;
             }
         }

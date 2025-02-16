@@ -171,15 +171,15 @@ namespace BLL.ProductService
             {
                 return "Ошибка кластер по id не найден";
             }
-            Rating rating = new Rating()
+            Rating rating = new()
             {
                 //ProductID = -1,
                 AmountOfComments = 1,
                 AverageRating = 5,
             };
             
-            await _ratingRepository.Add(rating);
-            Domain.Entities.Product product = new Domain.Entities.Product()
+         //   await _ratingRepository.Add(rating);
+            Domain.Entities.Product product = new()
             {
                 Price = 1005.8M,
                 Name = "test",
@@ -188,28 +188,18 @@ namespace BLL.ProductService
                 Description = "Description",
                 ClusterId = cluster.Id,
                 ShopId = shop.Id,
-                RatingId = rating.RatingId
+                Rating = rating
             };
 
             var s = await _productRepository.Add(product);
-            // костыль обсудить!!!
-            //product.Cluster = cluster;
-            //product.Shop = shop;
-            //product.Rating = rating;
-            //var s1 = await _productRepository.Update(product);
-
-            //rating.ProductID = product.Id;
-            //await _productRepository.Update(product);
-            //Product ssss = await _productRepository.Get(product.Id);
-            //cluster.Products.Add(product);
-            //await _clusterRepository.Update(cluster);
+  
 
             return "Продукт прикреплён к магазину и кластеру добавлен";
         }
         #endregion
 
         #region Управление кластером(классификатором)
-
+        /*
         /// <summary>
         /// Добавить кластер(классификатор) корневой элемент
         /// </summary>
@@ -479,7 +469,6 @@ namespace BLL.ProductService
             }
         }
 
-
         /// <summary>
         /// Получить все элементы кластеров
         /// </summary>
@@ -530,13 +519,13 @@ namespace BLL.ProductService
         }
 
 
-
+        */
         #endregion
 
         #region управление отзывами
 
         #region отзывы покупателей
-
+        /*
         /// <summary>
         /// Получить все комментарии по продукту
         /// </summary>
@@ -579,7 +568,7 @@ namespace BLL.ProductService
                 Domain.Entities.Product product = await _productRepository.Get(idProduct);
                 if (comment is null)
             {
-                CommentReply reply = new CommentReply()
+                CommentReply reply = new()
                 {
                     Text = "",
                 };
@@ -654,10 +643,13 @@ namespace BLL.ProductService
                 return "Не удалось удалить комментарий из-за отсутствия его в бд";
             }
         }
+        */
+       
+        
         #endregion
 
         #region отзывы продовцов по 2 перегрузки
-
+        /*
         /// <summary>
         /// Добавить(Обновить) ответ на комментарий пользователя со стороны магазина (id комментария пользователя)
         /// </summary>
@@ -767,7 +759,7 @@ namespace BLL.ProductService
                 return "Не удалось удалить комментарий ввиду отсутствия";
             }
         }
-
+        */
 
         #endregion
 

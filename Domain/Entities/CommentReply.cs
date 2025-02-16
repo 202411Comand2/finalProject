@@ -17,7 +17,7 @@ namespace Domain.Entities
         /// Текстовое описание
         /// </summary>
         [Required, MaxLength(400),Column("text")]
-        public string Text { get; set; }
+        public string Text { get; set; } = string.Empty;
         
         /// <summary>
         /// Удалён ли комментарий

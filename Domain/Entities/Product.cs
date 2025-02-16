@@ -13,6 +13,13 @@ namespace Domain.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+
+        /// <summary>
+        /// Продукт удалён
+        /// </summary>
+        [Column("is_deleted")]
+        public bool IsDeleted { get; set; } = false;
+
         /// <summary>
         /// Номер модели
         /// </summary>
