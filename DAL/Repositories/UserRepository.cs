@@ -15,14 +15,16 @@ namespace DAL.Repositories
         {
             using(var context = CreateDatabaseContext())
             {
-                return await context.Users.FirstOrDefaultAsync(x => x.Email == email);
+                return await context.Users.Where(u => u.IsDeleted == false)
+                    .FirstOrDefaultAsync(x => x.Email == email);
             }
         }
         public async Task<User> GetByPhone(string phone)
         {
             using (var context = CreateDatabaseContext())
             {
-                return await context.Users.FirstOrDefaultAsync(x => x.Phone == phone);
+                return await context.Users.Where(u => u.IsDeleted == false)
+                    .FirstOrDefaultAsync(x => x.Phone == phone);
             }
         }
 	}

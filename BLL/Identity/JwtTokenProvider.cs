@@ -1,6 +1,8 @@
 ﻿using BLL.Identity.Abstractions;
 using Domain.Entities;
 using Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -41,6 +43,31 @@ namespace BLL.Identity
 				);
 
 			return new JwtSecurityTokenHandler().WriteToken(token);
+		}
+
+		public IEnumerable<Claim> ValidateToken(string tokenValue)
+		{
+			var handler = new JwtSecurityTokenHandler();
+			var valParams = new TokenValidationParameters
+			{
+				ValidateIssuerSigningKey = true,
+				IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)),
+				ValidateIssuer = false,
+				ValidateAudience = false,
+				ValidateLifetime = true,
+			};
+
+			try
+			{
+				var principal = handler.ValidateToken(tokenValue, valParams, out var validatedToken);
+
+				return principal.Claims;
+			}
+			catch (SecurityTokenException ex)
+			{
+				// Добавить лог об ошибке
+				return null;
+			}
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using API.Models;
 using BLL.Identity.Abstractions;
+using BLL.Identity.Exceptions;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,13 +19,21 @@ namespace API.Controllers
         [HttpPost("Register")]
         public async Task<ActionResult<int>> RegisterByPhone([FromBody] UserRegisterModel registerModel)
         {
-            var result = await _identityService.Register(registerModel.Username,
-                registerModel.Password,
-                registerModel.Contact);
+            User result = null;
+            try
+            {
+				result = await _identityService.Register(registerModel.Username,
+				registerModel.Password,
+				registerModel.Contact);
+			}
+            catch (IdentityServiceException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             if (result == null) return NotFound();
 
-            return new ActionResult<int>(result.Id);
+            return Ok();
         }
         [HttpGet("Login/{contact}")]
         public async Task<ActionResult<string>> Login(string contact, string password)

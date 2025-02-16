@@ -27,6 +27,13 @@
       "applicationUrl": "https://localhost:7039;http://localhost:5046",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "SecretsSettings": {
+        "ConnectionString": "Host=localhost;Port=5000;Username=admin;Password=admin;Database=SuperDeal;"
+      },
+      "JwtOptions": {
+        "SecretKey": "ExampleKeyExampleKeyExampleKeyExampleKeyExampleKey",
+        "ExpiresHours": 1
       }
     },
     "IIS Express": {

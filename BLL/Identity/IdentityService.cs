@@ -12,6 +12,7 @@ namespace BLL.Identity
     public class IdentityService : IIdentityService
     {
         private readonly UserRepository _userRepository;
+        private readonly ShopOwnerRepository _shopOwnerRepository;
         private readonly AccessTokenRepository _accessTokenRepository;
         private readonly IGenericDataHasher<string> _passwordHasher;
         private readonly IJwtTokenProvider _jwtTokenProvider;
@@ -21,6 +22,7 @@ namespace BLL.Identity
             IJwtTokenProvider tokenProvider,
             IGenericDataHasher<string> passwordHasher)
         {
+            _shopOwnerRepository = new ShopOwnerRepository(contextManager);
             _userRepository = new UserRepository(contextManager);
             _accessTokenRepository = new AccessTokenRepository(contextManager);
             _passwordHasher = passwordHasher;
@@ -36,6 +38,21 @@ namespace BLL.Identity
             if (contact.IsEmail()) return await RegisterByEmail(username, password, contact);
             else if (contact.IsPhoneNumber()) return await RegisterByPhone(username, password, contact);
             else throw new InvalidContactInputException();
+        }
+        public async Task<bool> RegisterSeller(User user, Shop shop)
+        {
+            var newOwner = new ShopOwner()
+            {
+                IsHost = true,
+                IsDeleted = false,
+                UserId = user.Id,
+                ShopId = shop.Id,
+            };
+
+            var result = await _shopOwnerRepository.Add(newOwner);
+
+            if (result == null) return false;
+            return true;
         }
         public async Task<User> RegisterByPhone(string username, string password, string phone)
         {
@@ -74,7 +91,12 @@ namespace BLL.Identity
             else if (contact.IsPhoneNumber()) return await AuthUserByPhone(contact, password);
             else throw new InvalidContactInputException();
         }
-		public async Task<string> AuthUserByEmail(string email, string password)
+        //public async Task<string> BizLogin(string token, int shopId)
+        //{
+        //    var claims = _jwtTokenProvider.ValidateToken(token);
+            
+        //}
+        public async Task<string> AuthUserByEmail(string email, string password)
         {
             if (email.IsNullOrEmpty()) {throw new ArgumentNullException(nameof(email));}
             if (password.IsNullOrEmpty()) {throw new ArgumentNullException(nameof(password));}
