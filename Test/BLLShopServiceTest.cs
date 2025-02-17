@@ -19,7 +19,7 @@ namespace Test
 {
     internal class BLLShopServiceTest : IBLLShopServiceTest
     {
-        //private UserRepository _userRepository;
+        private UserRepository _userRepository;
         private ProductService _productService;
         private ShopService _shopService; // Для создания магазина 
         private ClusterService _clusterService;

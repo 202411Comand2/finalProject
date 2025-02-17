@@ -768,6 +768,7 @@ namespace BLL.ProductService
 
 
         #region Избранные позиции пользователя
+        /*
         /// <summary>
         /// Добавить товар в избранное
         /// </summary>
@@ -812,12 +813,12 @@ namespace BLL.ProductService
             await _favoriteRepository.Delete(favorite);
             return "Удалалил из избранного";
         }
-
+        */
         #endregion
 
 
         #region работа с рейтингом товара
-
+        /*
         /// <summary>
         /// Работа с рейтингом товара
         /// </summary>
@@ -861,7 +862,7 @@ namespace BLL.ProductService
 
             return "";
         }
-
+        */
         #endregion
 
 
