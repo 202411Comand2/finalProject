@@ -1,10 +1,10 @@
-﻿using BLL.Abstractions;
+﻿using BLL.Identity.Abstractions;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace BLL.Identity
 {
-	public class StringHasher : IGenericDataHasher<string>
+    public class StringHasher : IGenericDataHasher<string>
 	{
 		private static readonly byte _saltSize = 16;
 		private static readonly byte _hashSize = 128;
