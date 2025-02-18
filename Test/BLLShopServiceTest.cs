@@ -38,6 +38,16 @@ namespace Test
         }
 
         /// <summary>
+        /// Для вывода в консоль данных (Желтый цвет)
+        /// </summary>
+        /// <param name="word">Текст, который нужно отразить</param>
+        private void ConsoleLogYeelow(string word)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(word);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        /// <summary>
         /// Для вывода в консоль данных (Красный цвет)
         /// </summary>
         /// <param name="word">Текст, который нужно отразить</param>
@@ -338,7 +348,7 @@ namespace Test
                     123, 
                     $"model number_{i}"))
                 {
-                    ConsoleLogGreen("Продукт был добавлен");
+                    ConsoleLogYeelow("Продукт был добавлен");
                 }
                 else
                 {
@@ -355,7 +365,7 @@ namespace Test
         {
             if (await _productService.DeleteProduct(10))
             {
-                ConsoleLogGreen("Продукт удалён");
+                ConsoleLogYeelow("Продукт удалён");
             }
             else
             {
@@ -377,7 +387,7 @@ namespace Test
                     123,
                     $"model number_{i}"))
                 {
-                    ConsoleLogGreen("Продукт был обновлён");
+                    ConsoleLogYeelow("Продукт был обновлён");
                 }
                 else
                 {
@@ -394,7 +404,7 @@ namespace Test
             Console.WriteLine("Получение всех товаров магазина");
             foreach (var item in await _productService.GetShopProducts(2)) 
             {
-                ConsoleLogGreen($"Название: {item.Name} Магазин:{item.ShopId}");
+                ConsoleLogYeelow($"Название: {item.Name} Магазин:{item.ShopId}");
             }
         }
         /// <summary>
@@ -406,7 +416,7 @@ namespace Test
             Console.WriteLine("Получение всех товаров без учёта магазина");
             foreach (var item in await _productService.GetAllProduct())
             {
-                ConsoleLogGreen($"Название: {item.Name} Магазин:{item.ShopId}");
+                ConsoleLogYeelow($"Название: {item.Name} Магазин:{item.ShopId}");
             }
         }
 
