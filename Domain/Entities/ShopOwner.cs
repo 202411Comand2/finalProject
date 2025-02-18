@@ -22,7 +22,7 @@ namespace Domain.Entities
         /// <summary>
         /// true - пользователь удалён, false - пользователь не удалён
         /// </summary>
-        [Required, Column("is_delete")] public bool IsDeleted { get; set; } = false;
+        [Required, Column("is_deleted")] public bool IsDeleted { get; set; } = false;
         /// <summary>
         /// Id пользователя
         /// </summary>
