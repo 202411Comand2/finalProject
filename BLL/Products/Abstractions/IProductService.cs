@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,9 +54,40 @@ namespace BLL.Products.Abstractions
         /// <summary>
         /// Получить всё продукты
         /// </summary>
-        /// <param name="shopId">Id магазина</param>
         /// <returns>Коллекция продуктов</returns>
         public Task<List<Domain.Entities.Product>> GetAllProduct();
 
+        /// <summary>
+        /// Получить список продуктов, которые прикреплены к кластеру по кластру
+        /// </summary>
+        /// <param name="clusterId">Id кластера</param>
+        /// <returns></returns>
+        public Task<List<Domain.Entities.Product>> GetProductsByCluster(int clusterId);
+
+        /// <summary>
+        /// Добавить новый рейтинг
+        /// </summary>
+        /// <param name="productId">Id продукта</param>
+        /// <param name="reting">Рентинг товара</param>
+        /// <returns></returns>
+        public Task<bool> AddReting(int productId, decimal reting);
+
+        /// <summary>
+        /// Обновление рейтига
+        /// </summary>
+        /// <param name="productId">Id продукта</param>
+        /// <param name="newReting">Рентинг товара</param>
+        /// <param name="oldReting">Старый рейтинг товара</param>
+        /// <returns></returns>
+        public Task<bool> UpdateReting(int productId, decimal newReting, decimal oldReting);
+
+
+        /// <summary>
+        /// Удаление рейтинга
+        /// </summary>
+        /// <param name="productId">Id продукта</param>
+        /// <param name="reting">Рентинг товара</param>
+        /// <returns></returns>
+        public Task<bool> DeleteReting(int productId, decimal reting);
     }
 }

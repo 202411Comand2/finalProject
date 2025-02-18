@@ -67,6 +67,7 @@ namespace Test
         public Task TestUpdateProduct();
         public Task GetShopProducts();
         public Task GetAllProduct();
+        public Task GetClusterProducts();
         #endregion
 
         #region Работа с отзывами

@@ -13,7 +13,7 @@ namespace BLL.Products.Abstractions
         /// <summary>
         /// Получить все комментарии по продукту
         /// </summary>
-        /// <param name="idProduct"></param>
+        /// <param name="productId">id комментария</param>
         /// <returns></returns>
         public Task<List<Comment>> GetCommentProduct(int productId);
 
@@ -26,27 +26,27 @@ namespace BLL.Products.Abstractions
         /// <param name="shopId">id магазина</param>
         /// <param name="productId">id продукта</param>
         /// <param name="textComment">Текст комментария</param>
-        /// <param name="Estimation">Оценка</param>
+        /// <param name="estimation">Оценка</param>
         /// <returns></returns>
-        public Task<bool> AddNewComment(int userId, int shopId, int productId, string textComment, decimal Estimation);
+        public Task<bool> AddNewComment(int userId, int shopId, int productId, string textComment, decimal estimation);
 
 
         /// <summary>
         /// Обновление комментария
         /// </summary>
-        /// <param name="CommentId">id комментария</param>
+        /// <param name="сommentId">id комментария</param>
         /// <param name="textComment">Новый текст комментария</param>
         /// <param name="Estimation">Новая оценка комментария</param>
         /// <returns></returns>
-        public Task<bool> UpdateComment(int CommentId, string textComment, decimal Estimation);
+        public Task<bool> UpdateComment(int сommentId, string textComment, decimal Estimation);
 
 
         /// <summary>
         /// Удаление комментарий (скрыть IsDeleted = true)
         /// </summary>
-        /// <param name="CommentId">id комментария</param>
+        /// <param name="сommentId">id комментария</param>
         /// <returns></returns>
-        public Task<bool> DeleteComment(int CommentId);
+        public Task<bool> DeleteComment(int сommentId);
 
     }
 }

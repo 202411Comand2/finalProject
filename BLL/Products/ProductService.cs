@@ -60,7 +60,8 @@ namespace BLL.ProductService
                 return false;   
 
             }
-            await _productRepository.Delete(product);
+            product.IsDeleted= true;
+            await _productRepository.Update(product);
             return false;
         }
 
@@ -86,5 +87,80 @@ namespace BLL.ProductService
 
         public async Task<List<Domain.Entities.Product>> GetAllProduct()=> (List<Domain.Entities.Product>) await _productRepository.GetAll();
        
+
+        public async Task<List<Domain.Entities.Product>> GetProductsByCluster(int clusterId) => await _productRepository.GetProductsByCluster(clusterId);
+
+        public async Task<bool> AddReting(int productId, decimal reting)
+        {
+            Domain.Entities.Product product = await _productRepository.Get(productId);
+            if (product == null)
+            {
+                return false;
+            }
+            if (product.AmountOfComments == 0)
+            {
+                product.AverageRating = reting;
+                product.AmountOfComments = 1;
+                await _productRepository.Update(product);
+                return true;
+            }
+            else 
+            {
+                product.AverageRating = (product.AverageRating * product.AmountOfComments + product.AverageRating) / product.AmountOfComments + 1;
+                // востанавливаем рейтинг и прибавляем новые данные, потом делем на количество отзывом
+                product.AmountOfComments = product.AmountOfComments + 1;
+                await _productRepository.Update(product);
+                return true; 
+            }
+        }
+
+        public async Task<bool> UpdateReting(int productId, decimal newReting, decimal oldReting)
+        {
+            Domain.Entities.Product product = await _productRepository.Get(productId);
+            decimal reting = newReting - oldReting;
+            if (product == null)
+            {
+                return false;
+            }
+            if (product.AmountOfComments == 1)
+            {
+                product.AverageRating = newReting;
+                product.AmountOfComments = 1;
+                await _productRepository.Update(product);
+                return true;
+            }
+            else
+            {
+                product.AverageRating = (product.AverageRating * product.AmountOfComments + reting) / product.AmountOfComments;
+                // востанавливаем рейтинг и прибавляем новые данные, потом делем на количество отзывом
+                product.AmountOfComments = product.AmountOfComments;
+                await _productRepository.Update(product);
+                return true;
+            }
+        }
+
+        public async Task<bool> DeleteReting(int productId, decimal reting)
+        {
+            Domain.Entities.Product product = await _productRepository.Get(productId);
+            if (product == null)
+            {
+                return false;
+            }
+            if (product.AmountOfComments == 1)
+            {
+                product.AverageRating = 0;
+                product.AmountOfComments = 0;
+                await _productRepository.Update(product);
+                return true;
+            }
+            else
+            {
+                product.AverageRating = (product.AverageRating * product.AmountOfComments - reting) / product.AmountOfComments-1;
+                // востанавливаем рейтинг и прибавляем новые данные, потом делем на количество отзывом
+                product.AmountOfComments = product.AmountOfComments-1;
+                await _productRepository.Update(product);
+                return true;
+            }
+        }
     }
 }

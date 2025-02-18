@@ -143,7 +143,6 @@ namespace BLL.Products
 
         public async Task<List<Cluster>> GetRootElementsCluster() => await _clusterRepository.GetRootElementsClaster();
         
-
         public async Task<bool> UpdateNameCluster(int clasterId, string newNameClaster)
         {
             Cluster cluster = await _clusterRepository.Get(clasterId);
@@ -168,7 +167,6 @@ namespace BLL.Products
             }
         }
         
-
         public async  Task<bool> UpdateNameCluster(string oldNameClaster, string newNameClaster)
         {
             Cluster cluster = await _clusterRepository.GetNameCluster(oldNameClaster);

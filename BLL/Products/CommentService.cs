@@ -23,28 +23,15 @@ namespace BLL.Products
         }
 
 
-        public async Task<bool> AddNewComment(int userId, int shopId, int productId, string textComment, decimal Estimation)
+        public async Task<bool> AddNewComment(int userId, int shopId, int productId, string textComment, decimal estimation)
         {
             Comment? comment = await _commentRepository.GetCommentUser(userId, productId);
-            //if (await _shopRepository.Get(idShop) is null)
-            //{
-            //    return "Ошибка. Отсутствует магазин!";
-            //}
-            //if (await _productRepository.Get(idProduct) is null)
-            //{
-            //    return "Ошибка. Отсутствует продукт!";
-            //}
-            //if (await _userRepository.Get(idUser) is null)
-            //{
-            //    return "Ошибка. Отсутствует пользователь!";
-            //}
-            // Domain.Entities.Product product = await _productRepository.Get(idProduct);
-            
+           
             if (comment is null)
             {
                 comment = new Comment
                 {
-                    Estimation = Estimation,
+                    Estimation = estimation,
                     Text = textComment,
                     UserId = userId,
                     ShopId = shopId,
@@ -61,9 +48,9 @@ namespace BLL.Products
             }
         }
 
-        public async Task<bool> DeleteComment(int CommentId)
+        public async Task<bool> DeleteComment(int commentId)
         {
-            Comment? comment = await _commentRepository.Get(CommentId);
+            Comment? comment = await _commentRepository.Get(commentId);
             if (comment is not null && comment.IsDeleted == false)
             {
                 CommentReply commentReply = await _commentReplyRepository.Get(comment.IdReply);
@@ -83,14 +70,14 @@ namespace BLL.Products
         public async Task<List<Comment>> GetCommentProduct(int productId) => await _commentRepository.GetAllCommentOnTheProduct(productId);
             
 
-        public async Task<bool> UpdateComment(int CommentId, string textComment, decimal Estimation)
+        public async Task<bool> UpdateComment(int CommentId, string textComment, decimal estimation)
         {
             Comment? comment = await _commentRepository.Get(CommentId);
             if (comment is not null)
             {
                 decimal oldEstimation = comment.Estimation;
                 comment.Text = textComment;
-                comment.Estimation = Estimation;
+                comment.Estimation = estimation;
 
                 var result = await _commentRepository.Update(comment);
                 //   await UpdateRatingProduct(comment, "update", oldEstimation);

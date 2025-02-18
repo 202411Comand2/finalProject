@@ -404,12 +404,26 @@ namespace Test
         public async Task GetAllProduct() 
         {
             Console.WriteLine("Получение всех товаров без учёта магазина");
-            foreach (var item in await _productService.GetShopProducts(2))
+            foreach (var item in await _productService.GetAllProduct())
             {
                 ConsoleLogGreen($"Название: {item.Name} Магазин:{item.ShopId}");
             }
         }
 
+
+        public async Task GetClusterProducts() 
+        {
+            Console.WriteLine("Получение всех товаров по id кластеру");
+            foreach (var item in await _productService.GetProductsByCluster(2))
+            {
+                ConsoleLogGreen($"Название: {item.Name} Магазин:{item.ShopId}");
+            }
+
+            foreach (var item in await _productService.GetProductsByCluster(21))
+            {//проверка на то что ничего не упало
+                ConsoleLogGreen($"Название: {item.Name} Магазин:{item.ShopId}");
+            }
+        }
         #endregion
 
         #region Работа с отзывами (+ рейтинг товара, так как это внутреняя вещь отзывов)

@@ -24,7 +24,20 @@ namespace DAL.Repositories
             }
         }
 
-       
+        /// <summary>
+        /// Вернуть список продуктов по кластреру
+        /// </summary>
+        /// <param name="clusterId">Id Кластера</param>
+        /// <returns></returns>
+        public async Task<List<Product>> GetProductsByCluster(int clusterId) 
+        {
+            using (var context = CreateDatabaseContext())
+            { 
+                return await context.Products.Where(p => p.ClusterId == clusterId).ToListAsync();
+            }
+        }
+
+
         /// <summary>
         /// Получить продукт со связими (one to one)
         /// </summary>

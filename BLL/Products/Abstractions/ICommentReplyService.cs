@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Products.Abstractions
 {
-    public interface ICommentReply
+    public interface ICommentReplyService
     {
         /// <summary>
         /// Добавить ответ на комментарий пользователя со стороны магазина (id комментария пользователя)
