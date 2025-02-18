@@ -10,6 +10,7 @@ namespace DAL.Repositories
         {
 
         }
+        
         /// <summary>
         /// Получить все комментарии по продукту
         /// </summary>
@@ -22,23 +23,24 @@ namespace DAL.Repositories
                return await context.Comments.Where(p => p.IdProduct == idProduct ).ToListAsync();
             }
         }
+
         /// <summary>
         /// Получить объект со связими
         /// </summary>
         /// <param name="idComment">id Комментария</param>
         /// <returns></returns>
-        public async Task<Comment> GetWithInclude(int idComment) 
-        {
-            using (var context = CreateDatabaseContext())
-            {
-                return await context.Comments
-                    .Include(c=>c.Product)
-                    .Include(d=>d.Replies)
-                    .Include(u=>u.User)
-                    .Include(s=>s.Shop)
-                    .Where(p => p.Id == idComment).FirstOrDefaultAsync();
-            }
-        }
+        //public async Task<Comment> GetWithInclude(int idComment) 
+        //{
+        //    using (var context = CreateDatabaseContext())
+        //    {
+        //        return await context.Comments
+        //            .Include(c=>c.Product)
+        //            .Include(d=>d.Replies)
+        //            .Include(u=>u.User)
+        //            .Include(s=>s.Shop)
+        //            .Where(p => p.Id == idComment).FirstOrDefaultAsync();
+        //    }
+        //}
 
 
 
@@ -55,5 +57,28 @@ namespace DAL.Repositories
                 return await context.Comments.FirstOrDefaultAsync(p => p.UserId == idUser && p.IdProduct == idProduct);
             }
         }
+
+
+        /// <summary>
+        /// Добавление комментария
+        /// </summary>
+        /// <param name="comment">Объект комментарий</param>
+        /// <returns></returns>
+        public  async Task<Comment> Add(Comment comment , CommentReply reply) 
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                comment.Replies = reply;
+                comment.UserName = (await context.Users.FindAsync(comment.UserId))?.Name;
+                await context.Comments.AddAsync(comment);
+                await context.SaveChangesAsync();
+                reply.IdComment = comment.Id;
+                await context.SaveChangesAsync();
+            }
+            return comment;
+        }
+
+
+
     }
 }

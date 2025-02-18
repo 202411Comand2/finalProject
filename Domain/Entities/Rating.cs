@@ -20,13 +20,13 @@ namespace Domain.Entities
         /// Средний рейтинг оценки продукта
         /// </summary>
         [Column("average_rating")]
-        public decimal AverageRating { get; set; }
+        public decimal AverageRating { get; set; } = 0;
 
         /// <summary>
         /// Количество комментариев
         /// </summary>
         [Column("amount_of_comments")]
-        public int AmountOfComments { get; set; }
+        public int AmountOfComments { get; set; } = 0;
       
         /// <summary>
         /// Вернуть Id объекта
@@ -43,8 +43,10 @@ namespace Domain.Entities
         /// </summary>
         public int? ProductID { get; set; }
 
-        [ForeignKey(nameof(ProductID))]
-        public Product? Product { get; set; }
+        //[ForeignKey(nameof(ProductID))]
+        //public Product? Product { get; set; }
+
+
 
         #endregion
     }

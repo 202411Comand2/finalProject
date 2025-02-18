@@ -10,15 +10,33 @@ namespace DAL.Repositories
         {
 
         }
+
         /// <summary>
-        /// Вернуть рейтинг товара
+        /// Получить продукты по магазину
         /// </summary>
-        /// <param name="idProduct"></param>
+        /// <param name="shopId">Id магазина</param>
         /// <returns></returns>
-        public async Task GetIncludeReting(int idProduct) 
+        public async Task<List<Product>> GetShopProducts(int shopId) 
         {
-        
+            using (var context = CreateDatabaseContext())
+            {
+                return await context.Products.Where(p => p.ShopId == shopId).ToListAsync();
+            }
         }
+
+        /// <summary>
+        /// Вернуть список продуктов по кластреру
+        /// </summary>
+        /// <param name="clusterId">Id Кластера</param>
+        /// <returns></returns>
+        public async Task<List<Product>> GetProductsByCluster(int clusterId) 
+        {
+            using (var context = CreateDatabaseContext())
+            { 
+                return await context.Products.Where(p => p.ClusterId == clusterId).ToListAsync();
+            }
+        }
+
 
         /// <summary>
         /// Получить продукт со связими (one to one)
@@ -30,7 +48,6 @@ namespace DAL.Repositories
             using (var context = CreateDatabaseContext())
             {
                 return await context.Products
-                    .Include(c => c.RatingId)
                     .Include(cl => cl.Cluster)
                     .Include(sh => sh.Shop)
                     .Where(p => p.Id == idProduct).FirstOrDefaultAsync();

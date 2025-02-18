@@ -61,10 +61,14 @@ namespace Test
 
         #endregion
 
-        #region работа с магазином просто для тестирования других сервисов
+        #region работа с товарами магазина
         public Task TestCreateProduct();
+        public Task TestDeleteProduct();
+        public Task TestUpdateProduct();
+        public Task GetShopProducts();
+        public Task GetAllProduct();
+        public Task GetClusterProducts();
         #endregion
-
 
         #region Работа с отзывами
         /// <summary>
@@ -103,6 +107,21 @@ namespace Test
         /// <returns></returns>
         public Task GetAllComment();
 
+        #endregion
+
+        #region тестирование избранных позиция магазина
+        /// <summary>
+        /// Добовление позиции в избраное
+        /// </summary>
+        /// <returns></returns>
+        public  Task TestAddFavoriteProduct();
+     
+        /// <summary>
+        /// Удаление избраной позиции
+        /// </summary>
+        /// <returns></returns>
+        public  Task TestDeleteFavoriteProduct();
+       
         #endregion
     }
 }

@@ -22,6 +22,29 @@ namespace DAL.Repositories
         }
 
         /// <summary>
+        /// Удаление магазина и его асортимента
+        /// </summary>
+        /// <param name="shop">Экземпляр магазина</param>
+        /// <returns></returns>
+        public async Task<bool> DeleteShopWithProducts(Shop shop) 
+        {
+            using (var context = CreateDatabaseContext())
+            { 
+                shop.IsDelete = true;
+                List<Product> shops = await context.Products.Where(p => p.ShopId == shop.Id)
+                    .ToListAsync();
+                foreach (Product product in shops)
+                {
+                    product.IsDeleted = true;
+                }
+                await context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
+
+        /// <summary>
         /// Проверить имя магазина на существование
         /// </summary>
         /// <param name="name">Имя магазина</param>

@@ -23,11 +23,12 @@ namespace Test
 
         public async Task ExecuteAsync()
         {
-            await TestCreateUser();
+           // await TestCreateUser();
             await TestShop();
             await TestCluster();
             await TestProduct();
             await TestComment();
+            await TestFavoriteProduct();
         }
 
         /// <summary>
@@ -53,6 +54,11 @@ namespace Test
         private async Task TestProduct()
         {
             await _bLLShopServiceTest.TestCreateProduct();
+            await _bLLShopServiceTest.TestDeleteProduct();
+            await _bLLShopServiceTest.TestUpdateProduct();
+            await _bLLShopServiceTest.GetShopProducts();
+            await _bLLShopServiceTest.GetAllProduct();
+            //
 
         }
 
@@ -96,16 +102,30 @@ namespace Test
             await _bLLShopServiceTest.TestAddComment();
             // добавление отзыва
             await _bLLShopServiceTest.TestUpdateComment();
-            // Обновлённый комментарий
+            //// Обновлённый комментарий
             await _bLLShopServiceTest.TestDeleteComment();
-            // удаление комментария
-            await _bLLShopServiceTest.TestAddCommentReply();
-            //ответные комментарии владельца товара
-            await _bLLShopServiceTest.TestDeleteCommentReply();
-            //удаление ответов на комментарий
+            //// удаление комментария
             await _bLLShopServiceTest.GetAllComment();
             // получить всё комментарии по товару
+            await _bLLShopServiceTest.TestAddCommentReply();
+            ////ответные комментарии владельца товара
+            await _bLLShopServiceTest.TestDeleteCommentReply();
+            ////удаление ответов на комментарий
+
         }
+      
+        /// <summary>
+        /// тестирование избранных позиций
+        /// </summary>
+        /// <returns></returns>
+        private async Task TestFavoriteProduct()
+        {
+            await _bLLShopServiceTest.TestAddFavoriteProduct();
+            ////Добавить позицию в избранное
+            await _bLLShopServiceTest.TestDeleteFavoriteProduct();
+            ////Удалить позицию из избранного
+        }
+
 
         ///// <summary>
         ///// Тестирование рейтинга

@@ -10,8 +10,15 @@ namespace Domain.Entities
         /// <summary>
         /// Id продукта
         /// </summary>
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Column("id")]
         public int Id { get; set; }
+
+
+        /// <summary>
+        /// Продукт удалён
+        /// </summary>
+        [Column("is_deleted")]
+        public bool IsDeleted { get; set; } = false;
 
         /// <summary>
         /// Номер модели
@@ -34,8 +41,8 @@ namespace Domain.Entities
         /// <summary>
         /// Id рейтинга
         /// </summary>
-        [Column("rating_id")]
-        public int RatingId { get; set; }
+        //[Column("rating_id")]
+        //public int RatingId { get; set; }
 
         /// <summary>
         /// Id классификатора продукта
@@ -54,6 +61,20 @@ namespace Domain.Entities
         /// </summary>
         [Column("barcode")]
         public long Barcode { get; set; }
+
+
+        /// <summary>
+        /// Средний рейтинг оценки продукта
+        /// </summary>
+        [Column("average_rating")]
+        public decimal AverageRating { get; set; }
+
+        /// <summary>
+        /// Количество комментариев
+        /// </summary>
+        [Column("amount_of_comments")]
+        public int AmountOfComments { get; set; }
+
 
         /// <summary>
         /// Вернуть Id объекта
@@ -79,8 +100,8 @@ namespace Domain.Entities
         [ForeignKey(nameof(ClusterId))]
         public Cluster Cluster { get; set; }
 
-        [ForeignKey(nameof(RatingId))]
-        public Rating Rating { get; set; }
+        //[ForeignKey(nameof(RatingId))]
+        //public Rating Rating { get; set; }
         #endregion
 
 
