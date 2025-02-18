@@ -54,6 +54,11 @@ namespace Test
         private async Task TestProduct()
         {
             await _bLLShopServiceTest.TestCreateProduct();
+            await _bLLShopServiceTest.TestDeleteProduct();
+            await _bLLShopServiceTest.TestUpdateProduct();
+            await _bLLShopServiceTest.GetShopProducts();
+            await _bLLShopServiceTest.GetAllProduct();
+
 
         }
 

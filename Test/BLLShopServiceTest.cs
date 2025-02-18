@@ -19,17 +19,12 @@ namespace Test
 {
     internal class BLLShopServiceTest : IBLLShopServiceTest
     {
-        private UserRepository _userRepository;
         private ProductService _productService;
         private ShopService _shopService; // Для создания магазина 
         private ClusterService _clusterService;
         private CommentService _commentService;
         private CommentReplyService _commentReplyService;
         private FavoriteProductService _favoriteProductService;
-
-        //private ShopRepository _shopRepository;
-        //private ShopOwnerRepository _shopOwnerRepository;
-
 
         /// <summary>
         /// Для вывода в консоль данных (Зелёный цвет)
@@ -64,9 +59,6 @@ namespace Test
             _commentService = new CommentService(cm);
             _commentReplyService = new CommentReplyService(cm);
             _favoriteProductService = new FavoriteProductService(cm);
-            //_userRepository = new UserRepository(cm);
-            //_shopRepository = new ShopRepository(cm);
-            //_shopOwnerRepository = new ShopOwnerRepository(cm);
         }
 
         #region работа с магазином
@@ -329,12 +321,95 @@ namespace Test
         }
         #endregion
 
-        #region работа с продуктами просто для тестирования других сервисов
+        #region работа с продуктами
+        
+        /// <summary>
+        /// Добавить продукт
+        /// </summary>
+        /// <returns></returns>
         public async Task TestCreateProduct()
         {
-            var message = await _productService.AddProduct(1, 2);
-            ConsoleLogGreen(message);
+            for (var i = 0; i < 10; i++)
+            {
+                if (await _productService.AddProduct(1, 2, 
+                    $"Тестовый продукт {i}",
+                    $"Описание продукта {i}", 
+                    123,
+                    123, 
+                    $"model number_{i}"))
+                {
+                    ConsoleLogGreen("Продукт был добавлен");
+                }
+                else
+                {
+                    ConsoleLogRed("Не удалось добавить продукт");
+                }
+            }
         }
+
+        /// <summary>
+        /// Удаление продукта
+        /// </summary>
+        /// <returns></returns>
+        public async Task TestDeleteProduct() 
+        {
+            if (await _productService.DeleteProduct(10))
+            {
+                ConsoleLogGreen("Продукт удалён");
+            }
+            else
+            {
+                ConsoleLogRed("Продукт не был удалён");
+            }
+        }
+        /// <summary>
+        /// Обновить информацию о продукте
+        /// </summary>
+        /// <returns></returns>
+        public async Task TestUpdateProduct() 
+        {
+            for (var i = 3; i <= 6; i++)
+            {
+                if (await _productService.UpdateProduct(i, 2,
+                    $"Тестовый продукт Обновление {i}",
+                    $"Описание продукта Обновление {i}",
+                    123,
+                    123,
+                    $"model number_{i}"))
+                {
+                    ConsoleLogGreen("Продукт был обновлён");
+                }
+                else
+                {
+                    ConsoleLogRed("Не удалось обновлён продукт");
+                }
+            }
+        }
+        /// <summary>
+        /// Получить товары, которые есть в магазине
+        /// </summary>
+        /// <returns></returns>
+        public async Task GetShopProducts() 
+        {
+            Console.WriteLine("Получение всех товаров магазина");
+            foreach (var item in await _productService.GetShopProducts(2)) 
+            {
+                ConsoleLogGreen($"Название: {item.Name} Магазин:{item.ShopId}");
+            }
+        }
+        /// <summary>
+        /// Получить всё товары, которые есть в бд
+        /// </summary>
+        /// <returns></returns>
+        public async Task GetAllProduct() 
+        {
+            Console.WriteLine("Получение всех товаров без учёта магазина");
+            foreach (var item in await _productService.GetShopProducts(2))
+            {
+                ConsoleLogGreen($"Название: {item.Name} Магазин:{item.ShopId}");
+            }
+        }
+
         #endregion
 
         #region Работа с отзывами (+ рейтинг товара, так как это внутреняя вещь отзывов)

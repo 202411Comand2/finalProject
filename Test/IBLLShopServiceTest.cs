@@ -61,10 +61,13 @@ namespace Test
 
         #endregion
 
-        #region работа с магазином просто для тестирования других сервисов
+        #region работа с товарами магазина
         public Task TestCreateProduct();
+        public Task TestDeleteProduct();
+        public Task TestUpdateProduct();
+        public Task GetShopProducts();
+        public Task GetAllProduct();
         #endregion
-
 
         #region Работа с отзывами
         /// <summary>
