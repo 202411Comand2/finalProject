@@ -109,11 +109,12 @@ namespace BLL.Products
         public async Task<bool> AddReting(int productId, decimal reting)
         {
             Rating rating = await _ratingRepository.Get(productId);
-            if (rating.AmountOfComments == 0)
+            if (rating is null)
             {
+                rating = new Rating();
                 rating.AverageRating = reting;
                 rating.AmountOfComments = 1;
-                await _ratingRepository.Update(rating);
+                await _ratingRepository.Add(rating);
                 return true;
             }
             else
