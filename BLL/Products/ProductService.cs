@@ -14,6 +14,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Diagnostics.Metrics;
 using System.Text.RegularExpressions;
 using BLL.Products.Abstractions;
+using BLL.Dto;
 
 namespace BLL.ProductService
 {
@@ -30,18 +31,22 @@ namespace BLL.ProductService
         /// <param name="contextManager"></param>
         public ProductService(IContextManager contextManager) => _productRepository = new ProductRepository(contextManager);
        
-        public async Task<bool> AddProduct(int shopId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber)
+        public async Task<bool> AddProduct(ProductDto productDto)//int shopId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber)
         {
-            Domain.Entities.Product product = new()
-            {
-                Price = price,
-                Name = nameProduct,
-                Barcode = barcode,
-                ModelNumber = modelNumber,
-                Description = description,
-                ClusterId = clusterId,
-                ShopId = shopId,
-            };
+            Domain.Entities.Product product = Adapters.ProductAdapter.ConvertToEntity(productDto);
+
+            //Domain.Entities.Product product = new()
+            //{
+
+               
+            //    Price = price,
+            //    Name = nameProduct,
+            //    Barcode = barcode,
+            //    ModelNumber = modelNumber,
+            //    Description = description,
+            //    ClusterId = clusterId,
+            //    ShopId = shopId,
+            //};
             if ((await _productRepository.Add(product)) is not null)
             {
                 return true;
@@ -65,20 +70,15 @@ namespace BLL.ProductService
             return false;
         }
 
-        public async Task<bool> UpdateProduct(int productId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber)
+        public async Task<bool> UpdateProduct(ProductDto productDto) //,int productId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber)
         {
-            Domain.Entities.Product product = await _productRepository.Get(productId);
-            if (product == null) 
+            Domain.Entities.Product product = Adapters.ProductAdapter.ConvertToEntity(productDto);
+            Domain.Entities.Product _ = await _productRepository.Get(product.Id);
+            if (_ is null) 
             { 
                 return false;
-            
             }
-            product.Price = price;
-            product.Name = nameProduct;
-            product.Barcode = barcode;
-            product.ModelNumber = modelNumber;
-            product.Description = description;
-            product.ClusterId = clusterId;
+            product.ShopId = _.ShopId;
             await _productRepository.Update(product);
             return true;
         }

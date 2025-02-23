@@ -13,6 +13,7 @@ using NpgsqlTypes;
 using BLL.Product;
 using BLL.Abstractions;
 using BLL.Products;
+using BLL.Dto;
 
 
 namespace Test
@@ -218,7 +219,7 @@ namespace Test
         public async Task TestUpdateCluster()
         {
             Console.WriteLine("Попытка обновить кластер");
-          
+
             if (await _clusterService.UpdateNameCluster(1, "кластер"))
             {
                 ConsoleLogGreen("(id и новое имя) наименование кластера обновлено");
@@ -235,7 +236,7 @@ namespace Test
             {
                 ConsoleLogRed("(id и новое имя) наименование кластера не обновлено");
             }
-  
+
             if (await _clusterService.UpdateNameCluster("test", "кластер"))
             {
                 ConsoleLogGreen("(старое имя и новое имя) наименование кластера обновлено");
@@ -332,7 +333,7 @@ namespace Test
         #endregion
 
         #region работа с продуктами
-        
+
         /// <summary>
         /// Добавить продукт
         /// </summary>
@@ -341,12 +342,17 @@ namespace Test
         {
             for (var i = 0; i < 10; i++)
             {
-                if (await _productService.AddProduct(1, 2, 
-                    $"Тестовый продукт {i}",
-                    $"Описание продукта {i}", 
-                    123,
-                    123, 
-                    $"model number_{i}"))
+                ProductDto product = new ProductDto();
+                product.ShopId = 1;
+                product.ClusterId = 2;
+                product.NameProduct = $"Тестовый продукт Обновление {i}";
+                product.Description = $"Описание продукта Обновление {i}";
+                product.Price = 123;
+                product.Barcode = 123;
+                product.ModelNumber = $"model number_{i}";
+
+
+                if (await _productService.AddProduct(product))
                 {
                     ConsoleLogYeelow("Продукт был добавлен");
                 }
@@ -361,7 +367,7 @@ namespace Test
         /// Удаление продукта
         /// </summary>
         /// <returns></returns>
-        public async Task TestDeleteProduct() 
+        public async Task TestDeleteProduct()
         {
             if (await _productService.DeleteProduct(10))
             {
@@ -376,16 +382,20 @@ namespace Test
         /// Обновить информацию о продукте
         /// </summary>
         /// <returns></returns>
-        public async Task TestUpdateProduct() 
+        public async Task TestUpdateProduct()
         {
             for (var i = 3; i <= 6; i++)
             {
-                if (await _productService.UpdateProduct(i, 2,
-                    $"Тестовый продукт Обновление {i}",
-                    $"Описание продукта Обновление {i}",
-                    123,
-                    123,
-                    $"model number_{i}"))
+                ProductDto product = new ProductDto();
+                product.ProductId = i;
+                product.ClusterId = 2;
+                product.NameProduct = $"Тестовый продукт Обновление {i}";
+                product.Description = $"Описание продукта Обновление {i}";
+                product.Price = 123;
+                product.Barcode = 123;
+                product.ModelNumber = $"model number_{i}";
+
+                if (await _productService.UpdateProduct(product))
                 {
                     ConsoleLogYeelow("Продукт был обновлён");
                 }
@@ -399,10 +409,10 @@ namespace Test
         /// Получить товары, которые есть в магазине
         /// </summary>
         /// <returns></returns>
-        public async Task GetShopProducts() 
+        public async Task GetShopProducts()
         {
             Console.WriteLine("Получение всех товаров магазина");
-            foreach (var item in await _productService.GetShopProducts(2)) 
+            foreach (var item in await _productService.GetShopProducts(2))
             {
                 ConsoleLogYeelow($"Название: {item.Name} Магазин:{item.ShopId}");
             }
@@ -411,7 +421,7 @@ namespace Test
         /// Получить всё товары, которые есть в бд
         /// </summary>
         /// <returns></returns>
-        public async Task GetAllProduct() 
+        public async Task GetAllProduct()
         {
             Console.WriteLine("Получение всех товаров без учёта магазина");
             foreach (var item in await _productService.GetAllProduct())
@@ -421,7 +431,7 @@ namespace Test
         }
 
 
-        public async Task GetClusterProducts() 
+        public async Task GetClusterProducts()
         {
             Console.WriteLine("Получение всех товаров по id кластеру");
             foreach (var item in await _productService.GetProductsByCluster(2))
@@ -444,7 +454,8 @@ namespace Test
         /// <returns></returns>
         public async Task TestAddComment()
         {
-            if (await _commentService.AddNewComment(1, 1, 1, "Комментарий", 4.3m))
+            CommentDto commentDto = new CommentDto(1, 1, 1, "Комментарий", 4.3m);
+            if (await _commentService.AddNewComment(commentDto))
             {
                 ConsoleLogGreen($"О великий, коментарий создан ");
             }
@@ -483,7 +494,7 @@ namespace Test
         /// <returns></returns>
         public async Task TestDeleteComment()
         {
-            if( await _commentService.DeleteComment(1))
+            if (await _commentService.DeleteComment(1))
             {
                 ConsoleLogGreen($"коментарий удалён");
             }
@@ -509,7 +520,7 @@ namespace Test
         /// <returns></returns>
         public async Task TestAddCommentReply()
         {
-            if (await _commentReplyService.AddReplyComment(1, "Ответный комментарий")) 
+            if (await _commentReplyService.AddReplyComment(1, "Ответный комментарий"))
             {
                 ConsoleLogGreen($"Ответный комментарий добавлен");
             }
@@ -527,7 +538,7 @@ namespace Test
             {
                 ConsoleLogRed($"Не получилось добавить ответный комментарий");
             }
-           
+
         }
 
         /// <summary>
@@ -544,7 +555,7 @@ namespace Test
             {
                 ConsoleLogRed($"Добавлен ответный комментарий");
             }
-          
+
 
             //message = await _productService.AddNewOrUpdateCommentReplyIdCommentReply(1, "Ответный комментарий со стороны Reply");
             //ConsoleLogGreen(message);

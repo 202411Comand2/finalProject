@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using BLL.ProductService;
+using BLL.Dto;
 
 namespace BLL.Products
 {
@@ -27,24 +28,14 @@ namespace BLL.Products
         }
 
 
-        public async Task<bool> AddNewComment(int userId, int shopId, int productId, string textComment, decimal estimation)
+        public async Task<bool> AddNewComment(CommentDto commentDto)
         {
-            Comment? comment = await _commentRepository.GetCommentUser(userId, productId);
-           
-            if (comment is null)
+            Comment comment = Adapters.CommentAdapter.ConvertToEntity(commentDto);
+            if (await _commentRepository.GetCommentUser(comment.UserId, comment.IdProduct) is null)
             {
-                comment = new Comment
-                {
-                    Estimation = estimation,
-                    Text = textComment,
-                    UserId = userId,
-                    ShopId = shopId,
-                    IdProduct = productId,
-                };
                 CommentReply reply = new();
                 var result = await _commentRepository.Add(comment, reply);
-                // await UpdateRatingProduct(comment, "create", 0);
-                await AddReting(productId, estimation);
+                await AddReting(commentDto.ProductId, commentDto.Estimation);
                 return true;// Комментарий создан {comment.Id}
             }
             else
