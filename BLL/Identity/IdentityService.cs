@@ -104,7 +104,7 @@ namespace BLL.Identity
             var result = await _userRepository.Add(newUser);
             return result;
         }
-        public async Task ChangePassword(string token, string newPassword, string verifyCode)
+        public async Task ChangePassword(string token, string newPassword)
         {
             throw new NotImplementedException("Пока не сделал");
 		}
