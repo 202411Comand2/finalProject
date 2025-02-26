@@ -1,4 +1,5 @@
-﻿using DAL.Repositories;
+﻿using BLL.Dto;
+using DAL.Repositories;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -22,13 +23,9 @@ namespace BLL.Products.Abstractions
         /// <summary>
         /// Добавить отзыв на товар
         /// </summary>
-        /// <param name="userId">id пользователя</param>
-        /// <param name="shopId">id магазина</param>
-        /// <param name="productId">id продукта</param>
-        /// <param name="textComment">Текст комментария</param>
-        /// <param name="estimation">Оценка</param>
+        /// <param name="commentDto">Объект commentDto</param>
         /// <returns></returns>
-        public Task<bool> AddNewComment(int userId, int shopId, int productId, string textComment, decimal estimation);
+        public Task<bool> AddNewComment(CommentDto commentDto);
 
 
         /// <summary>

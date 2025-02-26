@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using BLL.Dto;
+using Domain.Entities;
 using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace BLL.Products.Abstractions
         /// <param name="barcode">штрихкод</param>
         /// <param name="modelNumber">Номер модели</param>
         /// <returns>Удалось добавить продукт</returns>
-        public Task<bool> AddProduct(int shopId, int clusterId,string nameProduct, string description, decimal price, int barcode, string modelNumber);
+        public Task<bool> AddProduct(ProductDto productDto);// int shopId, int clusterId,string nameProduct, string description, decimal price, int barcode, string modelNumber);
 
         /// <summary>
         /// Обновить продукт 
@@ -35,7 +36,7 @@ namespace BLL.Products.Abstractions
         /// <param name="barcode">штрихкод</param>
         /// <param name="modelNumber">Номер модели</param>
         /// <returns>Удалось добавить продукт</returns>
-        public Task<bool> UpdateProduct(int productId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber);
+        public Task<bool> UpdateProduct(ProductDto productDto);// int productId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber);
 
         /// <summary>
         /// Удаление продукта
