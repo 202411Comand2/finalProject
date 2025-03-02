@@ -8,6 +8,8 @@ using DAL.Repositories;
 using DAL.Abstractions;
 using System.Xml.Linq;
 using BLL.Products.Abstractions;
+using Microsoft.IdentityModel.Tokens;
+using BLL.Dto.Shop;
 
 
 namespace BLL.Product
@@ -22,29 +24,30 @@ namespace BLL.Product
         {
             _shopRepository = new ShopRepository(contextManager);
         }
-        public async Task<Shop?> CreateShop(string shopeName)
+        public async Task<bool> CreateShop(AddShopDto addShopDto)
         {
-            if (await _shopRepository.GetIdByStoreName(shopeName) != -1)
+            if (await _shopRepository.GetIdByStoreName(addShopDto.Name) != -1)
             {
-                return null;
+                return false;
             }
-            Shop newShop = new()
+            Shop shop = new Shop
             {
-                Name = shopeName,
+                Name = addShopDto.Name,
                 IsDelete = false,
             };
-            return await _shopRepository.Add(newShop);
+            await _shopRepository.Add(shop);
+            return true;
         }
        ////TODO как быть с удалением товаров??? если удалить из этого запроса, то мы далем монолит
         /// <summary>
         /// Удаление магазина
         /// </summary>
-        /// <param name="shopID">Id магазина, который нужно удалить></param>
+        /// <param name="shopID">ClusterId магазина, который нужно удалить></param>
         /// <returns>Магазин удалён или нет</returns>
-        public async Task<bool> DeleteShop(int shopID)
+        public async Task<bool> DeleteShop(DeleteShopDto shopDto)
         {
-            Shop? shop = await _shopRepository.Get(shopID);
-            if (shop is null)
+            Shop shop = await _shopRepository.Get(shopDto.Id);
+            if (await _shopRepository.Get(shopDto.Id) is null)
             {
                 return false;
             }
@@ -52,6 +55,7 @@ namespace BLL.Product
             {
                 shop.IsDelete = true;
                 await _shopRepository.DeleteShopWithProducts(shop);
+                await _shopRepository.Update(shop);
                 return true;
             }
         }
@@ -59,27 +63,26 @@ namespace BLL.Product
         /// <summary>
         /// Обновление название магазина
         /// </summary>
-        /// <param name="shopId">Id магазина</param>
+        /// <param name="shopId">ClusterId магазина</param>
         /// <param name="newShopName">Название магазина</param>
         /// <returns>Удалось ли обновить магазин</returns>
-        public async Task<bool> UpdateNameShop(int shopId, string newShopName)
+        public async Task<bool> UpdateNameShop(UpdateShopDto addShopDto)
         {
-            if (string.IsNullOrEmpty(newShopName))
+            Shop shop = await _shopRepository.Get(addShopDto.Id);
+            if (string.IsNullOrEmpty(addShopDto.NewName))
             {//название null или пустое
                 return false; 
             }
-            Shop? shopUser = await _shopRepository.Get(shopId);
-            if (shopUser is null)
+            if (shop is null)
             { //  В бд такого магазина нет
                 return false;
             }
             else
             {
-                if (await _shopRepository.GetIdByStoreName(newShopName) == -1)
+                if (await _shopRepository.GetIdByStoreName(addShopDto.NewName) == -1)
                 {
-                    string oldNameShop = shopUser.Name;
-                    shopUser.Name = newShopName;
-                    await _shopRepository.Update(shopUser);
+                    shop.Name= addShopDto.NewName;
+                    await _shopRepository.Update(shop);
                     return true;
                 }
                 else
@@ -88,5 +91,7 @@ namespace BLL.Product
                 }
             }
         }
+
+      
     }
 }

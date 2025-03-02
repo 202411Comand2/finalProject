@@ -1,11 +1,14 @@
 using API.Extensions;
 using BLL.Identity;
 using BLL.Identity.Abstractions;
+using BLL.Product;
+using BLL.Products;
 using BLL.Products.Abstractions;
 using BLL.ProductService;
 using DAL;
 using DAL.Abstractions;
 using DAL.ConfigSettings;
+using DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.Extensions.Options;
@@ -34,6 +37,11 @@ namespace API
 			services.AddApiAuthentication(services.BuildServiceProvider().GetRequiredService<IOptions<JwtOptions>>());
           
 			services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IShopService, ShopService>();
+            services.AddTransient<IClusterService, ClusterService>();
+            services.AddTransient<IFavoriteProductService, FavoriteProductService>();
+            services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<ICommentReplyService, CommentReplyService>();
 
             services.AddControllers();
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

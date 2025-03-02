@@ -13,6 +13,7 @@ using NpgsqlTypes;
 using BLL.Product;
 using BLL.Products;
 using BLL.Dto;
+using BLL.Dto.Product;
 
 
 namespace Test
@@ -83,8 +84,7 @@ namespace Test
             for (int i = 0; i < 10; i++)
             {
                 string nameShop = $"Название магазина{rand.Next(0, 10_000)}";
-                Shop? testCreateObject = await _shopService.CreateShop(nameShop);
-                if (testCreateObject is null)
+                if (!await _shopService.CreateShop(nameShop))
                 {
                     ConsoleLogRed($"Не удалось создать магазин ''{nameShop}''");
                 }
@@ -368,7 +368,9 @@ namespace Test
         /// <returns></returns>
         public async Task TestDeleteProduct()
         {
-            if (await _productService.DeleteProduct(10))
+            ProductDto product = new ProductDto();
+            product.ProductId = 10;
+            if (await _productService.DeleteProduct(product))
             {
                 ConsoleLogYeelow("Продукт удалён");
             }
@@ -411,9 +413,11 @@ namespace Test
         public async Task GetShopProducts()
         {
             Console.WriteLine("Получение всех товаров магазина");
-            foreach (var item in await _productService.GetShopProducts(2))
+            ProductDto product = new ProductDto();
+            product.ShopId = 2;
+            foreach (var item in await _productService.GetShopProducts(product))
             {
-                ConsoleLogYeelow($"Название: {item.Name} Магазин:{item.ShopId}");
+                ConsoleLogYeelow($"Название: {item.NameProduct} Магазин:{item.ShopId}");
             }
         }
         /// <summary>
@@ -425,22 +429,24 @@ namespace Test
             Console.WriteLine("Получение всех товаров без учёта магазина");
             foreach (var item in await _productService.GetAllProduct())
             {
-                ConsoleLogYeelow($"Название: {item.Name} Магазин:{item.ShopId}");
+                ConsoleLogYeelow($"Название: {item.NameProduct} Магазин:{item.ShopId}");
             }
         }
 
 
         public async Task GetClusterProducts()
         {
+            ProductDto product = new ProductDto();
+            product.ClusterId = 2;
             Console.WriteLine("Получение всех товаров по id кластеру");
-            foreach (var item in await _productService.GetProductsByCluster(2))
+            foreach (var item in await _productService.GetProductsByCluster(product))
             {
-                ConsoleLogGreen($"Название: {item.Name} Магазин:{item.ShopId}");
+                ConsoleLogGreen($"Название: {item.NameProduct} Магазин:{item.ShopId}");
             }
-
-            foreach (var item in await _productService.GetProductsByCluster(21))
+            product.ClusterId = 21;
+            foreach (var item in await _productService.GetProductsByCluster(product))
             {//проверка на то что ничего не упало
-                ConsoleLogGreen($"Название: {item.Name} Магазин:{item.ShopId}");
+                ConsoleLogGreen($"Название: {item.NameProduct} Магазин:{item.ShopId}");
             }
         }
         #endregion

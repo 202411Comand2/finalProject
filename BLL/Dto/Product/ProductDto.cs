@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Dto
+namespace BLL.Dto.Product
 {
     public class ProductDto
     {
         /// <summary>
-        /// Id продукта
+        /// ClusterId продукта
         /// </summary>
         public int ProductId { get; set; }
         /// <summary>
-        /// Id магазина
+        /// ClusterId магазина
         /// </summary>
         public int ShopId { get; set; }
         /// <summary>
-        /// Id кластера
+        /// ClusterId кластера
         /// </summary>
         public int ClusterId { get; set; }
         /// <summary>
