@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace API.Controllers
 {
     [ApiController]
+    [IgnoreAntiforgeryToken]
     [Route("[controller]")]
     public class UserController(IIdentityService identityService, IOptions<JwtOptions> jwtOptions) : ControllerBase
     {

@@ -22,7 +22,8 @@ namespace BLL.Identity
             IContextManager contextManager, 
             IJwtTokenProvider tokenProvider,
             IGenericDataHasher<string> passwordHasher,
-            IRedisRepository<UserRegisterAttempt> regAttemptsRepository)
+            IRedisRepository<UserRegisterAttempt> regAttemptsRepository
+            )
         {
             _shopOwnerRepository = new ShopOwnerRepository(contextManager);
             _userRepository = new UserRepository(contextManager);
