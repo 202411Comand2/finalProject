@@ -1,4 +1,4 @@
-﻿using BLL.Dto;
+﻿using BLL.Dto.Comment;
 using DAL.Repositories;
 using Domain.Entities;
 using System;
@@ -16,7 +16,7 @@ namespace BLL.Products.Abstractions
         /// </summary>
         /// <param name="productId">id комментария</param>
         /// <returns></returns>
-        public Task<List<Comment>> GetCommentProduct(int productId);
+        public Task<List<CommentDto>> GetCommentProduct(GetAllCommentsProduct productId);
 
 
         ////TODO  как проверить, что пользователь купил товар и что он на него может оставить отзыв?
@@ -25,17 +25,14 @@ namespace BLL.Products.Abstractions
         /// </summary>
         /// <param name="commentDto">Объект commentDto</param>
         /// <returns></returns>
-        public Task<bool> AddNewComment(CommentDto commentDto);
+        public Task<bool> AddNewComment(AddCommentDto commentDto);
 
 
         /// <summary>
         /// Обновление комментария
         /// </summary>
-        /// <param name="сommentId">id комментария</param>
-        /// <param name="textComment">Новый текст комментария</param>
-        /// <param name="Estimation">Новая оценка комментария</param>
         /// <returns></returns>
-        public Task<bool> UpdateComment(int сommentId, string textComment, decimal Estimation);
+        public Task<bool> UpdateComment(UpdateCommentDto updateCommentDto);
 
 
         /// <summary>
@@ -43,13 +40,13 @@ namespace BLL.Products.Abstractions
         /// </summary>
         /// <param name="сommentId">id комментария</param>
         /// <returns></returns>
-        public Task<bool> DeleteComment(int сommentId);
+        public Task<bool> DeleteComment(DeleteCommentDto сommentId);
 
 
         /// <summary>
         /// Добавить новый рейтинг
         /// </summary>
-        /// <param name="productId">Id продукта</param>
+        /// <param name="productId">ClusterId продукта</param>
         /// <param name="reting">Рентинг товара</param>
         /// <returns></returns>
         public Task<bool> AddReting(int productId, decimal reting);
@@ -57,7 +54,7 @@ namespace BLL.Products.Abstractions
         /// <summary>
         /// Обновление рейтига
         /// </summary>
-        /// <param name="productId">Id продукта</param>
+        /// <param name="productId">ClusterId продукта</param>
         /// <param name="newReting">Рентинг товара</param>
         /// <param name="oldReting">Старый рейтинг товара</param>
         /// <returns></returns>
@@ -67,7 +64,7 @@ namespace BLL.Products.Abstractions
         /// <summary>
         /// Удаление рейтинга
         /// </summary>
-        /// <param name="productId">Id продукта</param>
+        /// <param name="productId">ClusterId продукта</param>
         /// <param name="reting">Рентинг товара</param>
         /// <returns></returns>
         public Task<bool> DeleteReting(int productId, decimal reting);

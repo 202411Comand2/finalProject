@@ -14,7 +14,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Diagnostics.Metrics;
 using System.Text.RegularExpressions;
 using BLL.Products.Abstractions;
-using BLL.Dto;
+using BLL.Dto.Product;
 
 namespace BLL.ProductService
 {
@@ -31,22 +31,9 @@ namespace BLL.ProductService
         /// <param name="contextManager"></param>
         public ProductService(IContextManager contextManager) => _productRepository = new ProductRepository(contextManager);
        
-        public async Task<bool> AddProduct(ProductDto productDto)//int shopId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber)
+        public async Task<bool> AddProduct(AddProductDto productDto)//int shopId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber)
         {
             Domain.Entities.Product product = Adapters.ProductAdapter.ConvertToEntity(productDto);
-
-            //Domain.Entities.Product product = new()
-            //{
-
-               
-            //    Price = price,
-            //    Name = nameProduct,
-            //    Barcode = barcode,
-            //    ModelNumber = modelNumber,
-            //    Description = description,
-            //    ClusterId = clusterId,
-            //    ShopId = shopId,
-            //};
             if ((await _productRepository.Add(product)) is not null)
             {
                 return true;
@@ -57,20 +44,20 @@ namespace BLL.ProductService
             }
         }
 
-        public async Task<bool> DeleteProduct(int productId)
+        public async Task<bool> DeleteProduct(DeleteProductDto productDto)
         {
-            Domain.Entities.Product product = await _productRepository.Get(productId);
+            Domain.Entities.Product product = await _productRepository.Get(productDto.Id);
             if (product == null)
             {
                 return false;   
 
             }
-            product.IsDeleted= true;
+            product.IsDeleted = true;
             await _productRepository.Update(product);
-            return false;
+            return true;
         }
 
-        public async Task<bool> UpdateProduct(ProductDto productDto) //,int productId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber)
+        public async Task<bool> UpdateProduct(UpdateProductDto productDto) //,int ProductId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber)
         {
             Domain.Entities.Product product = Adapters.ProductAdapter.ConvertToEntity(productDto);
             Domain.Entities.Product _ = await _productRepository.Get(product.Id);
@@ -83,16 +70,43 @@ namespace BLL.ProductService
             return true;
         }
 
-        public async Task<List<Domain.Entities.Product>> GetShopProducts(int shopId) => await _productRepository.GetShopProducts(shopId);
-
-        public async Task<List<Domain.Entities.Product>> GetAllProduct()=> (List<Domain.Entities.Product>) await _productRepository.GetAll();
-       
-
-        public async Task<List<Domain.Entities.Product>> GetProductsByCluster(int clusterId) => await _productRepository.GetProductsByCluster(clusterId);
-
-        public async Task<bool> AddReting(int productId, decimal reting)
+        public async Task<List<ProductDto>> GetShopProducts(GetallShopProductsDto productDto) 
         {
-            Domain.Entities.Product product = await _productRepository.Get(productId);
+            List<ProductDto> products = new List<ProductDto>();
+            foreach (Domain.Entities.Product product in await _productRepository.GetShopProducts(productDto.ShopId)) 
+            {
+                products.Add(Adapters.ProductAdapter.ConvertToDTOProduct(product));
+            }
+            return products;
+
+        }
+
+        public async Task<List<ProductDto>> GetAllProduct() 
+        {
+            List<ProductDto> products = new List<ProductDto>();
+            foreach (Domain.Entities.Product product in await _productRepository.GetAll())
+            {
+                products.Add(Adapters.ProductAdapter.ConvertToDTOProduct(product));
+            }
+            return products;
+        }
+
+
+        public async Task<List<ProductDto>> GetProductsByCluster(GetAllClusterProductsDto productDto) 
+        {
+            List<ProductDto> products = new List<ProductDto>();
+            foreach (Domain.Entities.Product product in await _productRepository.GetProductsByCluster(productDto.ClusterId)) 
+            {
+                products.Add(Adapters.ProductAdapter.ConvertToDTOProduct(product));
+            }
+            return products;
+        } 
+
+        public async Task<bool> AddReting(ProductDto productDto, decimal reting)
+        {
+            // int ProductId, decimal reting
+
+            Domain.Entities.Product product = await _productRepository.Get(Adapters.ProductAdapter.ConvertToEntity(productDto).Id);
             if (product == null)
             {
                 return false;
@@ -106,9 +120,9 @@ namespace BLL.ProductService
             }
             else 
             {
-                product.AverageRating = (product.AverageRating * product.AmountOfComments + product.AverageRating) / product.AmountOfComments + 1;
-                // востанавливаем рейтинг и прибавляем новые данные, потом делем на количество отзывом
                 product.AmountOfComments = product.AmountOfComments + 1;
+                product.AverageRating = (product.AverageRating * product.AmountOfComments + reting) / product.AmountOfComments;
+                // востанавливаем рейтинг и прибавляем новые данные, потом делем на количество отзывом
                 await _productRepository.Update(product);
                 return true; 
             }

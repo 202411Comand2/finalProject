@@ -1,4 +1,4 @@
-﻿using BLL.Dto;
+﻿using BLL.Dto.Comment;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,15 +13,12 @@ namespace BLL.Adapters
     /// </summary>
     public class CommentAdapter
     {
-        /// <summary>
-        /// Преобразовать из Entitie Comment в CommentDto
-        /// </summary>
-        /// <param name="comment">Комментарий Entitie</param>
-        /// <returns>CommentDto</returns>
-        public static CommentDto ConvertToDTOComment(Comment comment)
+        
+        public static CommentDto ConvertToCommentDTO(Comment comment)
         {
             return new CommentDto()
             {
+                Id = comment.Id,
                 UserId = comment.UserId,
                 ShopId = comment.ShopId,
                 ProductId = comment.IdProduct,
@@ -29,13 +26,12 @@ namespace BLL.Adapters
                 Estimation = comment.Estimation,
             };
         }
-     
         /// <summary>
         /// Преобразовать из CommentDto в Entitie Comment
         /// </summary>
         /// <param name="comment">Комментарий Entitie</param>
         /// <returns>Comment</returns>
-        public static Comment ConvertToEntity(CommentDto сommentDto)
+        public static Comment ConvertToEntity(AddCommentDto сommentDto)
         {
             return new Comment
             {

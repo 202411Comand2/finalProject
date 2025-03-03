@@ -1,4 +1,5 @@
-﻿using BLL.Products.Abstractions;
+﻿using BLL.Dto.ReplyComment;
+using BLL.Products.Abstractions;
 using DAL.Abstractions;
 using DAL.Repositories;
 using Domain.Entities;
@@ -17,9 +18,9 @@ namespace BLL.Products
         public CommentReplyService(IContextManager contextManager) => _commentReplyRepository = new CommentReplyRepository(contextManager);
 
 
-        public async Task<bool> AddReplyComment(int commentUserId, string textComment)
+        public async Task<bool> AddReplyComment(AddReplyCommentDto addReplyCommentDto)
         {
-            if (await _commentReplyRepository.Add(commentUserId, textComment))
+            if (await _commentReplyRepository.Add(addReplyCommentDto.CommentUserId, addReplyCommentDto.TextComment))
             {
                 return true;
             }
@@ -30,14 +31,14 @@ namespace BLL.Products
 
         }
 
-        public async Task<bool> DeleteCommentReply(int commentReplyId)
+        public async Task<bool> DeleteCommentReply(DeleteCommentReplyDto Dto)
         {
-            CommentReply? commentReply = await _commentReplyRepository.Get(commentReplyId);
+            CommentReply? commentReply = await _commentReplyRepository.Get(Dto.Id);
             if (commentReply is not null)
             {
                 commentReply.IsDeleted = true;
                 await _commentReplyRepository.Update(commentReply);
-                return true;// $"Комментарий удалён {commentReply.Id}";
+                return true;// $"Комментарий удалён {commentReply.ClusterId}";
             }
             else
             {
@@ -45,14 +46,14 @@ namespace BLL.Products
             }
         }
 
-        public async Task<bool> UpdateCommentReply(int IdCommentReply, string textComment)
+        public async Task<bool> UpdateCommentReply(UpdateCommentReplyDto updateCommentReplyDto)
         {
-            CommentReply commentReply = await _commentReplyRepository.Get(IdCommentReply);
-            commentReply.Text = textComment;
+            CommentReply commentReply = await _commentReplyRepository.Get(updateCommentReplyDto.IdCommentReply);
+            commentReply.Text = updateCommentReplyDto.TextComment;
             if (commentReply != null)
             {
                 string newTextComment = (await _commentReplyRepository.Update(commentReply)).Text;
-                if (newTextComment == textComment)
+                if (newTextComment == updateCommentReplyDto.TextComment)
                 { //Проверяем, что коментарий был обновлён
                     return true;
                 }

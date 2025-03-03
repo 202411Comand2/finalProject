@@ -1,4 +1,5 @@
-﻿using DAL.Repositories;
+﻿using BLL.Dto.Shop;
+using DAL.Repositories;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -17,22 +18,22 @@ namespace BLL.Products.Abstractions
         /// <summary>
         /// Создание магазина
         /// </summary>
-        /// <param name="nameShope">Название магазина</param>
+        /// <param name="shopDto">Достаточно передать название магазина </param>
         /// <returns>Возращает созданный магазин</returns>
-        public Task<Shop?> CreateShop(string shopeName);
+        public Task<bool> CreateShop(AddShopDto addShopDto);
 
         /// <summary>
         /// Обновить название магазина
         /// </summary>
-        /// <param name="shopId">Id магазина</param>
+        /// <param name="shopId">Достаточно передать название и ClusterId магазина</param>
         /// <returns>Удалось ли обновить магазин</returns>
-        public Task<bool> UpdateNameShop(int shopId, string newShopName);
+        public Task<bool> UpdateNameShop(UpdateShopDto shopDto);
 
         /// <summary>
         /// Удаление магазина
         /// </summary>
-        /// <param name="shopID">Id магазина, который нужно удалить</param>
+        /// <param name="shopDto"> Достаточно передать ClusterId магазина, который нужно удалить</param>
         /// <returns>Удалось ли удалить магазин</returns>
-        public Task<bool> DeleteShop(int shopID);
+        public Task<bool> DeleteShop(DeleteShopDto shopDto);
     }
 }
