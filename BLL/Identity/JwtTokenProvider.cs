@@ -42,7 +42,7 @@ namespace BLL.Identity
 
 		public string GenerateToken()
 		{
-			Claim[] claims = [new (options.Value.UserRoleClaimName, UserRole.Guest.ToString())];
+			Claim[] claims = [new (_options.UserRoleClaimName, UserRole.Guest.ToString())];
 
 			return GenerateToken(claims);
 		}

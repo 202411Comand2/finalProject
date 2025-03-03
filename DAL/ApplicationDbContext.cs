@@ -8,7 +8,6 @@ namespace DAL
         #region Tables 
         public DbSet<User> Users { get; set; }
         public DbSet<ShopOwner> ShopOwners { get; set; }
-        public DbSet<AccessToken> AccessTokens { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Cluster> Clusters { get; set; }
         public DbSet<Comment> Comments { get; set; }
