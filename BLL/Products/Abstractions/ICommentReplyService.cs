@@ -1,4 +1,5 @@
-﻿using DAL.Repositories;
+﻿using BLL.Dto.ReplyComment;
+using DAL.Repositories;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace BLL.Products.Abstractions
         /// <param name="commentUserId">id комментария пользователя</param>
         /// <param name="textComment">Текст комментария</param>
         /// <returns></returns>
-        public Task<bool> AddReplyComment(int commentUserId, string textComment);
+        public Task<bool> AddReplyComment(AddReplyCommentDto addReplyCommentDto);
 
 
         /// <summary>
@@ -25,7 +26,7 @@ namespace BLL.Products.Abstractions
         /// <param name="IdCommentReply">id комментария ответа</param>
         /// <param name="textComment">Текст нового комментария</param>
         /// <returns></returns>
-        public  Task<bool> UpdateCommentReply(int IdCommentReply, string textComment);
+        public  Task<bool> UpdateCommentReply(UpdateCommentReplyDto updateCommentReplyDto);
 
 
 
@@ -34,7 +35,7 @@ namespace BLL.Products.Abstractions
         /// </summary>
         /// <param name="commentReplyId">id коментария ответа</param>
         /// <returns></returns>
-        public Task<bool> DeleteCommentReply(int commentReplyId);
+        public Task<bool> DeleteCommentReply(DeleteCommentReplyDto Dto);
 
 
     }

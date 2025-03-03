@@ -82,11 +82,10 @@ namespace BLL.Identity
             var result = await _userRepository.Add(newUser);
             return result;
         }
-
         public async Task<bool> ChangePassword(ChangeUserPasswordDto dto)
         {
             return await _userRepository.ChangePassword(dto.UserId, _passwordHasher.Hash(dto.Password));
-		}
+		    }
 
         /// <summary>
         /// Метод для аутентификации пользователя

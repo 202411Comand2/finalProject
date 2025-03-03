@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using BLL.ProductService;
+using BLL.Dto.Comment;
 
 namespace BLL.Products
 {
@@ -27,25 +28,15 @@ namespace BLL.Products
         }
 
 
-        public async Task<bool> AddNewComment(int userId, int shopId, int productId, string textComment, decimal estimation)
+        public async Task<bool> AddNewComment(AddCommentDto commentDto)
         {
-            Comment? comment = await _commentRepository.GetCommentUser(userId, productId);
-           
-            if (comment is null)
+            Comment comment = Adapters.CommentAdapter.ConvertToEntity(commentDto);
+            if (await _commentRepository.GetCommentUser(comment.UserId, comment.IdProduct) is null)
             {
-                comment = new Comment
-                {
-                    Estimation = estimation,
-                    Text = textComment,
-                    UserId = userId,
-                    ShopId = shopId,
-                    IdProduct = productId,
-                };
                 CommentReply reply = new();
                 var result = await _commentRepository.Add(comment, reply);
-                // await UpdateRatingProduct(comment, "create", 0);
-                await AddReting(productId, estimation);
-                return true;// Комментарий создан {comment.Id}
+                await AddReting(commentDto.ProductId, commentDto.Estimation);
+                return true;// Комментарий создан {comment.ClusterId}
             }
             else
             {
@@ -55,11 +46,9 @@ namespace BLL.Products
 
 
 
-        public async Task<bool> DeleteComment(int commentId)
+        public async Task<bool> DeleteComment(DeleteCommentDto deleteCommentDto)
         {
-            Comment? comment = await _commentRepository.Get(commentId);
-           
-
+            Comment? comment = await _commentRepository.Get(deleteCommentDto.Id);
             if (comment is not null && comment.IsDeleted == false)
             {
                 CommentReply commentReply = await _commentReplyRepository.Get(comment.IdReply);
@@ -78,27 +67,35 @@ namespace BLL.Products
             }
         }
 
-     
-        public async Task<List<Comment>> GetCommentProduct(int productId) => await _commentRepository.GetAllCommentOnTheProduct(productId);
+
+        public async Task<List<CommentDto>> GetCommentProduct(GetAllCommentsProduct getAllCommentsProduct) 
+        {
+            List<CommentDto>  comments = new List<CommentDto>();
+            foreach (var item in await _commentRepository.GetAllCommentOnTheProduct(getAllCommentsProduct.IdProduct)) 
+            {
+                comments.Add(Adapters.CommentAdapter.ConvertToCommentDTO( item));
+            }
+            return comments;
+        }
             
 
-        public async Task<bool> UpdateComment(int CommentId, string textComment, decimal estimation)
+        public async Task<bool> UpdateComment(UpdateCommentDto updateCommentDto)
         {
-            Comment? comment = await _commentRepository.Get(CommentId);
+            Comment? comment = await _commentRepository.Get(updateCommentDto.CommentId);
             if (comment is not null)
             {
                 int productId = comment.IdProduct;
                 decimal newReting = comment.Estimation;
-                decimal OldReting = estimation;
+                decimal OldReting = updateCommentDto.Estimation;
 
                 decimal oldEstimation = comment.Estimation;
-                comment.Text = textComment;
-                comment.Estimation = estimation;
+                comment.Text = updateCommentDto.TextComment;
+                comment.Estimation = updateCommentDto.Estimation;
 
                 var result = await _commentRepository.Update(comment);
                 await UpdateReting(productId, newReting, OldReting);
                 //   await UpdateRatingProduct(comment, "update", oldEstimation);
-                return true;// $"Комментарий обновлён {comment.Id}";
+                return true;// $"Комментарий обновлён {comment.ClusterId}";
             }
             else
             {
@@ -109,11 +106,12 @@ namespace BLL.Products
         public async Task<bool> AddReting(int productId, decimal reting)
         {
             Rating rating = await _ratingRepository.Get(productId);
-            if (rating.AmountOfComments == 0)
+            if (rating is null)
             {
+                rating = new Rating();
                 rating.AverageRating = reting;
                 rating.AmountOfComments = 1;
-                await _ratingRepository.Update(rating);
+                await _ratingRepository.Add(rating);
                 return true;
             }
             else

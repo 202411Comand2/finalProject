@@ -23,7 +23,7 @@ namespace Test
 
         public async Task ExecuteAsync()
         {
-           // await TestCreateUser();
+            await TestCreateUser();
             await TestShop();
             await TestCluster();
             await TestProduct();
