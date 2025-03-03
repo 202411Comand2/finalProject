@@ -12,7 +12,12 @@ namespace BLL.Identity
     public class JwtTokenProvider(IOptions<JwtOptions> options) : IJwtTokenProvider
 	{
 		private readonly JwtOptions _options = options.Value;
-
+		/// <summary>
+		/// Генерирует jwt токен
+		/// </summary>
+		/// <param name="user"></param>
+		/// <param name="shopCredentials"></param>
+		/// <returns></returns>
 		public string GenerateToken(User user, IList<ShopOwner> shopCredentials = null)
 		{
 			if (shopCredentials != null)
