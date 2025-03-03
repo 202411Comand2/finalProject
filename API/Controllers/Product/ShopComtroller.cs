@@ -88,5 +88,26 @@ namespace API.Controllers.Product
             return Ok("Название было заменено");
         }
 
+
+
+        [HttpPost("GetInfo")]
+        public async Task<ActionResult> Add([FromBody] GetShopsInfoDto shopDto)
+        {
+            bool result = false;
+            try
+            {
+                ///result = await _shopService.CreateShop(shopDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            if (!result)
+            {
+                return NotFound();
+            }
+            return Ok("Магазин создан");
+        }
     }
 }
