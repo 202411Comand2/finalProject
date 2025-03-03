@@ -29,7 +29,19 @@ namespace API.Extensions
 						{
 							context.Token = context.Request.Cookies[jwtOptions.Value.CookieName];
 							return Task.CompletedTask;
+						},
+						OnTokenValidated = context =>
+						{
+							var claims = context.Principal.Claims;
+							var httpContext = context.HttpContext;
+							foreach( var claim in claims)
+							{
+								httpContext.Items[claim.Type] = claim.Value;
+							}
+
+							return Task.CompletedTask;
 						}
+
 					};
 				});
 

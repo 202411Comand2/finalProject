@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
-
-
 	public class ContextManager : IContextManager
 	{
         /// <summary>

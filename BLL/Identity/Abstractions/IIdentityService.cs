@@ -1,20 +1,21 @@
-﻿using Domain.Entities;
+﻿using BLL.Identity.Dto;
+using Domain.Entities;
 
 namespace BLL.Identity.Abstractions
 {
     public interface IIdentityService
     {
         public Task<string> GetGuestToken();
-        public Task<User> Register(string username, string password, string contact);
-        public Task<User> RegisterByPhone(string username, string password, string phone);
-        public Task<User> RegisterByEmail(string username, string password, string email);
-        public Task<bool> RegisterSeller(string token, int shopId);
-        public Task<bool> RegisterManager(int userId, int shopId);
-        public Task ChangePassword(string token, string newPassword);
-        public Task<string> Login(string contact, string password);
-		public Task<string> AuthUserByEmail(string email, string password);
-        public Task<string> AuthUserByPhone(string phone, string password);
-        public Task<string> BizLogin(string contact, string password);
+        public Task<User> Register(RegisterUserDto dto);
+        public Task<User> RegisterByPhone(RegisterUserDto dto);
+        public Task<User> RegisterByEmail(RegisterUserDto dto);
+        public Task<User> GetUserInfo(int userId);
+        public Task<bool> RegisterSeller(RegisterShopOwnerDto dto);
+        public Task<bool> ChangePassword(ChangeUserPasswordDto dto);
+        public Task<string> Login(AuthDto dto);
+		public Task<string> AuthUserByEmail(AuthDto dto);
+        public Task<string> AuthUserByPhone(AuthDto dto);
+        public Task<string> BizLogin(AuthDto dto);
         public Task<string> BizLogin(string token);
 
 	}

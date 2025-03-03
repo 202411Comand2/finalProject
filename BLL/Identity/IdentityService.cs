@@ -1,10 +1,10 @@
 ﻿using BLL.Identity.Abstractions;
+using BLL.Identity.Dto;
 using BLL.Identity.Exceptions;
 using BLL.Identity.Extensions;
 using DAL.Abstractions;
 using DAL.Repositories;
 using Domain.Entities;
-using Domain.Enums;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
@@ -14,18 +14,19 @@ namespace BLL.Identity
     {
         private readonly UserRepository _userRepository;
         private readonly ShopOwnerRepository _shopOwnerRepository;
-        private readonly AccessTokenRepository _accessTokenRepository;
+        private readonly IRedisRepository<UserRegisterAttempt> _regAttemptsRespository;
         private readonly IGenericDataHasher<string> _passwordHasher;
         private readonly IJwtTokenProvider _jwtTokenProvider;
 
         public IdentityService(
             IContextManager contextManager, 
             IJwtTokenProvider tokenProvider,
-            IGenericDataHasher<string> passwordHasher)
+            IGenericDataHasher<string> passwordHasher,
+            IRedisRepository<UserRegisterAttempt> regAttemptsRepository)
         {
             _shopOwnerRepository = new ShopOwnerRepository(contextManager);
             _userRepository = new UserRepository(contextManager);
-            _accessTokenRepository = new AccessTokenRepository(contextManager);
+            _regAttemptsRespository = regAttemptsRepository;
             _passwordHasher = passwordHasher;
             _jwtTokenProvider = tokenProvider;
         }
@@ -34,29 +35,22 @@ namespace BLL.Identity
         {
             return _jwtTokenProvider.GenerateToken();
         }
-        public async Task<User> Register(string username, string password, string contact)
+        public async Task<User> GetUserInfo(int userId)
         {
-            if (contact.IsEmail()) return await RegisterByEmail(username, password, contact);
-            else if (contact.IsPhoneNumber()) return await RegisterByPhone(username, password, contact);
+            return await _userRepository.Get(userId);
+        }
+
+        public async Task<User> Register(RegisterUserDto dto)
+        {
+            if (dto.Contact.IsEmail()) return await RegisterByEmail(dto);
+            else if (dto.Contact.IsPhoneNumber()) return await RegisterByPhone(dto);
             else throw new InvalidContactInputException();
         }
-        public async Task<bool> RegisterSeller(string token, int shopId)
+        public async Task<bool> RegisterSeller(RegisterShopOwnerDto dto)
         {
-			var claims = _jwtTokenProvider.ValidateToken(token);
-			var userIdClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-			if (userIdClaim is null) return false;
-
-			var userId = Convert.ToInt32(userIdClaim.Value);
-			var newOwner = new ShopOwner()
-            {
-                IsHost = true,
-                IsDeleted = false,
-                UserId = userId,
-                ShopId = shopId,
-            };
             try
             {
-				var result = await _shopOwnerRepository.Add(newOwner);
+				var result = await _shopOwnerRepository.Add(dto.ToEntity());
 				if (result == null || result.Id == 0) return false;
 				return true;
 			}
@@ -65,62 +59,88 @@ namespace BLL.Identity
                 Console.WriteLine(ex.Message);
                 return false;
             }
-
-            
         }
-        public async Task<bool> RegisterManager(int userId, int shopId)
-        {
-            var newManager = new ShopOwner()
-            {
-                IsHost = false,
-                IsDeleted = false,
-                UserId = userId,
-                ShopId = shopId,
-            };
-
-            var result = await _shopOwnerRepository.Add(newManager);
-            if (result == null) return false;
-            return true;
-        }
-        public async Task<User> RegisterByPhone(string username, string password, string phone)
+        public async Task<User> RegisterByPhone(RegisterUserDto dto)
         {
             var newUser = new User
             {
-                Name = username,
-                Password = _passwordHasher.Hash(password),
-                Phone = phone
+                Name = dto.Username,
+                Password = _passwordHasher.Hash(dto.Password),
+                Phone = dto.Contact
             };
             var result = await _userRepository.Add(newUser);
 			return result;
 		}
-        public async Task<User> RegisterByEmail(string username, string password, string email)
+        public async Task<User> RegisterByEmail(RegisterUserDto dto)
         {
             var newUser = new User
             {
-                Name = username,
-                Password = _passwordHasher.Hash(password),
-                Email = email
+                Name = dto.Username,
+                Password = _passwordHasher.Hash(dto.Password),
+                Email = dto.Contact
             };
             var result = await _userRepository.Add(newUser);
             return result;
         }
-        public async Task ChangePassword(string token, string newPassword)
+        public async Task<bool> ChangePassword(ChangeUserPasswordDto dto)
         {
-            throw new NotImplementedException("Пока не сделал");
-		}
-        public async Task<string> Login(string contact, string password)
+            return await _userRepository.ChangePassword(dto.UserId, _passwordHasher.Hash(dto.Password));
+		    }
+
+        /// <summary>
+        /// Метод для аутентификации пользователя
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>jwt токен</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="InvalidContactInputException"></exception>
+        public async Task<string> Login(AuthDto dto)
         {
-            if (contact.IsEmail()) return await AuthUserByEmail(contact, password);
-            else if (contact.IsPhoneNumber()) return await AuthUserByPhone(contact, password);
+            if (dto.Contact.IsNullOrEmpty()) throw new ArgumentNullException(nameof(dto.Contact)); 
+            if (dto.Password.IsNullOrEmpty()) throw new ArgumentNullException(nameof(dto.Password)); 
+
+            if (dto.Contact.IsEmail()) return await AuthUserByEmail(dto);
+            else if (dto.Contact.IsPhoneNumber()) return await AuthUserByPhone(dto);
             else throw new InvalidContactInputException();
         }
-        public async Task<string> BizLogin(string contact, string password)
+        public async Task<string> AuthUserByEmail(AuthDto dto)
         {
-            User user = new User();
-            if (contact.IsEmail()) user = await _userRepository.GetByEmail(contact);
-            if (contact.IsPhoneNumber()) user = await _userRepository.GetByPhone(contact);
+            var user = await _userRepository.GetByEmail(dto.Contact);
 
-            bool isPasswordValid = _passwordHasher.Verify(password, user.Password);
+            if (user is null) throw new InvalidContactInputException();
+
+            var isPasswordValid = _passwordHasher.Verify(dto.Password, user.Password);
+            if (isPasswordValid)
+            {
+                return _jwtTokenProvider.GenerateToken(user);
+            }
+            else throw new InvalidContactInputException();
+        }
+        public async Task<string> AuthUserByPhone(AuthDto dto)
+        {
+			var user = await _userRepository.GetByPhone(dto.Contact);
+
+			if (user is null) throw new InvalidContactInputException();
+
+			var isPasswordValid = _passwordHasher.Verify(dto.Password, user.Password);
+			if (isPasswordValid)
+			{
+				return _jwtTokenProvider.GenerateToken(user);
+			}
+			else throw new InvalidContactInputException();
+		}
+        
+        public async Task<string?> BizLogin(AuthDto dto)
+        {
+            User? user = new User();
+
+            if (dto.Contact.IsEmail()) user = await _userRepository.GetByEmail(dto.Contact);
+            else if (dto.Contact.IsPhoneNumber()) user = await _userRepository.GetByPhone(dto.Contact);
+            else throw new InvalidContactInputException();
+
+            if (user is null) return null;
+
+            bool isPasswordValid = _passwordHasher.Verify(dto.Password, user.Password);
             if (isPasswordValid)
             {
                 return await BizLogin(user.Id);
@@ -139,43 +159,13 @@ namespace BLL.Identity
         }
         public async Task<string> BizLogin(int userId)
         {
-			var shopOwners = await _shopOwnerRepository.GetAllByUserId(userId);
-			var user = await _userRepository.Get(userId);
-			if (user != null && shopOwners != null)
-			{
-				return _jwtTokenProvider.GenerateToken(user, shopOwners);
-			}
-			else return null;
-		}
-        public async Task<string> AuthUserByEmail(string email, string password)
-        {
-            if (email.IsNullOrEmpty()) {throw new ArgumentNullException(nameof(email));}
-            if (password.IsNullOrEmpty()) {throw new ArgumentNullException(nameof(password));}
-            var user = await _userRepository.GetByEmail(email);
-
-            if (user is null) throw new InvalidCredentialsException();
-
-            var isPasswordValid = _passwordHasher.Verify(password, user.Password);
-            if (isPasswordValid)
+            var shopOwners = await _shopOwnerRepository.GetAllByUserId(userId);
+            var user = await _userRepository.Get(userId);
+            if (user != null && shopOwners != null)
             {
-                return _jwtTokenProvider.GenerateToken(user);
+                return _jwtTokenProvider.GenerateToken(user, shopOwners);
             }
-            else throw new InvalidCredentialsException();
+            else return null;
         }
-        public async Task<string> AuthUserByPhone(string phone, string password)
-        {
-			if (phone.IsNullOrEmpty()) { throw new ArgumentNullException(nameof(phone)); }
-			if (password.IsNullOrEmpty()) { throw new ArgumentNullException(nameof(password)); }
-			var user = await _userRepository.GetByPhone(phone);
-
-			if (user is null) throw new InvalidCredentialsException();
-
-			var isPasswordValid = _passwordHasher.Verify(password, user.Password);
-			if (isPasswordValid)
-			{
-				return _jwtTokenProvider.GenerateToken(user);
-			}
-			else throw new InvalidCredentialsException();
-		}
     }
 }

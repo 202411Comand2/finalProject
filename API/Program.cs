@@ -9,6 +9,7 @@ using DAL;
 using DAL.Abstractions;
 using DAL.ConfigSettings;
 using DAL.Repositories;
+using Domain.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.Extensions.Options;
@@ -27,6 +28,7 @@ namespace API
 			configuration.AddJsonFile("Properties/secretsSettings.json");
 
 			services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
+			services.Configure<RedisOptions>(configuration.GetSection(nameof(RedisOptions)));
 			// Add services to the container.
 			services.AddSingleton<IContextManager, ContextManager>();
 			services.AddSingleton<IGenericDataHasher<string>, StringHasher>();
@@ -34,6 +36,7 @@ namespace API
 			services.AddSingleton<ISecretsSettings, SecretsSettings>();
 			services.AddTransient<IJwtTokenProvider, JwtTokenProvider>();
 			services.AddTransient<IIdentityService, IdentityService>();
+			services.AddTransient<IRedisRepository<UserRegisterAttempt>, UserRegistersCache>();
 			services.AddApiAuthentication(services.BuildServiceProvider().GetRequiredService<IOptions<JwtOptions>>());
           
 			services.AddTransient<IProductService, ProductService>();
