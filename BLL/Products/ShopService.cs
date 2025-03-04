@@ -24,19 +24,18 @@ namespace BLL.Product
         {
             _shopRepository = new ShopRepository(contextManager);
         }
-        public async Task<bool> CreateShop(AddShopDto addShopDto)
+        public async Task<int> CreateShop(AddShopDto addShopDto)
         {
             if (await _shopRepository.GetIdByStoreName(addShopDto.Name) != -1)
             {
-                return false;
+                return -1;
             }
             Shop shop = new Shop
             {
                 Name = addShopDto.Name,
                 IsDelete = false,
             };
-            await _shopRepository.Add(shop);
-            return true;
+            return (await _shopRepository.Add(shop)).Id;
         }
        ////TODO как быть с удалением товаров??? если удалить из этого запроса, то мы далем монолит
         /// <summary>
@@ -92,6 +91,15 @@ namespace BLL.Product
             }
         }
 
-      
+
+        public async Task<List<ShopDto>> GetShopsInfo(GetShopsInfoDto shopDto) 
+        {
+            if(shopDto.ShopIds.Count==0)
+            { 
+                return null;
+            }
+
+            return Adapters.ShopAdapter.ConvertFromToEntityShopDto(await _shopRepository.GetShopsByIds(shopDto.ShopIds));
+        }
     }
 }

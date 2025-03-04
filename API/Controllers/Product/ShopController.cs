@@ -22,7 +22,7 @@ namespace API.Controllers.Product
         [HttpPost("add")]
         public async Task<ActionResult<int>> Add([FromBody] AddShopDto shopDto)
         {
-            bool result = false;
+            int result = -1;
             try
             {
                 result = await _shopService.CreateShop(shopDto);
@@ -32,11 +32,11 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (!result)
+            if (result == -1)
             {
                 return NotFound();
             }
-            return Ok("Магазин создан");
+            return Ok($"Магазин создан {result}");
         }
 
 
@@ -91,7 +91,7 @@ namespace API.Controllers.Product
 
 
         [HttpPost("GetInfo")]
-        public async Task<ActionResult> Add([FromBody] GetShopsInfoDto shopDto)
+        public async Task<ActionResult> GetInfo([FromBody] GetShopsInfoDto shopDto)
         {
             bool result = false;
             try
