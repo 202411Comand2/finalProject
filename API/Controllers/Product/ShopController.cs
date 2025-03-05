@@ -36,7 +36,9 @@ namespace API.Controllers.Product
             {
                 return NotFound();
             }
-            return Ok($"Магазин создан {result}");
+            //В этом случае, если объект успешно создан, клиент получит статус 200 OK и JSON с данными объекта
+            
+            return Ok(result);
         }
 
 

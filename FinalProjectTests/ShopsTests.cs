@@ -29,8 +29,8 @@ namespace FinalProjectTests
                 request.AddJsonBody(newShop);
 
                 // Выполняем запрос
-                var response = client.Execute<ShopDto>(request);
-
+                var response = client.Execute<int>(request);
+              //  Assert.True(response.IsSuccessful);
                 // Проверяем ответ
                 if (response.IsSuccessful)
                 {

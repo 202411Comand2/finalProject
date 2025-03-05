@@ -234,8 +234,6 @@ namespace BLL.Products
                 clusters.Add(Adapters.ClusterAdapter.ConvertFromEntitieToDTO(item));
             }
             return clusters;
-
-
         }
 
       

@@ -31,13 +31,13 @@ namespace FinalProjectTests
                 request.AddJsonBody(newCluster);
 
                 // Выполняем запрос
-                var response = client.Execute<ShopDto>(request);
+                var response = client.Execute<AddClusterDto>(request);
 
                 // Проверяем ответ
                 if (response.IsSuccessful)
                 {
                     Console.WriteLine("shop created successfully!");
-                    Console.WriteLine($"shop ID: {response.Data}");
+                    Console.WriteLine($"shop ID: {response.Data.Name}");
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace FinalProjectTests
                 }
                 else
                 {
-                    Console.WriteLine($"shop: {response.ErrorMessage}");
+                    Console.WriteLine($"Cluster: {response.ErrorMessage}");
                 }
             }
         }
@@ -116,7 +116,7 @@ namespace FinalProjectTests
 
             var cluster = new GetClusterDto()
             {
-                ClusterName = "Cluster root 1"
+                ClusterName = "Cluster root 4"
             };
           
             request.AddQueryParameter("ClusterName", cluster.ClusterName); // через get не удобно пользоваться(
