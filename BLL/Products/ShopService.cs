@@ -98,8 +98,8 @@ namespace BLL.Product
             { 
                 return null;
             }
-
-            return Adapters.ShopAdapter.ConvertFromToEntityShopDto(await _shopRepository.GetShopsByIds(shopDto.ShopIds));
+            var sss = await _shopRepository.GetShopsByIds(shopDto.ShopIds);
+            return Adapters.ShopAdapter.ConvertFromToEntityShopDto(sss);
         }
     }
 }

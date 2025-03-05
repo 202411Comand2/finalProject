@@ -93,21 +93,21 @@ namespace API.Controllers.Product
         [HttpPost("GetInfo")]
         public async Task<ActionResult> GetInfo([FromBody] GetShopsInfoDto shopDto)
         {
-            bool result = false;
+            List<ShopDto> result = new List<ShopDto>();
             try
             {
-                ///result = await _shopService.CreateShop(shopDto);
+                result = await _shopService.GetShopsInfo(shopDto);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
 
-            if (!result)
+            if (result.Count==0)
             {
                 return NotFound();
             }
-            return Ok("Магазин создан");
+            return new JsonResult(result);
         }
     }
 }
