@@ -8,43 +8,44 @@ using System.Threading.Tasks;
 
 namespace FinalProjectTests
 {
-    public class ProductTests
+    public class ShopsTests
     {
         [Test]
         public async Task AddShop()
         {
             var client = new RestClient("https://localhost:7039/Shop");
-
-            // Создаем запрос
-            var request = new RestRequest("add", Method.Post);
-            request.AddHeader("Content-Type", "application/json");
-
-            // Создаем объект, который хотим отправить
-            var newShop = new ShopDto
+            for (int i = 0; i < 10; i++)
             {
-                Name = "shops John Doe",
-            };
+                // Создаем запрос
+                var request = new RestRequest("add", Method.Post);
+                request.AddHeader("Content-Type", "application/json");
+                // Создаем объект, который хотим отправить
+                var newShop = new ShopDto
+                {
+                    Name = $"shops John Doe {i}",
+                };
 
-            // Сериализуем объект в JSON и добавляем его в тело запроса
-            request.AddJsonBody(newShop);
+                // Сериализуем объект в JSON и добавляем его в тело запроса
+                request.AddJsonBody(newShop);
 
-            // Выполняем запрос
-            var response = client.Execute<ShopDto>(request);
+                // Выполняем запрос
+                var response = client.Execute<ShopDto>(request);
 
-            // Проверяем ответ
-            if (response.IsSuccessful)
-            {
-                Console.WriteLine("shop created successfully!");
-                Console.WriteLine($"shop ID: {response.Data}");
-            }
-            else
-            {
-                Console.WriteLine($"shop: {response.ErrorMessage}");
+                // Проверяем ответ
+                if (response.IsSuccessful)
+                {
+                    Console.WriteLine("shop created successfully!");
+                    Console.WriteLine($"shop ID: {response.Data}");
+                }
+                else
+                {
+                    Console.WriteLine($"shop: {response.ErrorMessage}");
+                }
             }
         }
 
         [Test]
-        public async Task Update() 
+        public async Task Update()
         {
             var client = new RestClient("https://localhost:7039/Shop");
 
@@ -55,7 +56,7 @@ namespace FinalProjectTests
             // Создаем объект, который хотим отправить
             var updateShop = new UpdateShopDto
             {
-                Id =1,
+                Id = 1,
                 NewName = "shops John Doe Я обновить магазин",
             };
 
@@ -78,7 +79,7 @@ namespace FinalProjectTests
         }
 
         [Test]
-        public async Task Delete() 
+        public async Task Delete()
         {
             var client = new RestClient("https://localhost:7039/Shop");
 
@@ -97,6 +98,41 @@ namespace FinalProjectTests
 
             // Выполняем запрос
             var response = client.Execute<UpdateShopDto>(request);
+
+            // Проверяем ответ
+            if (response.IsSuccessful)
+            {
+                Console.WriteLine("shop created successfully!");
+                Console.WriteLine($"shop ID: {response.Data}");
+            }
+            else
+            {
+                Console.WriteLine($"shop: {response.ErrorMessage}");
+            }
+        }
+
+        [Test]
+        public async Task GetInfo()
+        {
+            var client = new RestClient("https://localhost:7039/Shop");
+
+            // Создаем запрос
+            var request = new RestRequest("GetInfo", Method.Post);
+            request.AddHeader("Content-Type", "application/json");
+            // Создаем объект, который хотим отправить
+
+            List<int> intShopId = new List<int>() { 1,2,3,4,5,6,7,8,9};
+
+            var newShop = new GetShopsInfoDto
+            {
+                ShopIds = intShopId
+            };
+
+            // Сериализуем объект в JSON и добавляем его в тело запроса
+            request.AddJsonBody(newShop);
+
+            // Выполняем запрос
+            var response = client.Execute<GetShopsInfoDto>(request);
 
             // Проверяем ответ
             if (response.IsSuccessful)
