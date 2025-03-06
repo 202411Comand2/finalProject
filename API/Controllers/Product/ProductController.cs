@@ -25,7 +25,7 @@ namespace API.Controllers.Product
         [HttpPost("add")]
         public async Task<ActionResult<int>> Add([FromBody] AddProductDto product)
         {
-            bool result = false;
+            int result = -1;
             try
             {
                 result = await _productService.AddProduct(product);
@@ -35,11 +35,11 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (!result)
+            if (result==-1)
             {
                 return NotFound();
             }
-            return Ok("Продукт добавлен");
+            return Ok(result);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace API.Controllers.Product
             {
                 return NotFound();
             }
-            return Ok("Продкт обновлён");
+            return Ok(true);
         }
 
         [HttpDelete("Delete")]
@@ -84,7 +84,7 @@ namespace API.Controllers.Product
             {
                 return NotFound();
             }
-            return Ok("Продукт удалён");
+            return Ok(true);
         }
 
 
@@ -128,8 +128,6 @@ namespace API.Controllers.Product
             return new JsonResult(result);
         }
 
-
-
         [HttpGet("GetProductsByCluster")]
         public async Task<ActionResult> GetProductsByCluster([FromQuery] GetAllClusterProductsDto product)
         {
@@ -149,27 +147,6 @@ namespace API.Controllers.Product
             }
             return new JsonResult(result);
         }
-
-
-
-        //[HttpPost("seller/login")]
-        //public async Task<IActionResult> SellerLogin([FromBody] UserModel model)
-        //{
-        //    var token = Request.Cookies[_jwtOptions.CookieName];
-        //    string result = string.Empty;
-        //    if (token.IsNullOrEmpty())
-        //    {
-        //        result = await _identityService.BizLogin(model.Contact, model.Password);
-        //    }
-        //    else result = await _identityService.BizLogin(token);
-
-        //    if (result == null) return NotFound();
-        //    else
-        //    {
-        //        Response.Cookies.Append(_jwtOptions.CookieName, result);
-        //        return Ok();
-        //    }
-        //}
 
     }
 }

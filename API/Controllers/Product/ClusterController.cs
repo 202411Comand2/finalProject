@@ -76,9 +76,8 @@ namespace API.Controllers.Product
             {
                 return NotFound();
             }
-            return Ok("Кластер удалён");
+            return Ok(true);
         }
-
 
 
         /// <summary>

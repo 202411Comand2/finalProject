@@ -17,7 +17,7 @@ namespace BLL.Products.Abstractions
         /// </summary>
         ///<param name="productDto">Объект продукт</param>
         /// <returns>Удалось добавить продукт</returns>
-        public Task<bool> AddProduct(AddProductDto productDto);// int shopId, int clusterId,string nameProduct, string description, decimal price, int barcode, string modelNumber);
+        public Task<int> AddProduct(AddProductDto productDto);// int shopId, int clusterId,string nameProduct, string description, decimal price, int barcode, string modelNumber);
 
         /// <summary>
         /// Обновить продукт 

@@ -81,7 +81,7 @@ namespace FinalProjectTests
         }
         
         [Test]
-        public async Task GetAllCluster() 
+        public async Task GetAllElements() 
         {
             // Создаем клиент RestSharp
             var client = new RestClient("https://localhost:7039/Cluster");
@@ -171,6 +171,61 @@ namespace FinalProjectTests
             }
         }
 
-     
+        [Test]
+        public async Task Delete() 
+        {
+            var client = new RestClient("https://localhost:7039/Cluster");
+
+            // Создаем запрос
+            var request = new RestRequest("Delete", Method.Delete);
+            request.AddHeader("Content-Type", "application/json");
+
+            // Создаем объект, который хотим отправить
+            var DeleteShop = new DeleteClusterDto
+            {
+                Id = 1,
+            };
+
+            // Сериализуем объект в JSON и добавляем его в тело запроса
+            request.AddJsonBody(DeleteShop);
+
+            // Выполняем запрос
+            var response = client.Execute<bool>(request);
+
+            // Проверяем ответ
+            if (response.IsSuccessful)
+            {
+                Console.WriteLine("Cluster Delete successfully!");
+                Console.WriteLine($"Cluster Delete: {response.Data}");
+            }
+            else
+            {
+                Console.WriteLine($"Delete: {response.ErrorMessage}");
+            }
+        }
+
+        [Test]
+        public async Task GetRootElements() 
+        {
+            // Создаем клиент RestSharp
+            var client = new RestClient("https://localhost:7039/Cluster");
+
+            // Создаем GET-запрос без параметров
+            var request = new RestRequest("GetRootElements", Method.Get);
+
+            // Выполняем запрос
+            var response = client.Execute(request);
+
+            // Проверяем ответ
+            if (response.IsSuccessful)
+            {
+                Console.WriteLine("GET request successful!");
+                Console.WriteLine("Response content: " + response.Content);
+            }
+            else
+            {
+                Console.WriteLine($"Error: {response.ErrorMessage}");
+            }
+        }
     }
 }
