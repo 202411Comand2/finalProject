@@ -17,7 +17,7 @@ namespace BLL.Products.Abstractions
         /// </summary>
         /// <param name="nameClaster">Название кластера</param>
         /// <returns>Успешно добавлен кластер</returns>
-        public Task<bool> AddNewCluster(AddClusterDto clusterDto);
+        public Task<int> AddNewCluster(AddClusterDto clusterDto);
 
         ///// <summary>
         ///// Добавить кластер

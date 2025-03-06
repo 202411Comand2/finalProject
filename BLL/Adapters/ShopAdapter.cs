@@ -70,7 +70,7 @@ namespace BLL.Adapters
                     IsDelete = shop.IsDelete,
                 });
             }
-            return  shopDtos;
+            return shopDtos;
         }
     }
 }

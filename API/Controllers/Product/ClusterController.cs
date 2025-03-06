@@ -21,7 +21,7 @@ namespace API.Controllers.Product
         [HttpPost("add")]
         public async Task<ActionResult<int>> Add([FromBody] AddClusterDto clusterDto)
         {
-            bool result = false;
+            int result = -1;
             try
             {
                 result = await _clusterService.AddNewCluster(clusterDto);
@@ -31,11 +31,11 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (!result)
+            if (result==-1)
             {
                 return NotFound();
             }
-            return Ok("Кластер создан");
+            return Ok(result);
         }
 
         [HttpPut("Update")]
@@ -55,7 +55,7 @@ namespace API.Controllers.Product
             {
                 return NotFound();
             }
-            return Ok("Кластер обновлён");
+            return Ok(result);
         }
 
 

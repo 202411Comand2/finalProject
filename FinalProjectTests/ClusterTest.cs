@@ -31,13 +31,13 @@ namespace FinalProjectTests
                 request.AddJsonBody(newCluster);
 
                 // Выполняем запрос
-                var response = client.Execute<AddClusterDto>(request);
+                var response = client.Execute<int>(request);
 
                 // Проверяем ответ
                 if (response.IsSuccessful)
                 {
                     Console.WriteLine("shop created successfully!");
-                    Console.WriteLine($"shop ID: {response.Data.Name}");
+                    Console.WriteLine($"shop ID: {response.Data}");
                 }
                 else
                 {
@@ -64,13 +64,13 @@ namespace FinalProjectTests
                 request.AddJsonBody(newCluster);
 
                 // Выполняем запрос
-                var response = client.Execute<ShopDto>(request);
+                var response = client.Execute<int>(request);
 
                 // Проверяем ответ
                 if (response.IsSuccessful)
                 {
                     Console.WriteLine("Cluster created successfully!");
-                    Console.WriteLine($"Cluster ID:{response.Data.Id} name: {response.Data.Name}");
+                    Console.WriteLine($"Cluster ID:{response.Data}");
                     
                 }
                 else
@@ -135,5 +135,42 @@ namespace FinalProjectTests
                 Console.WriteLine($"Error: {response.ErrorMessage}");
             }
         }
+
+        [Test]
+        public async Task Update() 
+        {
+            var client = new RestClient("https://localhost:7039/Cluster");
+
+            // Создаем запрос
+            var request = new RestRequest("Update", Method.Put);
+            request.AddHeader("Content-Type", "application/json");
+
+            // Создаем объект, который хотим отправить
+            var updateShop = new UpdateCluseterDto
+            {
+                Id = 1,
+                NewName = "cluster update",
+                newParent = ""
+            };
+
+            // Сериализуем объект в JSON и добавляем его в тело запроса
+            request.AddJsonBody(updateShop);
+
+            // Выполняем запрос
+            var response = client.Execute(request);
+
+            // Проверяем ответ
+            if (response.IsSuccessful)
+            {
+                Console.WriteLine("Cluster update!");
+                Console.WriteLine($"Cluster: {response.Content}");
+            }
+            else
+            {
+                Console.WriteLine($"Cluster: {response.ErrorMessage}");
+            }
+        }
+
+     
     }
 }

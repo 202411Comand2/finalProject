@@ -97,17 +97,17 @@ namespace FinalProjectTests
             request.AddJsonBody(DeleteShop);
 
             // Выполняем запрос
-            var response = client.Execute<UpdateShopDto>(request);
+            var response = client.Execute<bool>(request);
 
             // Проверяем ответ
             if (response.IsSuccessful)
             {
-                Console.WriteLine("shop created successfully!");
-                Console.WriteLine($"shop ID: {response.Data}");
+                Console.WriteLine("shop Delete successfully!");
+                Console.WriteLine($"shop Delete: {response.Data}");
             }
             else
             {
-                Console.WriteLine($"shop: {response.ErrorMessage}");
+                Console.WriteLine($"Delete: {response.ErrorMessage}");
             }
         }
 
@@ -132,13 +132,14 @@ namespace FinalProjectTests
             request.AddJsonBody(newShop);
 
             // Выполняем запрос
-            var response = client.Execute<GetShopsInfoDto>(request);
-
+            //var response = client.Execute<List<ShopDto>>(request);
+            var response = client.Execute(request);
             // Проверяем ответ
             if (response.IsSuccessful)
             {
                 Console.WriteLine("shop created successfully!");
-                Console.WriteLine($"shop ID: {response.Data}");
+                Console.WriteLine("Response content: " + response.Content);
+
             }
             else
             {

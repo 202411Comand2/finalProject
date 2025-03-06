@@ -1,18 +1,8 @@
 ﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Entities;
 using DAL.Repositories;
-using System.Xml.Linq;
 using DAL.Abstractions;
 using BLL.Products.Abstractions;
 using BLL.Dto.Cluster;
-using System.Diagnostics.Metrics;
-using System.Formats.Asn1;
-using static Pipelines.Sockets.Unofficial.SocketConnection;
 
 
 namespace BLL.Products
@@ -114,7 +104,7 @@ namespace BLL.Products
         //    throw new NotImplementedException();
         //}
 
-        public async Task<bool> AddNewCluster(AddClusterDto clusterDto)
+        public async Task<int> AddNewCluster(AddClusterDto clusterDto)
         {
             Cluster cluster = await _clusterRepository.GetNameCluster(clusterDto.Name);
             Cluster clusterParent = await _clusterRepository.GetNameCluster(clusterDto.NameParentCluseter);
@@ -126,13 +116,13 @@ namespace BLL.Products
                     Name = clusterDto.Name,
                     ParentId = -1,
                 };
-                var result = await _clusterRepository.Add(cluster);
-                return true; //Кластер создан
+               // var result = await _clusterRepository.Add(cluster);
+                return (await _clusterRepository.Add(cluster)).Id; //Кластер создан
             }
 
             if (clusterParent is null) 
             {
-                return false;
+                return -1;
             }
             if (cluster is null)
             {
@@ -141,12 +131,12 @@ namespace BLL.Products
                     Name = clusterDto.Name,
                     ParentId = clusterParent.Id
                 };
-                var result = await _clusterRepository.Add(cluster);
-                return true;//Кластер создан
+               // var result = await _clusterRepository.Add(cluster);
+                return (await _clusterRepository.Add(cluster)).Id;//Кластер создан
             }
             else
             {
-                return false;//Не удалось создать в виду наличия в системе уже существующего кластера
+                return (await _clusterRepository.Add(cluster)).Id;//Не удалось создать в виду наличия в системе уже существующего кластера
             }
         }
 

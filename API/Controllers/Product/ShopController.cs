@@ -61,7 +61,7 @@ namespace API.Controllers.Product
             {
                 return NotFound();
             }
-            return Ok("Магазин был ''удалён''");
+            return Ok(true);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (result.Count==0)
+            if (result.Count == 0)
             {
                 return NotFound();
             }
