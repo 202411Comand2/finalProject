@@ -26,7 +26,14 @@ namespace BLL.Products.Abstractions
         /// <param name="davoriteId">ClusterId избранной позиции</param>
         /// <returns></returns>
         public Task<bool> DeleteFavoriteProduct(DeleteFavoriteDto Dto);
-       
+
+        /// <summary>
+        /// Получить список избранных позиции пользователя
+        /// </summary>
+        /// <param name="getFavoriteDto"></param>
+        /// <returns></returns>
+        public Task<List<FavoriteDto>> GetFavoriteUser(GetFavoriteDto getFavoriteDto);
+        
 
     }
 }

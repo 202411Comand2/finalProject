@@ -37,5 +37,11 @@ namespace BLL.Products
             Favorite favorite = await _favoriteRepository.Get(Dto.IdFavorite);
             return await _favoriteRepository.Delete(favorite);// "Удалалил из избранного";
         }
+
+        public async Task<List<FavoriteDto>> GetFavoriteUser(GetFavoriteDto getFavoriteDto)
+        {
+            return Adapters.FavoriteAdapter.ConvertFromEntityToFavoriteDto
+                (await _favoriteRepository.GetFavoritesUser(getFavoriteDto.IdUser));
+        }
     }
 }

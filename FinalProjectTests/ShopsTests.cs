@@ -64,13 +64,13 @@ namespace FinalProjectTests
             request.AddJsonBody(updateShop);
 
             // Выполняем запрос
-            var response = client.Execute<UpdateShopDto>(request);
+            var response = client.Execute<bool>(request);
 
             // Проверяем ответ
             if (response.IsSuccessful)
             {
-                Console.WriteLine("shop created successfully!");
-                Console.WriteLine($"shop ID: {response.Data}");
+                Console.WriteLine("shop update successfully!");
+                Console.WriteLine($"shop update: {response.Data}");
             }
             else
             {

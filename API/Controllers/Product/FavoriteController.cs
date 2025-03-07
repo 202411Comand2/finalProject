@@ -63,5 +63,26 @@ namespace API.Controllers.Product
             }
             return Ok(true);
         }
+
+        [HttpGet("GetFavoriteUser")]
+        public async Task<ActionResult<int>> GetFavoriteUser([FromQuery] GetFavoriteDto Dto)
+        {
+            List<FavoriteDto> result = new  List<FavoriteDto>();
+            try
+            {
+                result = await _favoriteProductService.GetFavoriteUser(Dto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            if (result.Count()==0)
+            {
+                return NotFound();
+            }
+            return Ok(new JsonResult(result));
+        }
+
     }
 }

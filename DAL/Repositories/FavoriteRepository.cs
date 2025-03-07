@@ -29,5 +29,17 @@ namespace DAL.Repositories
             }
         }
 
+        /// <summary>
+        /// Получить избранные позиции пользователя
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public async Task<List<Favorite>> GetFavoritesUser(int UserId) 
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                return await context.Favorite.Where(p => p.UserId == UserId).ToListAsync();
+            }
+        }
     }
 }

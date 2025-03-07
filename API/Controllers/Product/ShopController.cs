@@ -87,7 +87,7 @@ namespace API.Controllers.Product
             {
                 return NotFound();
             }
-            return Ok("Название было заменено");
+            return Ok(true);
         }
 
 

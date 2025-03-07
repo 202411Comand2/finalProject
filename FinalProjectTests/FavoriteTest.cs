@@ -83,5 +83,36 @@ namespace FinalProjectTests
                 Console.WriteLine($"Delete: {response.ErrorMessage}");
             }
         }
+
+
+        [Test]
+        public async Task GetFavoriteUser() 
+        {
+            // Создаем клиент RestSharp
+            var client = new RestClient("https://localhost:7039/Favorite");
+
+            // Создаем GET-запрос без параметров
+            var request = new RestRequest("GetFavoriteUser", Method.Get);
+           
+
+            var Dto = new GetFavoriteDto()
+            {
+                IdUser = 1
+            };
+            // Выполняем запрос
+            request.AddQueryParameter("IdUser", Dto.IdUser); // через get не удобно пользоваться(
+            var response = client.Execute(request);
+
+            // Проверяем ответ
+            if (response.IsSuccessful)
+            {
+                Console.WriteLine("GET request successful!");
+                Console.WriteLine("Response content: " + response.Content);
+            }
+            else
+            {
+                Console.WriteLine($"Error: {response.ErrorMessage}");
+            }
+        }
     }
 }
