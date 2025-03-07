@@ -58,7 +58,7 @@ namespace API.Controllers.Product
             {
                 return NotFound();
             }
-            return Ok("Отзыв обновлён");
+            return Ok(result);
             
         }
 
@@ -82,7 +82,7 @@ namespace API.Controllers.Product
             {
                 return NotFound();
             }
-            return Ok("Отзыв удалён");
+            return Ok(true);
         }
 
         /// <summary>

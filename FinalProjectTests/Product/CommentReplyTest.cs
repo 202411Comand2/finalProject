@@ -1,7 +1,5 @@
 ﻿using BLL.Dto.Comment;
-using BLL.Dto.Favorite;
-using BLL.Dto.Product;
-using BLL.Dto.Shop;
+using BLL.Dto.ReplyComment;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -12,15 +10,15 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FinalProjectTests.Product
 {
-    public class CommentTest
+    public class CommentReplyTest
     {
-        //  POST
+        // POST
         [Test]
         public async Task Add()
         {
             Random rand = new Random();
 
-            var client = new RestClient("https://localhost:7039/Comment");
+            var client = new RestClient("https://localhost:7039/CommentReply");
             for (int i = 0; i < 10; i++)
             {
                 // Создаем запрос
@@ -28,7 +26,11 @@ namespace FinalProjectTests.Product
                 request.AddHeader("Content-Type", "application/json");
                 // Создаем объект, который хотим отправить
 
-                var New = new AddCommentDto(1, 2, rand.Next(1, 9), "", 1);
+                var New = new AddReplyCommentDto()
+                {
+                    CommentUserId = rand.Next(0,9),
+                    TextComment = $"comment {rand.Next(0,111111)}"
+                };
 
                 // Сериализуем объект в JSON и добавляем его в тело запроса
                 request.AddJsonBody(New);
@@ -46,23 +48,23 @@ namespace FinalProjectTests.Product
                     Console.WriteLine($"Comment not create: {response.ErrorMessage}");
                 }
             }
-
         }
-        //PUT
+
+
+        // PUT
         [Test]
         public async Task Update() 
         {
-            var client = new RestClient("https://localhost:7039/Comment");
+            var client = new RestClient("https://localhost:7039/CommentReply");
             // Создаем запрос
             var request = new RestRequest("Update", Method.Put);
             request.AddHeader("Content-Type", "application/json");
 
             // Создаем объект, который хотим отправить
-            var update = new UpdateCommentDto
+            var update = new UpdateCommentReplyDto
             {
-                CommentId = 2,
+               IdCommentReply=1,
                 TextComment = "я обновить комментарий",
-                Estimation = 123
             };
 
             // Сериализуем объект в JSON и добавляем его в тело запроса
@@ -88,14 +90,14 @@ namespace FinalProjectTests.Product
         [Test]
         public async Task Delete() 
         {
-            var client = new RestClient("https://localhost:7039/Comment");
+            var client = new RestClient("https://localhost:7039/CommentReply");
 
             // Создаем запрос
             var request = new RestRequest("Delete", Method.Delete);
             request.AddHeader("Content-Type", "application/json");
 
             // Создаем объект, который хотим отправить
-            var Delete = new DeleteCommentDto
+            var Delete = new DeleteCommentReplyDto
             {
                 Id = 1,
             };
@@ -115,39 +117,6 @@ namespace FinalProjectTests.Product
             else
             {
                 Console.WriteLine($"Delete: {response.ErrorMessage}");
-            }
-        }
-
-
-        //GET
-        [Test]
-        public async Task GetCommentsProduct() 
-        {
-            // Создаем клиент RestSharp
-            var client = new RestClient("https://localhost:7039/Comment");
-
-            // Создаем GET-запрос без параметров
-            var request = new RestRequest("GetCommentsProduct", Method.Get);
-
-            var productsDto = new GetAllCommentsProduct()
-            {
-                IdProduct = 1
-            };
-
-            request.AddQueryParameter("IdProduct", productsDto.IdProduct); // через get не удобно пользоваться(
-
-            // Выполняем запрос
-            var response = client.Execute(request);
-
-            // Проверяем ответ
-            if (response.IsSuccessful)
-            {
-                Console.WriteLine("GET request successful!");
-                Console.WriteLine("Response content: " + response.Content);
-            }
-            else
-            {
-                Console.WriteLine($"Error: {response.ErrorMessage}");
             }
         }
     }

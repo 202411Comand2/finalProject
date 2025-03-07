@@ -18,16 +18,9 @@ namespace BLL.Products
         public CommentReplyService(IContextManager contextManager) => _commentReplyRepository = new CommentReplyRepository(contextManager);
 
 
-        public async Task<bool> AddReplyComment(AddReplyCommentDto addReplyCommentDto)
+        public async Task<int> AddReplyComment(AddReplyCommentDto addReplyCommentDto)
         {
-            if (await _commentReplyRepository.Add(addReplyCommentDto.CommentUserId, addReplyCommentDto.TextComment))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (await _commentReplyRepository.Add(addReplyCommentDto.CommentUserId, addReplyCommentDto.TextComment)).IdComment;
 
         }
 
