@@ -21,7 +21,7 @@ namespace API.Controllers.Product
         [HttpPost("Add")]
         public async  Task<ActionResult<int>> AddFavorite([FromBody] AddFavoriteDto Dto)
         {
-            bool result = false;
+            int result = -1;
             try
             {
                 result = await _favoriteProductService.AddFavoriteProduct(Dto);
@@ -31,14 +31,12 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (!result)
+            if (result == - 1)
             {
                 return NotFound();
             }
-            return Ok("Продукт добавлен в избранное");
+            return Ok(result);
         }
-
-
 
        
         /// <summary>
@@ -63,7 +61,7 @@ namespace API.Controllers.Product
             {
                 return NotFound();
             }
-            return Ok("Продукт добавлен в избранное");
+            return Ok(true);
         }
     }
 }

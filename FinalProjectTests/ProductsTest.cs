@@ -158,8 +158,59 @@ namespace FinalProjectTests
             }
         }
 
-        //GetAll
+        [Test]
+        public async Task GetAll()
+        {
+            // Создаем клиент RestSharp
+            var client = new RestClient("https://localhost:7039/Product");
 
-        //GetProductsByCluster
+            // Создаем GET-запрос без параметров
+            var request = new RestRequest("GetAll", Method.Get);
+
+            // Выполняем запрос
+            var response = client.Execute(request);
+
+            // Проверяем ответ
+            if (response.IsSuccessful)
+            {
+                Console.WriteLine("GET request successful!");
+                Console.WriteLine("Response content: " + response.Content);
+            }
+            else
+            {
+                Console.WriteLine($"Error: {response.ErrorMessage}");
+            }
+        }
+
+        [Test]
+        public async Task GetProductsByCluster() 
+        {
+            // Создаем клиент RestSharp
+            var client = new RestClient("https://localhost:7039/Product");
+
+            // Создаем GET-запрос без параметров
+            var request = new RestRequest("GetProductsByCluster", Method.Get);
+
+            var productsDto = new GetAllClusterProductsDto()
+            {
+                ClusterId = 2
+            };
+
+            request.AddQueryParameter("ClusterId", productsDto.ClusterId); // через get не удобно пользоваться(
+
+            // Выполняем запрос
+            var response = client.Execute(request);
+
+            // Проверяем ответ
+            if (response.IsSuccessful)
+            {
+                Console.WriteLine("GET request successful!");
+                Console.WriteLine("Response content: " + response.Content);
+            }
+            else
+            {
+                Console.WriteLine($"Error: {response.ErrorMessage}");
+            }
+        }
     }
 }

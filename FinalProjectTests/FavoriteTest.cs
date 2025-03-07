@@ -1,0 +1,87 @@
+﻿using BLL.Dto.Cluster;
+using BLL.Dto.Favorite;
+using BLL.Dto.Product;
+using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FinalProjectTests
+{
+    public class FavoriteTest
+    {
+        [Test]
+        public async Task add() 
+        {
+            Random rand = new Random();
+
+            var client = new RestClient("https://localhost:7039/Favorite");
+            for (int i = 0; i < 10; i++)
+            {
+                // Создаем запрос
+                var request = new RestRequest("Add", Method.Post);
+                request.AddHeader("Content-Type", "application/json");
+                // Создаем объект, который хотим отправить
+
+                var NewFavorite = new AddFavoriteDto
+                {
+                  UserId = 1,
+                  ProductId = rand.Next(1,9) 
+
+                };
+
+                // Сериализуем объект в JSON и добавляем его в тело запроса
+                request.AddJsonBody(NewFavorite);
+
+                // Выполняем запрос
+                var response = client.Execute<int>(request);
+
+                // Проверяем ответ
+                if (response.IsSuccessful)
+                {
+                    Console.WriteLine("shop created successfully!");
+                    Console.WriteLine($"shop ID: {response.Data}");
+                }
+                else
+                {
+                    Console.WriteLine($"shop: {response.ErrorMessage}");
+                }
+            }
+        }
+
+        [Test]
+        public async Task Delete()
+        {
+            var client = new RestClient("https://localhost:7039/Favorite");
+
+            // Создаем запрос
+            var request = new RestRequest("Delete", Method.Delete);
+            request.AddHeader("Content-Type", "application/json");
+
+            // Создаем объект, который хотим отправить
+            var DeleteShop = new DeleteFavoriteDto
+            {
+                IdFavorite = 11,
+            };
+
+            // Сериализуем объект в JSON и добавляем его в тело запроса
+            request.AddJsonBody(DeleteShop);
+
+            // Выполняем запрос
+            var response = client.Execute<bool>(request);
+
+            // Проверяем ответ
+            if (response.IsSuccessful)
+            {
+                Console.WriteLine("Cluster Delete successfully!");
+                Console.WriteLine($"Cluster Delete: {response.Data}");
+            }
+            else
+            {
+                Console.WriteLine($"Delete: {response.ErrorMessage}");
+            }
+        }
+    }
+}

@@ -18,7 +18,7 @@ namespace BLL.Products.Abstractions
         /// <param name="userId">ClusterId пользователя</param>
         /// <param name="productId">ClusterId продукта</param>
         /// <returns></returns>
-        public Task<bool> AddFavoriteProduct(AddFavoriteDto addFavoriteDto);
+        public Task<int> AddFavoriteProduct(AddFavoriteDto addFavoriteDto);
 
         /// <summary>
         /// Удалить товар из избранного
