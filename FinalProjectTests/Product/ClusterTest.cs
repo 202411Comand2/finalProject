@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinalProjectTests
+namespace FinalProjectTests.Product
 {
     public class ClusterTest
     {
         [Test]
-        public async Task Add() 
+        public async Task Add()
         {
             var client = new RestClient("https://localhost:7039/Cluster");
             for (int i = 0; i < 10; i++)
@@ -44,8 +44,8 @@ namespace FinalProjectTests
                     Console.WriteLine($"shop: {response.ErrorMessage}");
                 }
             }
-            
-            Random random  = new Random();
+
+            Random random = new Random();
             //делаем рaндамайзер
             for (int i = 0; i < 10; i++)
             {
@@ -57,7 +57,7 @@ namespace FinalProjectTests
                 var newCluster = new AddClusterDto
                 {
                     Name = $"Cluster children {i}",
-                    NameParentCluseter = $"Cluster root {random.Next(1,9)}"// корневой кластер
+                    NameParentCluseter = $"Cluster root {random.Next(1, 9)}"// корневой кластер
                 };
 
                 // Сериализуем объект в JSON и добавляем его в тело запроса
@@ -71,7 +71,7 @@ namespace FinalProjectTests
                 {
                     Console.WriteLine("Cluster created successfully!");
                     Console.WriteLine($"Cluster ID:{response.Data}");
-                    
+
                 }
                 else
                 {
@@ -79,9 +79,9 @@ namespace FinalProjectTests
                 }
             }
         }
-        
+
         [Test]
-        public async Task GetAllElements() 
+        public async Task GetAllElements()
         {
             // Создаем клиент RestSharp
             var client = new RestClient("https://localhost:7039/Cluster");
@@ -118,7 +118,7 @@ namespace FinalProjectTests
             {
                 ClusterName = "Cluster root 4"
             };
-          
+
             request.AddQueryParameter("ClusterName", cluster.ClusterName); // через get не удобно пользоваться(
 
             // Выполняем запрос
@@ -137,7 +137,7 @@ namespace FinalProjectTests
         }
 
         [Test]
-        public async Task Update() 
+        public async Task Update()
         {
             var client = new RestClient("https://localhost:7039/Cluster");
 
@@ -172,7 +172,7 @@ namespace FinalProjectTests
         }
 
         [Test]
-        public async Task Delete() 
+        public async Task Delete()
         {
             var client = new RestClient("https://localhost:7039/Cluster");
 
@@ -205,7 +205,7 @@ namespace FinalProjectTests
         }
 
         [Test]
-        public async Task GetRootElements() 
+        public async Task GetRootElements()
         {
             // Создаем клиент RestSharp
             var client = new RestClient("https://localhost:7039/Cluster");

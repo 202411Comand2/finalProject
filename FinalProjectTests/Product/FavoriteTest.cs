@@ -8,12 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinalProjectTests
+namespace FinalProjectTests.Product
 {
     public class FavoriteTest
     {
         [Test]
-        public async Task add() 
+        public async Task add()
         {
             Random rand = new Random();
 
@@ -27,8 +27,8 @@ namespace FinalProjectTests
 
                 var NewFavorite = new AddFavoriteDto
                 {
-                  UserId = 1,
-                  ProductId = rand.Next(1,9) 
+                    UserId = 1,
+                    ProductId = rand.Next(1, 9)
 
                 };
 
@@ -86,14 +86,14 @@ namespace FinalProjectTests
 
 
         [Test]
-        public async Task GetFavoriteUser() 
+        public async Task GetFavoriteUser()
         {
             // Создаем клиент RestSharp
             var client = new RestClient("https://localhost:7039/Favorite");
 
             // Создаем GET-запрос без параметров
             var request = new RestRequest("GetFavoriteUser", Method.Get);
-           
+
 
             var Dto = new GetFavoriteDto()
             {

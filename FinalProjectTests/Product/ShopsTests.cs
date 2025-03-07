@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinalProjectTests
+namespace FinalProjectTests.Product
 {
     public class ShopsTests
     {
@@ -30,7 +30,7 @@ namespace FinalProjectTests
 
                 // Выполняем запрос
                 var response = client.Execute<int>(request);
-              //  Assert.True(response.IsSuccessful);
+                //  Assert.True(response.IsSuccessful);
                 // Проверяем ответ
                 if (response.IsSuccessful)
                 {
@@ -121,7 +121,7 @@ namespace FinalProjectTests
             request.AddHeader("Content-Type", "application/json");
             // Создаем объект, который хотим отправить
 
-            List<int> intShopId = new List<int>() { 1,2,3,4,5,6,7,8,9};
+            List<int> intShopId = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
             var newShop = new GetShopsInfoDto
             {

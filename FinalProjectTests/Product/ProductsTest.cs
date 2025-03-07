@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinalProjectTests
+namespace FinalProjectTests.Product
 {
     public class ProductsTest
     {
@@ -94,8 +94,8 @@ namespace FinalProjectTests
             }
         }
 
-        [Test]  
-        public async Task Delete() 
+        [Test]
+        public async Task Delete()
         {
             var client = new RestClient("https://localhost:7039/Product");
 
@@ -128,7 +128,7 @@ namespace FinalProjectTests
         }
 
         [Test]
-        public async Task GetShopProducts() 
+        public async Task GetShopProducts()
         {
             // Создаем клиент RestSharp
             var client = new RestClient("https://localhost:7039/Product");
@@ -183,7 +183,7 @@ namespace FinalProjectTests
         }
 
         [Test]
-        public async Task GetProductsByCluster() 
+        public async Task GetProductsByCluster()
         {
             // Создаем клиент RestSharp
             var client = new RestClient("https://localhost:7039/Product");
