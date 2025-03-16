@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities
 {
+    ////Не развивается
+    
     /// <summary>
     /// 1 позиция товара в корзине
     /// </summary>

@@ -17,7 +17,35 @@ namespace Domain.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-   
+        /// <summary>
+        /// Id позиции товара
+        /// </summary>
+        [Required, Column("product_id")]
+        public int ProductId { get; set; }
+
+        /// <summary>
+        /// Количество товара
+        /// </summary>
+        [Column("count")]
+        public decimal Count { get; set; } = 1;
+
+        /// <summary>
+        /// Дата добавления товара в корзину
+        /// </summary>
+        [Column("date_created")]
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+
+
+        #region связи
+
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User User { get; set; }
+
+        [ForeignKey(nameof(ProductId))]
+        public Product product { get; set; }
+
+        #endregion
 
         /// <summary>
         /// Вернуть Id объекта
@@ -27,20 +55,5 @@ namespace Domain.Entities
         {
             return Id;
         }
-
-        #region
-        /// <summary>
-        /// Id пользователя
-        /// </summary>
-        public int UserId { get; set; }
-
-        [ForeignKey("UserId")]
-        public User User { get; set; }
-
-
-        public ICollection<CartItem> cartItems { get; set; } = new List<CartItem>();
-
-
-        #endregion
     }
 }
