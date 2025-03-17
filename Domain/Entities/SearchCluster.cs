@@ -18,6 +18,7 @@ namespace Domain.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+
         /// <summary>
         /// Ключевое слово кластера по которому нужно делать поиск
         /// </summary>
