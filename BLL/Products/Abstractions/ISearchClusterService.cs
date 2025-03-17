@@ -1,4 +1,5 @@
 ﻿using BLL.Dto.Cluster;
+using BLL.Dto.SearchCluster;
 
 namespace BLL.Products.Abstractions
 {
@@ -9,7 +10,7 @@ namespace BLL.Products.Abstractions
         /// </summary>
         /// <param name="clusterDto">Название кластера</param>
         /// <returns>Успешно добавлен кластер</returns>
-        public Task<int> AddSearchClusterService(AddClusterDto clusterDto);
+        public Task<bool> AddSearchClusterService(AddSearchClusterDto clusterDto);
         
     }
 }

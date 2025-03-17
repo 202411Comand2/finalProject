@@ -17,7 +17,7 @@ namespace DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Rating> Rating { get; set; }
         public DbSet<Shop> Shops { get; set; }
-        public DbSet<SearchCluster> SearchCluster { get; set; }
+        public DbSet<SearchCluster> SearchClusters { get; set; }
 
         #endregion
 

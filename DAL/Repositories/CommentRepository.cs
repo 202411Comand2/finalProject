@@ -72,6 +72,7 @@ namespace DAL.Repositories
                 comment.UserName = (await context.Users.FindAsync(comment.UserId))?.Name;
                 await context.Comments.AddAsync(comment);
                 await context.SaveChangesAsync();
+
                 reply.IdComment = comment.Id;
                 await context.SaveChangesAsync();
             }

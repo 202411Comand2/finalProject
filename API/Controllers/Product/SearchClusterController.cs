@@ -1,4 +1,5 @@
 ﻿using BLL.Dto.Cluster;
+using BLL.Dto.SearchCluster;
 using BLL.Products;
 using BLL.Products.Abstractions;
 using Microsoft.AspNetCore.Mvc;
@@ -14,23 +15,23 @@ namespace API.Controllers.Product
       
         
         [HttpPost("add")]
-        public async Task<ActionResult<int>> Add([FromBody] List<ISearchClusterService> searchClusterServices)
+        public async Task<ActionResult<int>> Add([FromBody] AddSearchClusterDto addSearchClusterDto)
         {
-            //int result = -1;
-            //try
-            //{
-            //    result = await _clusterService.AddNewCluster(clusterDto);
-            //}
-            //catch (Exception ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
+            bool result =false;
+            try
+            {
+                result = await _searchClusterService.AddSearchClusterService(addSearchClusterDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
-            //if (result == -1)
-            //{
-            //    return NotFound();
-            //}
-            return Ok("result");
+            if (!result)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
     }
 }

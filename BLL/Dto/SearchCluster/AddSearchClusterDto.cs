@@ -11,7 +11,7 @@ namespace BLL.Dto.SearchCluster
         /// <summary>
         /// Ключевое слово
         /// </summary>
-        public string? KeyWord { get; set; }
+        public List<string?> KeyWords { get; set; }
         /// <summary>
         /// Id класстера
         /// </summary>

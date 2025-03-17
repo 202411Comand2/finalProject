@@ -50,7 +50,7 @@ namespace Domain.Entities
         /// <summary>
         /// Коллекция кластеров ключевых слов
         /// </summary>
-        public ICollection<SearchCluster> SearchCluster { get; set; } = new List<SearchCluster>();
+       // public ICollection<SearchCluster> SearchCluster { get; set; } = new List<SearchCluster>();
         #endregion
 
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace Domain.Entities
 {
     [Table("search_cluster")]
-    public class SearchCluster
+    public class SearchCluster : IDbEntity
     {
         /// <summary>
         /// Id классификатора

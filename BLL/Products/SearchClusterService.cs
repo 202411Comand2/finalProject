@@ -1,4 +1,5 @@
 ﻿using BLL.Dto.Cluster;
+using BLL.Dto.SearchCluster;
 using BLL.Products.Abstractions;
 using DAL.Abstractions;
 using DAL.Repositories;
@@ -16,10 +17,9 @@ namespace BLL.Products
         public SearchClusterService(IContextManager contextManager) => _clusterRepository = new SearchClusterRepository(contextManager);
 
 
-        public Task<int> AddSearchClusterService(AddClusterDto clusterDto)
+        public async Task<bool> AddSearchClusterService(AddSearchClusterDto clusterDto)
         {
-            
-            throw new NotImplementedException();
+            return await _clusterRepository.AddSearchElements(clusterDto.IdCluster, clusterDto.KeyWords);
         }
     }
 }
