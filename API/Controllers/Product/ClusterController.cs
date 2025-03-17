@@ -1,13 +1,6 @@
-﻿using API.Models;
-using BLL.Dto.Cluster;
-using BLL.Identity;
-using BLL.Identity.Abstractions;
-using BLL.Identity.Exceptions;
-using BLL.Product;
+﻿using BLL.Dto.Cluster;
 using BLL.Products.Abstractions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 //
 namespace API.Controllers.Product

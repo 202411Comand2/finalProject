@@ -1,11 +1,4 @@
 ﻿using BLL.Dto.Cluster;
-using DAL.Repositories;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Products.Abstractions
 {
@@ -15,7 +8,7 @@ namespace BLL.Products.Abstractions
         /// <summary>
         /// Добавить кластер(классификатор) корневой элемент
         /// </summary>
-        /// <param name="nameClaster">Название кластера</param>
+        /// <param name="clusterDto">Название кластера</param>
         /// <returns>Успешно добавлен кластер</returns>
         public Task<int> AddNewCluster(AddClusterDto clusterDto);
 

@@ -44,6 +44,13 @@ namespace Domain.Entities
         /// Коллекция продуктов
         /// </summary>
         public ICollection<Product> Products { get; set; } = new List<Product>();
+
+
+
+        /// <summary>
+        /// Коллекция кластеров ключевых слов
+        /// </summary>
+        public ICollection<SearchCluster> SearchCluster { get; set; } = new List<SearchCluster>();
         #endregion
 
     }

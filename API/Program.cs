@@ -42,6 +42,8 @@ namespace API
 			services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IShopService, ShopService>();
             services.AddTransient<IClusterService, ClusterService>();
+            services.AddTransient<ISearchClusterService, SearchClusterService>();
+
             services.AddTransient<IFavoriteProductService, FavoriteProductService>();
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<ICommentReplyService, CommentReplyService>();

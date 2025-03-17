@@ -33,6 +33,78 @@ namespace FinalProjectTests.Product
                 // Выполняем запрос
                 var response = client.Execute<int>(request);
 
+                 Assert.IsTrue(response.IsSuccessful);
+                // Проверяем ответ
+                if (response.IsSuccessful)
+                {
+                    Console.WriteLine("shop created successfully!");
+                    Console.WriteLine($"shop ID: {response.Data}");
+                }
+                else
+                {
+                    Console.WriteLine($"shop: {response.ErrorMessage}");
+                }
+            }
+
+            Random random = new Random();
+            //делаем рaндамайзер
+            for (int i = 0; i < 10; i++)
+            {
+
+                // Создаем запрос
+                var request = new RestRequest("add", Method.Post);
+                request.AddHeader("Content-Type", "application/json");
+                // Создаем объект, который хотим отправить
+                var newCluster = new AddClusterDto
+                {
+                    Name = $"Cluster children {i}",
+                    NameParentCluseter = $"Cluster root {random.Next(1, 9)}"// корневой кластер
+                };
+
+                // Сериализуем объект в JSON и добавляем его в тело запроса
+                request.AddJsonBody(newCluster);
+
+                // Выполняем запрос
+                var response = client.Execute<int>(request);
+
+                // Проверяем ответ
+                if (response.IsSuccessful)
+                {
+                    Console.WriteLine("Cluster created successfully!");
+                    Console.WriteLine($"Cluster ID:{response.Data}");
+
+                }
+                else
+                {
+                    Console.WriteLine($"Cluster: {response.ErrorMessage}");
+                }
+            }
+        }
+
+
+        [Test]
+        public async Task AddOldObject()
+        {
+            var client = new RestClient("https://localhost:7039/Cluster");
+            for (int i = 0; i < 10; i++)
+            {
+                // Создаем запрос
+                var request = new RestRequest("add", Method.Post);
+                request.AddHeader("Content-Type", "application/json");
+                // Создаем объект, который хотим отправить
+                var newCluster = new AddClusterDto
+                {
+                    Name = $"Cluster root {i}",
+                    NameParentCluseter = ""// корневой кластер
+                };
+
+                // Сериализуем объект в JSON и добавляем его в тело запроса
+                request.AddJsonBody(newCluster);
+
+                // Выполняем запрос
+                var response = client.Execute<int>(request);
+
+                Assert.IsTrue(!response.IsSuccessful);
                 // Проверяем ответ
                 if (response.IsSuccessful)
                 {
