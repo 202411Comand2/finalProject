@@ -11,6 +11,15 @@ namespace BLL.Products.Abstractions
         /// <param name="clusterDto">Название кластера</param>
         /// <returns>Успешно добавлен кластер</returns>
         public Task<bool> AddSearchClusterService(AddSearchClusterDto clusterDto);
-        
+
+        /// <summary>
+        /// Удалить ключевые слова кластеры
+        /// </summary>
+        /// <param name="deleteSearchClusterDto"></param>
+        /// <returns></returns>
+        public Task<bool> DeleteSearchClusterService(List<DeleteSearchClusterDto> deleteSearchClusterDto);
+
+
+
     }
 }

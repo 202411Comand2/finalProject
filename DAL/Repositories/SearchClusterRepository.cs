@@ -1,5 +1,6 @@
 ﻿using DAL.Abstractions;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,22 @@ namespace DAL.Repositories
                 return true;
             }
             return false;   
+        }
+
+        /// <summary>
+        /// Пакетное удаление данных
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public async Task<bool> AddSearchElements(List<int> ids)
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                await context.SearchClusters
+                   .Where(e => ids.Contains(e.Id))
+                   .ExecuteDeleteAsync();
+                return true;
+            }
         }
 
     }

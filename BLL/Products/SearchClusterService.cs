@@ -21,5 +21,10 @@ namespace BLL.Products
         {
             return await _clusterRepository.AddSearchElements(clusterDto.IdCluster, clusterDto.KeyWords);
         }
+
+        public async Task<bool> DeleteSearchClusterService(List<DeleteSearchClusterDto> deleteSearchClusterDto)
+        {
+            return await _clusterRepository.AddSearchElements(deleteSearchClusterDto);
+        }
     }
 }
