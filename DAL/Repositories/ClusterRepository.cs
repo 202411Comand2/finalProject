@@ -43,7 +43,7 @@ namespace DAL.Repositories
         /// </summary>
         /// <param name="id">Id кластера у которого нужно вернуть всех его родителей</param>
         /// <returns></returns>
-        public async Task<List<Cluster>> GeElementsClaster(int id)
+        public async Task<List<Cluster>> GeElementsCluster(int id)
         {
             using (var context = CreateDatabaseContext())
             {
@@ -51,6 +51,20 @@ namespace DAL.Repositories
             }
         }
 
+        /// <summary>
+        /// Вернуть массив кластеров
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public async Task<List<Cluster>> GetArrayCluster(List<int> ids) 
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                return await context.Clusters
+                .Where(e => ids.Contains(e.Id)) 
+                .ToListAsync();
+            }
+        }
 
     }
 }

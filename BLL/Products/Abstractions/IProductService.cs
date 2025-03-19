@@ -53,6 +53,13 @@ namespace BLL.Products.Abstractions
         /// <returns></returns>
         public Task<List<ProductDto>> GetProductsByCluster(GetAllClusterProductsDto productDto);
 
+        /// <summary>
+        /// Получить список продуктов, которые прикреплены к кластеру по кластрам
+        /// </summary>
+        /// <param name="ClusterIds"></param>
+        /// <returns></returns>
+        public Task<List<ProductDto>> GetProductsByCluster(List<int> ClusterIds);
+
         ///// <summary>
         ///// Добавить новый рейтинг
         ///// </summary>

@@ -176,5 +176,15 @@ namespace BLL.ProductService
                 return true;
             }
         }
+
+        public async Task<List<ProductDto>> GetProductsByCluster(List<int> ClusterIds)
+        {
+            List<ProductDto> products = new List<ProductDto>();
+            foreach (Domain.Entities.Product product in await _productRepository.GetProductsByClusters(ClusterIds))
+            {
+                products.Add(Adapters.ProductAdapter.ConvertToDTOProduct(product));
+            }
+            return products;
+        }
     }
 }

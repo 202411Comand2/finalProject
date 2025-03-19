@@ -11,6 +11,6 @@ namespace BLL.Dto.SearchCluster
         /// <summary>
         /// ID ключевых слов, которые нужно удалить
         /// </summary>
-       public int IdSearchClusterDto {  get; set; }
+       public List<int> IdSearchClusterDto {  get; set; }
     }
 }

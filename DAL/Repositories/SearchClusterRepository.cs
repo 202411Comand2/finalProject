@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -54,5 +55,51 @@ namespace DAL.Repositories
             }
         }
 
+        /// <summary>
+        /// Получить все ключевые кластера по которым идёт поиск
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<List<SearchCluster>> GetSearchClusters(int id) 
+        {
+            using (var context = CreateDatabaseContext())
+            {
+               return await context.SearchClusters
+                .Where(e => e.ClusterId == id).ToListAsync();
+            }
+        }
+        /// <summary>
+        /// Проверить, что хотя бы у этого кластера есть хоть одно слова для поиска
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<bool> CheckClusterForKeywords(int id) 
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                if (await context.SearchClusters.Where(p => p.ClusterId == id).FirstOrDefaultAsync() != null)
+                {
+                    return true; 
+                }
+                else 
+                {
+                    return false;
+                }
+            }
+        }
+
+        public async Task<List<int>> СompleteМatch(string keyWord) 
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                     return await context.SearchClusters.Where(p => p.KeyWord == keyWord)
+                    .Select( p =>  p.ClusterId)
+                    //.Select( p => new { p.Id,p.ClusterId})
+                    .Distinct()
+                    .ToListAsync();
+            }
+        }
+
+        
     }
 }

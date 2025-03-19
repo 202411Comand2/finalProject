@@ -36,6 +36,20 @@ namespace DAL.Repositories
                 return await context.Products.Where(p => p.ClusterId == clusterId).ToListAsync();
             }
         }
+        /// <summary>
+        /// Вернуть продукты по кластерам
+        /// </summary>
+        /// <param name="idsCluster"></param>
+        /// <returns></returns>
+        public async Task<List<Product>> GetProductsByClusters(List<int> idsCluster) 
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                return await context.Products
+                .Where(e => idsCluster.Contains(e.Id)) 
+                .ToListAsync();
+            }
+        }
 
 
         /// <summary>
