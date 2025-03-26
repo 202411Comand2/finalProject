@@ -17,6 +17,8 @@ namespace DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Rating> Rating { get; set; }
         public DbSet<Shop> Shops { get; set; }
+        public DbSet<SearchCluster> SearchClusters { get; set; }
+
         #endregion
 
         public ApplicationDbContext(DbContextOptions options) : base(options) => Database.EnsureCreated();

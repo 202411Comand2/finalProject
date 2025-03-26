@@ -19,8 +19,8 @@ namespace BLL.Products.Abstractions
         /// Создание магазина
         /// </summary>
         /// <param name="shopDto">Достаточно передать название магазина </param>
-        /// <returns>Возращает созданный магазин</returns>
-        public Task<bool> CreateShop(AddShopDto addShopDto);
+        /// <returns>Возвращает созданный магазин</returns>
+        public Task<int> CreateShop(AddShopDto addShopDto);
 
         /// <summary>
         /// Обновить название магазина
@@ -35,5 +35,12 @@ namespace BLL.Products.Abstractions
         /// <param name="shopDto"> Достаточно передать ClusterId магазина, который нужно удалить</param>
         /// <returns>Удалось ли удалить магазин</returns>
         public Task<bool> DeleteShop(DeleteShopDto shopDto);
+
+        /// <summary>
+        /// Получить список названий магазина
+        /// </summary>
+        /// <param name="shopDto">Коллекция id магазинов</param>
+        /// <returns></returns>
+        public Task<List<ShopDto>> GetShopsInfo(GetShopsInfoDto shopDto);
     }
 }

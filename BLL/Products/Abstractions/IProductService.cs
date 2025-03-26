@@ -17,7 +17,7 @@ namespace BLL.Products.Abstractions
         /// </summary>
         ///<param name="productDto">Объект продукт</param>
         /// <returns>Удалось добавить продукт</returns>
-        public Task<bool> AddProduct(AddProductDto productDto);// int shopId, int clusterId,string nameProduct, string description, decimal price, int barcode, string modelNumber);
+        public Task<int> AddProduct(AddProductDto productDto);// int shopId, int clusterId,string nameProduct, string description, decimal price, int barcode, string modelNumber);
 
         /// <summary>
         /// Обновить продукт 
@@ -52,6 +52,13 @@ namespace BLL.Products.Abstractions
         /// <param name="clusterId">ClusterId кластера</param>
         /// <returns></returns>
         public Task<List<ProductDto>> GetProductsByCluster(GetAllClusterProductsDto productDto);
+
+        /// <summary>
+        /// Получить список продуктов, которые прикреплены к кластеру по кластрам
+        /// </summary>
+        /// <param name="ClusterIds"></param>
+        /// <returns></returns>
+        public Task<List<ProductDto>> GetProductsByCluster(List<int> ClusterIds);
 
         ///// <summary>
         ///// Добавить новый рейтинг

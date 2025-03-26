@@ -1,14 +1,8 @@
-﻿using API.Models;
-using BLL.Dto.Cluster;
-using BLL.Identity;
-using BLL.Identity.Abstractions;
-using BLL.Identity.Exceptions;
-using BLL.Product;
+﻿using BLL.Dto.Cluster;
 using BLL.Products.Abstractions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
+//
 namespace API.Controllers.Product
 {
     [ApiController]
@@ -20,7 +14,7 @@ namespace API.Controllers.Product
         [HttpPost("add")]
         public async Task<ActionResult<int>> Add([FromBody] AddClusterDto clusterDto)
         {
-            bool result = false;
+            int result = -1;
             try
             {
                 result = await _clusterService.AddNewCluster(clusterDto);
@@ -30,11 +24,11 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (!result)
+            if (result==-1)
             {
                 return NotFound();
             }
-            return Ok("Кластер создан");
+            return Ok(result);
         }
 
         [HttpPut("Update")]
@@ -54,7 +48,7 @@ namespace API.Controllers.Product
             {
                 return NotFound();
             }
-            return Ok("Кластер обновлён");
+            return Ok(result);
         }
 
 
@@ -75,9 +69,8 @@ namespace API.Controllers.Product
             {
                 return NotFound();
             }
-            return Ok("Кластер удалён");
+            return Ok(true);
         }
-
 
 
         /// <summary>

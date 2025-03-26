@@ -31,16 +31,16 @@ namespace BLL.ProductService
         /// <param name="contextManager"></param>
         public ProductService(IContextManager contextManager) => _productRepository = new ProductRepository(contextManager);
        
-        public async Task<bool> AddProduct(AddProductDto productDto)//int shopId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber)
+        public async Task<int> AddProduct(AddProductDto productDto)//int shopId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber)
         {
             Domain.Entities.Product product = Adapters.ProductAdapter.ConvertToEntity(productDto);
-            if ((await _productRepository.Add(product)) is not null)
+            if ((await _productRepository.Add(product)) is null)
             {
-                return true;
+                return -1;
             }
             else 
             {
-                return false;
+                return product.Id;
             }
         }
 
@@ -175,6 +175,16 @@ namespace BLL.ProductService
                 await _productRepository.Update(product);
                 return true;
             }
+        }
+
+        public async Task<List<ProductDto>> GetProductsByCluster(List<int> ClusterIds)
+        {
+            List<ProductDto> products = new List<ProductDto>();
+            foreach (Domain.Entities.Product product in await _productRepository.GetProductsByClusters(ClusterIds))
+            {
+                products.Add(Adapters.ProductAdapter.ConvertToDTOProduct(product));
+            }
+            return products;
         }
     }
 }

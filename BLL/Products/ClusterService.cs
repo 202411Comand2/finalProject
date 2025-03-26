@@ -1,18 +1,8 @@
 ﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Entities;
 using DAL.Repositories;
-using System.Xml.Linq;
 using DAL.Abstractions;
 using BLL.Products.Abstractions;
 using BLL.Dto.Cluster;
-using System.Diagnostics.Metrics;
-using System.Formats.Asn1;
-using static Pipelines.Sockets.Unofficial.SocketConnection;
 
 
 namespace BLL.Products
@@ -22,99 +12,8 @@ namespace BLL.Products
         private readonly ClusterRepository _clusterRepository;
         public ClusterService(IContextManager contextManager) => _clusterRepository = new ClusterRepository(contextManager);
 
-        //public async Task<bool> AddNewCluster(ClusterDto clusterDto)
-        //{
-        //    Cluster cluster = await _clusterRepository.GetNameCluster(clusterDto.Name);
-        //    if (cluster is null)
-        //    {
-        //        if (clusterDto.ParentId == -1)
-        //        {
-        //            cluster = new Cluster
-        //            {
-        //                Name = clusterDto.Name,
-        //                ParentId = -1,
-        //            };
-        //            var result = await _clusterRepository.Add(cluster);
-        //            return true; //Кластер создан
-        //        }
-        //        else
-        //        {
-        //            Cluster clusterParent = await _clusterRepository.Get(clusterDto.ParentId);
-        //            if (clusterParent is null)
-        //            {
-        //                return false; // По указанному id не нашёл родителя
-        //            }
-        //            cluster = new Cluster
-        //            {
-        //                Name = clusterDto.Name,
-        //                ParentId = clusterDto.ParentId,
-        //            };
-        //            var result = await _clusterRepository.Add(cluster);
-        //            return true;// "Кластер создан";
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return false;   //Не удалось создать в виду наличия в системе уже существующего кластера
-        //    }
-        //}
 
-        //public async Task<bool> AddNewCluster(ClusterDto clusterDto)
-        //{
-        //    Cluster cluster = await _clusterRepository.GetNameCluster(clusterDto.Name);
-        //    Cluster clusterParent = await _clusterRepository.Get(clusterDto.ParentId);
-        //    if (clusterParent is null)
-        //    {
-        //        return false; // По указанному id не нашёл родителя
-        //    }
-        //    if (cluster is null)
-        //    {
-        //        cluster = new Cluster
-        //        {
-        //            Name = clusterDto.Name,
-        //            ParentId = clusterDto.ParentId,
-        //        };
-        //        var result = await _clusterRepository.Add(cluster);
-        //        return true;// "Кластер создан";
-        //    }
-        //    else
-        //    {
-        //        return false;//Не удалось создать в виду наличия в системе уже существующего кластера
-        //    }
-        //}
-
-        //public async Task<bool> AddNewCluster(string nameClaster, string NameParent)
-        //{
-        //    Cluster cluster = await _clusterRepository.GetNameCluster(nameClaster);
-        //    Cluster clusterParent = await _clusterRepository.GetNameCluster(NameParent);
-
-           
-        //    if (clusterParent is null)
-        //    {
-        //        return false;//"По указанному имени не нашёл родителя";
-        //    }
-        //    if (cluster is null)
-        //    {
-        //        cluster = new Cluster
-        //        {
-        //            Name = nameClaster,
-        //            ParentId = clusterParent.ClusterId
-        //        };
-        //        var result = await _clusterRepository.Add(cluster);
-        //        return true;//Кластер создан
-        //    }
-        //    else
-        //    {
-        //        return false;//Не удалось создать в виду наличия в системе уже существующего кластера
-        //    }
-        //}
-
-        //public Task<bool> AddNewCluster(string nameClaster, int ParentId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public async Task<bool> AddNewCluster(AddClusterDto clusterDto)
+        public async Task<int> AddNewCluster(AddClusterDto clusterDto)
         {
             Cluster cluster = await _clusterRepository.GetNameCluster(clusterDto.Name);
             Cluster clusterParent = await _clusterRepository.GetNameCluster(clusterDto.NameParentCluseter);
@@ -126,13 +25,13 @@ namespace BLL.Products
                     Name = clusterDto.Name,
                     ParentId = -1,
                 };
-                var result = await _clusterRepository.Add(cluster);
-                return true; //Кластер создан
+               // var result = await _clusterSearchRepository.Add(cluster);
+                return (await _clusterRepository.Add(cluster)).Id; //Кластер создан
             }
 
             if (clusterParent is null) 
             {
-                return false;
+                return -1;
             }
             if (cluster is null)
             {
@@ -141,39 +40,39 @@ namespace BLL.Products
                     Name = clusterDto.Name,
                     ParentId = clusterParent.Id
                 };
-                var result = await _clusterRepository.Add(cluster);
-                return true;//Кластер создан
+               // var result = await _clusterSearchRepository.Add(cluster);
+                return (await _clusterRepository.Add(cluster)).Id;//Кластер создан
             }
             else
             {
-                return false;//Не удалось создать в виду наличия в системе уже существующего кластера
+                return (await _clusterRepository.Add(cluster)).Id;//Не удалось создать в виду наличия в системе уже существующего кластера
             }
         }
 
         //public async Task<bool> DeleteCluster(int clusterId)
         //{
-        //    Cluster cluster = await _clusterRepository.Get(clusterId);
+        //    Cluster cluster = await _clusterSearchRepository.Get(clusterId);
         //    if (cluster is null)
         //    {
         //        return false;//Не получилось удалить ввиду отсутствия id кластера
         //    }
         //    else
         //    {
-        //        await _clusterRepository.Delete(cluster);
+        //        await _clusterSearchRepository.Delete(cluster);
         //        return false; // Кластер удалён
         //    }
         //}
 
         //public async Task<bool> DeleteCluster(string nameCluster)
         //{
-        //    Cluster cluster = await _clusterRepository.GetNameCluster(nameCluster);
+        //    Cluster cluster = await _clusterSearchRepository.GetNameCluster(nameCluster);
         //    if (cluster is null)
         //    {
         //        return false; // Не получилось удалить ввиду отсутствия id кластера
         //    }
         //    else
         //    {
-        //        await _clusterRepository.Delete(cluster);
+        //        await _clusterSearchRepository.Delete(cluster);
         //        return true; // Кластер удалён
 
         //    }
@@ -197,7 +96,7 @@ namespace BLL.Products
 
         //public async Task<List<Cluster>> GetChildrenElementsCluster(int clusterId)
         //{
-        //    Cluster cluster = await _clusterRepository.Get(clusterId);
+        //    Cluster cluster = await _clusterSearchRepository.Get(clusterId);
         //    if (cluster is null)
         //    {
         //        //если такого кластера нет
@@ -205,19 +104,19 @@ namespace BLL.Products
         //    }
         //    else
         //    {
-        //        return await _clusterRepository.GeElementsClaster(clusterId);
+        //        return await _clusterSearchRepository.GeElementsClaster(clusterId);
         //    }
         //}
 
         //public async Task<List<Cluster>> GetChildrenElementsCluster(string nameCluster)
         //{
-        //    Cluster cluster = await _clusterRepository.GetNameCluster(nameCluster);
+        //    Cluster cluster = await _clusterSearchRepository.GetNameCluster(nameCluster);
 
         //    if (cluster is null)
         //    {//"Ошибка. Не найден кластер по имени"
         //        return null;
         //    }
-        //    return await _clusterRepository.GeElementsClaster(cluster.ClusterId);
+        //    return await _clusterSearchRepository.GeElementsClaster(cluster.ClusterId);
         //}
 
         public async Task<List<ClusterDto>> GetChildrenElementsCluster(GetClusterDto getClusterDto)
@@ -228,22 +127,19 @@ namespace BLL.Products
                 return null;
             }
             List<ClusterDto> clusters = new List<ClusterDto>();
-            foreach (var item in await _clusterRepository.GeElementsClaster(cluster.Id))
+            foreach (var item in await _clusterRepository.GeElementsCluster(cluster.Id))
             {
-
                 clusters.Add(Adapters.ClusterAdapter.ConvertFromEntitieToDTO(item));
             }
             return clusters;
-
-
         }
 
       
 
         //public async Task<bool> UpdateNameCluster(int clasterId, string newNameClaster)
         //{
-        //    Cluster cluster = await _clusterRepository.Get(clasterId);
-        //    Cluster clusterNewName = await _clusterRepository.GetNameCluster(newNameClaster);
+        //    Cluster cluster = await _clusterSearchRepository.Get(clasterId);
+        //    Cluster clusterNewName = await _clusterSearchRepository.GetNameCluster(newNameClaster);
 
         //    if (cluster is null)
         //    {
@@ -254,7 +150,7 @@ namespace BLL.Products
         //        if (clusterNewName is null)
         //        {
         //            cluster.Name = newNameClaster;
-        //            await _clusterRepository.Update(cluster);
+        //            await _clusterSearchRepository.Update(cluster);
         //            return true;// "Кластер изменён";
         //        }
         //        else
@@ -266,8 +162,8 @@ namespace BLL.Products
 
         //public async Task<bool> UpdateNameCluster(string oldNameClaster, string newNameClaster)
         //{
-        //    Cluster cluster = await _clusterRepository.GetNameCluster(oldNameClaster);
-        //    Cluster clusterNewName = await _clusterRepository.GetNameCluster(newNameClaster);
+        //    Cluster cluster = await _clusterSearchRepository.GetNameCluster(oldNameClaster);
+        //    Cluster clusterNewName = await _clusterSearchRepository.GetNameCluster(newNameClaster);
 
         //    if (cluster is null)
         //    {
@@ -279,7 +175,7 @@ namespace BLL.Products
         //        if (clusterNewName is null)
         //        {
         //            cluster.Name = newNameClaster;
-        //            await _clusterRepository.Update(cluster);
+        //            await _clusterSearchRepository.Update(cluster);
         //            return true;//"Кластер изменён";
         //        }
         //        else
@@ -324,7 +220,7 @@ namespace BLL.Products
 
         //public async Task<bool> UpdatePositionCluster(int clusterId, int parentId)
         //{
-        //    Cluster cluster = await _clusterRepository.Get(clusterId);
+        //    Cluster cluster = await _clusterSearchRepository.Get(clusterId);
         //    if (cluster is null)
         //    {
         //        return false;//Ошибка. Не найден кластер по id
@@ -338,15 +234,15 @@ namespace BLL.Products
         //        if (parentId == -1)
         //        {
         //            cluster.ParentId = -1;
-        //            await _clusterRepository.Update(cluster);
+        //            await _clusterSearchRepository.Update(cluster);
         //            return true;// "Изменения были приняты иерархия была изменена";
         //        }
 
-        //        Cluster clusterParent = await _clusterRepository.Get(parentId);
+        //        Cluster clusterParent = await _clusterSearchRepository.Get(parentId);
         //        if (clusterParent is not null)
         //        {
         //            cluster.ParentId = parentId;
-        //            await _clusterRepository.Update(cluster);
+        //            await _clusterSearchRepository.Update(cluster);
         //            return true; //"Изменения были приняты иерархия была изменена";
         //        }
         //        else
@@ -358,7 +254,7 @@ namespace BLL.Products
 
         //public async Task<bool> UpdatePositionCluster(string nameCluster, int parentId)
         //{
-        //    Cluster cluster = await _clusterRepository.GetNameCluster(nameCluster);
+        //    Cluster cluster = await _clusterSearchRepository.GetNameCluster(nameCluster);
 
         //    if (cluster is null)
         //    {
@@ -373,15 +269,15 @@ namespace BLL.Products
         //        if (parentId == -1)
         //        {
         //            cluster.ParentId = -1;
-        //            await _clusterRepository.Update(cluster);
+        //            await _clusterSearchRepository.Update(cluster);
         //            return true;// "Изменения были приняты иерархия была изменена";
         //        }
 
-        //        Cluster clusterParent = await _clusterRepository.Get(parentId);
+        //        Cluster clusterParent = await _clusterSearchRepository.Get(parentId);
         //        if (clusterParent is not null)
         //        {
         //            cluster.ParentId = parentId;
-        //            await _clusterRepository.Update(cluster);
+        //            await _clusterSearchRepository.Update(cluster);
         //            return true;// "Изменения были приняты иерархия была изменена";
         //        }
         //        else

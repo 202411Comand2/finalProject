@@ -25,7 +25,7 @@ namespace BLL.Products.Abstractions
         /// </summary>
         /// <param name="commentDto">Объект commentDto</param>
         /// <returns></returns>
-        public Task<bool> AddNewComment(AddCommentDto commentDto);
+        public Task<int> AddNewComment(AddCommentDto commentDto);
 
 
         /// <summary>

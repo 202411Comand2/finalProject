@@ -17,7 +17,7 @@ namespace DAL.Repositories
         /// <param name="commentUserId"></param>
         /// <param name="textComment"></param>
         /// <returns></returns>
-        public  async Task<bool> Add(int commentUserId, string textComment)
+        public  async Task<CommentReply> Add(int commentUserId, string textComment)
         {
             using (var context = CreateDatabaseContext())
             {
@@ -25,7 +25,7 @@ namespace DAL.Repositories
                 var reply = await context.CommentReply.FindAsync(commnent);
                 reply.Text=textComment;
                 await context.SaveChangesAsync();
-                return true;
+                return reply;
             }
         }
     }

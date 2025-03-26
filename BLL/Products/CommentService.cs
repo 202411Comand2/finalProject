@@ -28,7 +28,7 @@ namespace BLL.Products
         }
 
 
-        public async Task<bool> AddNewComment(AddCommentDto commentDto)
+        public async Task<int> AddNewComment(AddCommentDto commentDto)
         {
             Comment comment = Adapters.CommentAdapter.ConvertToEntity(commentDto);
             if (await _commentRepository.GetCommentUser(comment.UserId, comment.IdProduct) is null)
@@ -36,11 +36,11 @@ namespace BLL.Products
                 CommentReply reply = new();
                 var result = await _commentRepository.Add(comment, reply);
                 await AddReting(commentDto.ProductId, commentDto.Estimation);
-                return true;// Комментарий создан {comment.ClusterId}
+                return comment.Id;// Комментарий создан {comment.ClusterId}
             }
             else
             {
-                return false; // Не удалось создать новый комментарий комментарий ввиду наличия
+                return -1; // Не удалось создать новый комментарий комментарий ввиду наличия
             }
         }
 

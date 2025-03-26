@@ -16,11 +16,11 @@ namespace BLL.Products
         private readonly FavoriteRepository _favoriteRepository;
         public FavoriteProductService(IContextManager contextManager) => _favoriteRepository = new FavoriteRepository(contextManager);
 
-        public async Task<bool> AddFavoriteProduct(AddFavoriteDto addFavoriteDto)
+        public async Task<int> AddFavoriteProduct(AddFavoriteDto addFavoriteDto)
         {
             if (await _favoriteRepository.GetFavoriteUser(addFavoriteDto.UserId, addFavoriteDto.ProductId) is not null)
             {
-                return false;// "Ошибка. Указанная позиция в избранном уже состоит";
+                return -1;// "Ошибка. Указанная позиция в избранном уже состоит";
             }
             var _favorite = new Favorite()
             {
@@ -29,14 +29,19 @@ namespace BLL.Products
             };
 
             await _favoriteRepository.Add(_favorite);
-            return true;// "Продукт прикреплён к магазину и кластеру добавлен";
+            return (await _favoriteRepository.Add(_favorite)).Id;// "Продукт прикреплён к магазину и кластеру добавлен";
         }
 
         public async Task<bool> DeleteFavoriteProduct(DeleteFavoriteDto Dto)
         {
             Favorite favorite = await _favoriteRepository.Get(Dto.IdFavorite);
-            await _favoriteRepository.Delete(favorite);
-            return false;// "Удалалил из избранного";
+            return await _favoriteRepository.Delete(favorite);// "Удалалил из избранного";
+        }
+
+        public async Task<List<FavoriteDto>> GetFavoriteUser(GetFavoriteDto getFavoriteDto)
+        {
+            return Adapters.FavoriteAdapter.ConvertFromEntityToFavoriteDto
+                (await _favoriteRepository.GetFavoritesUser(getFavoriteDto.IdUser));
         }
     }
 }

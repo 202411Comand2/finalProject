@@ -153,34 +153,23 @@ namespace DAL.Repositories
             }
         }
 
-        /// <summary>
-        /// Проверить является ли пользователем владельцем магазина
-        /// </summary>
-        /// <param name="idUser"></param>
-        /// <param name="nameShop"></param>
-        /// <returns></returns>
-        //public async Task<Shop> GetShop( string nameShop)
-        //{
-        //    var idShop = await GetIdByStoreName(nameShop);
-        //    if (idShop != -1)
-        //    {
-        //        return idShop;
-        //        // Проверяем магазин на наличие в бд
-        //        using (var context = CreateDatabaseContext())
-        //        {
-        //            var s = await (
-        //                from o in context.ShopOwners
-        //                          join c in context.Shops on o.ShopId equals c.Id
-        //                          where   c.Id == idShop
-        //                          select c).FirstOrDefaultAsync();
-        //            return s;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
-        //}
+      
 
+        /// <summary>
+        /// Вернуть список магазинов
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public async Task<List<Shop?>> GetShopsByIds(List<int> ids) 
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                List<Shop> shops = context.Shops
+                .Where(p => ids.Contains(p.Id))
+                .ToList();
+
+                return shops;
+            }
+        }
     }
 }

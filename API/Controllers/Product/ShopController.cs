@@ -22,7 +22,7 @@ namespace API.Controllers.Product
         [HttpPost("add")]
         public async Task<ActionResult<int>> Add([FromBody] AddShopDto shopDto)
         {
-            bool result = false;
+            int result = -1;
             try
             {
                 result = await _shopService.CreateShop(shopDto);
@@ -32,11 +32,13 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (!result)
+            if (result == -1)
             {
                 return NotFound();
             }
-            return Ok("Магазин создан");
+            //В этом случае, если объект успешно создан, клиент получит статус 200 OK и JSON с данными объекта
+            
+            return Ok(result);
         }
 
 
@@ -59,7 +61,7 @@ namespace API.Controllers.Product
             {
                 return NotFound();
             }
-            return Ok("Магазин был ''удалён''");
+            return Ok(true);
         }
 
         /// <summary>
@@ -85,8 +87,29 @@ namespace API.Controllers.Product
             {
                 return NotFound();
             }
-            return Ok("Название было заменено");
+            return Ok(true);
         }
 
+
+
+        [HttpPost("GetInfo")]
+        public async Task<ActionResult> GetInfo([FromBody] GetShopsInfoDto shopDto)
+        {
+            List<ShopDto> result = new List<ShopDto>();
+            try
+            {
+                result = await _shopService.GetShopsInfo(shopDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            if (result.Count == 0)
+            {
+                return NotFound();
+            }
+            return new JsonResult(result);
+        }
     }
 }

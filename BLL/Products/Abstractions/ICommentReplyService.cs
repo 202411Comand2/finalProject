@@ -17,7 +17,7 @@ namespace BLL.Products.Abstractions
         /// <param name="commentUserId">id комментария пользователя</param>
         /// <param name="textComment">Текст комментария</param>
         /// <returns></returns>
-        public Task<bool> AddReplyComment(AddReplyCommentDto addReplyCommentDto);
+        public Task<int> AddReplyComment(AddReplyCommentDto addReplyCommentDto);
 
 
         /// <summary>

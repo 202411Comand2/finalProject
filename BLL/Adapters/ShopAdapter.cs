@@ -39,6 +39,39 @@ namespace BLL.Adapters
                 IsDelete = shopDto.IsDelete,
             };
         }
+        /// <summary>
+        /// Преобразовать из Entitie в ShopDto 
+        /// </summary>
+        /// <param name="shopDto">Магазин Entitie</param>
+        /// <returns>Comment</returns>
+        public static ShopDto ConvertFromToEntityShopDto(Shop shop) 
+        {
+            return new ShopDto
+            {
+                Id = shop.Id,
+                Name = shop.Name,
+                IsDelete = shop.IsDelete,
+            };
+        }
+        /// <summary>
+        /// Преобразовать коллекцию из Entitie в ShopDto 
+        /// </summary>
+        /// <param name="shopDto">коллекция магазин Entitie</param>
+        /// <returns>Comment</returns>
+        public static List<ShopDto> ConvertFromToEntityShopDto(List<Shop> shops) 
+        {
+            List<ShopDto> shopDtos = new List<ShopDto>();
+            foreach (Shop shop in shops) 
+            {
+                shopDtos.Add(new ShopDto
+                {
+                    Id = shop.Id,
+                    Name = shop.Name,
+                    IsDelete = shop.IsDelete,
+                });
+            }
+            return shopDtos;
+        }
     }
 }
 
