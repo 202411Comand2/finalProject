@@ -3,6 +3,7 @@ using DAL.Repositories;
 using DAL.Abstractions;
 using BLL.Products.Abstractions;
 using BLL.Dto.Shop;
+using BLL.Dto;
 
 
 namespace BLL.Product
@@ -17,39 +18,50 @@ namespace BLL.Product
         {
             _shopRepository = new ShopRepository(contextManager);
         }
-        public async Task<int> CreateShop(AddShopDto addShopDto)
+        public async Task<AnswerWithBackendDto<ShopDto>> CreateShop(AddShopDto addShopDto)
         {
+            AnswerWithBackendDto<ShopDto> answerWithBackendDto = new();
+
             if (await _shopRepository.GetIdByStoreName(addShopDto.Name) != -1)
             {
-                return -1;
+                answerWithBackendDto.AddErrorLog("Не получилось создать магазин. Данное имя занято в системе!");
+                return answerWithBackendDto;
             }
             Shop shop = new Shop
             {
                 Name = addShopDto.Name,
                 IsDelete = false,
             };
-            return (await _shopRepository.Add(shop)).Id;
+            answerWithBackendDto.AddObject(Adapters.ShopAdapter.ConvertFromEntitieToDTO(await _shopRepository.Add(shop)));
+            return answerWithBackendDto;
         }
-       ////TODO как быть с удалением товаров??? если удалить из этого запроса, то мы далем монолит
+
+        ////TODO как быть с удалением товаров??? если удалить из этого запроса, то мы далем монолит
         /// <summary>
         /// Удаление магазина
         /// </summary>
         /// <param name="shopID">ClusterId магазина, который нужно удалить></param>
         /// <returns>Магазин удалён или нет</returns>
-        public async Task<bool> DeleteShop(DeleteShopDto shopDto)
+        public async Task<AnswerWithBackendDto<ShopDto>> DeleteShop(DeleteShopDto shopDto)
         {
+            AnswerWithBackendDto<ShopDto> answerWithBackendDto = new();
+
             Shop shop = await _shopRepository.Get(shopDto.Id);
+
             if (await _shopRepository.Get(shopDto.Id) is null)
             {
-                return false;
+                answerWithBackendDto.AddErrorLog($"Магазин, который вы пытаетесь удалить по id = {shopDto.Id}, не сущуствует или принадлежит не вам!");
+                return answerWithBackendDto;
             }
-            else
+            if (shop.IsDelete)
             {
-                shop.IsDelete = true;
-                await _shopRepository.DeleteShopWithProducts(shop);
-                await _shopRepository.Update(shop);
-                return true;
+                answerWithBackendDto.AddErrorLog($"Магазин, который вы пытаетесь удалить по id = {shopDto.Id}, не сущуствует или принадлежит не вам!");
+                return answerWithBackendDto;
             }
+            shop.IsDelete = true;
+            // await _shopRepository.DeleteShopWithProducts(shop);
+            answerWithBackendDto.AddObject(Adapters.ShopAdapter.ConvertFromEntitieToDTO(await _shopRepository.Update(shop)));
+            return answerWithBackendDto;
         }
 
         /// <summary>
@@ -58,37 +70,46 @@ namespace BLL.Product
         /// <param name="shopId">ClusterId магазина</param>
         /// <param name="newShopName">Название магазина</param>
         /// <returns>Удалось ли обновить магазин</returns>
-        public async Task<bool> UpdateNameShop(UpdateShopDto addShopDto)
+        public async Task<AnswerWithBackendDto<ShopDto>> UpdateNameShop(UpdateShopDto addShopDto)
         {
+            AnswerWithBackendDto<ShopDto> requst = new();
             Shop shop = await _shopRepository.Get(addShopDto.Id);
+
             if (string.IsNullOrEmpty(addShopDto.NewName))
             {//название null или пустое
-                return false; 
+                requst.AddErrorLog("Новое имя, которое вы задали пустое!");
+                return requst;
             }
             if (shop is null)
             { //  В бд такого магазина нет
-                return false;
+                requst.AddErrorLog("По указанному Вами id не удалось найти магазин, принадлежащий Вам!");
+                return requst;
+            }
+
+            if (shop.Name == addShopDto.NewName)
+            {
+                requst.AddErrorLog("Указанное вами новое название магазина = старому!");
+                return requst;
+            }
+
+            if (await _shopRepository.GetIdByStoreName(addShopDto.NewName) == -1)
+            {
+                shop.Name = addShopDto.NewName;
+                requst.AddObject(Adapters.ShopAdapter.ConvertFromEntitieToDTO(await _shopRepository.Update(shop)));
+                return requst;
             }
             else
-            {
-                if (await _shopRepository.GetIdByStoreName(addShopDto.NewName) == -1)
-                {
-                    shop.Name= addShopDto.NewName;
-                    await _shopRepository.Update(shop);
-                    return true;
-                }
-                else
-                { // название занято
-                    return false;
-                }
+            { // название занято
+                requst.AddErrorLog("Указанное вами новое имя магазина занято!");
+                return requst;
             }
         }
 
 
-        public async Task<List<ShopDto>> GetShopsInfo(GetShopsInfoDto shopDto) 
+        public async Task<List<ShopDto>> GetShopsInfo(GetShopsInfoDto shopDto)
         {
-            if(shopDto.ShopIds.Count==0)
-            { 
+            if (shopDto.ShopIds.Count == 0)
+            {
                 return null;
             }
             var sss = await _shopRepository.GetShopsByIds(shopDto.ShopIds);

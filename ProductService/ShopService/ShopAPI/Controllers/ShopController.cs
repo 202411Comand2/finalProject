@@ -1,4 +1,5 @@
-﻿using BLL.Dto.Shop;
+﻿using BLL.Dto;
+using BLL.Dto.Shop;
 using BLL.Products.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,31 +23,31 @@ namespace API.Controllers.Product
         [HttpPost("add")]
         public async Task<ActionResult<int>> Add([FromBody] AddShopDto shopDto)
         {
-            int result = -1;
+
+            AnswerWithBackendDto<ShopDto> result = new();
             try
             {
-                result = await _shopService.CreateShop(shopDto);
+               result = await _shopService.CreateShop(shopDto);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
 
-            if (result == -1)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
             //В этом случае, если объект успешно создан, клиент получит статус 200 OK и JSON с данными объекта
-            
-            return Ok(result);
+            return Ok(result.ObjectDto.Id);
         }
 
-
+        //TODO что делать с товарами при удалении магазина, нужно как-то пробегаться
         [HttpDelete("Delete")]
         public async Task<ActionResult<int>> Delete(DeleteShopDto shopDto)
         {
-
-            bool result = false;
+            AnswerWithBackendDto<ShopDto> result = new();
+          
             try
             {
                 result = await _shopService.DeleteShop(shopDto);
@@ -55,10 +56,9 @@ namespace API.Controllers.Product
             {
                 return BadRequest(ex.Message);
             }
-
-            if (!result)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
             return Ok(true);
         }
@@ -72,7 +72,7 @@ namespace API.Controllers.Product
         [HttpPut("Update")]
         public async Task<ActionResult<int>> UpdateName(UpdateShopDto updateShopDto)
         {
-            bool result = false;
+            AnswerWithBackendDto<ShopDto> result = new();
             try
             {
                 result = await _shopService.UpdateNameShop(updateShopDto);
@@ -82,9 +82,9 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (!result)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
             return Ok(true);
         }

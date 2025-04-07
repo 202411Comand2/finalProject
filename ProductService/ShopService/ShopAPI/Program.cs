@@ -96,9 +96,9 @@ namespace ShopAPI
 
         //      services.AddApiAuthentication(services.BuildServiceProvider().GetRequiredService<IOptions<JwtOptions>>());
 
-              // Add services to the container.
+              // AddObject services to the container.
               services.AddTransient<IShopService, ShopService>();
-              // Add services to the container.
+              // AddObject services to the container.
 
               services.AddControllers();
               // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

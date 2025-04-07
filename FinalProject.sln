@@ -83,6 +83,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "ProductService\Comme
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "ProductService\CommentService\Domain\Domain.csproj", "{97365969-56E3-4337-88F6-62766B913204}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupperBackEndDto", "ProductService\SupperDto\SupperBackEndDto\SupperBackEndDto.csproj", "{28D409E5-3512-4785-BAED-9779014C06F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -213,6 +215,10 @@ Global
 		{97365969-56E3-4337-88F6-62766B913204}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97365969-56E3-4337-88F6-62766B913204}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97365969-56E3-4337-88F6-62766B913204}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28D409E5-3512-4785-BAED-9779014C06F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28D409E5-3512-4785-BAED-9779014C06F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28D409E5-3512-4785-BAED-9779014C06F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28D409E5-3512-4785-BAED-9779014C06F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -248,6 +254,7 @@ Global
 		{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6} = {39D8B114-5FB5-4B68-85B7-9F8719276E5D}
 		{51FA61BF-A125-49D6-9BE0-D71D3BC0180D} = {39D8B114-5FB5-4B68-85B7-9F8719276E5D}
 		{97365969-56E3-4337-88F6-62766B913204} = {39D8B114-5FB5-4B68-85B7-9F8719276E5D}
+		{28D409E5-3512-4785-BAED-9779014C06F9} = {2E8B78B6-AD6A-477C-90BB-5E974F4A945A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47C6B020-09D3-4DF7-8460-95200C811308}
