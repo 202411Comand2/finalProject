@@ -14,7 +14,6 @@ namespace API.Controllers.Product
     {
         private readonly IShopService _shopService = shopService;
 
-
         /// <summary>
         /// Добавить магазин
         /// </summary>
@@ -23,7 +22,6 @@ namespace API.Controllers.Product
         [HttpPost("add")]
         public async Task<ActionResult<int>> Add([FromBody] AddShopDto shopDto)
         {
-
             AnswerWithBackendDto<ShopDto> result = new();
             try
             {
@@ -89,10 +87,30 @@ namespace API.Controllers.Product
             return Ok(true);
         }
 
-        [HttpPost("GetInfo")]
-        public async Task<ActionResult> GetInfo([FromBody] GetShopsInfoDto shopDto)
+        [HttpPut("RestoreShop")]
+        public async Task<ActionResult<int>> RestoreShop(RestoreShopDto restore) 
         {
-            List<ShopDto> result = new List<ShopDto>();
+            AnswerWithBackendDto<ShopDto> result = new();
+            try
+            {
+                result = await _shopService.RestoreStore(restore);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            if (!result.DataReceived)
+            {
+                return BadRequest(result.ErrorLog);
+            }
+            return Ok(true);
+        }
+
+        [HttpPost("GetInfo")]
+        public async Task<ActionResult<string>> GetInfo([FromBody] GetShopsInfoDto shopDto)
+        {
+            AnswerWithBackendDto<ShopDto> result = new();
             try
             {
                 result = await _shopService.GetShopsInfo(shopDto);
@@ -102,11 +120,11 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (result.Count == 0)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return NotFound(result.ErrorLog);
             }
-            return new JsonResult(result);
+            return result.GetCollectionNotProblem();
         }
     }
 }

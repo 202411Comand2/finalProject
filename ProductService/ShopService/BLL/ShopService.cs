@@ -106,14 +106,45 @@ namespace BLL.Product
         }
 
 
-        public async Task<List<ShopDto>> GetShopsInfo(GetShopsInfoDto shopDto)
+        public async Task<AnswerWithBackendDto<ShopDto>> GetShopsInfo(GetShopsInfoDto shopDto)
         {
+            AnswerWithBackendDto<ShopDto> answerWithBackendDto = new();
+
             if (shopDto.ShopIds.Count == 0)
             {
-                return null;
+                answerWithBackendDto.AddErrorLog("Была введена пустая коллекция");
+                return answerWithBackendDto;
             }
-            var sss = await _shopRepository.GetShopsByIds(shopDto.ShopIds);
-            return Adapters.ShopAdapter.ConvertFromToEntityShopDto(sss);
+            var collectionShop = await _shopRepository.GetShopsByIds(shopDto.ShopIds);
+            if (collectionShop.Count == 0) 
+            {
+                answerWithBackendDto.AddErrorLog("По указанному массиву id не удалось найти магазины");
+                return answerWithBackendDto;
+            }
+            answerWithBackendDto.AddObject(Adapters.ShopAdapter.ConvertFromToEntityShopDto(collectionShop));
+            return answerWithBackendDto;
+        }
+
+        public async Task<AnswerWithBackendDto<ShopDto>> RestoreStore(RestoreShopDto restoreShop)
+        {
+            AnswerWithBackendDto<ShopDto> answerWithBackendDto = new();
+
+            Shop shop = await _shopRepository.Get(restoreShop.Id);
+
+            if (await _shopRepository.Get(restoreShop.Id) is null)
+            {
+                answerWithBackendDto.AddErrorLog($"Магазин, который вы пытаетесь восстановить по id = {restoreShop.Id}, не существует или принадлежит не вам!");
+                return answerWithBackendDto;
+            }
+            if (!shop.IsDelete)
+            {
+                answerWithBackendDto.AddErrorLog($"Магазин, который вы пытаетесь восстановить по id = {restoreShop.Id}, не удалён!");
+                return answerWithBackendDto;
+            }
+            shop.IsDelete = false;
+            // await _shopRepository.DeleteShopWithProducts(shop);
+            answerWithBackendDto.AddObject(Adapters.ShopAdapter.ConvertFromEntitieToDTO(await _shopRepository.Update(shop)));
+            return answerWithBackendDto;
         }
     }
 }

@@ -38,10 +38,16 @@ namespace BLL.Products.Abstractions
         public Task<AnswerWithBackendDto<ShopDto>> DeleteShop(DeleteShopDto shopDto);
 
         /// <summary>
-        /// Получить список названий магазина
+        /// Восстановить магазин
+        /// <param name="restoreShop"></param>
+        /// <returns></returns>
+        public Task<AnswerWithBackendDto<ShopDto>> RestoreStore(RestoreShopDto restoreShop);
+
+        /// <summary>
+        /// Получить список магазинов по id 
         /// </summary>
         /// <param name="shopDto">Коллекция id магазинов</param>
         /// <returns></returns>
-        public Task<List<ShopDto>> GetShopsInfo(GetShopsInfoDto shopDto);
+        public Task<AnswerWithBackendDto<ShopDto>> GetShopsInfo(GetShopsInfoDto shopDto);
     }
 }
