@@ -33,6 +33,27 @@ namespace BLL.Adapters
             };
         }
 
+        public static List<ProductDto> ConvertToDTOProduct(List<Product> productItem) 
+        {
+            List <ProductDto> list = new ();
+            foreach (var product in productItem)
+            {
+                list.Add(   new ProductDto()
+                {
+                    ProductId = product.Id,
+                    ShopId = product.ShopId,
+                    ClusterId = product.ClusterId,
+                    NameProduct = product.Name,
+                    Description = product.Description,
+                    Price = product.Price,
+                    Barcode = product.Barcode,
+                    ModelNumber = product.ModelNumber,
+                });
+            }
+            return list;    
+        }
+
+
         /// <summary>
         /// Преобразовать из Dto в Entitie 
         /// </summary>

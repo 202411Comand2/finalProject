@@ -49,17 +49,19 @@ namespace BLL.ProductService
             }
         }
 
-        public async Task<bool> DeleteProduct(DeleteProductDto productDto)
+        public async Task<AnswerWithBackendDto<ProductDto>> DeleteProduct(DeleteProductDto productDto)
         {
+            AnswerWithBackendDto<ProductDto> answerWithBackendDto = new();
             Domain.Entities.Product product = await _productRepository.Get(productDto.Id);
             if (product == null)
             {
-                return false;   
+                answerWithBackendDto.AddErrorLog($"Не удалось удалить продукт по указанному id = {productDto.Id}");
+                return answerWithBackendDto;   
 
             }
             product.IsDeleted = true;
-            await _productRepository.Update(product);
-            return true;
+            answerWithBackendDto.AddObject(Adapters.ProductAdapter.ConvertToDTOProduct( await _productRepository.Update(product)));
+            return answerWithBackendDto;
         }
 
         public async Task<AnswerWithBackendDto<ProductDto>> UpdateProduct(UpdateProductDto productDto) //,int ProductId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber)
@@ -77,36 +79,55 @@ namespace BLL.ProductService
             return answerWithBackendDto;
         }
 
-        public async Task<List<ProductDto>> GetShopProducts(GetallShopProductsDto productDto) 
+        public async Task<AnswerWithBackendDto<ProductDto>> GetShopProducts(GetallShopProductsDto productDto) 
         {
-            List<ProductDto> products = new List<ProductDto>();
-            foreach (Domain.Entities.Product product in await _productRepository.GetShopProducts(productDto.ShopId)) 
+            AnswerWithBackendDto<ProductDto> answerWithBackendDto = new();
+            var items = await _productRepository.GetShopProducts(productDto.ShopId);
+            if (items == null) 
             {
-                products.Add(Adapters.ProductAdapter.ConvertToDTOProduct(product));
+                answerWithBackendDto.AddErrorLog("Произошла ошибка при обращении к бд.");
             }
-            return products;
-
+            if (items?.Count == 0)
+            {
+                answerWithBackendDto.AddErrorLog($"Данные отсутствуют.");
+            }
+            foreach (Product product in items) 
+            {
+                answerWithBackendDto.AddObject(Adapters.ProductAdapter.ConvertToDTOProduct(product));
+            }
+            return answerWithBackendDto;
         }
 
-        public async Task<List<ProductDto>> GetAllProduct() 
+        public async Task<AnswerWithBackendDto<ProductDto>> GetAllProduct() 
         {
-            List<ProductDto> products = new List<ProductDto>();
-            foreach (Domain.Entities.Product product in await _productRepository.GetAll())
+            AnswerWithBackendDto<ProductDto> answerWithBackendDto = new();
+            var items = await _productRepository.GetAll();
+            if (items == null)
             {
-                products.Add(Adapters.ProductAdapter.ConvertToDTOProduct(product));
+                answerWithBackendDto.AddErrorLog("Произошла ошибка при обращении к бд.");
             }
-            return products;
+            if (items?.Count == 0)
+            {
+                answerWithBackendDto.AddErrorLog($"Данные отсутствуют.");
+            }
+                answerWithBackendDto.AddObject(Adapters.ProductAdapter.ConvertToDTOProduct(items));
+            return answerWithBackendDto;
         }
 
-
-        public async Task<List<ProductDto>> GetProductsByCluster(GetAllClusterProductsDto productDto) 
+        public async Task<AnswerWithBackendDto<ProductDto>> GetProductsByCluster(GetAllClusterProductsDto productDto) 
         {
-            List<ProductDto> products = new List<ProductDto>();
-            foreach (Domain.Entities.Product product in await _productRepository.GetProductsByCluster(productDto.ClusterId)) 
+            AnswerWithBackendDto<ProductDto> answerWithBackendDto = new();
+            var items = await _productRepository.GetProductsByCluster(productDto.ClusterId);
+            if (items == null)
             {
-                products.Add(Adapters.ProductAdapter.ConvertToDTOProduct(product));
+                answerWithBackendDto.AddErrorLog("Произошла ошибка при обращении к бд.");
             }
-            return products;
+            if (items?.Count == 0)
+            {
+                answerWithBackendDto.AddErrorLog($"Данные отсутствуют.");
+            }
+            answerWithBackendDto.AddObject(Adapters.ProductAdapter.ConvertToDTOProduct(items));
+            return answerWithBackendDto;
         } 
 
         public async Task<bool> AddReting(ProductDto productDto, decimal reting)
@@ -184,14 +205,23 @@ namespace BLL.ProductService
             }
         }
 
-        public async Task<List<ProductDto>> GetProductsByCluster(List<int> ClusterIds)
+        public async Task<AnswerWithBackendDto<ProductDto>> GetProductsByCluster(List<int> ClusterIds)
         {
-            List<ProductDto> products = new List<ProductDto>();
-            foreach (Domain.Entities.Product product in await _productRepository.GetProductsByClusters(ClusterIds))
+            AnswerWithBackendDto<ProductDto> answerWithBackendDto = new();
+            var items = await _productRepository.GetProductsByClusters(ClusterIds);
+            if (items == null)
             {
-                products.Add(Adapters.ProductAdapter.ConvertToDTOProduct(product));
+                answerWithBackendDto.AddErrorLog("Произошла ошибка при обращении к бд.");
             }
-            return products;
+            if (items?.Count == 0)
+            {
+                answerWithBackendDto.AddErrorLog($"Данные отсутствуют.");
+            }
+            foreach (Product product in items)
+            {
+                answerWithBackendDto.AddObject(Adapters.ProductAdapter.ConvertToDTOProduct(product));
+            }
+            return answerWithBackendDto;
         }
     }
 }

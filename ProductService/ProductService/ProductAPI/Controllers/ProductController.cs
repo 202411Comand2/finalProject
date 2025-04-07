@@ -64,48 +64,47 @@ namespace API.Controllers.Product
         [HttpDelete("Delete")]
         public async Task<ActionResult<int>> Delete([FromBody] DeleteProductDto product)
         {
-            bool result = false;
+            AnswerWithBackendDto<ProductDto> result = new();
             try
             {
                 result = await _productService.DeleteProduct(product);
             }
-            catch (Exception ex) // подсмотреть у Глеба
+            catch (Exception ex) 
             {
                 return BadRequest(ex.Message);
             }
 
-            if (!result)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return Ok(true);
+            return Ok(result.DataReceived);
         }
 
 
         [HttpGet("GetShopProducts")]
-        public async Task<ActionResult> GetShopProducts([FromQuery] GetallShopProductsDto product)
+        public async Task<ActionResult<string>> GetShopProducts([FromQuery] GetallShopProductsDto product)
         {
-            List<ProductDto> result = new List<ProductDto>();
+            AnswerWithBackendDto<ProductDto> result = new();
             try
             {
                 result = await _productService.GetShopProducts(product);
             }
-            catch (Exception ex) // подсмотреть у Глеба
+            catch (Exception ex) 
             {
                 return BadRequest(ex.Message);
             }
-
-            if (result is null)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return new JsonResult(result);
+            return result.GetCollectionNotProblem();
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult<string>> GetAll()
         {
-            List<ProductDto> result = new List<ProductDto>();
+            AnswerWithBackendDto<ProductDto> result = new();
             try
             {
                 result = await _productService.GetAllProduct();
@@ -114,18 +113,17 @@ namespace API.Controllers.Product
             {
                 return BadRequest(ex.Message);
             }
-
-            if (result is null)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return new JsonResult(result);
+            return result.GetCollectionNotProblem();
         }
 
         [HttpGet("GetProductsByCluster")]
-        public async Task<ActionResult> GetProductsByCluster([FromQuery] GetAllClusterProductsDto product)
+        public async Task<ActionResult<string>> GetProductsByCluster([FromQuery] GetAllClusterProductsDto product)
         {
-            List<ProductDto> result = new List<ProductDto>();
+            AnswerWithBackendDto<ProductDto> result = new();
             try
             {
                 result = await _productService.GetProductsByCluster(product);
@@ -134,12 +132,11 @@ namespace API.Controllers.Product
             {
                 return BadRequest(ex.Message);
             }
-
-            if (result is null)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return new JsonResult(result);
+            return result.GetCollectionNotProblem();
         }
 
     }

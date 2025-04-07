@@ -32,33 +32,33 @@ namespace BLL.Products.Abstractions
         /// </summary>
         /// <param name="productDto">Модель продукта, достаточно id продукта, который нужно удалить</param>
         /// <returns>Удалось ли удалить продукт</returns>
-        public Task<bool> DeleteProduct(DeleteProductDto productDto);
+        public Task<AnswerWithBackendDto<ProductDto>> DeleteProduct(DeleteProductDto productDto);
 
         /// <summary>
         /// Получить все продукты магазина
         /// </summary>
         /// <param name="shopId">ClusterId магазина</param>
         /// <returns>Коллекция продуктов по указаному продукту</returns>
-        public Task<List<ProductDto>> GetShopProducts(GetallShopProductsDto productDto);
+        public Task<AnswerWithBackendDto<ProductDto>> GetShopProducts(GetallShopProductsDto productDto);
 
         /// <summary>
         /// Получить всё продукты
         /// </summary>
         /// <returns>Коллекция продуктов</returns>
-        public Task<List<ProductDto>> GetAllProduct();
+        public Task<AnswerWithBackendDto<ProductDto>> GetAllProduct();
 
         /// <summary>
         /// Получить список продуктов, которые прикреплены к кластеру по кластру
         /// </summary>
         /// <param name="clusterId">ClusterId кластера</param>
         /// <returns></returns>
-        public Task<List<ProductDto>> GetProductsByCluster(GetAllClusterProductsDto productDto);
+        public Task<AnswerWithBackendDto<ProductDto>> GetProductsByCluster(GetAllClusterProductsDto productDto);
 
         /// <summary>
         /// Получить список продуктов, которые прикреплены к кластеру по кластрам
         /// </summary>
         /// <param name="ClusterIds"></param>
         /// <returns></returns>
-        public Task<List<ProductDto>> GetProductsByCluster(List<int> ClusterIds);
+        public Task<AnswerWithBackendDto<ProductDto>> GetProductsByCluster(List<int> ClusterIds);
     }
 }
