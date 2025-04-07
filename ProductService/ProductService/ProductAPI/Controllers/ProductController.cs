@@ -1,4 +1,5 @@
-﻿using BLL.Dto.Product;
+﻿using BLL.Dto;
+using BLL.Dto.Product;
 using BLL.Products.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,21 +19,21 @@ namespace API.Controllers.Product
         [HttpPost("add")]
         public async Task<ActionResult<int>> Add([FromBody] AddProductDto product)
         {
-            int result = -1;
+            AnswerWithBackendDto<ProductDto> result = new();
             try
             {
                 result = await _productService.AddProduct(product);
             }
-            catch (Exception ex) // подсмотреть у Глеба
+            catch (Exception ex) 
             {
                 return BadRequest(ex.Message);
             }
 
-            if (result==-1)
+            if (result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return Ok(result);
+            return Ok(result.ObjectDto.ProductId);
         }
 
         /// <summary>

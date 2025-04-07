@@ -15,6 +15,7 @@ using System.Diagnostics.Metrics;
 using System.Text.RegularExpressions;
 using BLL.Products.Abstractions;
 using BLL.Dto.Product;
+using BLL.Dto;
 
 namespace BLL.ProductService
 {
@@ -31,16 +32,20 @@ namespace BLL.ProductService
         /// <param name="contextManager"></param>
         public ProductService(IContextManager contextManager) => _productRepository = new ProductRepository(contextManager);
        
-        public async Task<int> AddProduct(AddProductDto productDto)//int shopId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber)
+        public async Task<AnswerWithBackendDto<ProductDto>> AddProduct(AddProductDto productDto)//int shopId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber)
         {
-            Domain.Entities.Product product = Adapters.ProductAdapter.ConvertToEntity(productDto);
-            if ((await _productRepository.Add(product)) is null)
+            AnswerWithBackendDto<ProductDto> answerWithBackendDto = new();
+           // Domain.Entities.Product product = Adapters.ProductAdapter.ConvertToEntity(productDto);
+            var addProduct = await _productRepository.Add(Adapters.ProductAdapter.ConvertToEntity(productDto));
+            if (addProduct is null)
             {
-                return -1;
+                answerWithBackendDto.AddErrorLog("Не получилось добавить товар ");
+                return answerWithBackendDto;
             }
             else 
             {
-                return product.Id;
+                answerWithBackendDto.AddObject(Adapters.ProductAdapter.ConvertToDTOProduct(addProduct));
+                return answerWithBackendDto;
             }
         }
 
@@ -57,17 +62,19 @@ namespace BLL.ProductService
             return true;
         }
 
-        public async Task<bool> UpdateProduct(UpdateProductDto productDto) //,int ProductId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber)
+        public async Task<AnswerWithBackendDto<ProductDto>> UpdateProduct(UpdateProductDto productDto) //,int ProductId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber)
         {
+            AnswerWithBackendDto<ProductDto> answerWithBackendDto = new();
             Domain.Entities.Product product = Adapters.ProductAdapter.ConvertToEntity(productDto);
             Domain.Entities.Product _ = await _productRepository.Get(product.Id);
             if (_ is null) 
-            { 
-                return false;
+            {
+                answerWithBackendDto.AddErrorLog($"Не найден объект по указанному id = {productDto.ProductId}");
+                return answerWithBackendDto;
             }
             product.ShopId = _.ShopId;
-            await _productRepository.Update(product);
-            return true;
+            answerWithBackendDto.AddObject(Adapters.ProductAdapter.ConvertToDTOProduct(await _productRepository.Update(product)));
+            return answerWithBackendDto;
         }
 
         public async Task<List<ProductDto>> GetShopProducts(GetallShopProductsDto productDto) 

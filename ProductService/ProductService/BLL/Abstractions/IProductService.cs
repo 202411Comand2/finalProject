@@ -1,4 +1,5 @@
-﻿using BLL.Dto.Product;
+﻿using BLL.Dto;
+using BLL.Dto.Product;
 //using Domain.Entities;
 //using Microsoft.AspNetCore.Components.Web;
 //using System;
@@ -17,14 +18,14 @@ namespace BLL.Products.Abstractions
         /// </summary>
         ///<param name="productDto">Объект продукт</param>
         /// <returns>Удалось добавить продукт</returns>
-        public Task<int> AddProduct(AddProductDto productDto);// int shopId, int clusterId,string nameProduct, string description, decimal price, int barcode, string modelNumber);
+        public Task<AnswerWithBackendDto<ProductDto>> AddProduct(AddProductDto productDto);// int shopId, int clusterId,string nameProduct, string description, decimal price, int barcode, string modelNumber);
 
         /// <summary>
         /// Обновить продукт 
         /// </summary>
         ///<param name="productDto">Объект продукт</param>>
         /// <returns>Удалось добавить продукт</returns>
-        public Task<bool> UpdateProduct(UpdateProductDto productDto);// int ProductId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber);
+        public Task<AnswerWithBackendDto<ProductDto>> UpdateProduct(UpdateProductDto productDto);// int ProductId, int clusterId, string nameProduct, string description, decimal price, int barcode, string modelNumber);
 
         /// <summary>
         /// Удаление продукта
@@ -59,31 +60,5 @@ namespace BLL.Products.Abstractions
         /// <param name="ClusterIds"></param>
         /// <returns></returns>
         public Task<List<ProductDto>> GetProductsByCluster(List<int> ClusterIds);
-
-        ///// <summary>
-        ///// Добавить новый рейтинг
-        ///// </summary>
-        ///// <param name="ProductId">ClusterId продукта</param>
-        ///// <param name="reting">Рентинг товара</param>
-        ///// <returns></returns>
-        //public Task<bool> AddReting(int ProductId, decimal reting);
-
-        ///// <summary>
-        ///// Обновление рейтига
-        ///// </summary>
-        ///// <param name="ProductId">ClusterId продукта</param>
-        ///// <param name="newReting">Рентинг товара</param>
-        ///// <param name="oldReting">Старый рейтинг товара</param>
-        ///// <returns></returns>
-        //public Task<bool> UpdateReting(int ProductId, decimal newReting, decimal oldReting);
-
-
-        ///// <summary>
-        ///// Удаление рейтинга
-        ///// </summary>
-        ///// <param name="ProductId">ClusterId продукта</param>
-        ///// <param name="reting">Рентинг товара</param>
-        ///// <returns></returns>
-        //public Task<bool> DeleteReting(int ProductId, decimal reting);
     }
 }
