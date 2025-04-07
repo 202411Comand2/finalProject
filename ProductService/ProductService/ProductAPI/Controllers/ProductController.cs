@@ -29,7 +29,7 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (result.DataReceived)
+            if (!result.DataReceived)
             {
                 return BadRequest(result.ErrorLog);
             }
@@ -44,7 +44,7 @@ namespace API.Controllers.Product
         [HttpPut("Update")]
         public async Task<ActionResult<int>> Update([FromBody] UpdateProductDto product)
         {
-            bool result = false;
+            AnswerWithBackendDto<ProductDto> result = new();
             try
             {
                 result = await _productService.UpdateProduct(product);
@@ -54,11 +54,11 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (!result)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return Ok(true);
+            return Ok(result.DataReceived);
         }
 
         [HttpDelete("Delete")]
