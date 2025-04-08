@@ -1,4 +1,6 @@
-﻿using BLL.Dto.Cluster;
+﻿using BLL.Dto;
+using BLL.Dto.Cluster;
+using Domain.Entities;
 
 namespace BLL.Products.Abstractions
 {
@@ -10,7 +12,7 @@ namespace BLL.Products.Abstractions
         /// </summary>
         /// <param name="clusterDto">Название кластера</param>
         /// <returns>Успешно добавлен кластер</returns>
-        public Task<int> AddNewCluster(AddClusterDto clusterDto);
+        public Task<AnswerWithBackendDto<ClusterDto>> AddNewCluster(AddClusterDto clusterDto);
 
         ///// <summary>
         ///// Добавить кластер

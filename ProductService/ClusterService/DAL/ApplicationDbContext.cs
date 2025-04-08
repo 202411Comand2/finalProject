@@ -7,7 +7,9 @@ namespace DAL
 	{
         #region Tables 
         public DbSet<Cluster> Clusters { get; set; }
-      
+        public DbSet<SearchCluster> searchClusters { get; set; }
+
+
         #endregion
 
         public ApplicationDbContext(DbContextOptions options) : base(options) => Database.EnsureCreated();

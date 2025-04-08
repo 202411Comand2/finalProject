@@ -32,7 +32,7 @@ namespace DAL.Repositories
             {
                 //пакетное создание объектов для увеличение скорости и уменьшения задержки
                 var tagEntities = keyWords.Select(t => new SearchCluster { KeyWord = t, ClusterId = idCluster }).ToList();
-                await context.SearchClusters.AddRangeAsync(tagEntities); // Пакетное добавление
+                await context.searchClusters.AddRangeAsync(tagEntities); // Пакетное добавление
                 var sds = await context.SaveChangesAsync(); // Сохраняем изменения
                 return true;
             }
@@ -48,7 +48,7 @@ namespace DAL.Repositories
         {
             using (var context = CreateDatabaseContext())
             {
-                await context.SearchClusters
+                await context.searchClusters
                    .Where(e => ids.Contains(e.Id))
                    .ExecuteDeleteAsync();
                 return true;
@@ -64,7 +64,7 @@ namespace DAL.Repositories
         {
             using (var context = CreateDatabaseContext())
             {
-               return await context.SearchClusters
+               return await context.searchClusters
                 .Where(e => e.ClusterId == id).ToListAsync();
             }
         }
@@ -77,7 +77,7 @@ namespace DAL.Repositories
         {
             using (var context = CreateDatabaseContext())
             {
-                if (await context.SearchClusters.Where(p => p.ClusterId == id).FirstOrDefaultAsync() != null)
+                if (await context.searchClusters.Where(p => p.ClusterId == id).FirstOrDefaultAsync() != null)
                 {
                     return true; 
                 }
@@ -92,7 +92,7 @@ namespace DAL.Repositories
         {
             using (var context = CreateDatabaseContext())
             {
-                     return await context.SearchClusters.Where(p => p.KeyWord == keyWord)
+                     return await context.searchClusters.Where(p => p.KeyWord == keyWord)
                     .Select( p =>  p.ClusterId)
                     //.Select( p => new { p.Id,p.ClusterId})
                     .Distinct()

@@ -11,10 +11,10 @@ namespace BLL.Dto.SearchCluster
     public class SearchClusterProductDto
     {
         public List<Domain.Entities.Cluster> Clusters { get; set; }//= new List<Domain.Entities.Cluster>();
-        public List<ProductDto> Products { get;set; } //= new List<Product.ProductDto>();
+        public List<int> Products { get;set; } //= new List<Product.ProductDto>();
 
         public void  SearchClusterProductConnect(List<Domain.Entities.Cluster> clusters,
-            List<ProductDto> products) 
+            List<int> products) 
         {
              Clusters = clusters;
              Products = products;

@@ -3,6 +3,7 @@ using DAL.Repositories;
 using DAL.Abstractions;
 using BLL.Products.Abstractions;
 using BLL.Dto.Cluster;
+using BLL.Dto;
 
 
 namespace BLL.Products
@@ -13,25 +14,39 @@ namespace BLL.Products
         public ClusterService(IContextManager contextManager) => _clusterRepository = new ClusterRepository(contextManager);
 
 
-        public async Task<int> AddNewCluster(AddClusterDto clusterDto)
+        public async Task<AnswerWithBackendDto<ClusterDto>> AddNewCluster(AddClusterDto clusterDto)
         {
+            AnswerWithBackendDto<ClusterDto> result = new();
             Cluster cluster = await _clusterRepository.GetNameCluster(clusterDto.Name);
             Cluster clusterParent = await _clusterRepository.GetNameCluster(clusterDto.NameParentCluseter);
            
             if (cluster is null && string.IsNullOrEmpty(clusterDto.NameParentCluseter))
             {
+                //если родитель явно не указан, т.е. является корнем
                 cluster = new Cluster
                 {
                     Name = clusterDto.Name,
                     ParentId = -1,
                 };
-               // var result = await _clusterSearchRepository.Add(cluster);
-                return (await _clusterRepository.Add(cluster)).Id; //Кластер создан
+                // var result = await _clusterSearchRepository.Add(cluster);
+                var item = await _clusterRepository.Add(cluster);
+                if (item is not null)
+                {
+                    result.AddObject(Adapters.ClusterAdapter.ConvertFromEntitieToDTO(item));
+                    return result;
+                }
+                else 
+                {
+                    result.AddErrorLog("Не получилось создать кластер");
+                    return result;
+                }
+
             }
 
             if (clusterParent is null) 
             {
-                return -1;
+                result.AddErrorLog("Не получилось создать кластер, так как указанный родителей не был найден в бд");
+                return result;
             }
             if (cluster is null)
             {
@@ -41,11 +56,22 @@ namespace BLL.Products
                     ParentId = clusterParent.Id
                 };
                // var result = await _clusterSearchRepository.Add(cluster);
-                return (await _clusterRepository.Add(cluster)).Id;//Кластер создан
+                var item = await _clusterRepository.Add(cluster);
+                if (item is not null)
+                {
+                    result.AddObject(Adapters.ClusterAdapter.ConvertFromEntitieToDTO(item));
+                    return result;
+                }
+                else
+                {
+                    result.AddErrorLog("Не получилось создать кластер");
+                    return result;
+                }
             }
             else
             {
-                return (await _clusterRepository.Add(cluster)).Id;//Не удалось создать в виду наличия в системе уже существующего кластера
+                result.AddErrorLog("Не получилось создать кластер. Так какой уже существует в бд.");
+                return result; ;//Не удалось создать в виду наличия в системе уже существующего кластера
             }
         }
 

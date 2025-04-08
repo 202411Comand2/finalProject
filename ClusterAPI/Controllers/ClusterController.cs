@@ -1,5 +1,7 @@
-﻿using BLL.Dto.Cluster;
+﻿using BLL.Dto;
+using BLL.Dto.Cluster;
 using BLL.Products.Abstractions;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 //
@@ -14,7 +16,7 @@ namespace API.Controllers.Product
         [HttpPost("add")]
         public async Task<ActionResult<int>> Add([FromBody] AddClusterDto clusterDto)
         {
-            int result = -1;
+            AnswerWithBackendDto<ClusterDto> result = new();
             try
             {
                 result = await _clusterService.AddNewCluster(clusterDto);
@@ -23,12 +25,11 @@ namespace API.Controllers.Product
             {
                 return BadRequest(ex.Message);
             }
-
-            if (result==-1)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return Ok(result);
+            return Ok(result.ObjectDto.Id);
         }
 
         [HttpPut("Update")]
