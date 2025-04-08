@@ -25,7 +25,8 @@ namespace BLL.Products
             var item = await _commentReplyRepository.Add(addReplyCommentDto.CommentUserId, addReplyCommentDto.TextComment);
             if (item == null)
             {
-                result.AddErrorLog("Ошибка не удалось создать комментарий");
+                result.AddErrorLog("Ошибка не удалось создать комментарий"); 
+                return result;
             }
             else 
             {
