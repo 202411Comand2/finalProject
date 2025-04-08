@@ -13,7 +13,11 @@ namespace BLL.Adapters
     /// </summary>
     public class CommentAdapter
     {
-        
+        /// <summary>
+        /// Преобразовать из Entitie Comment  в  CommentDto
+        /// </summary>
+        /// <param name="comment">Комментарий Entitie Comment</param>
+        /// <returns>Comment</returns>
         public static CommentDto ConvertToCommentDTO(Comment comment)
         {
             return new CommentDto()
@@ -26,6 +30,31 @@ namespace BLL.Adapters
                 Estimation = comment.Estimation,
             };
         }
+        /// <summary>
+        /// Преобразовать из Entitie Comment  в  CommentDto
+        /// </summary>
+        /// <param name="comment">Комментарий Entitie Comment</param>
+        /// <returns>Comment</returns>
+        public static List<CommentDto> ConvertToCommentDTO(List<Comment> itemComment)
+        {
+            List<CommentDto> result = new List<CommentDto>();
+            foreach(Comment comment in itemComment) 
+            {
+                result.Add(
+                 new CommentDto()
+                 {
+
+                     Id = comment.Id,
+                     UserId = comment.UserId,
+                     ShopId = comment.ShopId,
+                     ProductId = comment.IdProduct,
+                     TextComment = comment.Text,
+                     Estimation = comment.Estimation,
+                 });
+            }return result;
+
+        }
+
         /// <summary>
         /// Преобразовать из CommentDto в Entitie Comment
         /// </summary>

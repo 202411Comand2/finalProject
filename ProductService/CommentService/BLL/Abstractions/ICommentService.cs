@@ -1,4 +1,5 @@
-﻿using BLL.Dto.Comment;
+﻿using BLL.Dto;
+using BLL.Dto.Comment;
 using DAL.Repositories;
 using Domain.Entities;
 using System;
@@ -16,7 +17,7 @@ namespace BLL.Products.Abstractions
         /// </summary>
         /// <param name="productId">id комментария</param>
         /// <returns></returns>
-        public Task<List<CommentDto>> GetCommentProduct(GetAllCommentsProduct productId);
+        public Task<AnswerWithBackendDto<CommentDto>> GetCommentProduct(GetAllCommentsProduct productId);
 
 
         ////TODO  как проверить, что пользователь купил товар и что он на него может оставить отзыв?
@@ -25,14 +26,14 @@ namespace BLL.Products.Abstractions
         /// </summary>
         /// <param name="commentDto">Объект commentDto</param>
         /// <returns></returns>
-        public Task<int> AddNewComment(AddCommentDto commentDto);
+        public Task<AnswerWithBackendDto<CommentDto>> AddNewComment(AddCommentDto commentDto);
 
 
         /// <summary>
         /// Обновление комментария
         /// </summary>
         /// <returns></returns>
-        public Task<bool> UpdateComment(UpdateCommentDto updateCommentDto);
+        public Task<AnswerWithBackendDto<CommentDto>> UpdateComment(UpdateCommentDto updateCommentDto);
 
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace BLL.Products.Abstractions
         /// </summary>
         /// <param name="сommentId">id комментария</param>
         /// <returns></returns>
-        public Task<bool> DeleteComment(DeleteCommentDto сommentId);
+        public Task<AnswerWithBackendDto<CommentDto>> DeleteComment(DeleteCommentDto сommentId);
 
 
         /// <summary>

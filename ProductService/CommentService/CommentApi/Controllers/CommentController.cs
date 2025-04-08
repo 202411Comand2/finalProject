@@ -1,4 +1,5 @@
-﻿using BLL.Dto.Comment;
+﻿using BLL.Dto;
+using BLL.Dto.Comment;
 using BLL.Products.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,8 @@ namespace API.Controllers.Product
         [HttpPost("Add")]
         public async Task<ActionResult<int>> Add([FromBody] AddCommentDto Dto)
         {
-            int result = -1;
+
+            AnswerWithBackendDto<CommentDto> result = new();
             try
             {
                 result = await _commentService.AddNewComment(Dto);
@@ -27,20 +29,20 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (result ==-1)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return Ok(result);
+            return Ok(result.ObjectDto.Id);
         }
 
         /// <summary>
         /// Обновление комментария
         /// </summary>
         [HttpPut("Update")]
-        public async Task<ActionResult<int>> UpdateComment([FromBody] UpdateCommentDto Dto) 
+        public async Task<ActionResult<string>> UpdateComment([FromBody] UpdateCommentDto Dto) 
         {
-            bool result = false;
+            AnswerWithBackendDto<CommentDto> result = new();
             try
             {
                 result = await _commentService.UpdateComment(Dto);
@@ -49,13 +51,12 @@ namespace API.Controllers.Product
             {
                 return BadRequest(ex.Message);
             }
-
-            if (!result)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return Ok(result);
-            
+            return Ok(result.DataReceived);
+
         }
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace API.Controllers.Product
         [HttpDelete("Delete")]
         public async Task<ActionResult<int>> Delete([FromBody] DeleteCommentDto Dto)
         {
-            bool result = false;
+            AnswerWithBackendDto<CommentDto> result = new();
             try
             {
                 result = await _commentService.DeleteComment(Dto);
@@ -74,20 +75,20 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (!result)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return Ok(true);
+            return Ok(result.DataReceived);
         }
 
         /// <summary>
         /// Получить все комментарии по продукту
         /// </summary>
         [HttpGet("GetCommentsProduct")]
-        public async Task<ActionResult> GetCommentsProduct([FromQuery] GetAllCommentsProduct Dto)
+        public async Task<ActionResult<string>> GetCommentsProduct([FromQuery] GetAllCommentsProduct Dto)
         {
-            List<CommentDto> result = new List<CommentDto>();
+            AnswerWithBackendDto<CommentDto> result = new();
             try
             {
                 result = await _commentService.GetCommentProduct(Dto);
@@ -97,11 +98,11 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (result.Count == 0)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return new JsonResult(result);
+            return result.GetCollectionNotProblem();
         }
 
     }

@@ -1,5 +1,7 @@
-﻿using BLL.Dto.Favorite;
+﻿using BLL.Dto;
+using BLL.Dto.Favorite;
 using BLL.Products.Abstractions;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Product
@@ -19,7 +21,7 @@ namespace API.Controllers.Product
         [HttpPost("Add")]
         public async  Task<ActionResult<int>> AddFavorite([FromBody] AddFavoriteDto Dto)
         {
-            int result = -1;
+            AnswerWithBackendDto<FavoriteDto> result = new();
             try
             {
                 result = await _favoriteProductService.AddFavoriteProduct(Dto);
@@ -29,11 +31,11 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (result == - 1)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return Ok(result);
+            return Ok(result.ObjectDto.Id);
         }
 
        
@@ -45,7 +47,7 @@ namespace API.Controllers.Product
         [HttpDelete("Delete")]
         public async Task<ActionResult<int>> Delete([FromBody] DeleteFavoriteDto Dto)
         {
-            bool result = false;
+            AnswerWithBackendDto<FavoriteDto> result = new();
             try
             {
                 result = await _favoriteProductService.DeleteFavoriteProduct(Dto);
@@ -55,17 +57,17 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (!result)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return Ok(true);
+            return Ok(result.DataReceived);
         }
 
         [HttpGet("GetFavoriteUser")]
-        public async Task<ActionResult<int>> GetFavoriteUser([FromQuery] GetFavoriteDto Dto)
+        public async Task<ActionResult<string>> GetFavoriteUser([FromQuery] GetFavoriteDto Dto)
         {
-            List<FavoriteDto> result = new  List<FavoriteDto>();
+            AnswerWithBackendDto<FavoriteDto> result = new();
             try
             {
                 result = await _favoriteProductService.GetFavoriteUser(Dto);
@@ -75,11 +77,11 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (result.Count()==0)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return Ok(new JsonResult(result));
+            return result.GetCollectionNotProblem();
         }
 
     }

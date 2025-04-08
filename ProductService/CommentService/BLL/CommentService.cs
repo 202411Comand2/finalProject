@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using BLL.Dto.Comment;
+using BLL.Dto;
 
 namespace BLL.Products
 {
@@ -27,26 +28,28 @@ namespace BLL.Products
         }
 
 
-        public async Task<int> AddNewComment(AddCommentDto commentDto)
+        public async Task<AnswerWithBackendDto<CommentDto>> AddNewComment(AddCommentDto commentDto)
         {
+            AnswerWithBackendDto<CommentDto> answerWithBackendDto = new();
             Comment comment = Adapters.CommentAdapter.ConvertToEntity(commentDto);
             if (await _commentRepository.GetCommentUser(comment.UserId, comment.IdProduct) is null)
             {
                 CommentReply reply = new();
                 var result = await _commentRepository.Add(comment, reply);
                 await AddReting(commentDto.ProductId, commentDto.Estimation);
-                return comment.Id;// Комментарий создан {comment.ClusterId}
+                answerWithBackendDto.AddObject(Adapters.CommentAdapter.ConvertToCommentDTO(comment));
+                return answerWithBackendDto;// Комментарий создан {comment.ClusterId}
             }
             else
             {
-                return -1; // Не удалось создать новый комментарий комментарий ввиду наличия
+                answerWithBackendDto.AddErrorLog("Не удалось создать новый комментарий комментарий ввиду уже существующего");
+                return answerWithBackendDto; // 
             }
         }
 
-
-
-        public async Task<bool> DeleteComment(DeleteCommentDto deleteCommentDto)
+        public async Task<AnswerWithBackendDto<CommentDto>> DeleteComment(DeleteCommentDto deleteCommentDto)
         {
+            AnswerWithBackendDto<CommentDto> answerWithBackendDto = new();
             Comment? comment = await _commentRepository.Get(deleteCommentDto.Id);
             if (comment is not null && comment.IsDeleted == false)
             {
@@ -58,28 +61,33 @@ namespace BLL.Products
                 await _commentRepository.Update(comment);
                 await _commentReplyRepository.Update(commentReply);
                 await DeleteReting(productId, reting);
-                return true;
+                answerWithBackendDto.DataReceived = true;
+                return answerWithBackendDto;
             }
             else
             {
-                return false;
+                answerWithBackendDto.AddErrorLog("Произошла ошибка. Удаления комментария не возможно!");
+                return answerWithBackendDto;
             }
         }
 
 
-        public async Task<List<CommentDto>> GetCommentProduct(GetAllCommentsProduct getAllCommentsProduct) 
+        public async Task<AnswerWithBackendDto<CommentDto>> GetCommentProduct(GetAllCommentsProduct getAllCommentsProduct) 
         {
-            List<CommentDto>  comments = new List<CommentDto>();
-            foreach (var item in await _commentRepository.GetAllCommentOnTheProduct(getAllCommentsProduct.IdProduct)) 
+            AnswerWithBackendDto<CommentDto> answerWithBackendDto = new();
+            var items = await _commentRepository.GetAllCommentOnTheProduct(getAllCommentsProduct.IdProduct);
+            if (items.Count == 0) 
             {
-                comments.Add(Adapters.CommentAdapter.ConvertToCommentDTO( item));
+                answerWithBackendDto.AddErrorLog("По указаному запросу ничего не найдено");
             }
-            return comments;
+            answerWithBackendDto.AddObject(Adapters.CommentAdapter.ConvertToCommentDTO(items));
+            return answerWithBackendDto;
         }
             
 
-        public async Task<bool> UpdateComment(UpdateCommentDto updateCommentDto)
+        public async Task<AnswerWithBackendDto<CommentDto>> UpdateComment(UpdateCommentDto updateCommentDto)
         {
+            AnswerWithBackendDto<CommentDto> answerWithBackendDto = new();
             Comment? comment = await _commentRepository.Get(updateCommentDto.CommentId);
             if (comment is not null)
             {
@@ -93,12 +101,13 @@ namespace BLL.Products
 
                 var result = await _commentRepository.Update(comment);
                 await UpdateReting(productId, newReting, OldReting);
-                //   await UpdateRatingProduct(comment, "update", oldEstimation);
-                return true;// $"Комментарий обновлён {comment.ClusterId}";
+                answerWithBackendDto.AddObject(Adapters.CommentAdapter.ConvertToCommentDTO( result));
+                return answerWithBackendDto;
             }
             else
             {
-                return false;// "Не удалось обновить комментарий из-за отсутствия его в бд";
+                answerWithBackendDto.AddErrorLog("Не удалось обновить комментарий из-за отсутствия его в бд");
+                return answerWithBackendDto;// "Не удалось обновить комментарий из-за отсутствия его в бд";
             }
         }
 

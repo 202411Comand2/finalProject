@@ -1,4 +1,5 @@
-﻿using BLL.Dto.Favorite;
+﻿using BLL.Dto;
+using BLL.Dto.Favorite;
 using DAL.Repositories;
 using Domain.Entities;
 using System;
@@ -18,21 +19,21 @@ namespace BLL.Products.Abstractions
         /// <param name="userId">ClusterId пользователя</param>
         /// <param name="productId">ClusterId продукта</param>
         /// <returns></returns>
-        public Task<int> AddFavoriteProduct(AddFavoriteDto addFavoriteDto);
+        public Task<AnswerWithBackendDto<FavoriteDto>> AddFavoriteProduct(AddFavoriteDto addFavoriteDto);
 
         /// <summary>
         /// Удалить товар из избранного
         /// </summary>
         /// <param name="davoriteId">ClusterId избранной позиции</param>
         /// <returns></returns>
-        public Task<bool> DeleteFavoriteProduct(DeleteFavoriteDto Dto);
+        public Task<AnswerWithBackendDto<FavoriteDto>> DeleteFavoriteProduct(DeleteFavoriteDto Dto);
 
         /// <summary>
         /// Получить список избранных позиции пользователя
         /// </summary>
         /// <param name="getFavoriteDto"></param>
         /// <returns></returns>
-        public Task<List<FavoriteDto>> GetFavoriteUser(GetFavoriteDto getFavoriteDto);
+        public Task<AnswerWithBackendDto<FavoriteDto>> GetFavoriteUser(GetFavoriteDto getFavoriteDto);
         
 
     }

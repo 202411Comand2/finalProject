@@ -91,17 +91,14 @@ namespace BLL.ProductService
             {
                 answerWithBackendDto.AddErrorLog($"Данные отсутствуют.");
             }
-            foreach (Product product in items) 
-            {
-                answerWithBackendDto.AddObject(Adapters.ProductAdapter.ConvertToDTOProduct(product));
-            }
+            answerWithBackendDto.AddObject(Adapters.ProductAdapter.ConvertToDTOProduct(items));
             return answerWithBackendDto;
         }
 
         public async Task<AnswerWithBackendDto<ProductDto>> GetAllProduct() 
         {
             AnswerWithBackendDto<ProductDto> answerWithBackendDto = new();
-            var items = await _productRepository.GetAll();
+            List<Product> items = (List<Product>)  await _productRepository.GetAll();
             if (items == null)
             {
                 answerWithBackendDto.AddErrorLog("Произошла ошибка при обращении к бд.");
@@ -110,7 +107,7 @@ namespace BLL.ProductService
             {
                 answerWithBackendDto.AddErrorLog($"Данные отсутствуют.");
             }
-                answerWithBackendDto.AddObject(Adapters.ProductAdapter.ConvertToDTOProduct(items));
+            answerWithBackendDto.AddObject(Adapters.ProductAdapter.ConvertToDTOProduct(items));
             return answerWithBackendDto;
         }
 
