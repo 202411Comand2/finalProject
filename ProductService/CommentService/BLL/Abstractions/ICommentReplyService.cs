@@ -1,4 +1,5 @@
-﻿using BLL.Dto.ReplyComment;
+﻿using BLL.Dto;
+using BLL.Dto.ReplyComment;
 using DAL.Repositories;
 using Domain.Entities;
 using System;
@@ -17,7 +18,7 @@ namespace BLL.Products.Abstractions
         /// <param name="commentUserId">id комментария пользователя</param>
         /// <param name="textComment">Текст комментария</param>
         /// <returns></returns>
-        public Task<int> AddReplyComment(AddReplyCommentDto addReplyCommentDto);
+        public Task<AnswerWithBackendDto<ReplyCommentDto>> AddReplyComment(AddReplyCommentDto addReplyCommentDto);
 
 
         /// <summary>

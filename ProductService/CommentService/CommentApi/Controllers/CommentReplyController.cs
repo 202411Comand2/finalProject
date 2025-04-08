@@ -1,7 +1,9 @@
-﻿using BLL.Dto.Comment;
+﻿using BLL.Dto;
+using BLL.Dto.Comment;
 using BLL.Dto.ReplyComment;
 using BLL.Products;
 using BLL.Products.Abstractions;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Product
@@ -19,7 +21,8 @@ namespace API.Controllers.Product
         [HttpPost("Add")]
         public async Task<ActionResult<int>> Add([FromBody] AddReplyCommentDto Dto)
         {
-            int result = -1;
+            AnswerWithBackendDto<ReplyCommentDto> result = new();
+         
             try
             {
                 result = await _commentReplyService.AddReplyComment(Dto);
@@ -29,11 +32,12 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (result==-1)
+
+            if (!result.DataReceived)
             {
-                return NotFound(-1);
+                return BadRequest(result.ErrorLog);
             }
-            return Ok(result);
+            return Ok(result.DataReceived);// true
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using BLL.Dto.ReplyComment;
+﻿using BLL.Dto;
+using BLL.Dto.ReplyComment;
 using BLL.Products.Abstractions;
 using DAL.Abstractions;
 using DAL.Repositories;
@@ -18,9 +19,20 @@ namespace BLL.Products
         public CommentReplyService(IContextManager contextManager) => _commentReplyRepository = new CommentReplyRepository(contextManager);
 
 
-        public async Task<int> AddReplyComment(AddReplyCommentDto addReplyCommentDto)
+        public async Task<AnswerWithBackendDto<ReplyCommentDto>> AddReplyComment(AddReplyCommentDto addReplyCommentDto)
         {
-            return (await _commentReplyRepository.Add(addReplyCommentDto.CommentUserId, addReplyCommentDto.TextComment)).IdComment;
+            AnswerWithBackendDto<ReplyCommentDto> result = new();
+            var item = await _commentReplyRepository.Add(addReplyCommentDto.CommentUserId, addReplyCommentDto.TextComment);
+            if (item == null)
+            {
+                result.AddErrorLog("Ошибка не удалось создать комментарий");
+            }
+            else 
+            {
+                result.AddObject(Adapters.ReplyCommentAdapter.ConvertToCommentDTO(item));
+                return result;
+            }
+           // return (await _commentReplyRepository.Add(addReplyCommentDto.CommentUserId, addReplyCommentDto.TextComment)).IdComment;
 
         }
 
