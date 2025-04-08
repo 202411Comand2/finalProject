@@ -21,11 +21,19 @@ namespace DAL.Repositories
         {
             using (var context = CreateDatabaseContext())
             {
-                int commnent =  (await context.comments.FindAsync(commentUserId)).IdReply;
-                var reply = await context.commentReplies.FindAsync(commnent);
-                reply.Text=textComment;
-                await context.SaveChangesAsync();
-                return reply;
+                var item = await context.comments.FindAsync(commentUserId);
+                if (item is null)
+                {
+                    return null;
+                }
+                else 
+                {
+                    int commnent = item.IdReply;
+                    var reply = await context.commentReplies.FindAsync(commnent);
+                    reply.Text = textComment;
+                    await context.SaveChangesAsync();
+                    return reply;
+                }
             }
         }
     }

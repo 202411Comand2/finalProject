@@ -13,11 +13,7 @@ namespace BLL.Adapters
     /// </summary>
     public class CommentAdapter
     {
-        /// <summary>
-        /// Преобразовать из Entitie Comment  в  CommentDto
-        /// </summary>
-        /// <param name="comment">Комментарий Entitie Comment</param>
-        /// <returns>Comment</returns>
+        
         public static CommentDto ConvertToCommentDTO(Comment comment)
         {
             return new CommentDto()
@@ -25,34 +21,30 @@ namespace BLL.Adapters
                 Id = comment.Id,
                 UserId = comment.UserId,
                 ShopId = comment.ShopId,
-                ProductId = comment.IdProduct,
+                ProductId = comment.ProductId,
                 TextComment = comment.Text,
                 Estimation = comment.Estimation,
             };
         }
-        /// <summary>
-        /// Преобразовать из Entitie Comment  в  CommentDto
-        /// </summary>
-        /// <param name="comment">Комментарий Entitie Comment</param>
-        /// <returns>Comment</returns>
-        public static List<CommentDto> ConvertToCommentDTO(List<Comment> itemComment)
+
+        public static List<CommentDto> ConvertToCommentDTO(List<Comment> ItemComment)
         {
-            List<CommentDto> result = new List<CommentDto>();
-            foreach(Comment comment in itemComment) 
+            List< CommentDto > itemsCommentDto = new List< CommentDto >();
+            foreach (var comment in ItemComment) 
             {
-                result.Add(
-                 new CommentDto()
-                 {
-
-                     Id = comment.Id,
-                     UserId = comment.UserId,
-                     ShopId = comment.ShopId,
-                     ProductId = comment.IdProduct,
-                     TextComment = comment.Text,
-                     Estimation = comment.Estimation,
-                 });
-            }return result;
-
+                itemsCommentDto.Add(new CommentDto()
+                {
+                    Id = comment.Id,
+                    UserId = comment.UserId,
+                    UserName = comment.UserName,
+                    ShopId = comment.ShopId,
+                    ProductId = comment.ProductId,
+                    TextComment = comment.Text,
+                    Estimation = comment.Estimation,
+                    
+                });
+            }
+            return itemsCommentDto;
         }
 
         /// <summary>
@@ -66,7 +58,8 @@ namespace BLL.Adapters
             {
                 UserId = сommentDto.UserId,
                 ShopId = сommentDto.ShopId,
-                IdProduct = сommentDto.ProductId,
+                UserName = сommentDto.UserName,
+                ProductId = сommentDto.ProductId,
                 Text = сommentDto.TextComment,
                 Estimation = сommentDto.Estimation,
             };

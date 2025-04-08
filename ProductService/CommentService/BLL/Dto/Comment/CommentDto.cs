@@ -17,6 +17,13 @@ namespace BLL.Dto.Comment
              /// id пользователя
              /// </summary>
         public int UserId { get; set; }
+
+        /// <summary>
+        /// НикНейм пользователя
+        /// </summary>
+        public string UserName { get; set; }
+
+
         /// <summary>
         /// id магазина
         /// </summary>

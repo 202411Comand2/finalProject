@@ -24,6 +24,7 @@ namespace ClusterAPI
             services.AddSingleton<IAppSettings, AppSettings>();
             services.AddSingleton<ISecretsSettings, SecretsSettings>();
             services.AddTransient<IClusterService, ClusterService>();
+            services.AddTransient<ISearchClusterService, SearchClusterService>();
 
             // Добавляем сервисы
             builder.Services.AddControllers();

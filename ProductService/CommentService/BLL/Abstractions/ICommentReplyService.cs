@@ -27,7 +27,7 @@ namespace BLL.Products.Abstractions
         /// <param name="IdCommentReply">id комментария ответа</param>
         /// <param name="textComment">Текст нового комментария</param>
         /// <returns></returns>
-        public  Task<bool> UpdateCommentReply(UpdateCommentReplyDto updateCommentReplyDto);
+        public Task<AnswerWithBackendDto<ReplyCommentDto>> UpdateCommentReply(UpdateCommentReplyDto updateCommentReplyDto);
 
 
 
@@ -36,7 +36,7 @@ namespace BLL.Products.Abstractions
         /// </summary>
         /// <param name="commentReplyId">id коментария ответа</param>
         /// <returns></returns>
-        public Task<bool> DeleteCommentReply(DeleteCommentReplyDto Dto);
+        public Task<AnswerWithBackendDto<ReplyCommentDto>> DeleteCommentReply(DeleteCommentReplyDto Dto);
 
 
     }

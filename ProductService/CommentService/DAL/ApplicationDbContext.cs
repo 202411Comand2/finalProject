@@ -9,6 +9,8 @@ namespace DAL
         public DbSet<Comment> comments { get; set; }
         public DbSet<CommentReply> commentReplies { get; set; }
 
+        public DbSet<Rating> ratings { get; set; }
+
 
         #endregion
 

@@ -22,7 +22,6 @@ namespace API.Controllers.Product
         public async Task<ActionResult<int>> Add([FromBody] AddReplyCommentDto Dto)
         {
             AnswerWithBackendDto<ReplyCommentDto> result = new();
-         
             try
             {
                 result = await _commentReplyService.AddReplyComment(Dto);
@@ -37,7 +36,7 @@ namespace API.Controllers.Product
             {
                 return BadRequest(result.ErrorLog);
             }
-            return Ok(result.DataReceived);// true
+            return Ok(result.ObjectDto.Id);// true
         }
 
         /// <summary>
@@ -46,7 +45,7 @@ namespace API.Controllers.Product
         [HttpPut("Update")]
         public async Task<ActionResult<int>> Update([FromBody] UpdateCommentReplyDto Dto)
         {
-            bool result = false;
+            AnswerWithBackendDto<ReplyCommentDto> result = new();
             try
             {
                 result = await _commentReplyService.UpdateCommentReply(Dto);
@@ -56,11 +55,11 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (!result)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return Ok(true);
+            return Ok(result.DataReceived);
         }
 
 
@@ -70,7 +69,7 @@ namespace API.Controllers.Product
         [HttpDelete("Delete")]
         public async Task<ActionResult<int>> Delete([FromBody] DeleteCommentReplyDto Dto)
         {
-            bool result = false;
+            AnswerWithBackendDto<ReplyCommentDto> result = new();
             try
             {
                 result = await _commentReplyService.DeleteCommentReply(Dto);
@@ -80,11 +79,11 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (!result)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return Ok(true);
+            return Ok(result.DataReceived);
         }
 
     }

@@ -24,6 +24,7 @@
     <ProjectReference Include="..\ProductService\ClusterService\BLL\BLL.csproj" />
     <ProjectReference Include="..\ProductService\ClusterService\DAL\DAL.csproj" />
     <ProjectReference Include="..\ProductService\ClusterService\Domain\Domain.csproj" />
+    <ProjectReference Include="..\ProductService\SupperDto\SupperBackEndDto\SupperBackEndDto.csproj" />
   </ItemGroup>
 
 </Project>

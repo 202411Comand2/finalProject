@@ -13,6 +13,13 @@ namespace BLL.Dto.Comment
         /// id пользователя
         /// </summary>
         public int UserId { get; set; }
+
+
+        /// <summary>
+        /// никнейм пользователя
+        /// </summary>
+        public string UserName { get; set; }
+
         /// <summary>
         /// id магазина
         /// </summary>
@@ -31,9 +38,10 @@ namespace BLL.Dto.Comment
         public decimal Estimation { get; set; }
 
       
-        public AddCommentDto(int userId, int shopId, int productId, string textComment, decimal estimation)
+        public AddCommentDto(int userId,string userName, int shopId, int productId, string textComment, decimal estimation)
         {
             UserId = userId;
+            UserName = userName;
             ShopId = shopId;
             ProductId = productId;
             TextComment = textComment;

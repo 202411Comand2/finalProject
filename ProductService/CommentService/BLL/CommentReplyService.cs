@@ -37,37 +37,50 @@ namespace BLL.Products
 
         }
 
-        public async Task<bool> DeleteCommentReply(DeleteCommentReplyDto Dto)
+        public async Task<AnswerWithBackendDto<ReplyCommentDto>> DeleteCommentReply(DeleteCommentReplyDto Dto)
         {
+            AnswerWithBackendDto<ReplyCommentDto> result = new();
             CommentReply? commentReply = await _commentReplyRepository.Get(Dto.Id);
             if (commentReply is not null)
             {
                 commentReply.IsDeleted = true;
-                await _commentReplyRepository.Update(commentReply);
-                return true;// $"Комментарий удалён {commentReply.ClusterId}";
+                var item = await _commentReplyRepository.Update(commentReply);
+                result.DataReceived=true;
             }
             else
             {
-                return false;// "Не удалось удалить комментарий ввиду отсутствия";
+                result.AddErrorLog("Не удалось удалить комментарий ввиду отсутствия");
+
             }
+            return result;
         }
 
-        public async Task<bool> UpdateCommentReply(UpdateCommentReplyDto updateCommentReplyDto)
+        public async Task<AnswerWithBackendDto<ReplyCommentDto>> UpdateCommentReply(UpdateCommentReplyDto updateCommentReplyDto)
         {
+            AnswerWithBackendDto<ReplyCommentDto> result = new();
+
             CommentReply commentReply = await _commentReplyRepository.Get(updateCommentReplyDto.IdCommentReply);
+            if (commentReply is  null) 
+            {
+                result.AddErrorLog($"Не удалось добавить комментарий! По указанный id = {updateCommentReplyDto.IdCommentReply} нет в бд");
+            }
             commentReply.Text = updateCommentReplyDto.TextComment;
             if (commentReply != null)
             {
-                string newTextComment = (await _commentReplyRepository.Update(commentReply)).Text;
-                if (newTextComment == updateCommentReplyDto.TextComment)
+                var item = await _commentReplyRepository.Update(commentReply);
+                if (item.Text == updateCommentReplyDto.TextComment)
                 { //Проверяем, что коментарий был обновлён
-                    return true;
+                    result.AddObject(Adapters.ReplyCommentAdapter.ConvertToCommentDTO( item));
+                    return result;
+
                 }
-                return false;
+                result.AddErrorLog("Не удалось обновить комментарий. Комментарий пустой!");
+                return result;
             }
             else 
             {
-                return false;   
+                result.AddErrorLog("Не удалось обновить комментарий. Комментарий не найден!");
+                return result;   
             }
         }
     }

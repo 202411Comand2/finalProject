@@ -63,7 +63,7 @@ namespace Domain.Entities
         /// Id продукта
         /// </summary>
         [Column("id_product")]
-        public int IdProduct { get; set; }
+        public int ProductId { get; set; }
        
         /// <summary>
         /// Id ответы
@@ -78,27 +78,8 @@ namespace Domain.Entities
         {
             return Id;
         }
-        
-        #region связи
-
-        public int Product { get; set; }
-
         [ForeignKey(nameof(IdReply))]
         public CommentReply Replies { get; set; }
-      
-        [ForeignKey(nameof(ShopId))]
-        public int Shop { get; set; }
 
-        [ForeignKey(nameof(UserId))]
-        public int User { get; set; }
-        #endregion
-
-
-        /*
-         Comment.IdReply' and 'Comment.UserName' are both mapped to column 'reply_id' in 'Comments', 
-            but the properties are contained within the same hierarchy. All properties on an entity type 
-            must be mapped to unique different columns."
-
-         */
     }
 }

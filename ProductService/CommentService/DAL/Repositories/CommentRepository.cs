@@ -20,7 +20,7 @@ namespace DAL.Repositories
         {
             using (var context = CreateDatabaseContext())
             {
-               return await context.comments.Where(p => p.IdProduct == idProduct ).ToListAsync();
+               return await context.comments.Where(p => p.ProductId == idProduct ).ToListAsync();
             }
         }
 
@@ -54,7 +54,7 @@ namespace DAL.Repositories
         {
             using (var context = CreateDatabaseContext())
             {
-                return await context.comments.FirstOrDefaultAsync(p => p.UserId == idUser && p.IdProduct == idProduct);
+                return await context.comments.FirstOrDefaultAsync(p => p.UserId == idUser && p.ProductId == idProduct);
             }
         }
 

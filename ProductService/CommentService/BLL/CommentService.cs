@@ -32,7 +32,7 @@ namespace BLL.Products
         {
             AnswerWithBackendDto<CommentDto> answerWithBackendDto = new();
             Comment comment = Adapters.CommentAdapter.ConvertToEntity(commentDto);
-            if (await _commentRepository.GetCommentUser(comment.UserId, comment.IdProduct) is null)
+            if (await _commentRepository.GetCommentUser(comment.UserId, comment.ProductId) is null)
             {
                 CommentReply reply = new();
                 var result = await _commentRepository.Add(comment, reply);
@@ -54,7 +54,7 @@ namespace BLL.Products
             if (comment is not null && comment.IsDeleted == false)
             {
                 CommentReply commentReply = await _commentReplyRepository.Get(comment.IdReply);
-                int productId = comment.IdProduct;
+                int productId = comment.ProductId;
                 decimal reting = comment.Estimation;
                 comment.IsDeleted = true;
                 commentReply.IsDeleted = true;
@@ -91,7 +91,7 @@ namespace BLL.Products
             Comment? comment = await _commentRepository.Get(updateCommentDto.CommentId);
             if (comment is not null)
             {
-                int productId = comment.IdProduct;
+                int productId = comment.ProductId;
                 decimal newReting = comment.Estimation;
                 decimal OldReting = updateCommentDto.Estimation;
 
@@ -133,7 +133,9 @@ namespace BLL.Products
         }
         public async Task<bool> DeleteReting(int productId, decimal reting)
         {
+
             Rating rating = await _ratingRepository.Get(productId);
+
             if (rating.AmountOfComments == 0)
             {
                 rating.AverageRating = reting;

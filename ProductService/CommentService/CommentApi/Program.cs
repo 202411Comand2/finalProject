@@ -25,7 +25,6 @@ namespace CommentApi
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<ICommentReplyService, CommentReplyService>();
 
-
             // Добавляем сервисы
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
