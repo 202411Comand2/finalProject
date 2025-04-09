@@ -10,6 +10,28 @@ namespace BLL.Adapters
 {
     public class ClusterAdapter
     {
+
+        /// <summary>
+        /// Преобразовать из List<Entitie> в List<Dto></Dto>
+        /// </summary>
+        /// <param name="Entitie">Магазин Entitie</param>
+        /// <returns>CommentDto</returns>
+        public static List<ClusterDto> ConvertFromEntitieToDTO(List<Cluster> items)
+        {
+            List<ClusterDto> itemClusterDto = new();
+            foreach (Cluster Entitie in items) 
+            {
+                itemClusterDto.Add(new ClusterDto()
+                {
+                    Id = Entitie.Id,
+                    Name = Entitie.Name,
+                    ParentId = Entitie.ParentId,
+                });
+            }
+            return itemClusterDto;
+        }
+
+
         /// <summary>
         /// Преобразовать из Entitie в Dto
         /// </summary>

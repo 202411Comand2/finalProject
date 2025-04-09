@@ -32,6 +32,7 @@ namespace BLL.Dto
         /// </summary>
         public List<AnswerWithBackendDto<T>> ObjectsDto { get; set; } = new();
 
+
         /// <summary>
         /// Добавить возращаемый объект
         /// </summary>

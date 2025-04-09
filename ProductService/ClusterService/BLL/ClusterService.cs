@@ -19,7 +19,12 @@ namespace BLL.Products
             AnswerWithBackendDto<ClusterDto> result = new();
             Cluster cluster = await _clusterRepository.GetNameCluster(clusterDto.Name);
             Cluster clusterParent = await _clusterRepository.GetNameCluster(clusterDto.NameParentCluseter);
-           
+
+            if (cluster is not null)
+            {
+                result.AddErrorLog("Не получилось создать кластер, так как он уже существует.");
+                return result;
+            }
             if (cluster is null && string.IsNullOrEmpty(clusterDto.NameParentCluseter))
             {
                 //если родитель явно не указан, т.е. является корнем
@@ -35,7 +40,7 @@ namespace BLL.Products
                     result.AddObject(Adapters.ClusterAdapter.ConvertFromEntitieToDTO(item));
                     return result;
                 }
-                else 
+                else
                 {
                     result.AddErrorLog("Не получилось создать кластер");
                     return result;
@@ -43,7 +48,7 @@ namespace BLL.Products
 
             }
 
-            if (clusterParent is null) 
+            if (clusterParent is null)
             {
                 result.AddErrorLog("Не получилось создать кластер, так как указанный родителей не был найден в бд");
                 return result;
@@ -55,7 +60,7 @@ namespace BLL.Products
                     Name = clusterDto.Name,
                     ParentId = clusterParent.Id
                 };
-               // var result = await _clusterSearchRepository.Add(cluster);
+                // var result = await _clusterSearchRepository.Add(cluster);
                 var item = await _clusterRepository.Add(cluster);
                 if (item is not null)
                 {
@@ -74,47 +79,26 @@ namespace BLL.Products
                 return result; ;//Не удалось создать в виду наличия в системе уже существующего кластера
             }
         }
-
-        //public async Task<bool> DeleteCluster(int clusterId)
-        //{
-        //    Cluster cluster = await _clusterSearchRepository.Get(clusterId);
-        //    if (cluster is null)
-        //    {
-        //        return false;//Не получилось удалить ввиду отсутствия id кластера
-        //    }
-        //    else
-        //    {
-        //        await _clusterSearchRepository.Delete(cluster);
-        //        return false; // Кластер удалён
-        //    }
-        //}
-
-        //public async Task<bool> DeleteCluster(string nameCluster)
-        //{
-        //    Cluster cluster = await _clusterSearchRepository.GetNameCluster(nameCluster);
-        //    if (cluster is null)
-        //    {
-        //        return false; // Не получилось удалить ввиду отсутствия id кластера
-        //    }
-        //    else
-        //    {
-        //        await _clusterSearchRepository.Delete(cluster);
-        //        return true; // Кластер удалён
-
-        //    }
-        //}
-
-        public async Task<bool> DeleteCluster(DeleteClusterDto deleteClusterDto)
+        public async Task<AnswerWithBackendDto<ClusterDto>> DeleteCluster(DeleteClusterDto deleteClusterDto)
         {
+            AnswerWithBackendDto<ClusterDto> result = new();
             Cluster cluster = await _clusterRepository.Get(deleteClusterDto.Id);
             if (cluster is null)
             {
-                return false; // Не получилось удалить ввиду отсутствия id кластера
+                result.AddErrorLog("Не удалось удалить кластер ввиду его отсутствия в бд!");
+                return result; // Не получилось удалить ввиду отсутствия id кластера
             }
             else
             {
-                await _clusterRepository.Delete(cluster);
-                return true; // Кластер удалён
+                if (await _clusterRepository.Delete(cluster))
+                {
+                    result.DataReceived = true;
+                }
+                else
+                {
+                    result.AddErrorLog("Не получилось удалить объект. Проблемы с бд.");
+                }
+                return result; // Кластер удалён
 
             }
         }
@@ -145,22 +129,32 @@ namespace BLL.Products
         //    return await _clusterSearchRepository.GeElementsClaster(cluster.ClusterId);
         //}
 
-        public async Task<List<ClusterDto>> GetChildrenElementsCluster(GetClusterDto getClusterDto)
+
+
+
+        public async Task<AnswerWithBackendDto<ClusterDto>> GetChildrenElementsCluster(GetClusterDto getClusterDto)
         {
+            AnswerWithBackendDto<ClusterDto> result = new();
             Cluster cluster = await _clusterRepository.GetNameCluster(getClusterDto.ClusterName);
             if (cluster is null)
             {//"Ошибка. Не найден кластер по имени"
-                return null;
+                result.AddErrorLog("Ошибка. Не найден кластер по id");
+                return result;
             }
-            List<ClusterDto> clusters = new List<ClusterDto>();
-            foreach (var item in await _clusterRepository.GeElementsCluster(cluster.Id))
+            var items = Adapters.ClusterAdapter.ConvertFromEntitieToDTO((List<Cluster>)await _clusterRepository.GeElementsCluster(cluster.Id));
+            if (items is null)
             {
-                clusters.Add(Adapters.ClusterAdapter.ConvertFromEntitieToDTO(item));
+                result.AddErrorLog("У указанно кластера отсутствуют дочерние объекты");
             }
-            return clusters;
+            else 
+            { 
+            result.AddObject(items);
+
+            }
+            return result;
         }
 
-      
+
 
         //public async Task<bool> UpdateNameCluster(int clasterId, string newNameClaster)
         //{
@@ -211,14 +205,16 @@ namespace BLL.Products
         //    }
         //}
 
-        public async Task<bool> UpdateNameCluster(UpdateCluseterDto updateCluseterDto)
+        public async Task<AnswerWithBackendDto<ClusterDto>> UpdateNameCluster(UpdateCluseterDto updateCluseterDto)
         {
+            AnswerWithBackendDto<ClusterDto> result = new();
             Cluster cluster = await _clusterRepository.Get(updateCluseterDto.Id);
             Cluster clusterNewName = await _clusterRepository.GetNameCluster(updateCluseterDto.NewName);
             Cluster clusterParent = await _clusterRepository.GetNameCluster(updateCluseterDto.newParent);
             if (cluster is null)
             {
-                return false;// "не получилось изменить название классификатора. Не получилось найти указанный кластер в базе";
+                result.AddErrorLog("не получилось изменить название классификатора. Не получилось найти указанный кластер в базе");
+                return result;
             }
             else
             {
@@ -227,20 +223,38 @@ namespace BLL.Products
                 {
                     cluster.Name = updateCluseterDto.NewName;
                     cluster.ParentId = -1;
-                    
-                    var result = await _clusterRepository.Update(cluster);
-                    return true; //Кластер создан
+                    var itemUpdate = await _clusterRepository.Update(cluster);
+                    if (itemUpdate is not null)
+                    {
+                        result.AddObject(Adapters.ClusterAdapter.ConvertFromEntitieToDTO(itemUpdate));
+                        return result;
+                    }
+                    else
+                    {
+                        result.AddErrorLog("Ошибка бд.");
+                        return result;
+                    }
                 }
 
                 if (cluster is not null && clusterParent is not null && clusterNewName is null)
                 {
                     cluster.Name = updateCluseterDto.NewName;
                     cluster.ParentId = clusterParent.Id;
-                   
-                    var result = await _clusterRepository.Update(cluster);
-                    return true; //Кластер создан
+                    var itemUpdate = await _clusterRepository.Update(cluster);
+                    if (itemUpdate is not null)
+                    {
+                        result.AddObject(Adapters.ClusterAdapter.ConvertFromEntitieToDTO(itemUpdate));
+                        return result;
+                    }
+                    else
+                    {
+                        result.AddErrorLog("Ошибка бд.");
+                        return result;
+                    }
+
                 }
-                    return false;// "не получилось изменить название классификатора. Имя этого кластера занято!";
+                result.AddErrorLog("не получилось изменить название классификатора. Имя этого кластера занято!");
+                return result;
             }
         }
 
@@ -313,25 +327,19 @@ namespace BLL.Products
         //    }
         //}
 
-        public  async Task<List<ClusterDto>>  GetAllElementsCluster()
+        public async Task<AnswerWithBackendDto<ClusterDto>> GetAllElementsCluster()
         {
-            List<ClusterDto > clusters = new List<ClusterDto>();
-
-            foreach (var item in (List<Cluster>)await _clusterRepository.GetAll()) 
-            {
-                clusters.Add(Adapters.ClusterAdapter.ConvertFromEntitieToDTO(item));
-            }
-            return clusters;
+            AnswerWithBackendDto<ClusterDto> result = new();
+            List<ClusterDto> clusters = new List<ClusterDto>();
+            result.AddObject(Adapters.ClusterAdapter.ConvertFromEntitieToDTO( (List<Cluster>)await _clusterRepository.GetAll()));
+            return result;
         }
 
-        public async Task<List<ClusterDto>> GetRootElementsCluster()
+        public async Task<AnswerWithBackendDto<ClusterDto>> GetRootElementsCluster()
         {
-            List<ClusterDto> clusters = new List<ClusterDto>();
-            foreach (var item in await _clusterRepository.GetRootElementsClaster()) 
-            {
-                clusters.Add(Adapters.ClusterAdapter.ConvertFromEntitieToDTO(item));
-            }
-            return clusters;
+            AnswerWithBackendDto<ClusterDto> result = new();
+            result.AddObject(Adapters.ClusterAdapter.ConvertFromEntitieToDTO((List<Cluster>)await _clusterRepository.GetRootElementsClaster()));
+            return result;
         }
     }
 }

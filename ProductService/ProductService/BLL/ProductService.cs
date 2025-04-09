@@ -214,10 +214,7 @@ namespace BLL.ProductService
             {
                 answerWithBackendDto.AddErrorLog($"Данные отсутствуют.");
             }
-            foreach (Product product in items)
-            {
-                answerWithBackendDto.AddObject(Adapters.ProductAdapter.ConvertToDTOProduct(product));
-            }
+            answerWithBackendDto.AddObject(Adapters.ProductAdapter.ConvertToDTOProduct(items));
             return answerWithBackendDto;
         }
     }

@@ -37,7 +37,7 @@ namespace BLL.Products.Abstractions
         /// <param name="clasterId">id кластера</param>
         /// <param name="newNameClaster">Новое имя кластера</param>
         /// <returns></returns>
-        public Task<bool> UpdateNameCluster(UpdateCluseterDto updateCluseterDto);
+        public Task<AnswerWithBackendDto<ClusterDto>> UpdateNameCluster(UpdateCluseterDto updateCluseterDto);
 
 
         ///// <summary>
@@ -55,7 +55,7 @@ namespace BLL.Products.Abstractions
         /// </summary>
         /// <param name="clusterId">id кластера</param>
         /// <returns></returns>
-        public Task<bool> DeleteCluster(DeleteClusterDto deleteClusterDto);
+        public Task<AnswerWithBackendDto<ClusterDto>> DeleteCluster(DeleteClusterDto deleteClusterDto);
 
 
         ///// <summary>
@@ -88,12 +88,12 @@ namespace BLL.Products.Abstractions
         /// Получить все элементы кластеров
         /// </summary>
         /// <returns>Коллекцию кластеров</returns>
-        public Task<List<ClusterDto>> GetAllElementsCluster();
+        public Task<AnswerWithBackendDto<ClusterDto>> GetAllElementsCluster();
 
         /// <summary>
         /// Получить только корневые элементы кластера
         /// </summary>
-        public Task<List<ClusterDto>> GetRootElementsCluster();
+        public Task<AnswerWithBackendDto<ClusterDto>> GetRootElementsCluster();
 
 
         ////TODO что делать ошибку кидать или возвращаться null
@@ -102,7 +102,7 @@ namespace BLL.Products.Abstractions
         /// </summary>
         /// <param name="clusterId">ClusterId кластера</param>
         /// <returns></returns>
-        public Task<List<ClusterDto>> GetChildrenElementsCluster(GetClusterDto getClusterDto);
+        public Task<AnswerWithBackendDto<ClusterDto>> GetChildrenElementsCluster(GetClusterDto getClusterDto);
 
 
         ///// <summary>

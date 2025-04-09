@@ -35,7 +35,7 @@ namespace API.Controllers.Product
         [HttpPut("Update")]
         public async Task<ActionResult<int>> Update([FromBody] UpdateCluseterDto clusterDto)
         {
-            bool result = false;
+            AnswerWithBackendDto<ClusterDto> result = new();
             try
             {
                 result = await _clusterService.UpdateNameCluster(clusterDto);
@@ -44,19 +44,18 @@ namespace API.Controllers.Product
             {
                 return BadRequest(ex.Message);
             }
-
-            if (!result)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return Ok(result);
+            return Ok(result.ObjectDto);
         }
 
 
         [HttpDelete("Delete")]
-        public async Task<ActionResult<int>> Delete(DeleteClusterDto deleteClusterDto)
+        public async Task<ActionResult<bool>> Delete(DeleteClusterDto deleteClusterDto)
         {
-            bool result = false;
+            AnswerWithBackendDto<ClusterDto> result = new();
             try
             {
                 result = await _clusterService.DeleteCluster(deleteClusterDto);
@@ -66,11 +65,11 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (!result)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return Ok(true);
+            return Ok(result.DataReceived);
         }
 
 
@@ -81,7 +80,7 @@ namespace API.Controllers.Product
         [HttpGet("GetAllElements")]
         public async Task<ActionResult> GetAllElements()
         {
-            List<ClusterDto> result = new List<ClusterDto>();
+            AnswerWithBackendDto<ClusterDto> result = new();
             try
             {
                 result = await _clusterService.GetAllElementsCluster();
@@ -91,11 +90,11 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (result.Count == 0)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return new JsonResult(result);
+            return Ok(result.GetCollectionWithProblem());
         }
 
         /// <summary>
@@ -104,7 +103,7 @@ namespace API.Controllers.Product
         [HttpGet("GetRootElements")]
         public async Task<ActionResult> GetRootElements()
         {
-            List<ClusterDto> result = new List<ClusterDto>();
+            AnswerWithBackendDto<ClusterDto> result = new();
             try
             {
                 result = await _clusterService.GetRootElementsCluster();
@@ -114,11 +113,11 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (result.Count == 0)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return new JsonResult(result);
+            return Ok(result.GetCollectionWithProblem());
         }
 
 
@@ -129,7 +128,7 @@ namespace API.Controllers.Product
         [HttpGet("GetChildrenElements")]
         public async Task<ActionResult> GetChildrenElements([FromQuery] GetClusterDto getClusterDto)
         {
-            List<ClusterDto> result = new List<ClusterDto>();
+            AnswerWithBackendDto<ClusterDto> result = new();
             try
             {
                 result = await _clusterService.GetChildrenElementsCluster(getClusterDto);
@@ -139,11 +138,11 @@ namespace API.Controllers.Product
                 return BadRequest(ex.Message);
             }
 
-            if (result.Count == 0)
+            if (!result.DataReceived)
             {
-                return NotFound();
+                return BadRequest(result.ErrorLog);
             }
-            return new JsonResult(result);
+            return Ok(result.GetCollectionWithProblem());
         }
     }
 }

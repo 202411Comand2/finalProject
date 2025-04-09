@@ -51,6 +51,9 @@ namespace DAL.Repositories
             }
         }
 
+
+
+
         /// <summary>
         /// Вернуть массив кластеров
         /// </summary>

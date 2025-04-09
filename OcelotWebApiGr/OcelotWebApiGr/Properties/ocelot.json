@@ -1,0 +1,98 @@
+{
+  "Routes": [
+    // Маршруты для ProductService
+    {
+      "DownstreamPathTemplate": "/api/products",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "product-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/products",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/products/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "product-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/products/{id}",
+      "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ]
+    },
+
+    // Маршруты для OrderService
+    {
+      "DownstreamPathTemplate": "/api/orders",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "order-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/orders",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
+
+    // Маршруты для UserService
+    {
+      "DownstreamPathTemplate": "/api/users",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "user-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/users",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
+
+    // Маршрут для общения между сервисами (например, OrderService запрашивает ProductService)
+    {
+      "DownstreamPathTemplate": "/internal/products/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "product-service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/internal/products/{id}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "InternalApiKey",
+        "AllowedScopes": []
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://api-gateway:80",
+    "ServiceDiscoveryProvider": {
+      "Host": "consul",
+      "Port": 8500,
+      "Type": "Consul"
+    }
+  }
+}
+
+/*
+
+  
+Параметр	Описание
+DownstreamPathTemplate	Путь в целевом микросервисе (например, /api/products)
+DownstreamScheme	Протокол (http/https)
+DownstreamHostAndPorts	Адреса сервисов (можно несколько для балансировки)
+UpstreamPathTemplate	Внешний URL, который видит клиент
+UpstreamHttpMethod	Разрешённые HTTP-методы (GET, POST и т.д.)
+AuthenticationOptions	Настройки аутентификации (JWT, API Key)
+RateLimitOptions	Ограничение запросов (RPS)
+QoSOptions	Настройки устойчивости (Circuit Breaker)
+ServiceDiscoveryProvider	Интеграция с Consul/Eureka для динамического обнаружения сервисов
+*/
