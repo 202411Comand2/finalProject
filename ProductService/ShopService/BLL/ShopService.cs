@@ -146,5 +146,11 @@ namespace BLL.Product
             answerWithBackendDto.AddObject(Adapters.ShopAdapter.ConvertFromEntitieToDTO(await _shopRepository.Update(shop)));
             return answerWithBackendDto;
         }
+
+
+        private async Task DeleteProduct() 
+        {
+        
+        }
     }
 }

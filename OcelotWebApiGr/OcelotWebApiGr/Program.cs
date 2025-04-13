@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -5,41 +7,35 @@ namespace OcelotWebApiGr
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            // Добавляем Ocelot и загружаем конфигурацию
+
+            // Конфигурация Ocelot
             builder.Configuration.AddJsonFile("Properties/ocelot.json");
-            builder.Services.AddOcelot(builder.Configuration);
+            builder.Services.AddOcelot();
+
+            // Настройка CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+            });
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerForOcelot(builder.Configuration);
+
+         
             var app = builder.Build();
-            app.UseOcelot().Wait();
+            app.UseCors("AllowAll");
+            await app.UseOcelot();
+            app.UseSwagger();
+            app.UseSwaggerUi(opt => {
+                opt.PathToSwaggerGenerator = "/swagger/docs";
+            });
             app.Run();
-
-            /* var builder = WebApplication.CreateBuilder(args);
-
-             // Add services to the container.
-             builder.Services.AddRazorPages();
-
-             var app = builder.Build();
-
-             // Configure the HTTP request pipeline.
-             if (!app.Environment.IsDevelopment())
-             {
-                 app.UseExceptionHandler("/Error");
-                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                 app.UseHsts();
-             }
-
-             app.UseHttpsRedirection();
-             app.UseStaticFiles();
-
-             app.UseRouting();
-
-             app.UseAuthorization();
-
-             app.MapRazorPages();
-
-             app.Run();*/
         }
+       
     }
 }

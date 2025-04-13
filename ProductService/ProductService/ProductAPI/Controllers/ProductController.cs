@@ -9,6 +9,17 @@ namespace API.Controllers.Product
     [Route("[controller]")]
     public class ProductController(IProductService productService) : ControllerBase()
     {
+
+
+
+       
+            //[HttpGet]
+            //public IActionResult GetAll() => Ok(new[] { "Laptop", "Phone" });
+
+            [HttpGet("{id}")]
+            public IActionResult GetById(int id) => Ok($"Product {id}");
+       
+
         private readonly IProductService _productService = productService;
 
         /// <summary>

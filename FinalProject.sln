@@ -87,6 +87,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupperBackEndDto", "Product
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotWebApiGr", "OcelotWebApiGr\OcelotWebApiGr\OcelotWebApiGr.csproj", "{5ED4EE5E-C332-40F0-B4E8-C0A6F9A25DC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "APIGateway\ConsoleClient\ConsoleApp\ConsoleApp.csproj", "{375CAE47-9320-42FA-98D4-64B583BE3509}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -225,6 +227,10 @@ Global
 		{5ED4EE5E-C332-40F0-B4E8-C0A6F9A25DC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5ED4EE5E-C332-40F0-B4E8-C0A6F9A25DC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5ED4EE5E-C332-40F0-B4E8-C0A6F9A25DC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{375CAE47-9320-42FA-98D4-64B583BE3509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{375CAE47-9320-42FA-98D4-64B583BE3509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{375CAE47-9320-42FA-98D4-64B583BE3509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{375CAE47-9320-42FA-98D4-64B583BE3509}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -262,6 +268,7 @@ Global
 		{97365969-56E3-4337-88F6-62766B913204} = {39D8B114-5FB5-4B68-85B7-9F8719276E5D}
 		{28D409E5-3512-4785-BAED-9779014C06F9} = {2E8B78B6-AD6A-477C-90BB-5E974F4A945A}
 		{5ED4EE5E-C332-40F0-B4E8-C0A6F9A25DC6} = {582AEE01-85DC-4D8E-8A58-EC1BCFAC2F75}
+		{375CAE47-9320-42FA-98D4-64B583BE3509} = {582AEE01-85DC-4D8E-8A58-EC1BCFAC2F75}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47C6B020-09D3-4DF7-8460-95200C811308}
