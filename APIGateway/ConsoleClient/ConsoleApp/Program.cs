@@ -9,11 +9,12 @@ namespace ConsoleApp
             {
             var client = new HttpClient
             {
-                BaseAddress = new Uri("http://localhost:5000")
+                BaseAddress = new Uri("http://localhost:5010")
             };
 
             // GET запрос
-            var response = await client.GetAsync("/products");
+            var response = await client.GetAsync("");
+            var s = await response.Content.ReadAsStringAsync();
             Console.WriteLine(await response.Content.ReadAsStringAsync());
 
             // POST запрос

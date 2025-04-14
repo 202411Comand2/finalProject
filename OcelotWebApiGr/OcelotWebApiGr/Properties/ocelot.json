@@ -1,121 +1,27 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/products/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/swagger",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "product-service",
-          "Port": 5000
+          "Host": "localhost",
+          "Port": 7186
         }
       ],
       "UpstreamPathTemplate": "/products/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/orders/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "order-service",
-          "Port": 5002
-        }
-      ],
-      "UpstreamPathTemplate": "/orders/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
-    }
-  ],
-  "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5000"
-  }
-}
-/*{
-  "Routes": [
-    // Маршруты для ProductService
-    {
-      "DownstreamPathTemplate": "/api/products",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "product-service",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/products",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/products/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "product-service",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/products/{id}",
-      "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ]
-    },
-
-    // Маршруты для OrderService
-    {
-      "DownstreamPathTemplate": "/api/orders",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "order-service",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/orders",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
-    },
-
-    // Маршруты для UserService
-    {
-      "DownstreamPathTemplate": "/api/users",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "user-service",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/users",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
-    },
-
-    // Маршрут для общения между сервисами (например, OrderService запрашивает ProductService)
-    {
-      "DownstreamPathTemplate": "/internal/products/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "product-service",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/internal/products/{id}",
-      "UpstreamHttpMethod": [ "GET" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "InternalApiKey",
-        "AllowedScopes": []
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60
       }
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://api-gateway:80",
-    "ServiceDiscoveryProvider": {
-      "Host": "consul",
-      "Port": 8500,
-      "Type": "Consul"
-    }
+    "BaseUrl": "http://localhost:5000",
+    "RequestIdKey": "OcelotRequestId"
   }
 }
-*/
 /*
-
-  
 Параметр	Описание
 DownstreamPathTemplate	Путь в целевом микросервисе (например, /api/products)
 DownstreamScheme	Протокол (http/https)
