@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/swagger",
+      "DownstreamPathTemplate": "/api/Product/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -9,7 +9,7 @@
           "Port": 7186
         }
       ],
-      "UpstreamPathTemplate": "/products/{everything}",
+      "UpstreamPathTemplate": "/gateway/Product/{everything}", // http://localhost:5010/gateway/Product/1
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "FileCacheOptions": {
         "TtlSeconds": 60
