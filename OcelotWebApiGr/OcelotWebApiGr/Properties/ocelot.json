@@ -10,7 +10,7 @@
         }
       ],
       "UpstreamPathTemplate": "/gateway/Product/{everything}", // http://localhost:5010/gateway/Product/1
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], //http://localhost:5010/gateway/Product/GetAll
       "FileCacheOptions": {
         "TtlSeconds": 60
       }
