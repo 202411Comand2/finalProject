@@ -9,10 +9,15 @@ namespace API.Controllers.Product
 
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
+    
     public class ShopController(IShopService shopService) : ControllerBase()
     {
         private readonly IShopService _shopService = shopService;
+
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id) => Ok($"Product {id}");
 
         /// <summary>
         /// Добавить магазин
