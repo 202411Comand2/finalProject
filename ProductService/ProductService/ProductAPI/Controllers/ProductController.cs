@@ -105,7 +105,7 @@ namespace API.Controllers.Product
             }
             if (!result.DataReceived)
             {
-                return BadRequest(result.ErrorLog);
+                return BadRequest(result.ErrorLog); 
             }
             return result.GetCollectionNotProblem();
         }
