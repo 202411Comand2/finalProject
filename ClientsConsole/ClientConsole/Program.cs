@@ -18,7 +18,9 @@ namespace ClientConsole
             // http://localhost:5010/gateway/Product/1
             // http://localhost:5010/gateway/Product/GetAll подумать над разделением
             // GET запрос
+            Console.WriteLine("\nСервис Продуктов:\n");
             await ProductService();
+            Console.WriteLine("\nСервис магазинов:\n");
             await ShopService();
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Чтобы выйти нажмите любую клавишу");
@@ -173,6 +175,7 @@ namespace ClientConsole
             Console.WriteLine("Получить всё продукты " + await response.Content.ReadAsStringAsync() + "\n");
 
             #region Post
+            //создание магазина
             Models.Shop.AddShopDto addShopDto = new();
             addShopDto.Name = "modelNumbersdadasdasdas";
             // 2. Подготавливаем данные (объект → JSON)
@@ -193,8 +196,34 @@ namespace ClientConsole
             }
             else
             {
-                Console.WriteLine($"Ошибка: {response.StatusCode}");
+                Console.WriteLine($"Ошибка: {response.StatusCode} {await response.Content.ReadAsStringAsync()}");
             }
+            //
+            Models.Shop.GetShopsInfoDto GetShopDto = new();
+            GetShopDto.ShopIds = new List<int> { 1,2,3,4,5};
+            // 2. Подготавливаем данные (объект → JSON)
+             json = JsonSerializer.Serialize(GetShopDto);
+             content = new StringContent(json, Encoding.UTF8, "application/json");
+            // 3. Отправляем POST-запрос
+            response = await client.PostAsync("gateway/Shop/GetInfo", content);
+
+
+             idResponseObject = -1; //запысываем id объекта чтобы его изменить
+
+            // 4. Проверяем ответ
+            if (response.IsSuccessStatusCode)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Список магазинов по массиву: {responseBody}");
+                int.TryParse(responseBody, out idResponseObject);
+            }
+            else
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Ошибка: {response.StatusCode} {responseBody}");
+            }
+
+
             #endregion
         }
 
