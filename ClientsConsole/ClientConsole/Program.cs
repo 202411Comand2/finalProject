@@ -1,23 +1,11 @@
-﻿using BLL.Dto.Product;
-using System.Diagnostics;
-using System.Net.Http.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text;
-using System.Net.Http;
 
-
-namespace ConsoleApp
+namespace ClientConsole
 {
-    public class AddShopDto
-    {
-        public string? Name { get; set; }
-    }
-
-
     internal class Program
     {
-        static private HttpClient? client = new HttpClient() 
+        static private HttpClient? client = new HttpClient()
         {
             BaseAddress = new Uri("http://localhost:5010")
         };
@@ -30,11 +18,13 @@ namespace ConsoleApp
             // http://localhost:5010/gateway/Product/1
             // http://localhost:5010/gateway/Product/GetAll подумать над разделением
             // GET запрос
-          //  await ProductService();
+            await ProductService();
             await ShopService();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Чтобы выйти нажмите любую клавишу");
             Console.ReadKey();
             return;
-          
+
         }
 
         /// <summary>
@@ -46,7 +36,7 @@ namespace ConsoleApp
             #region get запросы
             var response = await client.GetAsync("gateway/Product/GetAll");
             await response.Content.ReadAsStringAsync();
-            Console.WriteLine("Получить всё продукты " + await response.Content.ReadAsStringAsync()+"\n");
+            Console.WriteLine("Получить всё продукты " + await response.Content.ReadAsStringAsync() + "\n");
 
             string idShop = "1";
             response = await client.GetAsync($"gateway/Product/GetShopProducts?ShopId={idShop}");
@@ -60,7 +50,7 @@ namespace ConsoleApp
             #endregion
 
             #region Post
-            AddProductDto addProductDto = new AddProductDto();
+            Models.Product.AddProductDto addProductDto = new();
             addProductDto.ShopId = 0;
             addProductDto.ClusterId = 0;
             addProductDto.NameProduct = "post ";
@@ -75,7 +65,7 @@ namespace ConsoleApp
             response = await client.PostAsync("gateway/Product/add", content);
 
 
-            int idResponseObject=-1; //запысываем id объекта чтобы его изменить
+            int idResponseObject = -1; //запысываем id объекта чтобы его изменить
 
             // 4. Проверяем ответ
             if (response.IsSuccessStatusCode)
@@ -92,7 +82,7 @@ namespace ConsoleApp
 
 
             #region put 
-            UpdateProductDto UpdateProductDto = new ();
+            Models.Product.UpdateProductDto UpdateProductDto = new();
             UpdateProductDto.ProductId = idResponseObject;
             UpdateProductDto.ClusterId = 0;
             UpdateProductDto.NameProduct = "put update";
@@ -122,7 +112,7 @@ namespace ConsoleApp
 
 
 
-       
+
 
             // 1. Создаем HttpClient
             using var httpClient = new HttpClient();
@@ -134,7 +124,7 @@ namespace ConsoleApp
             httpClient.DefaultRequestHeaders.Add("accept", "text/plain");
 
             // 4. Создаем DTO для удаления
-            DeleteProductDto DeleteProductDto = new();
+            Models.Product.DeleteProductDto DeleteProductDto = new();
             DeleteProductDto.Id = idResponseObject;
 
 
@@ -175,7 +165,7 @@ namespace ConsoleApp
         }
 
 
-        private static async Task ShopService() 
+        private static async Task ShopService()
         {
 
             var response = await client.GetAsync("gateway/Shop/1");
@@ -183,13 +173,13 @@ namespace ConsoleApp
             Console.WriteLine("Получить всё продукты " + await response.Content.ReadAsStringAsync() + "\n");
 
             #region Post
-            AddShopDto addShopDto = new AddShopDto();
-            addShopDto.Name= "modelNumbersdadasdasdas";
+            Models.Shop.AddShopDto addShopDto = new();
+            addShopDto.Name = "modelNumbersdadasdasdas";
             // 2. Подготавливаем данные (объект → JSON)
             string json = JsonSerializer.Serialize(addShopDto);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             // 3. Отправляем POST-запрос
-             response = await client.PostAsync("gateway/Shop/add", content);
+            response = await client.PostAsync("gateway/Shop/add", content);
 
 
             int idResponseObject = -1; //запысываем id объекта чтобы его изменить
@@ -208,10 +198,7 @@ namespace ConsoleApp
             #endregion
         }
 
-        private static async Task s() 
-        {
-          
 
-        }
     }
 }
+
