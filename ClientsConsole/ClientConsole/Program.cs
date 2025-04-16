@@ -112,10 +112,6 @@ namespace ClientConsole
 
             #region delete
 
-
-
-
-
             // 1. Создаем HttpClient
             using var httpClient = new HttpClient();
 
@@ -170,12 +166,12 @@ namespace ClientConsole
         private static async Task ShopService()
         {
 
-            var response = await client.GetAsync("gateway/Shop/1");
+            HttpResponseMessage response = await client.GetAsync("gateway/Shop/1");
             await response.Content.ReadAsStringAsync();
             Console.WriteLine("Получить всё продукты " + await response.Content.ReadAsStringAsync() + "\n");
 
             #region Post
-            //создание магазина
+            #region создание магазина
             Models.Shop.AddShopDto addShopDto = new();
             addShopDto.Name = "modelNumbersdadasdasdas";
             // 2. Подготавливаем данные (объект → JSON)
@@ -198,17 +194,19 @@ namespace ClientConsole
             {
                 Console.WriteLine($"Ошибка: {response.StatusCode} {await response.Content.ReadAsStringAsync()}");
             }
-            //
+            #endregion
+           
+            #region получить информацию о магазинах по list
             Models.Shop.GetShopsInfoDto GetShopDto = new();
-            GetShopDto.ShopIds = new List<int> { 1,2,3,4,5};
+            GetShopDto.ShopIds = new List<int> { 1, 2, 3, 4, 5 };
             // 2. Подготавливаем данные (объект → JSON)
-             json = JsonSerializer.Serialize(GetShopDto);
-             content = new StringContent(json, Encoding.UTF8, "application/json");
+            json = JsonSerializer.Serialize(GetShopDto);
+            content = new StringContent(json, Encoding.UTF8, "application/json");
             // 3. Отправляем POST-запрос
             response = await client.PostAsync("gateway/Shop/GetInfo", content);
 
 
-             idResponseObject = -1; //запысываем id объекта чтобы его изменить
+            idResponseObject = -1; //запысываем id объекта чтобы его изменить
 
             // 4. Проверяем ответ
             if (response.IsSuccessStatusCode)
@@ -222,11 +220,103 @@ namespace ClientConsole
                 string responseBody = await response.Content.ReadAsStringAsync();
                 Console.WriteLine($"Ошибка: {response.StatusCode} {responseBody}");
             }
+            #endregion
 
+            #endregion
+            
+            #region put
+
+            #region Обновить название магазина
+            Models.Shop.UpdateShopDto UpdateShopDto = new();
+            UpdateShopDto.Id = 1;
+            UpdateShopDto.NewName = "Сам лучший магазин";
+            // 2. Подготавливаем данные (объект → JSON)
+            response = await client.PutAsync("gateway/Shop/Update", CreateJson(UpdateShopDto));
+            // 4. Проверяем ответ
+            await CheckedAnswer(response);
+            #endregion
+
+
+            #region Восстановить магазин
+            Models.Shop.RestoreShopDto RestoreShopDto = new();
+            RestoreShopDto.Id = 1;
+            // 2. Подготавливаем данные (объект → JSON)
+            response = await client.PutAsync("gateway/Shop/RestoreShop", CreateJson(UpdateShopDto));
+            // 4. Проверяем ответ
+            await CheckedAnswer(response);
+            #endregion
+
+            #endregion
+
+            #region Delete удаление магазина
+
+
+            // 4. Создаем DTO для удаления
+            Models.Shop.DeleteShopDto deleteShopDto = new();
+            deleteShopDto.Id = 1;
+
+            // 5. Создаем DELETE-запрос с телом
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri("gateway/Shop/Delete", UriKind.Relative),
+                Content = CreateJson(deleteShopDto) 
+            };
+
+            // 6. Отправляем запрос
+
+            response = await client.SendAsync(request);
+            await  CheckedAnswer(response);
 
             #endregion
         }
 
+        /// <summary>
+        /// Создать StringContent из объекта для подготовки данных (объект → JSON)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objects"></param>
+        /// <returns></returns>
+        private static StringContent CreateJson<T> (T objects) => 
+            new StringContent(JsonSerializer.Serialize(objects), Encoding.UTF8, "application/json");
+  
+        /// <summary>
+        /// Проверить ответ от сервера
+        /// </summary>
+        /// <param name="response">Ответ сервера</param>
+        /// <param name="printMessage">Печатать ли в консоли ответ</param>
+        /// <returns></returns>
+        private async static Task<string> CheckedAnswer(HttpResponseMessage response, bool printMessage = true) 
+        {
+            string responseBody = "";
+            bool error = false;
+            if (response.IsSuccessStatusCode)
+            {
+                error = false;
+                responseBody = await response.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                error = true;
+                responseBody = await response.Content.ReadAsStringAsync();
+            }
+            if (printMessage) 
+            {
+                if (error)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Ошибка:\n" + responseBody);
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else 
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Ответ от сервера:\n" + responseBody);
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            return responseBody;
+        }
 
     }
 }
