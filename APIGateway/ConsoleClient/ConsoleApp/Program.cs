@@ -6,8 +6,15 @@ using System.Text.Json;
 using System.Text;
 using System.Net.Http;
 
+
 namespace ConsoleApp
 {
+    public class AddShopDto
+    {
+        public string? Name { get; set; }
+    }
+
+
     internal class Program
     {
         static private HttpClient? client = new HttpClient() 
@@ -23,23 +30,18 @@ namespace ConsoleApp
             // http://localhost:5010/gateway/Product/1
             // http://localhost:5010/gateway/Product/GetAll подумать над разделением
             // GET запрос
-            ProductServuce();
+          //  await ProductService();
+            await ShopService();
             Console.ReadKey();
             return;
-            var response = await client.GetAsync("gateway/Product/GetAll");
-            var s = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(await response.Content.ReadAsStringAsync());
-
-            // POST запрос
-            var newProduct = new StringContent("\"Tablet\"");
-            await client.PostAsync("/products", newProduct);
+          
         }
 
         /// <summary>
         /// Написание запроса для productService
         /// </summary>
         /// <returns></returns>
-        private static async Task ProductServuce()
+        private static async Task ProductService()
         {
             #region get запросы
             var response = await client.GetAsync("gateway/Product/GetAll");
@@ -172,6 +174,39 @@ namespace ConsoleApp
             #endregion
         }
 
+
+        private static async Task ShopService() 
+        {
+
+            var response = await client.GetAsync("gateway/Shop/1");
+            await response.Content.ReadAsStringAsync();
+            Console.WriteLine("Получить всё продукты " + await response.Content.ReadAsStringAsync() + "\n");
+
+            #region Post
+            AddShopDto addShopDto = new AddShopDto();
+            addShopDto.Name= "modelNumbersdadasdasdas";
+            // 2. Подготавливаем данные (объект → JSON)
+            string json = JsonSerializer.Serialize(addShopDto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            // 3. Отправляем POST-запрос
+             response = await client.PostAsync("gateway/Shop/add", content);
+
+
+            int idResponseObject = -1; //запысываем id объекта чтобы его изменить
+
+            // 4. Проверяем ответ
+            if (response.IsSuccessStatusCode)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Ответ сервера id созданного объекта: {responseBody}");
+                int.TryParse(responseBody, out idResponseObject);
+            }
+            else
+            {
+                Console.WriteLine($"Ошибка: {response.StatusCode}");
+            }
+            #endregion
+        }
 
         private static async Task s() 
         {
