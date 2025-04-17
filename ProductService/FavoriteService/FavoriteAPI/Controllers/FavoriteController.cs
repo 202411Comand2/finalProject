@@ -8,18 +8,18 @@ namespace API.Controllers.Product
 {
 
 
-        [ApiController]
-        [Route("[controller]")]
-        public class FavoriteController(IFavoriteProductService favoriteProductService) : ControllerBase()
-        {
-            private readonly IFavoriteProductService _favoriteProductService = favoriteProductService;
+    [ApiController]
+    [Route("api/[controller]")]
+    public class FavoriteController(IFavoriteProductService favoriteProductService) : ControllerBase()
+    {
+        private readonly IFavoriteProductService _favoriteProductService = favoriteProductService;
 
 
         /// <summary>
         /// Добавить товар в избранное
         /// </summary>
         [HttpPost("Add")]
-        public async  Task<ActionResult<int>> AddFavorite([FromBody] AddFavoriteDto Dto)
+        public async Task<ActionResult<int>> AddFavorite([FromBody] AddFavoriteDto Dto)
         {
             AnswerWithBackendDto<FavoriteDto> result = new();
             try
@@ -38,7 +38,7 @@ namespace API.Controllers.Product
             return Ok(result.ObjectDto.Id);
         }
 
-       
+
         /// <summary>
         /// Удалить товар из избранного
         /// </summary>

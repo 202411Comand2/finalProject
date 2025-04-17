@@ -22,10 +22,13 @@ namespace ClientConsole
             await ProductService();
             Console.WriteLine("\nСервис магазинов:\n");
             await ShopService();
+            Console.WriteLine("\nСервис избранного:\n");
+            await FavoriteService();
             Console.ForegroundColor = ConsoleColor.Red;
+            
             Console.WriteLine("Чтобы выйти нажмите любую клавишу");
             Console.ReadKey();
-            return;
+             return;
 
         }
 
@@ -162,7 +165,10 @@ namespace ClientConsole
             #endregion
         }
 
-
+        /// <summary>
+        /// Сервис магазина
+        /// </summary>
+        /// <returns></returns>
         private static async Task ShopService()
         {
 
@@ -270,6 +276,30 @@ namespace ClientConsole
 
             #endregion
         }
+
+        /// <summary>
+        /// Избранные позиции
+        /// </summary>
+        /// <returns></returns>
+        private static async Task FavoriteService() 
+        {
+            #region Post
+            #region создание магазина
+            Models.Favorite.AddFavoriteDto addFavoriteDto = new();
+            addFavoriteDto.UserId = 12;
+            addFavoriteDto.ProductId = 12;
+            HttpResponseMessage response = await client.PostAsync("gateway/Favorite/Add", CreateJson(addFavoriteDto));
+            // 4. Проверяем ответ
+            await CheckedAnswer(response);
+            #endregion
+
+           
+
+            #endregion
+        }
+
+
+
 
         /// <summary>
         /// Создать StringContent из объекта для подготовки данных (объект → JSON)

@@ -11,6 +11,10 @@
         "Action": "Start"
       },
       {
+        "Path": "ProductService\\FavoriteService\\FavoriteAPI\\FavoriteAPI.csproj",
+        "Action": "Start"
+      },
+      {
         "Path": "OcelotWebApiGr\\OcelotWebApiGr\\OcelotWebApiGr.csproj",
         "Action": "Start"
       }

@@ -29,9 +29,22 @@
       "FileCacheOptions": {
         "TtlSeconds": 60
       }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Favorite/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7052
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Favorite/{everything}", // http://localhost:5010/gateway/shop/1
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
     }
-
-
 
   ],
   "GlobalConfiguration": {
