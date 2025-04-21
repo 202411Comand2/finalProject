@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers.Product
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ClusterController(IClusterService clusterService) : ControllerBase
     {
         private readonly IClusterService _clusterService = clusterService;

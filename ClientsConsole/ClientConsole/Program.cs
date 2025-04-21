@@ -18,12 +18,20 @@ namespace ClientConsole
             // http://localhost:5010/gateway/Product/1
             // http://localhost:5010/gateway/Product/GetAll подумать над разделением
             // GET запрос
-            Console.WriteLine("\nСервис Продуктов:\n");
-            await ProductService();
-            Console.WriteLine("\nСервис магазинов:\n");
-            await ShopService();
-            Console.WriteLine("\nСервис избранного:\n");
-            await FavoriteService();
+
+            //Console.WriteLine("\nСервис Продуктов:\n");
+            //await ProductService();
+            //Console.WriteLine("\nСервис магазинов:\n");
+            //await ShopService();
+            //Console.WriteLine("\nСервис избранного:\n");
+            //await FavoriteService();
+            //Console.WriteLine("\nСервис комментов:\n");
+            //await CommentService();
+
+            Console.WriteLine("\nСервис кластеров:\n");
+            await ClusterService();
+
+
             Console.ForegroundColor = ConsoleColor.Red;
             
             Console.WriteLine("Чтобы выйти нажмите любую клавишу");
@@ -281,10 +289,10 @@ namespace ClientConsole
         /// Избранные позиции
         /// </summary>
         /// <returns></returns>
-        private static async Task FavoriteService() 
+        private static async Task FavoriteService()
         {
             #region Post
-            #region создание магазина
+            #region добовление избранной позиции
             Models.Favorite.AddFavoriteDto addFavoriteDto = new();
             addFavoriteDto.UserId = 12;
             addFavoriteDto.ProductId = 12;
@@ -292,12 +300,136 @@ namespace ClientConsole
             // 4. Проверяем ответ
             await CheckedAnswer(response);
             #endregion
+            #endregion
+
+            #region Delete избранной позиции
+
+
+            // 4. Создаем DTO для удаления
+            Models.Favorite.DeleteFavoriteDto deleteFavoriteDto = new();
+            deleteFavoriteDto.IdFavorite = 1;
+
+            // 5. Создаем DELETE-запрос с телом
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri("gateway/Favorite/Delete", UriKind.Relative),
+                Content = CreateJson(deleteFavoriteDto)
+            };
+
+            // 6. Отправляем запрос
+            response = await client.SendAsync(request);
+            await CheckedAnswer(response);
+            #endregion
+
+            #region get запросы
+            string intUserId = "1";
+            response = await client.GetAsync($"gateway/Favorite/GetFavoriteUser?IdUser={intUserId}");
+            await response.Content.ReadAsStringAsync();
+            Console.WriteLine("Получить всё избранные позиции " + await response.Content.ReadAsStringAsync() + "\n");
 
            
-
             #endregion
+
+
         }
 
+        /// <summary>
+        /// Работа с комментариями
+        /// </summary>
+        /// <returns></returns>
+        private static async Task CommentService() 
+        {
+            #region Post
+            // добавление комментария
+            Models.Comments.Comment.AddCommentDto addDto = new(1,"name",1,1,"commet text",12);
+            await PostAsync(addDto, "gateway/Comment/Add");
+            #endregion
+
+            #region Post
+            // добавление комментария
+            Models.Comments.Comment.AddCommentDto addDto1 = new(2, "name", 1, 1, "commet text", 12);
+            await PostAsync(addDto, "gateway/Comment/Add");
+            #endregion
+
+            #region delete удаление магазина
+            //удаление комменатрия
+            Models.Comments.Comment.DeleteCommentDto deleteDto = new(1);
+            await DeleteAsync(deleteDto, "gateway/Comment/Delete");
+            #endregion
+
+            #region put
+            // обновление комментария
+            Models.Comments.Comment.UpdateCommentDto updateDto = new(1, "Новый комментарий",4);
+            await PutAsync(updateDto, "gateway/Comment/Update");
+            #endregion
+
+            #region get получить всё комментарии по магазину
+            Models.Comments.Comment.GetAllCommentsProduct getDto = new(1);
+            await GetAsync(getDto, $"gateway/Comment/GetCommentsProduct?IdProduct={getDto.IdProduct}");
+            #endregion
+
+            Console.WriteLine("-----------------Ответные комменатрия----------------");
+
+            //ответные комментария CommentReply
+            #region Post
+            // добавление комментария
+            Models.Comments.ReplyComment.AddReplyCommentDto addRepDto = new(2,"Сам такой");
+            await PostAsync(addRepDto, "gateway/CommentReply/Add");
+            #endregion
+
+            #region delete удаление магазина
+            //удаление комменатрия
+            Models.Comments.ReplyComment.DeleteCommentReplyDto deletdRepDto = new(1);
+            await DeleteAsync(deletdRepDto, "gateway/CommentReply/Delete");
+            #endregion
+
+            #region put
+            // обновление комментария
+            Models.Comments.ReplyComment.UpdateCommentReplyDto updateRepDto = new(1, "Новый комментарий исправленый");
+            await PutAsync(updateRepDto, "gateway/CommentReply/Update");
+            #endregion
+
+
+
+        }
+
+
+        private static async Task ClusterService() 
+        {
+            #region Post
+            // добавление кластера
+            Models.Cluster.Clusters.AddClusterDto addDto = new("Как-то имя кластера","");
+            await PostAsync(addDto, "gateway/Cluster/Add");
+            #endregion
+
+
+            #region put
+            // обновление кластера
+            Models.Cluster.Clusters.UpdateCluseterDto updateDto = new(1,"Обновлённое название кластера","");
+            await PutAsync(updateDto, "gateway/Cluster/Update");
+            #endregion
+
+
+            #region delete удаление магазина
+            //удаление кластера
+            Models.Cluster.Clusters.DeleteClusterDto deleteDto = new(1);
+            await DeleteAsync(deleteDto, "gateway/Cluster/Delete");
+            #endregion
+
+            #region get получить всё комментарии по магазину
+            await GetAsync("",$"gateway/Cluster/GetAllElements");
+
+            await GetAsync("", $"gateway/Cluster/GetRootElements");
+
+            Models.Cluster.Clusters.GetClusterDto getClusterDto = new("Обновлённое название кластера");
+            await GetAsync("", $"gateway/Cluster/GetChildrenElements?ClusterName={getClusterDto.ClusterName}");
+            #endregion
+
+
+            Console.WriteLine("---------------SearchCluster-----------------");
+
+        }
 
 
 
@@ -347,6 +479,74 @@ namespace ClientConsole
             }
             return responseBody;
         }
+
+
+        #region запросы post, get, delete, update
+   
+        /// <summary>
+        /// Пост запрос для простоты вынес в отдельный метод
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objectDto">модель DTO</param>
+        /// <param name="puthResponse">Запрос</param>
+        /// <returns></returns>
+        private async static Task PostAsync<T>(T objectDto, string puthResponse) 
+        {
+            HttpResponseMessage response = await client.PostAsync(puthResponse, CreateJson(objectDto));
+            // 4. Проверяем ответ
+            await CheckedAnswer(response);
+        }
+
+        /// <summary>
+        /// Put запрос для простоты вынес в отдельный метод
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objectDto">модель DTO</param>
+        /// <param name="puthResponse">Запрос</param>
+        /// <returns></returns>
+        private async static Task PutAsync<T>(T objectDto, string puthResponse)
+        {
+            // 2. Подготавливаем данные (объект → JSON)
+            HttpResponseMessage response = await client.PutAsync(puthResponse, CreateJson(objectDto));
+            // 4. Проверяем ответ
+            await CheckedAnswer(response);
+        }
+
+        /// <summary>
+        /// delete запрос для простоты вынес в отдельный метод
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objectDto">модель DTO</param>
+        /// <param name="puthResponse">Запрос</param>
+        /// <returns></returns>
+        private async static Task DeleteAsync<T>(T objectDto, string puthResponse)
+        {
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri(puthResponse, UriKind.Relative),
+                Content = CreateJson(objectDto)
+            };
+            HttpResponseMessage response = await client.SendAsync(request);
+            await CheckedAnswer(response);
+        }
+
+        /// <summary>
+        /// Get запрос для простоты вынес в отдельный метод
+        /// </summary>
+        /// <param name="puthResponse">Запрос</param>
+        /// <returns></returns>
+        private async static Task GetAsync<T>(T objectDto, string puthResponse)
+        {
+            var response = await client.GetAsync(puthResponse);
+            await response.Content.ReadAsStringAsync();
+            Console.WriteLine("Получить всё объекты из get запроса:\n" + await response.Content.ReadAsStringAsync() + "\n");
+        }
+
+
+
+
+        #endregion
 
     }
 }

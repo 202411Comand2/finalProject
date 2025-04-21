@@ -9,8 +9,8 @@
           "Port": 7186
         }
       ],
-      "UpstreamPathTemplate": "/gateway/Product/{everything}", // http://localhost:5010/gateway/Product/1
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
+      "UpstreamPathTemplate": "/gateway/Product/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "FileCacheOptions": {
         "TtlSeconds": 60
       }
@@ -24,8 +24,8 @@
           "Port": 7171
         }
       ],
-      "UpstreamPathTemplate": "/gateway/Shop/{everything}", // http://localhost:5010/gateway/shop/1
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
+      "UpstreamPathTemplate": "/gateway/Shop/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "FileCacheOptions": {
         "TtlSeconds": 60
       }
@@ -44,7 +44,74 @@
       "FileCacheOptions": {
         "TtlSeconds": 60
       }
+    },
+
+
+
+    { //cluster
+      "DownstreamPathTemplate": "/api/Cluster/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7222
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Cluster/{everything}", // http://localhost:5010/gateway/shop/1
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    },
+    { //cluster
+      "DownstreamPathTemplate": "/api/SearchCluster/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7222
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/SearchCluster/{everything}", // http://localhost:5010/gateway/shop/1
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    },
+
+
+    { // comment
+      "DownstreamPathTemplate": "/api/Comment/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Comment/{everything}", // http://localhost:5010/gateway/shop/1
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    },
+    { // CommentReply
+      "DownstreamPathTemplate": "/api/CommentReply/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/CommentReply/{everything}", // http://localhost:5010/gateway/shop/1
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
     }
+
+
 
   ],
   "GlobalConfiguration": {
