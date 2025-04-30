@@ -19,14 +19,14 @@ namespace ClientConsole
             // http://localhost:5010/gateway/Product/GetAll подумать над разделением
             // GET запрос
 
-            //Console.WriteLine("\nСервис Продуктов:\n");
-            //await ProductService();
-            //Console.WriteLine("\nСервис магазинов:\n");
-            //await ShopService();
-            //Console.WriteLine("\nСервис избранного:\n");
-            //await FavoriteService();
-            //Console.WriteLine("\nСервис комментов:\n");
-            //await CommentService();
+            Console.WriteLine("\nСервис Продуктов:\n");
+            await ProductService();
+            Console.WriteLine("\nСервис магазинов:\n");
+            await ShopService();
+            Console.WriteLine("\nСервис избранного:\n");
+            await FavoriteService();
+            Console.WriteLine("\nСервис комментов:\n");
+            await CommentService();
 
             Console.WriteLine("\nСервис кластеров:\n");
             await ClusterService();
