@@ -1,0 +1,39 @@
+﻿# services:
+#   productapi:
+#     image: ${DOCKER_REGISTRY-}productapi
+#     build:
+#       context: .
+#       dockerfile: ProductService/ProductService/ProductAPI/Dockerfile
+
+version: '3.8'
+
+services:
+  productapi:
+    image: ${DOCKER_REGISTRY-}productapi
+    build:
+      context: .
+      dockerfile: ProductService/ProductService/ProductAPI/Dockerfile
+    ports:
+      - "7186:80"  # Локальный порт 5000 → порт 80 в контейнере
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Postgres=Host=db;Database=products;Username=postgres;Password=12345
+    depends_on:
+      - db
+    volumes:
+      - ./ProductService/ProductService/ProductAPI:/app  # Для hot-reload
+
+  db:
+    image: ilyagall01/product-service2:latest
+    container_name: ProductsService_5000
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password2
+      POSTGRES_DB: ProductsService
+    ports:
+      - "5000:5432"  # Вторая БД на порту 5000
+    volumes:
+      - postgres_data2:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -9,6 +9,21 @@
   //  }
   //},
   "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "publishAllPorts": true,
+      "useSSL": true
+    },
     "http": {
       "commandName": "Project",
       "dotnetRunMessages": true,
@@ -30,18 +45,18 @@
       },
       "SecretsSettings": {
         "ConnectionString": "Host=localhost;Port=5000;Username=admin;Password=admin;Database=SuperDeal;"
-      }//,
+      } //,
       //"JwtOptions": {
       //  "SecretKey": "ExampleKeyExampleKeyExampleKeyExampleKeyExampleKey",
       //  "ExpiresHours": 1
       //}
-    }//,
+    } //,
     //"IIS Express": {
     //  "commandName": "IISExpress",
     //  "launchBrowser": true,
     //  "environmentVariables": {
     //    "ASPNETCORE_ENVIRONMENT": "Development"
     //  }
-    }
+  }
   }
 }
