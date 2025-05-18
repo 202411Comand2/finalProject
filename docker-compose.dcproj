@@ -4,7 +4,7 @@
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
     <DockerPublishLocally>False</DockerPublishLocally>
-    <ProjectGuid>8ee7a378-299e-46b8-868b-19e9e9a7a670</ProjectGuid>
+    <ProjectGuid>eee47d4f-26bd-43cc-a1d6-99f2e9c5b51b</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>productapi</DockerServiceName>

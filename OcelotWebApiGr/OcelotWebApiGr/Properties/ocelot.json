@@ -5,26 +5,29 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "host.docker.internal",
           "Port": 7186
         }
       ],
       "UpstreamPathTemplate": "/gateway/Product/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "FileCacheOptions": {
         "TtlSeconds": 60
       }
+
     },
     {
       "DownstreamPathTemplate": "/api/Shop/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "host.docker.internal",
           "Port": 7171
         }
       ],
       "UpstreamPathTemplate": "/gateway/Shop/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "FileCacheOptions": {
         "TtlSeconds": 60
@@ -35,11 +38,12 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "host.docker.internal",
           "Port": 7052
         }
       ],
       "UpstreamPathTemplate": "/gateway/Favorite/{everything}", // http://localhost:5010/gateway/shop/1
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
       "FileCacheOptions": {
         "TtlSeconds": 60
@@ -53,11 +57,12 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "host.docker.internal",
           "Port": 7222
         }
       ],
       "UpstreamPathTemplate": "/gateway/Cluster/{everything}", // http://localhost:5010/gateway/shop/1
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
       "FileCacheOptions": {
         "TtlSeconds": 60
@@ -68,7 +73,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "host.docker.internal",
           "Port": 7222
         }
       ],
@@ -85,11 +90,12 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "host.docker.internal",
           "Port": 7276
         }
       ],
       "UpstreamPathTemplate": "/gateway/Comment/{everything}", // http://localhost:5010/gateway/shop/1
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
       "FileCacheOptions": {
         "TtlSeconds": 60
@@ -100,11 +106,12 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "host.docker.internal",
           "Port": 7276
         }
       ],
       "UpstreamPathTemplate": "/gateway/CommentReply/{everything}", // http://localhost:5010/gateway/shop/1
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
       "FileCacheOptions": {
         "TtlSeconds": 60

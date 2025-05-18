@@ -1,32 +1,43 @@
-﻿version: '3.8'
-
 services:
   productapi:
     image: ${DOCKER_REGISTRY-}productapi
     build:
       context: .
       dockerfile: ProductService/ProductService/ProductAPI/Dockerfile
-    ports:
-      - "7186:80"  # Локальный порт 5000 → порт 80 в контейнере
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Postgres=Host=db;Database=products;Username=postgres;Password=12345
-    depends_on:
-      - db
-    volumes:
-      - ./ProductService/ProductService/ProductAPI:/app  # Для hot-reload
+    expose:
+      - "8080"
+  shopapi:
+    image: ${DOCKER_REGISTRY-}shopapi
+    build:
+      context: .
+      dockerfile: ProductService/ShopService/ShopAPI/Dockerfile
 
-  db:
-    image: ilyagall01/product-service2:latest
-    container_name: ProductsService_5000
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password2
-      POSTGRES_DB: ProductsService
-    ports:
-      - "5000:5432"  # Вторая БД на порту 5000
-    volumes:
-      - postgres_data2:/var/lib/postgresql/data
 
-volumes:
-  postgres_data:
+  favoriteapi:
+    image: ${DOCKER_REGISTRY-}favoriteapi
+    build:
+      context: .
+      dockerfile: ProductService/FavoriteService/FavoriteAPI/Dockerfile
+
+
+  commentapi:
+    image: ${DOCKER_REGISTRY-}commentapi
+    build:
+      context: .
+      dockerfile: ProductService/CommentService/CommentApi/Dockerfile
+
+
+  clusterapi:
+    image: ${DOCKER_REGISTRY-}clusterapi
+    build:
+      context: .
+      dockerfile: ClusterAPI/Dockerfile
+
+
+  ocelotwebapigr:
+    image: ${DOCKER_REGISTRY-}ocelotwebapigr
+    build:
+      context: .
+      dockerfile: OcelotWebApiGr/OcelotWebApiGr/Dockerfile
+
+
