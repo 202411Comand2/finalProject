@@ -16,8 +16,7 @@ COPY ["OcelotWebApiGr/OcelotWebApiGr/OcelotWebApiGr.csproj", "OcelotWebApiGr/Oce
 RUN dotnet restore "./OcelotWebApiGr/OcelotWebApiGr/OcelotWebApiGr.csproj"
 COPY . .
 WORKDIR "/src/OcelotWebApiGr/OcelotWebApiGr"
-# Добавьте копирование ocelot.json во время сборки
-COPY ["OcelotWebApiGr/OcelotWebApiGr/Properties/ocelot.json", "/app/publish/"]  # <-- Важное изменение!
+
 
 RUN dotnet build "./OcelotWebApiGr.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
@@ -30,6 +29,5 @@ RUN dotnet publish "./OcelotWebApiGr.csproj" -c $BUILD_CONFIGURATION -o /app/pub
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-# Убедитесь, что ocelot.json скопирован в финальный образ
-COPY ["OcelotWebApiGr/OcelotWebApiGr/Properties/ocelot.json", "./"]  # <-- Или здесь
+
 ENTRYPOINT ["dotnet", "OcelotWebApiGr.dll"]
