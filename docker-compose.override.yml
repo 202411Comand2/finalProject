@@ -66,6 +66,7 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${PWD}/OcelotWebApiGr/OcelotWebApiGr/Properties/ocelot.json:/app/Properties/ocelot.json
     depends_on:
         - productapi
         - shopapi 
