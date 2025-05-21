@@ -7,17 +7,17 @@ namespace ClientConsole
     {
         static private HttpClient? client = new HttpClient()
         {
-            BaseAddress = new Uri("https://localhost:5010")
+            BaseAddress = new Uri("http://host.docker.internal:5010")
         };
         static async Task Main()
         {
-        //HttpClient? client = new HttpClient
-        //{
-        //    BaseAddress = new Uri("http://localhost:5010")
-        //};
-        // http://localhost:5010/gateway/Product/1
-        // http://localhost:5010/gateway/Product/GetAll подумать над разделением
-       // https://localhost:5010/gateway/Product/GetAll
+            //HttpClient? client = new HttpClient
+            //{
+            //    BaseAddress = new Uri("http://host.docker.internal:5010")
+            //};
+            // http://localhost:5010/gateway/Product/1
+            // http://localhost:5010/gateway/Product/GetAll подумать над разделением
+            // https://localhost:5010/gateway/Product/GetAll
             // GET запрос
 
             Console.WriteLine("\nСервис Продуктов:\n");
