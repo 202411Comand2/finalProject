@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {   
     /// <summary>
-     /// Отдельные позиции заказа
-     /// </summary>
+    /// Отдельные позиции заказа
+    /// </summary>
     [Table("OrderDetails")]
     public class OrderDetails : IDbEntity
     { 

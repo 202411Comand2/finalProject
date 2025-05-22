@@ -5,14 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
-
     /// <summary>
     /// Таблица заказов
     /// </summary>
     [Table("Order")]
     public class Order : IDbEntity
     {
-
         /// <summary>
         /// Id заказа
         /// </summary>
@@ -20,10 +18,16 @@ namespace Domain.Entities
         public int Id { get; set; }
 
         /// <summary>
-        /// Состояние заказа
+        /// Id позиции товара
         /// </summary>
-        [Column("state")]
-        public OrderState State { get; set; }
+        [Required, Column("product_id")]
+        public int ProductId { get; set; }
+
+        /// <summary>
+        /// Id позиции магазина
+        /// </summary>
+        [Required, Column("shop_id")]
+        public int ShopId { get; set; }
 
         /// <summary>
         /// Дата создание заказа
@@ -32,10 +36,22 @@ namespace Domain.Entities
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
         /// <summary>
+        /// Количество позиций в заказе
+        /// </summary>
+        [Required, Column("сount")]
+        public int Count { get; set; }
+
+        /// <summary>
         /// Дата прибытия
         /// </summary>
         [Column("arrive_date")]
         public DateTime ArriveDate { get; set; }
+
+        /// <summary>
+        /// Состояние заказа
+        /// </summary>
+        [Column("state")]
+        public OrderState State { get; set; }
 
         #region связи
 
@@ -45,10 +61,8 @@ namespace Domain.Entities
         [ForeignKey("UserId")]
         public User User { get; set; }
 
-        public ICollection<OrderDetails> OrderDetails { get; set; } = new List<OrderDetails>();
-
-
         #endregion
+
         /// <summary>
         /// Вернуть Id объекта
         /// </summary>

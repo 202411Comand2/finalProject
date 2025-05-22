@@ -16,7 +16,7 @@ namespace DAL.Repositories
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<List<Order>> GetUserCart(int userId)
+        public async Task<List<Order>> GetUserOrder(int userId)
         {
             using (var context = CreateDatabaseContext())
             {
