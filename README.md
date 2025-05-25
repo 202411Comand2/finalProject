@@ -1,6 +1,6 @@
 ﻿# docker - compose бд
 
-* ![Images БД находится тут](https://github.com/IlyaGall/Docker-education/blob/main/product_service/castom_docker/docker-compose.yml)
+* [Images БД находится тут](https://github.com/IlyaGall/Docker-education/blob/main/FinalProject/costom_docker_bd/docker-compose.yml)
 * Скачиваем его
 * Открываем pgAdmin(от админа) переходим по пути где лежит файл docker-compose с помощью команды ```cd -path путь_до_файла_```
 * После открытия собираем проект с помощью команды ```docker-compose up -d```
@@ -35,12 +35,12 @@
 
 ## ссылки на серсвисов
 
-* ![Сервис продуктов](https://localhost:7186/swagger/index.html)
-* ![Сервис магазина](https://localhost:7171/swagger/index.html)
-* ![Сервис избранных позиций](https://localhost:7052/swagger/index.html)
-* ![Сервис комментариев](https://localhost:7276/swagger/index.html)
-* ![Сервис кластер](https://localhost:7222/swagger/index.html)
-* ![Сервис gatway](http://localhost:5010/)
+* [Сервис продуктов](https://localhost:7186/swagger/index.html)
+* [Сервис магазина](https://localhost:7171/swagger/index.html)
+* [Сервис избранных позиций](https://localhost:7052/swagger/index.html)
+* [Сервис комментариев](https://localhost:7276/swagger/index.html)
+* [Сервис кластер](https://localhost:7222/swagger/index.html)
+* [Сервис gatway](http://localhost:5010/)
 
 
 ## ссылки для проверик ocelot
