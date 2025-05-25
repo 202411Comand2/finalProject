@@ -2,10 +2,8 @@ services:
   productapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-     # - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
     ports:
-     # - "50000:8080"
       - "7186:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
@@ -34,10 +32,8 @@ services:
   commentapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      #- ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
     ports:
-      #- "8080"
       - "7276:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
@@ -46,10 +42,8 @@ services:
   clusterapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      #- ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
     ports:
-     # - "8080"
       - "7222:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
@@ -59,15 +53,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      #- ASPNETCORE_HTTPS_PORTS=8081
     ports:
-      #- "8080"
       - "5010:8080"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-      - ${PWD}/OcelotWebApiGr/OcelotWebApiGr/Properties/ocelot.json:/app/Properties/ocelot.json
     depends_on:
+    #ќжидани€ запуска остальных сервисов
         - productapi
         - shopapi 
         - favoriteapi

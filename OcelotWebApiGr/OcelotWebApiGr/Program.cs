@@ -12,7 +12,7 @@ namespace OcelotWebApiGr
             var builder = WebApplication.CreateBuilder(args);
 
             // Добавляем конфигурацию Ocelot
-            builder.Configuration.AddJsonFile("ocelot.json");
+            builder.Configuration.AddJsonFile("Properties/ocelot.json");
 
             // Настройка сервисов
             builder.Services.AddOcelot();
@@ -24,9 +24,7 @@ namespace OcelotWebApiGr
             app.UseRouting();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
             await app.UseOcelot();
-
             app.Run();
         }
-       
     }
 }

@@ -11,15 +11,7 @@ namespace ClientConsole
         };
         static async Task Main()
         {
-            //HttpClient? client = new HttpClient
-            //{
-            //    BaseAddress = new Uri("http://host.docker.internal:5010")
-            //};
-            // http://localhost:5010/gateway/Product/1
-            // http://localhost:5010/gateway/Product/GetAll подумать над разделением
-            // https://localhost:5010/gateway/Product/GetAll
-            // GET запрос
-
+           
             Console.WriteLine("\nСервис Продуктов:\n");
             await ProductService();
             Console.WriteLine("\nСервис магазинов:\n");
@@ -63,7 +55,8 @@ namespace ClientConsole
             Console.WriteLine("Получить по id кластеру " + await response1.Content.ReadAsStringAsync() + "\n");
             #endregion
 
-            #region Post
+            #region Post 
+            // Добаление продукта
             Models.Product.AddProductDto addProductDto = new();
             addProductDto.ShopId = 0;
             addProductDto.ClusterId = 0;
@@ -94,8 +87,8 @@ namespace ClientConsole
             }
             #endregion
 
-
             #region put 
+            //Обновить информацию по продукту
             Models.Product.UpdateProductDto UpdateProductDto = new();
             UpdateProductDto.ProductId = idResponseObject;
             UpdateProductDto.ClusterId = 0;
@@ -293,7 +286,7 @@ namespace ClientConsole
         private static async Task FavoriteService()
         {
             #region Post
-            #region добовление избранной позиции
+            #region добавление избранной позиции
             Models.Favorite.AddFavoriteDto addFavoriteDto = new();
             addFavoriteDto.UserId = 12;
             addFavoriteDto.ProductId = 12;
@@ -379,7 +372,7 @@ namespace ClientConsole
             await PostAsync(addRepDto, "gateway/CommentReply/Add");
             #endregion
 
-            #region delete удаление магазина
+            #region delete удаление комментария
             //удаление комменатрия
             Models.Comments.ReplyComment.DeleteCommentReplyDto deletdRepDto = new(1);
             await DeleteAsync(deletdRepDto, "gateway/CommentReply/Delete");
@@ -404,13 +397,11 @@ namespace ClientConsole
             await PostAsync(addDto, "gateway/Cluster/Add");
             #endregion
 
-
             #region put
             // обновление кластера
             Models.Cluster.Clusters.UpdateCluseterDto updateDto = new(1,"Обновлённое название кластера","");
             await PutAsync(updateDto, "gateway/Cluster/Update");
             #endregion
-
 
             #region delete удаление магазина
             //удаление кластера
@@ -426,8 +417,7 @@ namespace ClientConsole
             Models.Cluster.Clusters.GetClusterDto getClusterDto = new("Обновлённое название кластера");
             await GetAsync("", $"gateway/Cluster/GetChildrenElements?ClusterName={getClusterDto.ClusterName}");
             #endregion
-
-
+            
             Console.WriteLine("---------------SearchCluster-----------------");
 
         }
@@ -480,7 +470,6 @@ namespace ClientConsole
             }
             return responseBody;
         }
-
 
         #region запросы post, get, delete, update
    
@@ -548,7 +537,6 @@ namespace ClientConsole
 
 
         #endregion
-
     }
 }
 
