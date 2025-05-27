@@ -27,9 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{DD6FD724-3F74-4AF5-9915-0C498ACF960C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{2D1FC842-0B69-4F2F-BDAC-7D545AE07DCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{2D1FC842-0B69-4F2F-BDAC-7D545AE07DCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalProjectTests", "FinalProjectTests\FinalProjectTests.csproj", "{CC25D49E-126D-4D2B-8EA0-6BE7C9BE8072}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProjectTests", "FinalProjectTests\FinalProjectTests.csproj", "{CC25D49E-126D-4D2B-8EA0-6BE7C9BE8072}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ShopService", "ShopService", "{489ED704-F1A4-4BB9-90C5-C36446F4412E}"
 EndProject
@@ -94,9 +94,6 @@ EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EEE47D4F-26BD-43CC-A1D6-99F2E9C5B51B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{43B26D1C-6D55-4F06-93A0-3A6078ABECB0}"
-	ProjectSection(SolutionItems) = preProject
-		readMe.md = readMe.md
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

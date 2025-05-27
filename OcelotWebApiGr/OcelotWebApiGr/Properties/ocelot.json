@@ -6,7 +6,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "host.docker.internal",
-          "Port": 7186
+          "Port": 7101
         }
       ],
       "UpstreamPathTemplate": "/gateway/Product/{everything}",
@@ -23,7 +23,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "host.docker.internal",
-          "Port": 7171
+          "Port": 7102
         }
       ],
       "UpstreamPathTemplate": "/gateway/Shop/{everything}",
@@ -39,7 +39,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "host.docker.internal",
-          "Port": 7052
+          "Port": 7103
         }
       ],
       "UpstreamPathTemplate": "/gateway/Favorite/{everything}", // http://localhost:5010/gateway/shop/1
@@ -58,7 +58,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "host.docker.internal",
-          "Port": 7222
+          "Port": 7105
         }
       ],
       "UpstreamPathTemplate": "/gateway/Cluster/{everything}", // http://localhost:5010/gateway/shop/1
@@ -74,7 +74,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "host.docker.internal",
-          "Port": 7222
+          "Port": 7105
         }
       ],
       "UpstreamPathTemplate": "/gateway/SearchCluster/{everything}", // http://localhost:5010/gateway/shop/1
@@ -91,7 +91,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "host.docker.internal",
-          "Port": 7276
+          "Port": 7104
         }
       ],
       "UpstreamPathTemplate": "/gateway/Comment/{everything}", // http://localhost:5010/gateway/shop/1
@@ -107,7 +107,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "host.docker.internal",
-          "Port": 7276
+          "Port": 7104
         }
       ],
       "UpstreamPathTemplate": "/gateway/CommentReply/{everything}", // http://localhost:5010/gateway/shop/1

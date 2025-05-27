@@ -17,7 +17,7 @@ namespace OcelotWebApiGr
             // Настройка сервисов
             builder.Services.AddOcelot();
             builder.Services.AddControllers();
-
+            
             var app = builder.Build();
 
             // Конфигурация middleware

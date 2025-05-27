@@ -23,7 +23,7 @@ namespace ClientConsole
 
             Console.WriteLine("\nСервис кластеров:\n");
             await ClusterService();
-
+            
 
             Console.ForegroundColor = ConsoleColor.Red;
             
@@ -71,7 +71,7 @@ namespace ClientConsole
             // 3. Отправляем POST-запрос
             response = await client.PostAsync("gateway/Product/add", content);
 
-
+            
             int idResponseObject = -1; //запысываем id объекта чтобы его изменить
 
             // 4. Проверяем ответ

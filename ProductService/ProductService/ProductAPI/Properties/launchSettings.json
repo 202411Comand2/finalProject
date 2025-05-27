@@ -23,9 +23,9 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7186;http://localhost:5235",
+      "applicationUrl": "https://localhost:7101;http://localhost:5235",
       "SecretsSettings": {
-        "ConnectionString": "Host=ProductsService_5000;Port=5000;Username=postgres;Password=password1;Database=SuperDeal;"
+        "ConnectionString": "Host=products_service_db;Port=5001;Username=postgres;Password=password1;Database=ProductsService;"
       }
     }
   },

@@ -8,7 +8,7 @@
         "OCELOT_CONFIGURATION_FILE": "Properties/ocelot.json"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5010;https://localhost:5011"
+      "applicationUrl": "http://localhost:7100;https://localhost:7099"
     },
     "Container (Dockerfile)": {
       "commandName": "Docker",

@@ -35,7 +35,7 @@ namespace DAL.Repositories
         {
             using (var context = CreateDatabaseContext())
             {
-                var cartList = await context.Carts.Where(x => x.UserId == cart.UserId && x.ProductId == cart.ProductId).ToListAsync())
+                var cartList = await context.Carts.Where(x => x.UserId == cart.UserId && x.ProductId == cart.ProductId).ToListAsync();
                 
                 bool cartExists = cartList.Any();
                 if (cartExists == false)
@@ -89,7 +89,7 @@ namespace DAL.Repositories
         {
             using (var context = CreateDatabaseContext())
             {
-                var cartList = await context.Carts.Where(x => x.UserId == cart.UserId && x.ProductId == cart.ProductId).ToListAsync())
+                var cartList = await context.Carts.Where(x => x.UserId == cart.UserId && x.ProductId == cart.ProductId).ToListAsync();
 
                 bool cartExists = cartList.Any();
                 if (cartExists == true)

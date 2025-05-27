@@ -1,66 +1,146 @@
 services:
-  productapi:
+  products_service:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTPS_PORTS=8081
     ports:
-      - "7186:8081"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-
-  shopapi:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTPS_PORTS=8081
-    ports:
-      - "7171:8081"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-
-  favoriteapi:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTPS_PORTS=8081
-    ports:
-      - "7052:8081"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-
-  commentapi:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTPS_PORTS=8081
-    ports:
-      - "7276:8081"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-
-  clusterapi:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTPS_PORTS=8081
-    ports:
-      - "7222:8081"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-
-  ocelotwebapigr:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-    ports:
-      - "5010:8080"
+      - "7101:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
     depends_on:
-        - productapi
-        - shopapi 
-        - favoriteapi
-        - commentapi
-        - clusterapi
+      products_service_db:
+        condition: service_healthy
+
+  products_service_db:
+    ports:
+      - "5001:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password1
+      POSTGRES_DB: ProductsService
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ProductsService"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+  shop_service:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "7102:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on:
+      shop_service_db:
+        condition: service_healthy
+
+  shop_service_db:
+    ports:
+      - "5002:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password2
+      POSTGRES_DB: ShopService
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ShopService"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+  favorite_service:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "7103:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on:
+      favorite_service_db:
+        condition: service_healthy
+  
+  favorite_service_db:
+    ports:
+      - "5003:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password3
+      POSTGRES_DB: FavoriteService
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d FavoriteService"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+  comment_service:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "7104:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on:
+      comment_service_db:
+        condition: service_healthy
+
+  comment_service_db:
+    ports:
+      - "5004:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password4
+      POSTGRES_DB: CommentService
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d CommentService"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+  cluster_service:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "7105:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on:
+      cluster_service_db:
+        condition: service_healthy
+
+  cluster_service_db:
+    ports:
+      - "5005:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password5
+      POSTGRES_DB: ClusterService
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ClusterService"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+  api_gateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "7100:8080"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on:
+        - products_service
+        - shop_service
+        - favorite_service
+        - comment_service
+        - cluster_service

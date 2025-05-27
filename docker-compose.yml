@@ -1,43 +1,80 @@
 services:
-  productapi:
+  products_service:
     image: ${DOCKER_REGISTRY-}productapi
+    container_name: products_service
     build:
       context: .
       dockerfile: ProductService/ProductService/ProductAPI/Dockerfile
- 
 
-  shopapi:
+  products_service_db:
+    image: postgres:14
+    container_name: products_service_db
+    volumes:
+      - postgres_data1:/var/lib/postgresql/data
+
+  shop_service:
     image: ${DOCKER_REGISTRY-}shopapi
+    container_name: shop_service
     build:
       context: .
       dockerfile: ProductService/ShopService/ShopAPI/Dockerfile
 
 
-  favoriteapi:
+  shop_service_db:
+    image: postgres:14
+    container_name: shop_service_db
+    volumes:
+      - postgres_data2:/var/lib/postgresql/data
+
+
+  favorite_service:
     image: ${DOCKER_REGISTRY-}favoriteapi
+    container_name: favorite_service
     build:
       context: .
       dockerfile: ProductService/FavoriteService/FavoriteAPI/Dockerfile
 
+  favorite_service_db:
+    image: postgres:14
+    container_name: favorite_service_db
+    volumes:
+      - postgres_data3:/var/lib/postgresql/data
 
-  commentapi:
+  comment_service:
     image: ${DOCKER_REGISTRY-}commentapi
+    container_name: comment_service
     build:
       context: .
       dockerfile: ProductService/CommentService/CommentApi/Dockerfile
 
+  comment_service_db:
+    image: postgres:14
+    container_name: comment_service_db
+    volumes:
+      - postgres_data4:/var/lib/postgresql/data
 
-  clusterapi:
+  cluster_service:
     image: ${DOCKER_REGISTRY-}clusterapi
     build:
       context: .
       dockerfile: ClusterAPI/Dockerfile
 
+  cluster_service_db:
+    image: postgres:14
+    container_name: cluster_service_db
+    volumes:
+      - postgres_data5:/var/lib/postgresql/data
 
-  ocelotwebapigr:
+  api_gateway:
     image: ${DOCKER_REGISTRY-}ocelotwebapigr
+    container_name: gateway
     build:
       context: .
       dockerfile: OcelotWebApiGr/OcelotWebApiGr/Dockerfile
 
-
+volumes:
+  postgres_data1:
+  postgres_data2:
+  postgres_data3:
+  postgres_data4:
+  postgres_data5:
