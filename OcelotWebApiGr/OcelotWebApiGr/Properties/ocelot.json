@@ -1,0 +1,140 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Product/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7186
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Product/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+
+    },
+    {
+      "DownstreamPathTemplate": "/api/Shop/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7171
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Shop/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Favorite/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7052
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Favorite/{everything}", // http://localhost:5010/gateway/shop/1
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    },
+
+
+
+    { //cluster
+      "DownstreamPathTemplate": "/api/Cluster/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7222
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Cluster/{everything}", // http://localhost:5010/gateway/shop/1
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    },
+    { //cluster
+      "DownstreamPathTemplate": "/api/SearchCluster/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7222
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/SearchCluster/{everything}", // http://localhost:5010/gateway/shop/1
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    },
+
+
+    { // comment
+      "DownstreamPathTemplate": "/api/Comment/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Comment/{everything}", // http://localhost:5010/gateway/shop/1
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    },
+    { // CommentReply
+      "DownstreamPathTemplate": "/api/CommentReply/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/CommentReply/{everything}", // http://localhost:5010/gateway/shop/1
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    }
+
+
+
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5000",
+    "RequestIdKey": "OcelotRequestId"
+  }
+}
+/*
+Параметр	Описание
+DownstreamPathTemplate	Путь в целевом микросервисе (например, /api/products)
+DownstreamScheme	Протокол (http/https)
+DownstreamHostAndPorts	Адреса сервисов (можно несколько для балансировки)
+UpstreamPathTemplate	Внешний URL, который видит клиент
+UpstreamHttpMethod	Разрешённые HTTP-методы (GET, POST и т.д.)
+AuthenticationOptions	Настройки аутентификации (JWT, API Key)
+RateLimitOptions	Ограничение запросов (RPS)
+QoSOptions	Настройки устойчивости (Circuit Breaker)
+ServiceDiscoveryProvider	Интеграция с Consul/Eureka для динамического обнаружения сервисов
+*/

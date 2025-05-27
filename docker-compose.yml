@@ -1,0 +1,43 @@
+services:
+  productapi:
+    image: ${DOCKER_REGISTRY-}productapi
+    build:
+      context: .
+      dockerfile: ProductService/ProductService/ProductAPI/Dockerfile
+ 
+
+  shopapi:
+    image: ${DOCKER_REGISTRY-}shopapi
+    build:
+      context: .
+      dockerfile: ProductService/ShopService/ShopAPI/Dockerfile
+
+
+  favoriteapi:
+    image: ${DOCKER_REGISTRY-}favoriteapi
+    build:
+      context: .
+      dockerfile: ProductService/FavoriteService/FavoriteAPI/Dockerfile
+
+
+  commentapi:
+    image: ${DOCKER_REGISTRY-}commentapi
+    build:
+      context: .
+      dockerfile: ProductService/CommentService/CommentApi/Dockerfile
+
+
+  clusterapi:
+    image: ${DOCKER_REGISTRY-}clusterapi
+    build:
+      context: .
+      dockerfile: ClusterAPI/Dockerfile
+
+
+  ocelotwebapigr:
+    image: ${DOCKER_REGISTRY-}ocelotwebapigr
+    build:
+      context: .
+      dockerfile: OcelotWebApiGr/OcelotWebApiGr/Dockerfile
+
+

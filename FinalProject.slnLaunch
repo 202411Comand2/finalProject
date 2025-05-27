@@ -1,0 +1,31 @@
+[
+  {
+    "Name": "ProductService_testing",
+    "Projects": [
+      {
+        "Path": "ProductService\\ProductService\\ProductAPI\\ProductAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "ProductService\\ShopService\\ShopAPI\\ShopAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "ProductService\\FavoriteService\\FavoriteAPI\\FavoriteAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "ProductService\\CommentService\\CommentApi\\CommentApi.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "ClusterAPI\\ClusterAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "OcelotWebApiGr\\OcelotWebApiGr\\OcelotWebApiGr.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
