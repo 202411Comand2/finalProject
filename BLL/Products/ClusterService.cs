@@ -185,7 +185,7 @@ namespace BLL.Products
         //    }
         //}
 
-        public async Task<bool> UpdateNameCluster(UpdateCluseterDto updateCluseterDto)
+        public async Task<bool> UpdateNameCluster(UpdateClusterDto updateCluseterDto)
         {
             Cluster cluster = await _clusterRepository.Get(updateCluseterDto.Id);
             Cluster clusterNewName = await _clusterRepository.GetNameCluster(updateCluseterDto.NewName);

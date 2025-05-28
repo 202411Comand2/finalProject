@@ -13,7 +13,6 @@ namespace BLL.Orders
     {
         private readonly OrderRepository _orderRepository;
         public OrderService(IContextManager contextManager) => _orderRepository = new OrderRepository(contextManager);
-
         public async Task<bool> AddNewOrder(AddOrderDto orderDto)
         {
             Order orderEntity = Adapters.OrderAdapter.ConvertFromDtoOrderToEntity(orderDto);
@@ -26,7 +25,6 @@ namespace BLL.Orders
                 return false;
             }
         }
-
         public async Task<bool> DeleteOrder(DeleteOrderDto orderDto)
         {
             Order orderEntity = await _orderRepository.Get(orderDto.Id);
@@ -38,7 +36,6 @@ namespace BLL.Orders
             await _orderRepository.Update(orderEntity);
             return true;
         }
-
         public async Task<bool> UpdateOrder(UpdateOrderDto orderDto)
         {
             Order orderEntity = Adapters.OrderAdapter.ConvertFromDtoOrderToEntity(orderDto);
@@ -51,7 +48,6 @@ namespace BLL.Orders
             await _orderRepository.Update(orderEntity);
             return true;
         }
-
         public async Task<List<OrderDto>> GetAllOrder(GetOrderDto orderDto)
         {
             List<OrderDto> orders = new List<OrderDto>();

@@ -104,8 +104,6 @@ namespace BLL.Product
                 return requst;
             }
         }
-
-
         public async Task<AnswerWithBackendDto<ShopDto>> GetShopsInfo(GetShopsInfoDto shopDto)
         {
             AnswerWithBackendDto<ShopDto> answerWithBackendDto = new();
@@ -124,7 +122,6 @@ namespace BLL.Product
             answerWithBackendDto.AddObject(Adapters.ShopAdapter.ConvertFromToEntityShopDto(collectionShop));
             return answerWithBackendDto;
         }
-
         public async Task<AnswerWithBackendDto<ShopDto>> RestoreStore(RestoreShopDto restoreShop)
         {
             AnswerWithBackendDto<ShopDto> answerWithBackendDto = new();
@@ -146,8 +143,6 @@ namespace BLL.Product
             answerWithBackendDto.AddObject(Adapters.ShopAdapter.ConvertFromEntitieToDTO(await _shopRepository.Update(shop)));
             return answerWithBackendDto;
         }
-
-
         private async Task DeleteProduct() 
         {
         

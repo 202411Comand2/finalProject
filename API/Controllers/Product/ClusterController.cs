@@ -32,7 +32,7 @@ namespace API.Controllers.Product
         }
 
         [HttpPut("Update")]
-        public async Task<ActionResult<int>> Update([FromBody] UpdateCluseterDto clusterDto)
+        public async Task<ActionResult<int>> Update([FromBody] UpdateClusterDto clusterDto)
         {
             bool result = false;
             try

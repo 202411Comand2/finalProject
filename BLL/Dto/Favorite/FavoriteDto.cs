@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BLL.Dto.Favorite
+﻿namespace BLL.Dto.Favorite
 {
-
     public class FavoriteDto
     {
         /// <summary>
         /// Id объекта
         /// </summary>
         public int Id { get; set; }
-
         /// <summary>
         /// Id пользователя
         /// </summary>

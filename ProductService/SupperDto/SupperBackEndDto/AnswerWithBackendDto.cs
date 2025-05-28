@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using System.Text.Json;
 
 namespace BLL.Dto
 {
@@ -16,23 +9,18 @@ namespace BLL.Dto
         /// </summary>
         /// <param name="objectDto"></param>
         public T ObjectDto { get; set; }
-
         /// <summary>
         /// Полученны ли данные с бека
         /// </summary>
         public bool DataReceived { get; set; } = false;
-
         /// <summary>
         /// Лог ошибки
         /// </summary>
         public string ErrorLog { get; set; } = string.Empty;
-
         /// <summary>
         /// Коллекция объектов
         /// </summary>
         public List<AnswerWithBackendDto<T>> ObjectsDto { get; set; } = new();
-
-
         /// <summary>
         /// Добавить возращаемый объект
         /// </summary>
@@ -69,13 +57,10 @@ namespace BLL.Dto
         /// <param name="objectDro"></param>
         /// <returns></returns>
         static private string Serialization(List<T> objectDro) => JsonSerializer.Serialize(objectDro);
-
-
         private AnswerWithBackendDto<T> _adapter(AnswerWithBackendDto<T> obj)
         {
             return obj;
         }
-
         /// <summary>
         /// Получить коллекцию объектов без проблемных, т.е. в выборку попадут объекты без ошибок
         /// </summary>
@@ -93,7 +78,6 @@ namespace BLL.Dto
             }
             return Serialization(list);
         }
-
         /// <summary>
         /// Получить коллекцию объектов включая и проблемные проблемных
         /// </summary>
@@ -109,15 +93,11 @@ namespace BLL.Dto
             }
             return Serialization(list);
         }
-
         ///// <summary>
         ///// Получить коллекцию объектов c проблемами, т.е. нет ошибок в нём
         ///// </summary>
         ///// <returns></returns>
         //public string GetCollectionWithProblem() => Serialization(ObjectsDto);
-
-
-
         /// <summary>
         /// Добавить коллекцию объектов
         /// </summary>
@@ -156,9 +136,6 @@ namespace BLL.Dto
                 ObjectsDto.Add(answerWithBackendDto);
             }
         }
-
-
-
         /// <summary>
         /// Добавить ошибку
         /// </summary>

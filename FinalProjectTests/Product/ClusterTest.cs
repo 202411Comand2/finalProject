@@ -218,7 +218,7 @@ namespace FinalProjectTests.Product
             request.AddHeader("Content-Type", "application/json");
 
             // Создаем объект, который хотим отправить
-            var updateShop = new UpdateCluseterDto
+            var updateShop = new UpdateClusterDto
             {
                 Id = 1,
                 NewName = "cluster update",

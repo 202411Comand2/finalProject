@@ -11,7 +11,6 @@ namespace BLL.Products
     public class SearchClusterService : ISearchClusterService
     {
         private readonly SearchClusterRepository _clusterSearchRepository;
-
         private readonly ClusterRepository _clusterRepository;
 
         public SearchClusterService(IContextManager contextManager)
@@ -19,17 +18,14 @@ namespace BLL.Products
             _clusterSearchRepository = new SearchClusterRepository(contextManager);
             _clusterRepository = new ClusterRepository(contextManager);
         }
-
         public async Task<bool> AddSearchClusterService(AddSearchClusterDto clusterDto)
         {
             return await _clusterSearchRepository.AddSearchElements(clusterDto.IdCluster, clusterDto.KeyWords);
         }
-
         public async Task<bool> DeleteSearchClusterService(DeleteSearchClusterDto deleteSearchClusterDto)
         {
             return await _clusterSearchRepository.AddSearchElements(deleteSearchClusterDto.IdSearchClusterDto);
         }
-
         public async Task<bool> UpdateSearchClusterService(UpdateSearchClusterDto updateSearchClusterDto)
         {
             if (updateSearchClusterDto == null || string.IsNullOrEmpty(updateSearchClusterDto.SearchClusterKeyWord))
@@ -50,7 +46,6 @@ namespace BLL.Products
                 return false;
             }
         }
-
         public async Task<GetSearchClusterDto> GetSearchClusterId(int id)
         {
             if (await _clusterSearchRepository.CheckClusterForKeywords(id))
@@ -68,7 +63,6 @@ namespace BLL.Products
             }
             return null;
         }
-
         public async Task<(List<Cluster>, List<int>)> SearchProducts(string keyWord)
         {
             List<int> s = await _clusterSearchRepository.СompleteМatch(keyWord);

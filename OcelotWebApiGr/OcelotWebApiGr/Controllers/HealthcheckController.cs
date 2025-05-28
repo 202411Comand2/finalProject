@@ -4,7 +4,7 @@ namespace OcelotWebApiGr.Controllers
 {
     [ApiController]
     [Route("/")]
-    public class TestController : ControllerBase
+    public class HealthcheckController : ControllerBase
     {
         [HttpGet]
         public IActionResult Get()

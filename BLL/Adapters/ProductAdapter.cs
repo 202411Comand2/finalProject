@@ -1,10 +1,4 @@
 ﻿using BLL.Dto.Product;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Adapters
 {
@@ -32,7 +26,6 @@ namespace BLL.Adapters
                 ModelNumber = product.ModelNumber,
             };
         }
-
         /// <summary>
         /// Преобразовать из Dto в Entitie 
         /// </summary>
@@ -52,7 +45,6 @@ namespace BLL.Adapters
                 ModelNumber = сommentDto.ModelNumber,
             };
         }
-
         /// <summary>
         /// Преобразовать из Dto в Entitie 
         /// </summary>
@@ -71,7 +63,6 @@ namespace BLL.Adapters
                 ModelNumber = сommentDto.ModelNumber,
             };
         }
-
         /// <summary>
         /// Преобразовать из Dto в Entitie 
         /// </summary>

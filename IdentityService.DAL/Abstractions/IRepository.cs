@@ -1,12 +1,14 @@
-﻿namespace IdentityService.DAL.Abstractions
+﻿using IdentityService.Domain.Abstractions;
+
+namespace IdentityService.DAL.Abstractions
 {
-	public interface IRepository<T> where T : class
-	{
-		public Task<T> Get(int entityId);
-		public Task<IList<T>> GetAll();
-		public Task<T> Add(T entity);
-		public Task<bool> Update(T entity);
-		public Task<T> SaveOrUpdate(T entity);
-		public Task<bool> Delete(int entityId);
-	}
+    public interface IRepository<T> where T : class, IEntity
+    {
+        public IContextManager ContextManager { get; }
+        public Task<T> Add(T entity);
+        public Task<bool> Delete(int id);
+        public Task<T?> Get(int id);
+        public Task<IList<T>> GetAll();
+        public Task<bool> Update(T entity);
+    }
 }

@@ -1,5 +1,4 @@
 ﻿using BLL.Dto.Cart;
-using BLL.Dto.Product;
 using Domain.Entities;
 
 namespace BLL.Adapters
@@ -22,7 +21,6 @@ namespace BLL.Adapters
                 Count = cart.Count,
             };
         }
-
         /// <summary>
         /// Преобразовать из Dto в Entity 
         /// </summary>
@@ -39,7 +37,6 @@ namespace BLL.Adapters
                 Count = dto.Count,
             };
         }
-
         public static Cart ConvertFromDtoCartToEntity(AddCartDto dto)
         {
             return new Cart
@@ -50,7 +47,6 @@ namespace BLL.Adapters
                 Count = dto.Count,
             };
         }
-
         public static Cart ConvertFromDtoCartToEntity(UpdateCartDto dto)
         {
             return new Cart

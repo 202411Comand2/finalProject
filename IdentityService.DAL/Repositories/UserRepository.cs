@@ -1,19 +1,20 @@
 ﻿using IdentityService.DAL.Abstractions;
-using IdentityService.DAL.Entities;
 using IdentityService.DAL.Exceptions;
+using IdentityService.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdentityService.DAL.Repositories
 {
-	public class UserRepository : IRepository<User>
+	public class UserRepository : IUserRepository<User>
 	{
-		private readonly IContextManager _contextManager;
+		public IContextManager ContextManager { get; private set; }
         public UserRepository(IContextManager contextManager)
         {
-			_contextManager = contextManager;
+			ContextManager = contextManager;
         }
         public async Task<User> Add(User entity)
 		{
-			using(var context = _contextManager.CreateDatabaseContext())
+			using(var context = ContextManager.CreateDatabaseContext())
 			{
 				await context.Users.AddAsync(entity);
 
@@ -21,12 +22,11 @@ namespace IdentityService.DAL.Repositories
 			}
 			return entity;
 		}
-
-		public async Task<bool> Delete(int entityId)
+		public async Task<bool> Delete(int id)
 		{
-			using(var context = _contextManager.CreateDatabaseContext())
+			using(var context = ContextManager.CreateDatabaseContext())
 			{
-				var entity = await context.Users.FindAsync(entityId);
+				var entity = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
 
 				if (entity != null)
 				{
@@ -38,41 +38,25 @@ namespace IdentityService.DAL.Repositories
 				else return false;
 			}
 		}
-
-		public async Task<User> Get(int entityId)
+		public async Task<User?> Get(int id)
 		{
 			var result = new User();
-			using(var context = _contextManager.CreateDatabaseContext())
+			using(var context = ContextManager.CreateDatabaseContext())
 			{
-				var hashedUser = await context.Users.FindAsync(entityId);
-				if (hashedUser == null) throw new EntityNotExistsException();
-				else
-				{
-					result.Id = hashedUser.Id;
-					result.Name = hashedUser.Name;
-					result.Password = DecryptSensitiveData(hashedUser.Password);
-					result.Phone = DecryptSensitiveData(hashedUser.Phone);
-					result.Email = DecryptSensitiveData(hashedUser.Email);
-					result.TelegramId = hashedUser.TelegramId;
-					result.DateCreated = hashedUser.DateCreated;
-				}
+				result = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
 			}
 			return result;
 		}
-
-		public Task<IList<User>> GetAll()
+		public async Task<IList<User>> GetAll()
 		{
-			throw new NotImplementedException();
+			using(var context = ContextManager.CreateDatabaseContext())
+			{
+				return await context.Users.ToListAsync();
+			}
 		}
-
-		public Task<User> SaveOrUpdate(User entity)
-		{
-			throw new NotImplementedException();
-		}
-
 		public async Task<bool> Update(User entity)
 		{
-			using(var context = _contextManager.CreateDatabaseContext())
+			using(var context = ContextManager.CreateDatabaseContext())
 			{
 				try
 				{
@@ -84,14 +68,47 @@ namespace IdentityService.DAL.Repositories
 			}
 			return true;
 		}
-
-		private string EncryptSensitiveData(string data)
-		{
-			throw new NotImplementedException();
-		}
-		private string DecryptSensitiveData(string data)
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public async Task<User?> GetByEmail(string email)
+        {
+            using (var context = ContextManager.CreateDatabaseContext())
+            {
+                return await context.Users.Where(u => u.IsDeleted == false && u.Email == email)
+                    .Select(x => new User
+                    {
+                        Id = x.Id,
+                        Password = x.Password,
+                    })
+                    .FirstOrDefaultAsync();
+            }
+        }
+        public async Task<User?> GetByPhone(string phone)
+        {
+            using (var context = ContextManager.CreateDatabaseContext())
+            {
+                return await context.Users.Where(u => u.IsDeleted == false && u.Phone == phone)
+                    .Select(x => new User
+                    {
+                        Id = x.Id,
+                        Password = x.Password,
+                    })
+                    .FirstOrDefaultAsync();
+            }
+        }
+        public async Task<bool> ChangePassword(int userId, string newPassword)
+        {
+            try
+            {
+                using (var context = ContextManager.CreateDatabaseContext())
+                {
+                    var tempUser = new User { Id = userId };
+                    context.Attach(tempUser);
+                    tempUser.Password = newPassword;
+                    context.Entry(tempUser).Property(x => x.Password).IsModified = true;
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+            }
+            catch (Exception) { return false; }
+        }
+    }
 }

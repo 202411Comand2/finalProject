@@ -1,7 +1,4 @@
-﻿using BLL.Dto.Cart;
-using BLL.Dto.Order;
-using Domain.Entities;
-using FinalProjectEntityDataBase.Enums;
+﻿using BLL.Dto.Order;
 using Order = Domain.Entities.Order;
 
 namespace BLL.Adapters
@@ -24,7 +21,6 @@ namespace BLL.Adapters
                 ArriveDate = order.ArriveDate,
             };
         }
-
         /// <summary>
         /// Преобразовать из Dto в Entity 
         /// </summary>
@@ -41,7 +37,6 @@ namespace BLL.Adapters
                 ArriveDate = dto.ArriveDate,
             };
         }
-
         public static Order ConvertFromDtoOrderToEntity(AddOrderDto dto)
         {
             return new Order
@@ -54,7 +49,6 @@ namespace BLL.Adapters
                 State = dto.State,
             };
         }
-
         public static Order ConvertFromDtoOrderToEntity(UpdateOrderDto dto)
         {
             return new Order

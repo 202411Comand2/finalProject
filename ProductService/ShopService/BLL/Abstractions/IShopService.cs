@@ -1,12 +1,5 @@
 ﻿using BLL.Dto;
 using BLL.Dto.Shop;
-using DAL.Repositories;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Products.Abstractions
 {

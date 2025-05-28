@@ -1,10 +1,5 @@
 ﻿using BLL.Dto.Comment;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Adapters
 {
@@ -13,7 +8,6 @@ namespace BLL.Adapters
     /// </summary>
     public class CommentAdapter
     {
-        
         public static CommentDto ConvertToCommentDTO(Comment comment)
         {
             return new CommentDto()

@@ -35,7 +35,7 @@ namespace BLL.Products.Abstractions
         /// <param name="clasterId">id кластера</param>
         /// <param name="newNameClaster">Новое имя кластера</param>
         /// <returns></returns>
-        public Task<bool> UpdateNameCluster(UpdateCluseterDto updateCluseterDto);
+        public Task<bool> UpdateNameCluster(UpdateClusterDto updateCluseterDto);
 
 
         ///// <summary>
