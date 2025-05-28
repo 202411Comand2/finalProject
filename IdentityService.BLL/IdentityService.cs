@@ -13,58 +13,58 @@ namespace IdentityService.BLL
     public class IdentityService : IIdentityService
     {
         private readonly IUserRepository<User> _repository;
-        private readonly IShopOwnerService<ShopOwner> _shopOwnerService;
+        private readonly IShopOwnerService _shopOwnerService;
         private readonly IJwtTokenProvider _jwtTokenProvider;
         private readonly IHasher _hasher;
         private readonly ILogger _logger;
         public IdentityService(IUserRepository<User> repository,
             ILogger<IdentityService> logger,
             IJwtTokenProvider jwtTokenProvider,
-            IHasher hasher)
+            IHasher hasher,
+            IShopOwnerService shopOwnerService)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _jwtTokenProvider = jwtTokenProvider;
             _hasher = hasher;
+            _shopOwnerService = shopOwnerService;
         }
 
-        public async Task<string> GetGuestToken()
+        public string GetGuestToken()
         {
             return _jwtTokenProvider.GenerateToken();
         }
-        public async Task<User> GetUserInfo(int userId)
+        public async Task<User> GetUserInfo(int userId, CancellationToken? cancellationToken = null)
         {
             return await _repository.Get(userId);
         }
 
-        public async Task<User> Register(RegisterUserDto dto)
+        public async Task<User> Register(RegisterUserDto dto, CancellationToken? cancellationToken = null)
         {
             if (dto.Contact.IsEmail()) return await RegisterByEmail(dto);
             else if (dto.Contact.IsPhoneNumber()) return await RegisterByPhone(dto);
             else throw new InvalidContactInputException();
         }
-        public async Task<bool> RegisterSeller(RegisterShopOwnerDto dto)
+        public async Task<bool> RegisterSeller(RegisterShopOwnerDto dto, CancellationToken? cancellationToken = null)
         {
             try
             {
-                var result = await _shopOwnerService.Add(dto.ToEntity());
-                if (result == null || result.Id == 0) return false;
-                return true;
+                return await _shopOwnerService.Add(dto);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message, ex.StackTrace);
                 return false;
             }
         }
-        public async Task<User> RegisterByPhone(RegisterUserDto dto)
+        public async Task<User> RegisterByPhone(RegisterUserDto dto, CancellationToken? cancellationToken = null)
         {
             var entity = dto.ToEntity();
             entity.Password = _hasher.Hash(entity.Password);
             var result = await _repository.Add(entity);
             return result;
         }
-        public async Task<User> RegisterByEmail(RegisterUserDto dto)
+        public async Task<User> RegisterByEmail(RegisterUserDto dto, CancellationToken? cancellationToken = null)
         {
             var newUser = new User
             {
@@ -75,7 +75,7 @@ namespace IdentityService.BLL
             var result = await _repository.Add(newUser);
             return result;
         }
-        public async Task<bool> ChangePassword(ChangeUserPasswordDto dto)
+        public async Task<bool> ChangePassword(ChangeUserPasswordDto dto, CancellationToken? cancellationToken = null)
         {
             return await _repository.ChangePassword(dto.UserId, _hasher.Hash(dto.Password));
         }
@@ -87,7 +87,7 @@ namespace IdentityService.BLL
         /// <returns>jwt токен</returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="InvalidContactInputException"></exception>
-        public async Task<string> Login(AuthDto dto)
+        public async Task<string> Login(AuthDto dto, CancellationToken? cancellationToken = null)
         {
             if (dto.Contact.IsNullOrEmpty()) throw new ArgumentNullException(nameof(dto.Contact));
             if (dto.Password.IsNullOrEmpty()) throw new ArgumentNullException(nameof(dto.Password));
@@ -96,7 +96,7 @@ namespace IdentityService.BLL
             else if (dto.Contact.IsPhoneNumber()) return await AuthUserByPhone(dto);
             else throw new InvalidContactInputException();
         }
-        public async Task<string> AuthUserByEmail(AuthDto dto)
+        public async Task<string> AuthUserByEmail(AuthDto dto, CancellationToken? cancellationToken = null)
         {
             var user = await _repository.GetByEmail(dto.Contact);
 
@@ -109,13 +109,13 @@ namespace IdentityService.BLL
             }
             else throw new InvalidContactInputException();
         }
-        public async Task<string> AuthUserByPhone(AuthDto dto)
+        public async Task<string> AuthUserByPhone(AuthDto dto, CancellationToken? cancellationToken = null)
         {
             var user = await _repository.GetByPhone(dto.Contact);
 
             if (user is null) throw new InvalidContactInputException();
 
-            var isPasswordValid = _repository.Verify(dto.Password, user.Password);
+            var isPasswordValid = _hasher.Verify(dto.Password, user.Password);
             if (isPasswordValid)
             {
                 return _jwtTokenProvider.GenerateToken(user);
@@ -123,7 +123,7 @@ namespace IdentityService.BLL
             else throw new InvalidContactInputException();
         }
 
-        public async Task<string?> BizLogin(AuthDto dto)
+        public async Task<string?> BizLogin(AuthDto dto, CancellationToken? cancellationToken = null)
         {
             User? user = new User();
 
@@ -140,7 +140,7 @@ namespace IdentityService.BLL
             }
             else return null;
         }
-        public async Task<string> BizLogin(string token)
+        public async Task<string> BizLogin(string token, CancellationToken? cancellationToken = null)
         {
             var claims = _jwtTokenProvider.ValidateToken(token);
             var userIdClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
@@ -150,10 +150,10 @@ namespace IdentityService.BLL
 
             return await BizLogin(userId);
         }
-        public async Task<string> BizLogin(int userId)
+        private async Task<string> BizLogin(int userId, CancellationToken? cancellationToken = null)
         {
-            var shopOwners = await _shopOwnerRepository.GetAllByUserId(userId);
-            var user = await _userRepository.Get(userId);
+            var shopOwners = await _shopOwnerService.GetAllByUser(userId);
+            var user = await _repository.Get(userId);
             if (user != null && shopOwners != null)
             {
                 return _jwtTokenProvider.GenerateToken(user, shopOwners);

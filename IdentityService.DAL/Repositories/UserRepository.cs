@@ -1,5 +1,4 @@
 ﻿using IdentityService.DAL.Abstractions;
-using IdentityService.DAL.Exceptions;
 using IdentityService.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +11,7 @@ namespace IdentityService.DAL.Repositories
         {
 			ContextManager = contextManager;
         }
-        public async Task<User> Add(User entity)
+        public async Task<User> Add(User entity, CancellationToken? cancellationToken = null)
 		{
 			using(var context = ContextManager.CreateDatabaseContext())
 			{
@@ -22,23 +21,18 @@ namespace IdentityService.DAL.Repositories
 			}
 			return entity;
 		}
-		public async Task<bool> Delete(int id)
+		public async Task<bool> Delete(int id, CancellationToken? cancellationToken = null)
 		{
 			using(var context = ContextManager.CreateDatabaseContext())
 			{
-				var entity = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
+				var rowsAffected = await context.Users
+					.Where(x => x.Id == id)
+					.ExecuteDeleteAsync();
 
-				if (entity != null)
-				{
-					context.Users.Remove(entity);
-
-					await context.SaveChangesAsync();
-					return true;
-				}
-				else return false;
+				return rowsAffected > 0;
 			}
 		}
-		public async Task<User?> Get(int id)
+		public async Task<User?> Get(int id, CancellationToken? cancellationToken = null)
 		{
 			var result = new User();
 			using(var context = ContextManager.CreateDatabaseContext())
@@ -47,14 +41,14 @@ namespace IdentityService.DAL.Repositories
 			}
 			return result;
 		}
-		public async Task<IList<User>> GetAll()
+		public async Task<IList<User>> GetAll(CancellationToken? cancellationToken = null)
 		{
 			using(var context = ContextManager.CreateDatabaseContext())
 			{
 				return await context.Users.ToListAsync();
 			}
 		}
-		public async Task<bool> Update(User entity)
+		public async Task<bool> Update(User entity, CancellationToken? cancellationToken = null)
 		{
 			using(var context = ContextManager.CreateDatabaseContext())
 			{
@@ -68,7 +62,7 @@ namespace IdentityService.DAL.Repositories
 			}
 			return true;
 		}
-        public async Task<User?> GetByEmail(string email)
+        public async Task<User?> GetByEmail(string email, CancellationToken? cancellationToken = null)
         {
             using (var context = ContextManager.CreateDatabaseContext())
             {
@@ -81,7 +75,7 @@ namespace IdentityService.DAL.Repositories
                     .FirstOrDefaultAsync();
             }
         }
-        public async Task<User?> GetByPhone(string phone)
+        public async Task<User?> GetByPhone(string phone, CancellationToken? cancellationToken = null)
         {
             using (var context = ContextManager.CreateDatabaseContext())
             {
@@ -94,7 +88,7 @@ namespace IdentityService.DAL.Repositories
                     .FirstOrDefaultAsync();
             }
         }
-        public async Task<bool> ChangePassword(int userId, string newPassword)
+        public async Task<bool> ChangePassword(int userId, string newPassword, CancellationToken? cancellationToken = null)
         {
             try
             {
