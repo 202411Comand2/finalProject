@@ -34,7 +34,7 @@ namespace ClientConsole
         }
 
         /// <summary>
-        /// Написание запроса для productService
+        /// Написание запроса для productService  
         /// </summary>
         /// <returns></returns>
         private static async Task ProductService()
