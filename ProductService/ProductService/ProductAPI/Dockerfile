@@ -13,10 +13,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ProductService/ProductService/ProductAPI/ProductAPI.csproj", "ProductService/ProductService/ProductAPI/"]
-COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEndDto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
-COPY ["ProductService/ProductService/BLL/BLL.csproj", "ProductService/ProductService/BLL/"]
-COPY ["ProductService/ProductService/DAL/DAL.csproj", "ProductService/ProductService/DAL/"]
-COPY ["ProductService/ProductService/Domain/Domain.csproj", "ProductService/ProductService/Domain/"]
+COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEnd.Dto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
+COPY ["ProductService/ProductService/BLL/ProductService.BLL.csproj", "ProductService/ProductService/BLL/"]
+COPY ["ProductService/ProductService/DAL/ProductService.DAL.csproj", "ProductService/ProductService/DAL/"]
+COPY ["ProductService/ProductService/Domain/ProductService.Domain.csproj", "ProductService/ProductService/Domain/"]
+COPY ["DAL/Platform.DAL.csproj", "DAL/"]
 RUN dotnet restore "./ProductService/ProductService/ProductAPI/ProductAPI.csproj"
 COPY . .
 WORKDIR "/src/ProductService/ProductService/ProductAPI"

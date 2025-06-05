@@ -12,24 +12,23 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["ClusterAPI/ClusterAPI.csproj", "ClusterAPI/"]
-COPY ["ProductService/ClusterService/BLL/ClusterService.BLL.csproj", "ProductService/ClusterService/BLL/"]
-COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEnd.Dto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
-COPY ["ProductService/ClusterService/DAL/ClusterService.DAL.csproj", "ProductService/ClusterService/DAL/"]
-COPY ["DAL/Platform.DAL.csproj", "DAL/"]
-COPY ["ProductService/ClusterService/Domain/ClusterService.Domain.csproj", "ProductService/ClusterService/Domain/"]
-RUN dotnet restore "./ClusterAPI/ClusterAPI.csproj"
+COPY ["ProductService/ProductService/ProductAPI/ProductAPI.csproj", "ProductService/ProductService/ProductAPI/"]
+COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEndDto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
+COPY ["ProductService/ProductService/BLL/BLL.csproj", "ProductService/ProductService/BLL/"]
+COPY ["ProductService/ProductService/DAL/DAL.csproj", "ProductService/ProductService/DAL/"]
+COPY ["ProductService/ProductService/Domain/Domain.csproj", "ProductService/ProductService/Domain/"]
+RUN dotnet restore "./ProductService/ProductService/ProductAPI/ProductAPI.csproj"
 COPY . .
-WORKDIR "/src/ClusterAPI"
-RUN dotnet build "./ClusterAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/ProductService/ProductService/ProductAPI"
+RUN dotnet build "./ProductAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Этот этап используется для публикации проекта службы, который будет скопирован на последний этап
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./ClusterAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./ProductAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Этот этап используется в рабочей среде или при запуске из VS в обычном режиме (по умолчанию, когда конфигурация отладки не используется)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ClusterAPI.dll"]
+ENTRYPOINT ["dotnet", "ProductAPI.dll"]
