@@ -1,4 +1,4 @@
-﻿namespace DAL.Abstractions
+﻿namespace ProductService.DAL
 {
 	public interface IRepository<T> where T : class
 	{

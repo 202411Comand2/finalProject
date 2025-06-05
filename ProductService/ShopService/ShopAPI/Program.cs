@@ -1,9 +1,7 @@
-using BLL.Product;
-using BLL.Products.Abstractions;
-using DAL;
-using DAL.Abstractions;
-using DAL.ConfigSettings;
 using Microsoft.OpenApi.Models;
+using Platform.DAL;
+using ShopService.BLL;
+using ShopService.DAL;
 
 namespace ShopAPI
 {
@@ -22,7 +20,7 @@ namespace ShopAPI
             services.AddSingleton<IContextManager, ContextManager>();
             services.AddSingleton<IAppSettings, AppSettings>();
             services.AddSingleton<ISecretsSettings, SecretsSettings>();
-            services.AddTransient<IShopService, ShopService>();
+            services.AddTransient<IShopMainService, ShopService.BLL.ShopMainService>();
 
             // Добавляем сервисы
             builder.Services.AddControllers();

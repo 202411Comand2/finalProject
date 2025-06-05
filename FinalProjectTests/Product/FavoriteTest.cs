@@ -1,12 +1,5 @@
-﻿using BLL.Dto.Cluster;
-using BLL.Dto.Favorite;
-using BLL.Dto.Product;
+﻿using FavoriteService.BLL;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinalProjectTests.Product
 {

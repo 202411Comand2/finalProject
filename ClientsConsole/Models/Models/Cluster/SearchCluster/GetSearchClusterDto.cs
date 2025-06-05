@@ -1,4 +1,4 @@
-namespace Models.Cluster.SearchCluster
+namespace Client.Models
 {
     public class GetSearchClusterDto
     {

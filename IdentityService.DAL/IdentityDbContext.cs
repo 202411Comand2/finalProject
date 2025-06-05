@@ -1,6 +1,4 @@
-﻿using IdentityService.DAL.Abstractions;
-using IdentityService.DAL.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace IdentityService.DAL
 {

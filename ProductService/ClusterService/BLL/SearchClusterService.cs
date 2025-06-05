@@ -1,12 +1,7 @@
-﻿using BLL.Dto.Cluster;
-using BLL.Dto.SearchCluster;
-using BLL.Products.Abstractions;
-using DAL;
-using DAL.Abstractions;
-using DAL.Repositories;
-using Domain.Entities;
+﻿using ClusterService.DAL;
+using ClusterService.Domain;
 
-namespace BLL.Products
+namespace ClusterService.BLL
 {
     public class SearchClusterService : ISearchClusterService
     {

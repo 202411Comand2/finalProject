@@ -1,8 +1,7 @@
-﻿using DAL.Abstractions;
-using DAL.ConfigSettings;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Platform.DAL;
 
-namespace DAL
+namespace ClusterService.DAL
 {
 	public class ContextManager : IContextManager
 	{

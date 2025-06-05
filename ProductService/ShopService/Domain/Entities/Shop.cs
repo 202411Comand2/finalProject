@@ -1,8 +1,8 @@
-﻿using Domain.Abstractions;
+﻿using Platform.DAL;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain.Entities
+namespace ShopService.Domain
 {
     /// <summary>
     /// Магазин

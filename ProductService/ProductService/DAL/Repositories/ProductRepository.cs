@@ -1,8 +1,7 @@
-﻿using DAL.Abstractions;
-using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using ProductService.Domain;
 
-namespace DAL.Repositories
+namespace ProductService.DAL
 {
     public class ProductRepository : BaseRepository<Product>
     {

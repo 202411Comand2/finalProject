@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="Cogito.Extensions.Configuration" Version="4.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.1" />
@@ -18,9 +19,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BLL\BLL.csproj" />
-    <ProjectReference Include="..\DAL\DAL.csproj" />
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Domain\Rabbit.Platform.csproj" />
+    <ProjectReference Include="..\IdentityService.DAL\IdentityService.DAL.csproj" />
+    <ProjectReference Include="..\ProductService\ClusterService\BLL\ClusterService.BLL.csproj" />
+    <ProjectReference Include="..\ProductService\CommentService\BLL\CommentService.BLL.csproj" />
+    <ProjectReference Include="..\ProductService\FavoriteService\BLL\FavoriteService.BLL.csproj" />
+    <ProjectReference Include="..\ProductService\ProductService\BLL\ProductService.BLL.csproj" />
+    <ProjectReference Include="..\ProductService\ShopService\BLL\ShopService.BLL.csproj" />
   </ItemGroup>
 
   <ItemGroup>

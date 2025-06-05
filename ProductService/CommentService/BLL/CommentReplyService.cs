@@ -1,16 +1,8 @@
-﻿using BLL.Dto;
-using BLL.Dto.ReplyComment;
-using BLL.Products.Abstractions;
-using DAL.Abstractions;
-using DAL.Repositories;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommentService.DAL;
+using CommentService.Domain;
+using SupperBackEnd.Dto;
 
-namespace BLL.Products
+namespace CommentService.BLL
 {
     public class CommentReplyService : ICommentReplyService
     {
@@ -30,7 +22,7 @@ namespace BLL.Products
             }
             else 
             {
-                result.AddObject(Adapters.ReplyCommentAdapter.ConvertToCommentDTO(item));
+                result.AddObject(ReplyCommentAdapter.ConvertToCommentDTO(item));
                 return result;
             }
            // return (await _commentReplyRepository.Add(addReplyCommentDto.CommentUserId, addReplyCommentDto.TextComment)).IdComment;
@@ -70,7 +62,7 @@ namespace BLL.Products
                 var item = await _commentReplyRepository.Update(commentReply);
                 if (item.Text == updateCommentReplyDto.TextComment)
                 { //Проверяем, что коментарий был обновлён
-                    result.AddObject(Adapters.ReplyCommentAdapter.ConvertToCommentDTO( item));
+                    result.AddObject(ReplyCommentAdapter.ConvertToCommentDTO( item));
                     return result;
 
                 }

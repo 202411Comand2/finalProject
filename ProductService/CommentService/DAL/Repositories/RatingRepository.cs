@@ -1,7 +1,6 @@
-﻿using DAL.Abstractions;
-using Domain.Entities;
+﻿using CommentService.Domain;
 
-namespace DAL.Repositories
+namespace CommentService.DAL
 {
     public class RatingRepository : BaseRepository<Rating>
     {

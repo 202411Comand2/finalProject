@@ -1,8 +1,6 @@
-﻿using DAL.Abstractions;
-using DAL.ConfigSettings;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace DAL
+namespace ShopService.DAL
 {
 	public class ContextManager : IContextManager
 	{

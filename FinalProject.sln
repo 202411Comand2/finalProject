@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{BB84A5E5-8ACD-4724-A364-D867BA5D630B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platform.DAL", "DAL\Platform.DAL.csproj", "{BB84A5E5-8ACD-4724-A364-D867BA5D630B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{495367AE-0D6B-45C2-8878-A792A9C26CF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rabbit.Platform", "Domain\Rabbit.Platform.csproj", "{495367AE-0D6B-45C2-8878-A792A9C26CF0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityService", "IdentityService", "{696DE2B5-40E1-4672-96DA-DDD1F26660D4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderService", "OrderService", "{9B74C3C5-16D3-4DB9-9868-B7044DDDE3D8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderServices", "OrderServices", "{9B74C3C5-16D3-4DB9-9868-B7044DDDE3D8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shop_Product_Service", "Shop_Product_Service", "{2E8B78B6-AD6A-477C-90BB-5E974F4A945A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shop_Product_Services", "Shop_Product_Services", "{2E8B78B6-AD6A-477C-90BB-5E974F4A945A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIGateway", "APIGateway", "{582AEE01-85DC-4D8E-8A58-EC1BCFAC2F75}"
 EndProject
@@ -23,73 +23,67 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityService.DAL", "Iden
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService.Api", "OrderService.Api\OrderService.Api.csproj", "{DAC1F9C9-E2E6-47E9-B23E-D810DD59EE4D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{390F1FB7-7B6C-40B4-8288-B3212B29EA03}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{DD6FD724-3F74-4AF5-9915-0C498ACF960C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{2D1FC842-0B69-4F2F-BDAC-7D545AE07DCB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalProjectTests", "FinalProjectTests\FinalProjectTests.csproj", "{CC25D49E-126D-4D2B-8EA0-6BE7C9BE8072}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProjectTests", "FinalProjectTests\FinalProjectTests.csproj", "{CC25D49E-126D-4D2B-8EA0-6BE7C9BE8072}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ShopService", "ShopService", "{489ED704-F1A4-4BB9-90C5-C36446F4412E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "ProductService\ShopService\Domain\Domain.csproj", "{3EFE167A-8622-48D9-A4D3-499979B30488}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopService.Domain", "ProductService\ShopService\Domain\ShopService.Domain.csproj", "{3EFE167A-8622-48D9-A4D3-499979B30488}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "ProductService\ShopService\DAL\DAL.csproj", "{95178447-D25E-4B23-8C66-E6AB76501498}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopService.DAL", "ProductService\ShopService\DAL\ShopService.DAL.csproj", "{95178447-D25E-4B23-8C66-E6AB76501498}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "ProductService\ShopService\BLL\BLL.csproj", "{E44447B2-2286-4034-A516-3D99400C697D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopService.BLL", "ProductService\ShopService\BLL\ShopService.BLL.csproj", "{E44447B2-2286-4034-A516-3D99400C697D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopAPI", "ProductService\ShopService\ShopAPI\ShopAPI.csproj", "{A187189D-F4B6-4659-9583-5BD16985C8A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopAPI", "ProductService\ShopService\ShopAPI\ShopAPI.csproj", "{A187189D-F4B6-4659-9583-5BD16985C8A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "ProductService\ProductService\BLL\BLL.csproj", "{5AE13205-A043-4E8F-AD43-9BAB309B69A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService.BLL", "ProductService\ProductService\BLL\ProductService.BLL.csproj", "{5AE13205-A043-4E8F-AD43-9BAB309B69A8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProductService", "ProductService", "{2D446767-3B34-4DED-A646-C57A7E6726F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "ProductService\ProductService\DAL\DAL.csproj", "{1FAF5411-3C39-4ABB-9991-7A49B81EA32A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService.DAL", "ProductService\ProductService\DAL\ProductService.DAL.csproj", "{1FAF5411-3C39-4ABB-9991-7A49B81EA32A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "ProductService\ProductService\Domain\Domain.csproj", "{B27F1E57-A672-481E-BB27-CA8F6DB48527}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService.Domain", "ProductService\ProductService\Domain\ProductService.Domain.csproj", "{B27F1E57-A672-481E-BB27-CA8F6DB48527}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductAPI", "ProductService\ProductService\ProductAPI\ProductAPI.csproj", "{1E39743F-2349-4BB8-B37A-63207F241CB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductAPI", "ProductService\ProductService\ProductAPI\ProductAPI.csproj", "{1E39743F-2349-4BB8-B37A-63207F241CB5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClusterService", "ClusterService", "{7A8B6F49-165E-411B-8954-3E1AB57997B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "ProductService\ClusterService\BLL\BLL.csproj", "{0B6BE19D-E75B-40B1-A817-6D5AF4FFD707}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClusterService.BLL", "ProductService\ClusterService\BLL\ClusterService.BLL.csproj", "{0B6BE19D-E75B-40B1-A817-6D5AF4FFD707}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "ProductService\ClusterService\DAL\DAL.csproj", "{F2C4BDA6-57CB-4242-BFE3-AF337FD21F41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClusterService.DAL", "ProductService\ClusterService\DAL\ClusterService.DAL.csproj", "{F2C4BDA6-57CB-4242-BFE3-AF337FD21F41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "ProductService\ClusterService\Domain\Domain.csproj", "{092B9A96-436C-4590-BEF0-1737EEA84774}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClusterService.Domain", "ProductService\ClusterService\Domain\ClusterService.Domain.csproj", "{092B9A96-436C-4590-BEF0-1737EEA84774}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClusterAPI", "ClusterAPI\ClusterAPI.csproj", "{610EF49C-3B52-46B5-A265-CFA534867B2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClusterAPI", "ClusterAPI\ClusterAPI.csproj", "{610EF49C-3B52-46B5-A265-CFA534867B2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FavoriteAPI", "ProductService\FavoriteService\FavoriteAPI\FavoriteAPI.csproj", "{CE3CE40A-6C44-451E-A7F1-5CC28AC8A1E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoriteAPI", "ProductService\FavoriteService\FavoriteAPI\FavoriteAPI.csproj", "{CE3CE40A-6C44-451E-A7F1-5CC28AC8A1E6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FavoriteService", "FavoriteService", "{365967A5-FBA0-4E65-9292-4CABC1851816}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "ProductService\FavoriteService\BLL\BLL.csproj", "{ABBD03F1-3F7C-4D95-A9ED-96A6872AB62F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoriteService.BLL", "ProductService\FavoriteService\BLL\FavoriteService.BLL.csproj", "{ABBD03F1-3F7C-4D95-A9ED-96A6872AB62F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "ProductService\FavoriteService\DAL\DAL.csproj", "{D85B778C-EBD0-4DA4-9DDC-402B07B4A558}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoriteService.DAL", "ProductService\FavoriteService\DAL\FavoriteService.DAL.csproj", "{D85B778C-EBD0-4DA4-9DDC-402B07B4A558}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "ProductService\FavoriteService\Domain\Domain.csproj", "{DF1CDBC0-9987-49CE-AC69-167C6202910F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoriteService.Domain", "ProductService\FavoriteService\Domain\FavoriteService.Domain.csproj", "{DF1CDBC0-9987-49CE-AC69-167C6202910F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentApi", "ProductService\CommentService\CommentApi\CommentApi.csproj", "{FA3A80AD-E02D-4D87-A3E4-B9ED184CAFBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommentApi", "ProductService\CommentService\CommentApi\CommentApi.csproj", "{FA3A80AD-E02D-4D87-A3E4-B9ED184CAFBF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommentService", "CommentService", "{39D8B114-5FB5-4B68-85B7-9F8719276E5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "ProductService\CommentService\BLL\BLL.csproj", "{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommentService.BLL", "ProductService\CommentService\BLL\CommentService.BLL.csproj", "{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "ProductService\CommentService\DAL\DAL.csproj", "{51FA61BF-A125-49D6-9BE0-D71D3BC0180D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommentServce.DAL", "ProductService\CommentService\DAL\CommentServce.DAL.csproj", "{51FA61BF-A125-49D6-9BE0-D71D3BC0180D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "ProductService\CommentService\Domain\Domain.csproj", "{97365969-56E3-4337-88F6-62766B913204}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommentService.Domain", "ProductService\CommentService\Domain\CommentService.Domain.csproj", "{97365969-56E3-4337-88F6-62766B913204}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupperBackEndDto", "ProductService\SupperDto\SupperBackEndDto\SupperBackEndDto.csproj", "{28D409E5-3512-4785-BAED-9779014C06F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SupperBackEnd.Dto", "ProductService\SupperDto\SupperBackEndDto\SupperBackEnd.Dto.csproj", "{28D409E5-3512-4785-BAED-9779014C06F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotWebApiGr", "OcelotWebApiGr\OcelotWebApiGr\OcelotWebApiGr.csproj", "{5ED4EE5E-C332-40F0-B4E8-C0A6F9A25DC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotWebApiGr", "OcelotWebApiGr\OcelotWebApiGr\OcelotWebApiGr.csproj", "{5ED4EE5E-C332-40F0-B4E8-C0A6F9A25DC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientConsole", "ClientsConsole\ClientConsole\ClientConsole.csproj", "{93580A89-F24D-4850-A77B-F364722B6BE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client.Console", "ClientsConsole\ClientConsole\Client.Console.csproj", "{93580A89-F24D-4850-A77B-F364722B6BE0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{7656E577-291E-4EC5-BD43-D60E2C6E7931}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "ClientsConsole\Models\Models\Models.csproj", "{7D2DE4DA-C160-4A33-BF25-A210369D7839}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client.Models", "ClientsConsole\Models\Models\Client.Models.csproj", "{7D2DE4DA-C160-4A33-BF25-A210369D7839}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EEE47D4F-26BD-43CC-A1D6-99F2E9C5B51B}"
 EndProject
@@ -128,18 +122,6 @@ Global
 		{DAC1F9C9-E2E6-47E9-B23E-D810DD59EE4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAC1F9C9-E2E6-47E9-B23E-D810DD59EE4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAC1F9C9-E2E6-47E9-B23E-D810DD59EE4D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{390F1FB7-7B6C-40B4-8288-B3212B29EA03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{390F1FB7-7B6C-40B4-8288-B3212B29EA03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{390F1FB7-7B6C-40B4-8288-B3212B29EA03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{390F1FB7-7B6C-40B4-8288-B3212B29EA03}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DD6FD724-3F74-4AF5-9915-0C498ACF960C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD6FD724-3F74-4AF5-9915-0C498ACF960C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD6FD724-3F74-4AF5-9915-0C498ACF960C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD6FD724-3F74-4AF5-9915-0C498ACF960C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D1FC842-0B69-4F2F-BDAC-7D545AE07DCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D1FC842-0B69-4F2F-BDAC-7D545AE07DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D1FC842-0B69-4F2F-BDAC-7D545AE07DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D1FC842-0B69-4F2F-BDAC-7D545AE07DCB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CC25D49E-126D-4D2B-8EA0-6BE7C9BE8072}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CC25D49E-126D-4D2B-8EA0-6BE7C9BE8072}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC25D49E-126D-4D2B-8EA0-6BE7C9BE8072}.Release|Any CPU.ActiveCfg = Release|Any CPU

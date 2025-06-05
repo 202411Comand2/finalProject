@@ -1,9 +1,7 @@
-using BLL.Products;
-using BLL.Products.Abstractions;
-using DAL;
-using DAL.Abstractions;
-using DAL.ConfigSettings;
+using FavoriteService.BLL;
+using FavoriteService.DAL;
 using Microsoft.OpenApi.Models;
+using Platform.DAL;
 
 namespace FavoriteAPI
 {

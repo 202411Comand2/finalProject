@@ -1,4 +1,4 @@
-﻿namespace DAL.Abstractions
+﻿namespace FavoriteService.DAL
 {
 	public interface IContextManager
 	{

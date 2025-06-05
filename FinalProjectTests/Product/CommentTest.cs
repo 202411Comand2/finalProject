@@ -1,14 +1,5 @@
-﻿using BLL.Dto.Comment;
-using BLL.Dto.Favorite;
-using BLL.Dto.Product;
-using BLL.Dto.Shop;
+﻿using CommentService.BLL;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FinalProjectTests.Product
 {
@@ -28,7 +19,7 @@ namespace FinalProjectTests.Product
                 request.AddHeader("Content-Type", "application/json");
                 // Создаем объект, который хотим отправить
 
-                var New = new AddCommentDto(1, 2, rand.Next(1, 9), "", 1);
+                var New = new AddCommentDto(1, "User", 2, rand.Next(1, 9), "", 1);
 
                 // Сериализуем объект в JSON и добавляем его в тело запроса
                 request.AddJsonBody(New);

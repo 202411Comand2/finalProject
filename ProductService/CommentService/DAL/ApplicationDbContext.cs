@@ -1,7 +1,7 @@
-﻿using Domain.Entities;
+﻿using CommentService.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL
+namespace CommentService.DAL
 {
 	public class ApplicationDbContext : DbContext
 	{

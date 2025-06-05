@@ -1,4 +1,4 @@
-﻿namespace IdentityService.DAL.Exceptions
+﻿namespace IdentityService.DAL
 {
 	/// <summary>
 	/// Represents errors that occur when querying the database

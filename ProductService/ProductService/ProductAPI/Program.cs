@@ -1,9 +1,7 @@
-using BLL.Products.Abstractions;
-using BLL.ProductService;
-using DAL;
-using DAL.Abstractions;
-using DAL.ConfigSettings;
 using Microsoft.OpenApi.Models;
+using Platform.DAL;
+using ProductService.BLL;
+using ProductService.DAL;
 
 namespace ProductAPI
 {
@@ -22,7 +20,7 @@ namespace ProductAPI
             services.AddSingleton<IContextManager, ContextManager>();
             services.AddSingleton<IAppSettings, AppSettings>();
             services.AddSingleton<ISecretsSettings, SecretsSettings>();
-            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IProductMainService, ProductService.BLL.ProductMainService>();
 
             // Добавляем сервисы
             builder.Services.AddControllers();

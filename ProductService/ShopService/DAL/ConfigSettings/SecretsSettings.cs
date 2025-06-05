@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace DAL.ConfigSettings
+namespace ShopService.DAL
 {
     /// <summary>
     /// Конфиденциальные настройки приложения

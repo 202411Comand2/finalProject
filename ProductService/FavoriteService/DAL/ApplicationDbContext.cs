@@ -1,7 +1,7 @@
-﻿using Domain.Entities;
+﻿using FavoriteService.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL
+namespace FavoriteService.DAL
 {
 	public class ApplicationDbContext : DbContext
 	{

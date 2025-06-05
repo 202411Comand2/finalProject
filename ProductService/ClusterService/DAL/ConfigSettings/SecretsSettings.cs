@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace DAL.ConfigSettings
+namespace ClusterService.DAL
 {
     /// <summary>
     /// Конфиденциальные настройки приложения

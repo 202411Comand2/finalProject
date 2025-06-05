@@ -1,4 +1,4 @@
-﻿namespace IdentityService.DAL.Abstractions
+﻿namespace IdentityService.DAL
 {
 	public interface IRepository<T> where T : class
 	{

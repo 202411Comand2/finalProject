@@ -1,12 +1,6 @@
-﻿using BLL.Dto.ReplyComment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Entities;
+﻿using CommentService.Domain;
 
-namespace BLL.Adapters
+namespace CommentService.BLL
 {
     public class ReplyCommentAdapter
     {

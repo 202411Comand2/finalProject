@@ -1,9 +1,7 @@
-﻿using DAL.Abstractions;
-using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using static System.Formats.Asn1.AsnWriter;
+﻿using Microsoft.EntityFrameworkCore;
+using ShopService.Domain;
 
-namespace DAL.Repositories
+namespace ShopService.DAL
 {
     public class ShopRepository : BaseRepository<Shop>
     {

@@ -1,13 +1,12 @@
-﻿using BLL.Dto;
-using BLL.Dto.Product;
-using BLL.Products.Abstractions;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using ProductService.BLL;
+using SupperBackEnd.Dto;
 
 namespace API.Controllers.Product
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductController(IProductService productService) : ControllerBase()
+    public class ProductController(IProductMainService productService) : ControllerBase()
     {
 
        
@@ -18,7 +17,7 @@ namespace API.Controllers.Product
             public IActionResult GetById(int id) => Ok($"Product {id}");
        
 
-        private readonly IProductService _productService = productService;
+        private readonly IProductMainService _productService = productService;
 
         /// <summary>
         /// Добавить продукт

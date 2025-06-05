@@ -1,4 +1,4 @@
-﻿namespace DAL.Abstractions
+﻿namespace ClusterService.DAL
 {
 	public interface IContextManager
 	{

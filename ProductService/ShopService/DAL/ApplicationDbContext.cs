@@ -1,7 +1,7 @@
-﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using ShopService.Domain;
 
-namespace DAL
+namespace ShopService.DAL
 {
 	public class ApplicationDbContext : DbContext
 	{

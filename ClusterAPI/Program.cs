@@ -1,10 +1,7 @@
-using BLL.Products;
-using BLL.Products.Abstractions;
-using DAL;
-using DAL.Abstractions;
-using DAL.ConfigSettings;
-using Microsoft.Extensions.Options;
+using ClusterService.BLL;
+using ClusterService.DAL;
 using Microsoft.OpenApi.Models;
+using Platform.DAL;
 
 namespace ClusterAPI
 {
@@ -23,7 +20,7 @@ namespace ClusterAPI
             services.AddSingleton<IContextManager, ContextManager>();
             services.AddSingleton<IAppSettings, AppSettings>();
             services.AddSingleton<ISecretsSettings, SecretsSettings>();
-            services.AddTransient<IClusterService, ClusterService>();
+            services.AddTransient<IClusterMainService, ClusterService.BLL.ClusterMainService>();
             services.AddTransient<ISearchClusterService, SearchClusterService>();
 
             // Добавляем сервисы
