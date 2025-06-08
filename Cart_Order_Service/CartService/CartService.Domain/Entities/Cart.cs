@@ -8,7 +8,7 @@ namespace Domain.Entities
     /// Корзина пользователя
     /// </summary>
 
-    [Table("Carts")]
+    [Table("Cart")]
     public class Cart : IDbEntity
     {
         /// <summary>
@@ -17,11 +17,11 @@ namespace Domain.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        /// <summary>
+        /*/// <summary>
         /// Id позиции товара
         /// </summary>
         [Required, Column("product_id")]
-        public int ProductId { get; set; }
+        public int ProductId { get; set; }*/
 
         /// <summary>
         /// Количество товара
@@ -30,20 +30,27 @@ namespace Domain.Entities
         public int Count { get; set; } = 1;
 
         /// <summary>
+        /// Цена товара
+        /// </summary>
+        [Column("price")]
+        public decimal Price { get; set; } = 1;
+
+        /// <summary>
+        /// Скидка
+        /// </summary>
+        [Column("discount")]
+        public decimal Discount { get; set; } = 1;
+
+        /// <summary>
         /// Дата добавления товара в корзину
         /// </summary>
         [Column("date_created")]
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
-
         #region связи
 
         public int UserId { get; set; }
-        [ForeignKey("UserId")]
-        public User User { get; set; }
-
-        [ForeignKey(nameof(ProductId))]
-        public Product product { get; set; }
+        public int ProductId { get; set; }
 
         #endregion
 

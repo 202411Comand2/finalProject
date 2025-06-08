@@ -1,29 +1,27 @@
-п»їusing BLL.Abstractions;
+using BLL.Abstractions;
 using BLL.Dto;
-using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using SupperBackEndDto;
 
-namespace OrderApi.Controllers
+namespace CartApi.Controllers
 {
-
     [ApiController]
     [Route("api/[controller]")]
-    public class OrderController(IOrderService orderService, CancellationToken token) : ControllerBase()
+    public class CartController(ICartService cartService, CancellationToken token) : ControllerBase()
     {
-        private readonly IOrderService _orderService = orderService;
+        private readonly ICartService _cartService = cartService;
         private readonly CancellationToken _token = token;
 
         /// <summary>
-        /// РЎРѕР·РґР°С‚СЊ Р·Р°РєР°Р·
+        /// Добавить товар в корзину/обновить количество
         /// </summary>
         [HttpPost("AddProduct")]
-        public async Task<ActionResult<bool>> AddProduct([FromQuery] CreateOrderDto dto)
+        public async Task<ActionResult<int>> AddProduct([FromQuery] AddCartDto dto)
         {
-            AnswerWithBackendDto<OrderDto> result = new();
+            AnswerWithBackendDto<CartDto> result = new();
             try
             {
-                result = await _orderService.AddOrder(dto, _token);
+                result = await _cartService.AddCartProduct(dto, token);
             }
             catch (Exception ex)
             {
@@ -34,20 +32,20 @@ namespace OrderApi.Controllers
             {
                 return BadRequest(result.ErrorLog);
             }
-            return Ok(true);
+            return Ok(result.ObjectDto.Id);
         }
 
 
         /// <summary>
-        /// РћР±РЅРѕРІРёС‚СЊ СЃС‚Р°С‚СѓСЃ С‚РµРєСѓС‰РµРіРѕ Р·Р°РєР°Р·Р°
+        /// Удалить товар из корзины
         /// </summary>
         [HttpDelete("DeleteProduct")]
-        public async Task<ActionResult<int>> DeleteProduct([FromBody] int id, OrderStatus orderStatus)
+        public async Task<ActionResult<int>> DeleteProduct([FromBody] int id)
         {
-            AnswerWithBackendDto<OrderDto> result = new();
+            AnswerWithBackendDto<CartDto> result = new();
             try
             {
-                result = await _orderService.UpdateOrderStatus(id, orderStatus, _token);
+                result = await _cartService.DeleteProduct(id);
             }
             catch (Exception ex)
             {
@@ -62,15 +60,15 @@ namespace OrderApi.Controllers
         }
 
         /// <summary>
-        /// РџРѕР»СѓС‡РёС‚СЊ Р·Р°РєР°Р·С‹ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        /// Получить корзину пользователя
         /// </summary>
-        [HttpGet("GetOrderUser")]
-        public async Task<ActionResult<string>> GetOrderUser([FromBody] int userId)
+        [HttpGet("GetCartUser")]
+        public async Task<ActionResult<string>> GetCartUser([FromBody] int userId)
         {
-            AnswerWithBackendDto<OrderDto> result = new();
+            AnswerWithBackendDto<CartDto> result = new();
             try
             {
-                result = await _orderService.GetOrderUser(userId, _token);
+                result = await _cartService.GetCartUser(userId);
             }
             catch (Exception ex)
             {
