@@ -35,20 +35,20 @@ namespace DAL.Repositories
         {
             using (var context = CreateDatabaseContext())
             {
-                var cartList = await context.Carts.Where(x => x.UserId == cart.UserId && x.ProductId == cart.ProductId).ToListAsync())
-                
+                /*var cartList = await context.Carts.Where(x => x.UserId == cart.UserId && x.ProductId == cart.ProductId).ToListAsync());
+                ;
                 bool cartExists = cartList.Any();
                 if (cartExists == false)
                 {
                     await context.Carts.AddAsync(cart);
-                    await context.SaveChangesAsync();
+                    await context.SaveChangesAsync();*/
                     return true;
-                }
+                /*}
                 else
                 {
                     UpdateCountProductInCart(cart.UserId, cart.ProductId, cart.Count);
                     return true;
-                }  
+                } */ 
             }
         }
 
@@ -61,7 +61,7 @@ namespace DAL.Repositories
         /// <returns></returns>
         public async Task<bool> UpdateCountProductInCart(int userId, int productId, decimal count)
         {
-            try
+           /* try
             {
                 using (var context = CreateDatabaseContext())
                 {
@@ -69,14 +69,14 @@ namespace DAL.Repositories
                     cart!.Count = count;
                     await context.Carts.AddAsync(cart);
                     await context.SaveChangesAsync();
-
+           */
                     return true;
-                }
+           /*     }
             }
             catch (Exception)
             {
                 return false;
-            }
+            }*/
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace DAL.Repositories
         {
             using (var context = CreateDatabaseContext())
             {
-                var cartList = await context.Carts.Where(x => x.UserId == cart.UserId && x.ProductId == cart.ProductId).ToListAsync())
+                /*var cartList = await context.Carts.Where(x => x.UserId == cart.UserId && x.ProductId == cart.ProductId).ToListAsync());
 
                 bool cartExists = cartList.Any();
                 if (cartExists == true)
@@ -97,7 +97,7 @@ namespace DAL.Repositories
                     //object value = await context.Carts.RemoveAsync(cart);
                     await context.SaveChangesAsync();
                     return true;
-                }
+                }*/
 
                 return false;
             }
