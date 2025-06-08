@@ -9,6 +9,10 @@ namespace API.Controllers.Product
     [Route("api/[controller]")]
     public class ClusterController(IClusterMainService clusterService) : ControllerBase
     {
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id) => Ok($"Product {id}");
+
+
         private readonly IClusterMainService _clusterService = clusterService;
 
         [HttpPost("add")]

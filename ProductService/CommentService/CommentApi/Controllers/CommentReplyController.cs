@@ -11,6 +11,8 @@ namespace API.Controllers.Product
 
         ICommentReplyService _commentReplyService = commentReplyService;
 
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id) => Ok($"Product {id}");
         /// <summary>
         /// Добавить ответ на комментарий пользователя со стороны магазина (id комментария пользователя)
         /// </summary>

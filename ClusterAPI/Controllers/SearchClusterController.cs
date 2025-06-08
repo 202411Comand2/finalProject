@@ -10,7 +10,12 @@ namespace API.Controllers.Product
                                                                                                                     ): ControllerBase
     {
 
+
         private readonly ISearchClusterService _searchClusterService = searchClusterService;
+
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id) => Ok($"Product {id}");
 
         [HttpPost("add")]
         public async Task<ActionResult<int>> Add([FromBody] AddSearchClusterDto addSearchClusterDto)

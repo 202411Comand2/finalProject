@@ -34,10 +34,17 @@ services:
       dockerfile: ClusterAPI/Dockerfile
 
 
-  ocelotwebapigr:
-    image: ${DOCKER_REGISTRY-}ocelotwebapigr
+  # ocelotwebapigr:
+  #   image: ${DOCKER_REGISTRY-}ocelotwebapigr
+  #   build:
+  #     context: .
+  #     dockerfile: OcelotWebApiGr/OcelotWebApiGr/Dockerfile
+
+
+
+  ocleot_https:
+    image: ${DOCKER_REGISTRY-}ocleothttps
     build:
       context: .
-      dockerfile: OcelotWebApiGr/OcelotWebApiGr/Dockerfile
-
+      dockerfile: OcelotWebApiGr/Ocleot_https/Dockerfile
 

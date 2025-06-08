@@ -14,6 +14,10 @@
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "FileCacheOptions": {
         "TtlSeconds": 60
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
       }
 
     },
@@ -68,21 +72,7 @@
         "TtlSeconds": 60
       }
     },
-    { //cluster
-      "DownstreamPathTemplate": "/api/SearchCluster/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 7222
-        }
-      ],
-      "UpstreamPathTemplate": "/gateway/SearchCluster/{everything}", // http://localhost:5010/gateway/shop/1
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
-      "FileCacheOptions": {
-        "TtlSeconds": 60
-      }
-    },
+
 
 
     { // comment

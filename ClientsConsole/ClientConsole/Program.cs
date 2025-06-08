@@ -8,7 +8,7 @@ namespace ClientConsole
     {
         static private HttpClient? client = new HttpClient()
         {
-            BaseAddress = new Uri("http://host.docker.internal:5010")
+            BaseAddress = new Uri("https://host.docker.internal:5011")
         };
         static async Task Main()
         {
