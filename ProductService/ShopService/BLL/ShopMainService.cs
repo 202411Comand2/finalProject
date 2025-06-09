@@ -1,4 +1,5 @@
-﻿using ShopService.DAL;
+﻿using Rabbit.Platform;
+using ShopService.DAL;
 using ShopService.Domain;
 using SupperBackEnd.Dto;
 
@@ -10,10 +11,15 @@ namespace ShopService.BLL
     public class ShopMainService : IShopMainService
     {
         private readonly ShopRepository _shopRepository;
-        public ShopMainService(IContextManager contextManager)
+        private readonly IMessagePublisher _messagePublisher;
+
+        public ShopMainService(IContextManager contextManager, 
+            IMessagePublisher messagePublisher)
         {
             _shopRepository = new ShopRepository(contextManager);
+            _messagePublisher = messagePublisher;
         }
+
         public async Task<AnswerWithBackendDto<ShopDto>> CreateShop(AddShopDto addShopDto)
         {
             AnswerWithBackendDto<ShopDto> answerWithBackendDto = new();
@@ -57,6 +63,9 @@ namespace ShopService.BLL
             shop.IsDelete = true;
             // await _shopRepository.DeleteShopWithProducts(shop);
             answerWithBackendDto.AddObject(ShopAdapter.ConvertFromEntitieToDTO(await _shopRepository.Update(shop)));
+
+            SendMessageToRabbitAsync(shop.Id, RoutingKeys.ShopDeleted);
+
             return answerWithBackendDto;
         }
 
@@ -143,10 +152,14 @@ namespace ShopService.BLL
             return answerWithBackendDto;
         }
 
-
-        private async Task DeleteProduct() 
+        /// <summary>
+        /// Отправка сообщения в RabbitMQ о том, что магазин был удалён.
+        /// </summary>
+        /// <param name="shopId">Идентификатор магазина</param>
+        /// <param name="routingKey">Ключ маршрутизации сообщения.</param>
+        private async void SendMessageToRabbitAsync(int shopId, RoutingKeys routingKey)
         {
-        
+            await _messagePublisher.SendMessageAsync<ShopChangeMessage>(new ShopChangeMessage(shopId), routingKey, "shop.exchange");
         }
     }
 }

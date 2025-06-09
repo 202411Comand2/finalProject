@@ -2,6 +2,7 @@ using Microsoft.OpenApi.Models;
 using Platform.DAL;
 using ProductService.BLL;
 using ProductService.DAL;
+using Rabbit.Platform;
 
 namespace ProductAPI
 {
@@ -15,12 +16,17 @@ namespace ProductAPI
             var services = builder.Services;
 
             configuration.AddJsonFile("Properties/secretsSettings.json");
+            configuration.AddJsonFile("Properties/rabbitSettings.json");
 
             services.Configure<RedisOptions>(configuration.GetSection(nameof(RedisOptions)));
             services.AddSingleton<IContextManager, ContextManager>();
             services.AddSingleton<IAppSettings, AppSettings>();
             services.AddSingleton<ISecretsSettings, SecretsSettings>();
-            services.AddTransient<IProductMainService, ProductService.BLL.ProductMainService>();
+            services.AddTransient<IProductMainService, ProductMainService>();
+            services.AddSingleton<IRabbitSettings, RabbitSettings>();
+            services.AddSingleton<IRabbitMQService, RabbitMQService>();
+            services.AddSingleton<IMessageConsumer, MessageConsumer>();
+            services.AddHostedService<ShopToProductMessagesConsumer>();
 
             // Добавляем сервисы
             builder.Services.AddControllers();

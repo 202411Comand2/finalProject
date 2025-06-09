@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Domain\Rabbit.Platform.csproj" />
     <ProjectReference Include="..\Domain\ShopService.Domain.csproj" />
   </ItemGroup>
 

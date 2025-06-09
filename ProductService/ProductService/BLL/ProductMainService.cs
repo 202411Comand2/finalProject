@@ -202,5 +202,20 @@ namespace ProductService.BLL
             answerWithBackendDto.AddObject(ProductAdapter.ConvertToDTOProduct(items));
             return answerWithBackendDto;
         }
+
+        public async Task DeleteShopAllProductsAsync(int shopId)
+        {
+            var items = await _productRepository.GetShopProducts(shopId);
+            if (items.Count == 0)
+            {
+                return;
+            }
+            foreach (var item in items)
+            {
+                item.IsDeleted = true;
+            }
+
+            await _productRepository.UpdateRange(items);
+        }
     }
 }

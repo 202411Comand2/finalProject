@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Platform.DAL;
+using ProductService.Domain;
 
 namespace ProductService.DAL
 {
@@ -88,6 +89,15 @@ namespace ProductService.DAL
                     return true;
                 }
                 catch (Exception ex) { return false; }
+            }
+        }
+
+        public async Task UpdateRange(IEnumerable<T> items)
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                context.Set<T>().UpdateRange(items);
+                await context.SaveChangesAsync();
             }
         }
     }

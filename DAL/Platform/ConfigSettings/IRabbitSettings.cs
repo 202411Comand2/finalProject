@@ -19,5 +19,15 @@
         /// Пароль пользователя для работы с RabbitMQ.
         /// </summary>
         string RabbitUserPassword { get; }
+
+        /// <summary>
+        /// Название обменника RabbitMQ по умолчанию.
+        /// </summary>
+        string RabbitDefaultExchangeName { get; }
+
+        /// <summary>
+        /// Имя очереди RabbitMQ по умолчанию.
+        /// </summary>
+        string RabbitDefaultQueueName { get; }
     }
 }

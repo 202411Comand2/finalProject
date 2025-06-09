@@ -51,5 +51,12 @@ namespace ProductService.BLL
         /// <param name="ClusterIds"></param>
         /// <returns></returns>
         public Task<AnswerWithBackendDto<ProductDto>> GetProductsByCluster(List<int> ClusterIds);
+        
+        /// <summary>
+        /// Удаляет все продукты магазина по идентификатору магазина.
+        /// </summary>
+        /// <param name="shopId">Идентификатор магазина.</param>
+        /// <returns>Задачу на удаление продуктов из магазина.</returns>
+        public Task DeleteShopAllProductsAsync(int shopId);
     }
 }
