@@ -17,16 +17,12 @@ namespace ProductService.BLL
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            do
-            {
-                await _consumer.ProcessMessageAsync<ShopChangeMessage>(
-                    DeleteShopAllProduct,
-                    RoutingKeys.ShopDeleted,
-                    "shop.exchange",
-                    "shop.queue"
-                );
-            } while (!cancellationToken.IsCancellationRequested);
-            
+            await _consumer.ProcessMessageAsync<ShopChangeMessage>(
+                DeleteShopAllProduct,
+                RoutingKeys.ShopDeleted,
+                "shop.exchange",
+                "shop.queue"
+            );
         }
 
         private async Task DeleteShopAllProduct(ShopChangeMessage message)

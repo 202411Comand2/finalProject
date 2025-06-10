@@ -24,8 +24,8 @@ namespace Rabbit.Platform
         /// <inheritdoc />
         public async Task ProcessMessageAsync<T>(Func<T, Task> handler, RoutingKeys routingKey, string exchange = "", string queue = "") where T : IMessage
         {
-            using var connection = await _rabbitMQService.CreateConnectionAsync();
-            using var channel = await connection.CreateChannelAsync();
+            var connection = await _rabbitMQService.CreateConnectionAsync();
+            var channel = await connection.CreateChannelAsync();
 
             if (string.IsNullOrEmpty(exchange))
             {
