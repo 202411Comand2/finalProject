@@ -1,9 +1,7 @@
-using BLL.Products;
-using BLL.Products.Abstractions;
-using DAL;
-using DAL.Abstractions;
-using DAL.ConfigSettings;
+using CommentService.DAL;
+using CommentService.BLL;
 using Microsoft.OpenApi.Models;
+using Platform.DAL;
 
 namespace CommentApi
 {
@@ -22,7 +20,7 @@ namespace CommentApi
             services.AddSingleton<IContextManager, ContextManager>();
             services.AddSingleton<IAppSettings, AppSettings>();
             services.AddSingleton<ISecretsSettings, SecretsSettings>();
-            services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<ICommentMainService, CommentService.BLL.CommentMainService>();
             services.AddTransient<ICommentReplyService, CommentReplyService>();
 
             // Добавляем сервисы

@@ -1,9 +1,3 @@
-using System;
-using System.Threading;
-using CSharpx;
-using DAL;
-using Microsoft.EntityFrameworkCore;
-using RestSharp.Authenticators;
 using RestSharp;
 
 namespace FinalProjectTests

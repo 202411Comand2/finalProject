@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using IdentityService.DAL.Abstractions;
 
-namespace IdentityService.DAL.Entities
+namespace IdentityService.DAL
 {
 	public class User : BaseEntity
 	{

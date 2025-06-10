@@ -1,10 +1,8 @@
-﻿using DAL.Abstractions;
-using DAL.ConfigSettings;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace DAL
+namespace ProductService.DAL
 {
-	public class ContextManager : IContextManager
+    public class ContextManager : IContextManager
 	{
         /// <summary>
         /// Перезаписать бд,путём удаления старой бд и замена на новую

@@ -1,7 +1,7 @@
-﻿using Domain.Abstractions;
+﻿using Platform.DAL;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL.Abstractions
+namespace ClusterService.DAL
 {
     public abstract class BaseRepository<T> : IRepository<T> where T : class
     {

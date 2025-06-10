@@ -1,7 +1,7 @@
-﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using ProductService.Domain;
 
-namespace DAL
+namespace ProductService.DAL
 {
 	public class ApplicationDbContext : DbContext
 	{

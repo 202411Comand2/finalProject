@@ -1,8 +1,4 @@
-﻿using BLL.Identity;
-using BLL.Identity.Abstractions;
-using DAL;
-using DAL.Abstractions;
-using Domain.Entities;
+﻿using IdentityService.DAL.Entities;
 using Microsoft.Extensions.Options;
 using Moq;
 using Xunit;

@@ -13,10 +13,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ProductService/FavoriteService/FavoriteAPI/FavoriteAPI.csproj", "ProductService/FavoriteService/FavoriteAPI/"]
-COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEndDto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
-COPY ["ProductService/FavoriteService/BLL/BLL.csproj", "ProductService/FavoriteService/BLL/"]
-COPY ["ProductService/FavoriteService/DAL/DAL.csproj", "ProductService/FavoriteService/DAL/"]
-COPY ["ProductService/FavoriteService/Domain/Domain.csproj", "ProductService/FavoriteService/Domain/"]
+COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEnd.Dto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
+COPY ["ProductService/FavoriteService/BLL/FavoriteService.BLL.csproj", "ProductService/FavoriteService/BLL/"]
+COPY ["ProductService/FavoriteService/DAL/FavoriteService.DAL.csproj", "ProductService/FavoriteService/DAL/"]
+COPY ["ProductService/FavoriteService/Domain/FavoriteService.Domain.csproj", "ProductService/FavoriteService/Domain/"]
+COPY ["DAL/Platform.DAL.csproj", "DAL/"]
 RUN dotnet restore "./ProductService/FavoriteService/FavoriteAPI/FavoriteAPI.csproj"
 COPY . .
 WORKDIR "/src/ProductService/FavoriteService/FavoriteAPI"

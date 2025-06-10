@@ -1,8 +1,6 @@
-﻿using DAL.Abstractions;
-using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using CommentService.Domain;
 
-namespace DAL.Repositories
+namespace CommentService.DAL
 {
     
     public class CommentReplyRepository : BaseRepository<CommentReply>

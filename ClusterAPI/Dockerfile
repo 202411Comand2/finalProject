@@ -13,10 +13,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ClusterAPI/ClusterAPI.csproj", "ClusterAPI/"]
-COPY ["ProductService/ClusterService/BLL/BLL.csproj", "ProductService/ClusterService/BLL/"]
-COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEndDto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
-COPY ["ProductService/ClusterService/DAL/DAL.csproj", "ProductService/ClusterService/DAL/"]
-COPY ["ProductService/ClusterService/Domain/Domain.csproj", "ProductService/ClusterService/Domain/"]
+COPY ["ProductService/ClusterService/BLL/ClusterService.BLL.csproj", "ProductService/ClusterService/BLL/"]
+COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEnd.Dto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
+COPY ["ProductService/ClusterService/DAL/ClusterService.DAL.csproj", "ProductService/ClusterService/DAL/"]
+COPY ["DAL/Platform.DAL.csproj", "DAL/"]
+COPY ["ProductService/ClusterService/Domain/ClusterService.Domain.csproj", "ProductService/ClusterService/Domain/"]
 RUN dotnet restore "./ClusterAPI/ClusterAPI.csproj"
 COPY . .
 WORKDIR "/src/ClusterAPI"

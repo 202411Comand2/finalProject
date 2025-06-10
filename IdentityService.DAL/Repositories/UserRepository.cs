@@ -1,8 +1,4 @@
-﻿using IdentityService.DAL.Abstractions;
-using IdentityService.DAL.Entities;
-using IdentityService.DAL.Exceptions;
-
-namespace IdentityService.DAL.Repositories
+﻿namespace IdentityService.DAL
 {
 	public class UserRepository : IRepository<User>
 	{

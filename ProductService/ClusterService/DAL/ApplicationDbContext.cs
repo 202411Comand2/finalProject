@@ -1,7 +1,7 @@
-﻿using Domain.Entities;
+﻿using ClusterService.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL
+namespace ClusterService.DAL
 {
 	public class ApplicationDbContext : DbContext
 	{

@@ -1,7 +1,6 @@
-﻿using BLL.Dto.Favorite;
-using Domain.Entities;
+﻿using FavoriteService.Domain;
 
-namespace BLL.Adapters
+namespace FavoriteService.BLL
 {
     public class FavoriteAdapter
     {

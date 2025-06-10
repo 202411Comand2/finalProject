@@ -1,9 +1,8 @@
-using BLL.Product;
-using BLL.Products.Abstractions;
-using DAL;
-using DAL.Abstractions;
-using DAL.ConfigSettings;
 using Microsoft.OpenApi.Models;
+using Platform.DAL;
+using Rabbit.Platform;
+using ShopService.BLL;
+using ShopService.DAL;
 
 namespace ShopAPI
 {
@@ -17,12 +16,16 @@ namespace ShopAPI
             var services = builder.Services;
 
             configuration.AddJsonFile("Properties/secretsSettings.json");
+            configuration.AddJsonFile("Properties/rabbitSettings.json");
 
             services.Configure<RedisOptions>(configuration.GetSection(nameof(RedisOptions)));
             services.AddSingleton<IContextManager, ContextManager>();
             services.AddSingleton<IAppSettings, AppSettings>();
             services.AddSingleton<ISecretsSettings, SecretsSettings>();
-            services.AddTransient<IShopService, ShopService>();
+            services.AddTransient<IShopMainService, ShopMainService>();
+            services.AddSingleton<IRabbitSettings, RabbitSettings>();
+            services.AddSingleton<IRabbitMQService, RabbitMQService>();
+            services.AddSingleton<IMessagePublisher, MessagePublisher>(); 
 
             // Добавляем сервисы
             builder.Services.AddControllers();

@@ -1,14 +1,6 @@
-﻿using BLL.Dto;
-using BLL.Dto.ReplyComment;
-using DAL.Repositories;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SupperBackEnd.Dto;
 
-namespace BLL.Products.Abstractions
+namespace CommentService.BLL
 {
     public interface ICommentReplyService
     {

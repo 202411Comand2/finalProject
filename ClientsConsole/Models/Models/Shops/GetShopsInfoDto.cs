@@ -1,4 +1,4 @@
-﻿namespace Models.Shop
+﻿namespace Client.Models
 {
     public class GetShopsInfoDto
     {

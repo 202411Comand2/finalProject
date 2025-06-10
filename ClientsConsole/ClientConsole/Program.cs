@@ -1,5 +1,6 @@
-﻿using System.Text.Json;
+﻿using Client.Models;
 using System.Text;
+using System.Text.Json;
 
 namespace ClientConsole
 {
@@ -57,7 +58,7 @@ namespace ClientConsole
 
             #region Post 
             // Добаление продукта
-            Models.Product.AddProductDto addProductDto = new();
+            AddProductDto addProductDto = new();
             addProductDto.ShopId = 0;
             addProductDto.ClusterId = 0;
             addProductDto.NameProduct = "post ";
@@ -89,7 +90,7 @@ namespace ClientConsole
 
             #region put 
             //Обновить информацию по продукту
-            Models.Product.UpdateProductDto UpdateProductDto = new();
+            UpdateProductDto UpdateProductDto = new();
             UpdateProductDto.ProductId = idResponseObject;
             UpdateProductDto.ClusterId = 0;
             UpdateProductDto.NameProduct = "put update";
@@ -127,7 +128,7 @@ namespace ClientConsole
             httpClient.DefaultRequestHeaders.Add("accept", "text/plain");
 
             // 4. Создаем DTO для удаления
-            Models.Product.DeleteProductDto DeleteProductDto = new();
+            DeleteProductDto DeleteProductDto = new();
             DeleteProductDto.Id = idResponseObject;
 
 
@@ -180,7 +181,7 @@ namespace ClientConsole
 
             #region Post
             #region создание магазина
-            Models.Shop.AddShopDto addShopDto = new();
+            AddShopDto addShopDto = new();
             addShopDto.Name = "modelNumbersdadasdasdas";
             // 2. Подготавливаем данные (объект → JSON)
             string json = JsonSerializer.Serialize(addShopDto);
@@ -205,7 +206,7 @@ namespace ClientConsole
             #endregion
            
             #region получить информацию о магазинах по list
-            Models.Shop.GetShopsInfoDto GetShopDto = new();
+            GetShopsInfoDto GetShopDto = new();
             GetShopDto.ShopIds = new List<int> { 1, 2, 3, 4, 5 };
             // 2. Подготавливаем данные (объект → JSON)
             json = JsonSerializer.Serialize(GetShopDto);
@@ -235,7 +236,7 @@ namespace ClientConsole
             #region put
 
             #region Обновить название магазина
-            Models.Shop.UpdateShopDto UpdateShopDto = new();
+            UpdateShopDto UpdateShopDto = new();
             UpdateShopDto.Id = 1;
             UpdateShopDto.NewName = "Сам лучший магазин";
             // 2. Подготавливаем данные (объект → JSON)
@@ -246,7 +247,7 @@ namespace ClientConsole
 
 
             #region Восстановить магазин
-            Models.Shop.RestoreShopDto RestoreShopDto = new();
+            RestoreShopDto RestoreShopDto = new();
             RestoreShopDto.Id = 1;
             // 2. Подготавливаем данные (объект → JSON)
             response = await client.PutAsync("gateway/Shop/RestoreShop", CreateJson(UpdateShopDto));
@@ -260,7 +261,7 @@ namespace ClientConsole
 
 
             // 4. Создаем DTO для удаления
-            Models.Shop.DeleteShopDto deleteShopDto = new();
+            DeleteShopDto deleteShopDto = new();
             deleteShopDto.Id = 1;
 
             // 5. Создаем DELETE-запрос с телом
@@ -287,7 +288,7 @@ namespace ClientConsole
         {
             #region Post
             #region добавление избранной позиции
-            Models.Favorite.AddFavoriteDto addFavoriteDto = new();
+            AddFavoriteDto addFavoriteDto = new();
             addFavoriteDto.UserId = 12;
             addFavoriteDto.ProductId = 12;
             HttpResponseMessage response = await client.PostAsync("gateway/Favorite/Add", CreateJson(addFavoriteDto));
@@ -300,7 +301,7 @@ namespace ClientConsole
 
 
             // 4. Создаем DTO для удаления
-            Models.Favorite.DeleteFavoriteDto deleteFavoriteDto = new();
+            DeleteFavoriteDto deleteFavoriteDto = new();
             deleteFavoriteDto.IdFavorite = 1;
 
             // 5. Создаем DELETE-запрос с телом
@@ -336,30 +337,30 @@ namespace ClientConsole
         {
             #region Post
             // добавление комментария
-            Models.Comments.Comment.AddCommentDto addDto = new(1,"name",1,1,"commet text",12);
+            AddCommentDto addDto = new(1,"name",1,1,"commet text",12);
             await PostAsync(addDto, "gateway/Comment/Add");
             #endregion
 
             #region Post
             // добавление комментария
-            Models.Comments.Comment.AddCommentDto addDto1 = new(2, "name", 1, 1, "commet text", 12);
+            AddCommentDto addDto1 = new(2, "name", 1, 1, "commet text", 12);
             await PostAsync(addDto, "gateway/Comment/Add");
             #endregion
 
             #region delete удаление магазина
             //удаление комменатрия
-            Models.Comments.Comment.DeleteCommentDto deleteDto = new(1);
+            DeleteCommentDto deleteDto = new(1);
             await DeleteAsync(deleteDto, "gateway/Comment/Delete");
             #endregion
 
             #region put
             // обновление комментария
-            Models.Comments.Comment.UpdateCommentDto updateDto = new(1, "Новый комментарий",4);
+            UpdateCommentDto updateDto = new(1, "Новый комментарий",4);
             await PutAsync(updateDto, "gateway/Comment/Update");
             #endregion
 
             #region get получить всё комментарии по магазину
-            Models.Comments.Comment.GetAllCommentsProduct getDto = new(1);
+            GetAllCommentsProduct getDto = new(1);
             await GetAsync(getDto, $"gateway/Comment/GetCommentsProduct?IdProduct={getDto.IdProduct}");
             #endregion
 
@@ -368,19 +369,19 @@ namespace ClientConsole
             //ответные комментария CommentReply
             #region Post
             // добавление комментария
-            Models.Comments.ReplyComment.AddReplyCommentDto addRepDto = new(2,"Сам такой");
+            AddReplyCommentDto addRepDto = new(2,"Сам такой");
             await PostAsync(addRepDto, "gateway/CommentReply/Add");
             #endregion
 
             #region delete удаление комментария
             //удаление комменатрия
-            Models.Comments.ReplyComment.DeleteCommentReplyDto deletdRepDto = new(1);
+            DeleteCommentReplyDto deletdRepDto = new(1);
             await DeleteAsync(deletdRepDto, "gateway/CommentReply/Delete");
             #endregion
 
             #region put
             // обновление комментария
-            Models.Comments.ReplyComment.UpdateCommentReplyDto updateRepDto = new(1, "Новый комментарий исправленый");
+            UpdateCommentReplyDto updateRepDto = new(1, "Новый комментарий исправленый");
             await PutAsync(updateRepDto, "gateway/CommentReply/Update");
             #endregion
 
@@ -393,19 +394,19 @@ namespace ClientConsole
         {
             #region Post
             // добавление кластера
-            Models.Cluster.Clusters.AddClusterDto addDto = new("Как-то имя кластера","");
+            AddClusterDto addDto = new("Как-то имя кластера","");
             await PostAsync(addDto, "gateway/Cluster/Add");
             #endregion
 
             #region put
             // обновление кластера
-            Models.Cluster.Clusters.UpdateCluseterDto updateDto = new(1,"Обновлённое название кластера","");
+            UpdateCluseterDto updateDto = new(1,"Обновлённое название кластера","");
             await PutAsync(updateDto, "gateway/Cluster/Update");
             #endregion
 
             #region delete удаление магазина
             //удаление кластера
-            Models.Cluster.Clusters.DeleteClusterDto deleteDto = new(1);
+            DeleteClusterDto deleteDto = new(1);
             await DeleteAsync(deleteDto, "gateway/Cluster/Delete");
             #endregion
 
@@ -414,7 +415,7 @@ namespace ClientConsole
 
             await GetAsync("", $"gateway/Cluster/GetRootElements");
 
-            Models.Cluster.Clusters.GetClusterDto getClusterDto = new("Обновлённое название кластера");
+            GetClusterDto getClusterDto = new("Обновлённое название кластера");
             await GetAsync("", $"gateway/Cluster/GetChildrenElements?ClusterName={getClusterDto.ClusterName}");
             #endregion
             

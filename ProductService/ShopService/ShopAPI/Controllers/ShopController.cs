@@ -1,8 +1,6 @@
-﻿using BLL.Dto;
-using BLL.Dto.Shop;
-using BLL.Products.Abstractions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using ShopService.BLL;
+using SupperBackEnd.Dto;
 
 namespace API.Controllers.Product
 {
@@ -11,9 +9,9 @@ namespace API.Controllers.Product
     [ApiController]
     [Route("api/[controller]")]
     
-    public class ShopController(IShopService shopService) : ControllerBase()
+    public class ShopController(IShopMainService shopService) : ControllerBase()
     {
-        private readonly IShopService _shopService = shopService;
+        private readonly IShopMainService _shopService = shopService;
 
 
         [HttpGet("{id}")]

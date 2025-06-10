@@ -1,10 +1,6 @@
-﻿using BLL.Dto;
-using BLL.Dto.Comment;
-using BLL.Dto.ReplyComment;
-using BLL.Products;
-using BLL.Products.Abstractions;
-using Domain.Entities;
+﻿using CommentService.BLL;
 using Microsoft.AspNetCore.Mvc;
+using SupperBackEnd.Dto;
 
 namespace API.Controllers.Product
 {

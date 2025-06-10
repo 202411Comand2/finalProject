@@ -1,11 +1,5 @@
-﻿using BLL.Dto.Cluster;
-using BLL.Dto.Shop;
+﻿using ClusterService.BLL;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinalProjectTests.Product
 {

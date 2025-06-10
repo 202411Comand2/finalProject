@@ -1,4 +1,4 @@
-﻿namespace IdentityService.DAL.Exceptions
+﻿namespace IdentityService.DAL
 {
 	/// <summary>
 	/// Represents error that occur when requested entity does not exist in database

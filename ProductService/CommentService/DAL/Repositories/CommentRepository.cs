@@ -1,10 +1,9 @@
-﻿using DAL.Abstractions;
-using Domain.Entities;
+﻿using CommentService.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL.Repositories
+namespace CommentService.DAL
 {
-    public class CommentRepository : BaseRepository<Comment>
+    public class CommentRepository : BaseRepository<Domain.Comment>
     {
         public CommentRepository(IContextManager manager) : base(manager)
         {
@@ -16,7 +15,7 @@ namespace DAL.Repositories
         /// </summary>
         /// <param name="idProduct">id продукта по которому нужно получить все комментарии пользователей</param>
         /// <returns></returns>
-        public async Task<List<Comment>> GetAllCommentOnTheProduct(int idProduct)
+        public async Task<List<Domain.Comment>> GetAllCommentOnTheProduct(int idProduct)
         {
             using (var context = CreateDatabaseContext())
             {
@@ -50,7 +49,7 @@ namespace DAL.Repositories
         /// <param name="idUser">ID пользователя</param>
         /// <param name="idProduct">ID комментария</param>
         /// <returns>Возвращает отзыв пользователя</returns>
-        public async Task<Comment?> GetCommentUser(int idUser, int idProduct)
+        public async Task<Domain.Comment?> GetCommentUser(int idUser, int idProduct)
         {
             using (var context = CreateDatabaseContext())
             {
@@ -64,7 +63,7 @@ namespace DAL.Repositories
         /// </summary>
         /// <param name="comment">Объект комментарий</param>
         /// <returns></returns>
-        public  async Task<Comment> Add(Comment comment , CommentReply reply) 
+        public  async Task<Domain.Comment> Add(Domain.Comment comment , CommentReply reply) 
         {
             using (var context = CreateDatabaseContext())
             {

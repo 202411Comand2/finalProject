@@ -1,4 +1,6 @@
-﻿namespace DAL.Abstractions
+﻿using ProductService.Domain;
+
+namespace ProductService.DAL
 {
 	public interface IRepository<T> where T : class
 	{
@@ -9,5 +11,6 @@
 		public Task<T> Update(T entity);
 		public Task<T> SaveOrUpdate(T entity);
 		public Task<bool> Delete(T entity);
-	}
+		public Task UpdateRange(IEnumerable<T> items);
+    }
 }

@@ -1,18 +1,8 @@
-﻿using DAL.Abstractions;
-using Domain.Entities;
+﻿using ClusterService.Domain;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DAL.Repositories
+namespace ClusterService.DAL
 {
-
-
-   
     public class SearchClusterRepository : BaseRepository<SearchCluster>
     {
         public SearchClusterRepository(IContextManager manager) : base(manager)

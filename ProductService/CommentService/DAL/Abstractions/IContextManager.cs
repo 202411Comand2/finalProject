@@ -1,4 +1,4 @@
-﻿namespace DAL.Abstractions
+﻿namespace CommentService.DAL
 {
 	public interface IContextManager
 	{
