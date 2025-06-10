@@ -202,5 +202,21 @@ namespace ProductService.BLL
             answerWithBackendDto.AddObject(ProductAdapter.ConvertToDTOProduct(items));
             return answerWithBackendDto;
         }
+
+        public async Task<AnswerWithBackendDto<ProductDto>> GetProductById(int id)
+        {
+            AnswerWithBackendDto<ProductDto> answerWithBackendDto = new();
+            var items = await _productRepository.Get(id);
+            if (items == null)
+            {
+                answerWithBackendDto.AddErrorLog("Произошла ошибка при обращении к бд.");
+            }
+            if (items?.Id == 0)
+            {
+                answerWithBackendDto.AddErrorLog($"Данные отсутствуют.");
+            }
+            answerWithBackendDto.AddObject(ProductAdapter.ConvertToDTOProduct(items));
+            return answerWithBackendDto;
+        }
     }
 }

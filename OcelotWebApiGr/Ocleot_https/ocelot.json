@@ -11,13 +11,36 @@
       ],
       "UpstreamPathTemplate": "/gateway/Product/{everything}",
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamHttpMethod": [ "GET"]
+      // ssl проверка, отключена, иначе ошибки
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/Product/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7186
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Product/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "UpstreamHttpMethod": [ "POST", "PUT", "DELETE" ],
       // ssl проверка, отключена, иначе ошибки
       "AuthenticationOptions": { //аутефикация
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       }
     },
+
+
+
+
+
+
+
+
 
 
 

@@ -10,6 +10,8 @@ namespace ProductService.DAL
 
         }
 
+        
+
         /// <summary>
         /// Получить продукты по магазину
         /// </summary>

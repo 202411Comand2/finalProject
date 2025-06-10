@@ -51,5 +51,12 @@ namespace ProductService.BLL
         /// <param name="ClusterIds"></param>
         /// <returns></returns>
         public Task<AnswerWithBackendDto<ProductDto>> GetProductsByCluster(List<int> ClusterIds);
+
+        /// <summary>
+        /// Получить информацию о продукте по id 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<AnswerWithBackendDto<ProductDto>> GetProductById(int id);
     }
 }
