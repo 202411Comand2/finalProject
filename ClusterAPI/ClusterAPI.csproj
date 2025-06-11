@@ -25,10 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProductService\ClusterService\BLL\BLL.csproj" />
-    <ProjectReference Include="..\ProductService\ClusterService\DAL\DAL.csproj" />
-    <ProjectReference Include="..\ProductService\ClusterService\Domain\Domain.csproj" />
-    <ProjectReference Include="..\ProductService\SupperDto\SupperBackEndDto\SupperBackEndDto.csproj" />
+    <ProjectReference Include="..\ProductService\ClusterService\BLL\ClusterService.BLL.csproj" />
+    <ProjectReference Include="..\ProductService\ClusterService\DAL\ClusterService.DAL.csproj" />
+    <ProjectReference Include="..\ProductService\ClusterService\Domain\ClusterService.Domain.csproj" />
+    <ProjectReference Include="..\ProductService\SupperDto\SupperBackEndDto\SupperBackEnd.Dto.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,15 +1,12 @@
-﻿using BLL.Dto.Cluster;
-using BLL.Dto.SearchCluster;
-using BLL.Products;
-using BLL.Products.Abstractions;
-using Domain.Entities;
+﻿using ClusterService.BLL;
+using ClusterService.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Product
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SearchClusterController(ISearchClusterService searchClusterService, IClusterService clusterService//, IProductService productService)
+    public class SearchClusterController(ISearchClusterService searchClusterService, IClusterMainService clusterService//, IProductService productService)
                                                                                                                     ): ControllerBase
     {
 

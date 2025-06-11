@@ -1,10 +1,5 @@
-﻿using BLL.Dto.Shop;
-using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RestSharp;
+using ShopService.BLL;
 
 namespace FinalProjectTests.Product
 {

@@ -1,17 +1,15 @@
-﻿using BLL.Dto;
-using BLL.Dto.Cluster;
-using BLL.Products.Abstractions;
-using Domain.Entities;
+﻿using ClusterService.BLL;
 using Microsoft.AspNetCore.Mvc;
+using SupperBackEnd.Dto;
 
 //
 namespace API.Controllers.Product
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ClusterController(IClusterService clusterService) : ControllerBase
+    public class ClusterController(IClusterMainService clusterService) : ControllerBase
     {
-        private readonly IClusterService _clusterService = clusterService;
+        private readonly IClusterMainService _clusterService = clusterService;
 
         [HttpPost("add")]
         public async Task<ActionResult<int>> Add([FromBody] AddClusterDto clusterDto)

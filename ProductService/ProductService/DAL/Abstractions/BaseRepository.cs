@@ -1,7 +1,8 @@
-﻿using Domain.Abstractions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Platform.DAL;
+using ProductService.Domain;
 
-namespace DAL.Abstractions
+namespace ProductService.DAL
 {
     public abstract class BaseRepository<T> : IRepository<T> where T : class
     {
@@ -88,6 +89,15 @@ namespace DAL.Abstractions
                     return true;
                 }
                 catch (Exception ex) { return false; }
+            }
+        }
+
+        public async Task UpdateRange(IEnumerable<T> items)
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                context.Set<T>().UpdateRange(items);
+                await context.SaveChangesAsync();
             }
         }
     }

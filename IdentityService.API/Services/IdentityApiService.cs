@@ -1,5 +1,4 @@
 using Grpc.Core;
-using IdentityService.API;
 
 namespace IdentityService.API.Services
 {

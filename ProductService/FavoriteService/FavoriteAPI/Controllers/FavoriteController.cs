@@ -1,8 +1,6 @@
-﻿using BLL.Dto;
-using BLL.Dto.Favorite;
-using BLL.Products.Abstractions;
-using Domain.Entities;
+﻿using FavoriteService.BLL;
 using Microsoft.AspNetCore.Mvc;
+using SupperBackEnd.Dto;
 
 namespace API.Controllers.Product
 {

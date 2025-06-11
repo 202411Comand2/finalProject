@@ -30,5 +30,9 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 # Копируем файл конфигурации
+<<<<<<< Updated upstream
 COPY ["OcelotWebApiGr/OcelotWebApiGr/Properties/ocelot.json", "/app/Properties/ocelot.json"]
+=======
+#COPY ["OcelotWebApiGr/OcelotWebApiGr/Properties/ocelot.json", "/app/ocelot.json"]
+>>>>>>> Stashed changes
 ENTRYPOINT ["dotnet", "OcelotWebApiGr.dll"]

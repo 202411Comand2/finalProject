@@ -1,29 +1,17 @@
-﻿using BLL.Identity;
-using BLL.ProductService;
-using DAL.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL.Abstractions;
-using Domain.Entities;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using NpgsqlTypes;
-using BLL.Product;
-using BLL.Products;
-using BLL.Dto;
-using BLL.Dto.Product;
-
+﻿using CommentService.BLL;
+using ClusterService.BLL;
+using FavoriteService.BLL;
+using ProductService.BLL;
+using ShopService.BLL;
 
 namespace Test
 {
     internal class BLLShopServiceTest : IBLLShopServiceTest
     {
-        private ProductService _productService;
-        private ShopService _shopService; // Для создания магазина 
-        private ClusterService _clusterService;
-        private CommentService _commentService;
+        private ProductMainService _productService;
+        private ShopMainService _shopService; // Для создания магазина 
+        private ClusterMainService _clusterService;
+        private CommentMainService _commentService;
         private CommentReplyService _commentReplyService;
         private FavoriteProductService _favoriteProductService;
 
@@ -64,10 +52,10 @@ namespace Test
         /// <returns></returns>
         public BLLShopServiceTest(IContextManager cm)
         {
-            _productService = new ProductService(cm);
-            _shopService = new ShopService(cm);
-            _clusterService = new ClusterService(cm);
-            _commentService = new CommentService(cm);
+            _productService = new ProductMainService(cm);
+            _shopService = new ShopMainService(cm);
+            _clusterService = new ClusterMainService(cm);
+            _commentService = new CommentMainService(cm);
             _commentReplyService = new CommentReplyService(cm);
             _favoriteProductService = new FavoriteProductService(cm);
         }

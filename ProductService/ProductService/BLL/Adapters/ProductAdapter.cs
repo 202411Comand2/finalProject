@@ -1,12 +1,6 @@
-﻿using BLL.Dto.Product;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ProductService.Domain;
 
-namespace BLL.Adapters
+namespace ProductService.BLL
 {
     /// <summary>
     /// Класс адаптер, который служит для преобразования продуктов в DTO и в Entitie
@@ -18,7 +12,7 @@ namespace BLL.Adapters
         /// </summary>
         /// <param name="comment">Продукт Entitie</param>
         /// <returns>ProductDto</returns>
-        public static ProductDto ConvertToDTOProduct(Domain.Entities.Product product)
+        public static ProductDto ConvertToDTOProduct(Product product)
         {
             return new ProductDto()
             {
@@ -59,9 +53,9 @@ namespace BLL.Adapters
         /// </summary>
         /// <param name="comment">Продукты Dto</param>
         /// <returns>Product</returns>
-        public static Domain.Entities.Product ConvertToEntity(ProductDto сommentDto)
+        public static Product ConvertToEntity(ProductDto сommentDto)
         {
-            return new Domain.Entities.Product()
+            return new Product()
             {
                 Id = сommentDto.ProductId ,
                 ShopId = сommentDto.ShopId ,
@@ -79,9 +73,9 @@ namespace BLL.Adapters
         /// </summary>
         /// <param name="comment">Продукты Dto</param>
         /// <returns>Product</returns>
-        public static Domain.Entities.Product ConvertToEntity(AddProductDto сommentDto)
+        public static Product ConvertToEntity(AddProductDto сommentDto)
         {
-            return new Domain.Entities.Product()
+            return new Product()
             {
                 ShopId = сommentDto.ShopId,
                 ClusterId = сommentDto.ClusterId,
@@ -98,9 +92,9 @@ namespace BLL.Adapters
         /// </summary>
         /// <param name="comment">Продукты Dto</param>
         /// <returns>Product</returns>
-        public static Domain.Entities.Product ConvertToEntity(UpdateProductDto сommentDto)
+        public static Product ConvertToEntity(UpdateProductDto сommentDto)
         {
-            return new Domain.Entities.Product()
+            return new Product()
             {
                 Id = сommentDto.ProductId,
                 ClusterId = сommentDto.ClusterId,

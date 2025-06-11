@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//using BLL.Dto.Product;
-using Domain.Entities;
+﻿using ClusterService.Domain;
 
-namespace BLL.Dto.SearchCluster
+namespace ClusterService.BLL
 {
     public class SearchClusterProductDto
     {
-        public List<Domain.Entities.Cluster> Clusters { get; set; }//= new List<Domain.Entities.Cluster>();
+        public List<Cluster> Clusters { get; set; }//= new List<Domain.Entities.Cluster>();
         public List<int> Products { get;set; } //= new List<Product.ProductDto>();
 
-        public void  SearchClusterProductConnect(List<Domain.Entities.Cluster> clusters,
+        public void  SearchClusterProductConnect(List<Cluster> clusters,
             List<int> products) 
         {
              Clusters = clusters;

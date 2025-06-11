@@ -1,4 +1,4 @@
-﻿namespace DAL.Abstractions
+﻿namespace ProductService.DAL
 {
 	public interface IContextManager
 	{

@@ -2,26 +2,29 @@ using BLL.Abstractions;
 using BLL.Dto;
 using Microsoft.AspNetCore.Mvc;
 using SupperBackEndDto;
+using System.Net;
 
 namespace CartApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CartController(ICartService cartService, CancellationToken token) : ControllerBase()
+    [ProducesResponseType<ProblemDetails>((int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType<ProblemDetails>((int)HttpStatusCode.NotFound)]
+    public class CartController(ICartService cartService) : ControllerBase()
     {
         private readonly ICartService _cartService = cartService;
-        private readonly CancellationToken _token = token;
 
         /// <summary>
         /// Добавить товар в корзину/обновить количество
         /// </summary>
         [HttpPost("AddProduct")]
-        public async Task<ActionResult<int>> AddProduct([FromQuery] AddCartDto dto)
+        [ProducesResponseType<int>((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<int>> AddProduct([FromQuery] AddCartDto dto, CancellationToken cancellationToken)
         {
             AnswerWithBackendDto<CartDto> result = new();
             try
             {
-                result = await _cartService.AddCartProduct(dto, token);
+                result = await _cartService.AddCartProduct(dto, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -33,6 +36,28 @@ namespace CartApi.Controllers
                 return BadRequest(result.ErrorLog);
             }
             return Ok(result.ObjectDto.Id);
+
+            /*
+             public async Task<Results<Ok<FlsCardDataDto>, ProblemHttpResult>>
+            public async Task<Results<Ok, Created, ProblemHttpResult>>
+             * 
+           if (fls is null)
+            {
+                return TypedResults.Problem($"ФЛС с ид. {query.FlsId} не найден", statusCode: (int)HttpStatusCode.NotFound);
+            }
+            catch (ArgumentException ex)
+            {
+                return TypedResults.Problem(ex.Message, statusCode: (int)HttpStatusCode.BadRequest);
+            }
+            return TypedResults.Ok(fls);
+
+            При создании/изменении
+            
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Created)]
+            return dkp.Id is null ? TypedResults.Created() : TypedResults.Ok();
+            return TypedResults.Created();
+             * */
         }
 
 

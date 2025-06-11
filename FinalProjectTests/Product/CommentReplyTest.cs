@@ -1,12 +1,5 @@
-﻿using BLL.Dto.Comment;
-using BLL.Dto.ReplyComment;
+﻿using CommentService.BLL;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FinalProjectTests.Product
 {

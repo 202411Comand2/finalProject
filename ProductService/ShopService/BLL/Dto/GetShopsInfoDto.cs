@@ -1,5 +1,4 @@
-﻿
-namespace BLL.Dto.Shop
+﻿namespace ShopService.BLL
 {
     public class GetShopsInfoDto
     {

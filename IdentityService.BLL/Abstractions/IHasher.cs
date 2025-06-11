@@ -1,4 +1,4 @@
-﻿namespace IdentityService.BLL.Abstractions
+﻿namespace IdentityService.BLL
 {
 	internal interface IHasher
 	{

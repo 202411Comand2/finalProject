@@ -4,6 +4,7 @@ using DAL.Abstractions;
 using DAL.Repositories;
 using Domain.Entities;
 using SupperBackEndDto;
+using System.Threading;
 
 namespace BLL
 {
@@ -15,7 +16,7 @@ namespace BLL
         /// <summary>
         /// Добавление продукта в корзину или обновление количества
         /// </summary>
-        public async Task<AnswerWithBackendDto<CartDto>> AddCartProduct(AddCartDto addCartDto, CancellationToken token)
+        public async Task<AnswerWithBackendDto<CartDto>> AddCartProduct(AddCartDto addCartDto, CancellationToken cancellationToken)
         { 
             return await Task.Run(async () =>
             {
@@ -27,6 +28,7 @@ namespace BLL
                     var userCarts = await _cartRepository.GetListProducts(addCartDto.UserId);
                     var userCart = userCarts.Where(x => x.ProductId == addCartDto.ProductId).FirstOrDefault();
 
+                    cancellationToken.ThrowIfCancellationRequested();
                     if (userCart is not null)
                     {
                         cart = await _cartRepository
@@ -53,7 +55,8 @@ namespace BLL
                 {
                     throw;
                 }
-            });
+            },
+            cancellationToken);
         }
 
         /// <summary>

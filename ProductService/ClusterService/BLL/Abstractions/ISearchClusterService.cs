@@ -1,8 +1,6 @@
-﻿using BLL.Dto.Cluster;
-using BLL.Dto.SearchCluster;
-using Domain.Entities;
+﻿using ClusterService.Domain;
 
-namespace BLL.Products.Abstractions
+namespace ClusterService.BLL
 {
     public interface ISearchClusterService
     {

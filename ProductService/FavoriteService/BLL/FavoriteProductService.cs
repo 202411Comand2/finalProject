@@ -1,17 +1,8 @@
-﻿using BLL.Dto;
-using BLL.Dto.Favorite;
-using BLL.Products.Abstractions;
-using DAL.Abstractions;
-using DAL.Repositories;
-using Domain.Entities;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FavoriteService.DAL;
+using FavoriteService.Domain;
+using SupperBackEnd.Dto;
 
-namespace BLL.Products
+namespace FavoriteService.BLL
 {
     public class FavoriteProductService:IFavoriteProductService
     {
@@ -32,7 +23,7 @@ namespace BLL.Products
                 IdProduct = addFavoriteDto.ProductId,
             };
             answerWithBackendDto.AddObject(
-                Adapters.FavoriteAdapter.ConvertFromEntityToFavoriteDto(
+                FavoriteAdapter.ConvertFromEntityToFavoriteDto(
                     await _favoriteRepository.Add(_favorite)
                     )
                 );
@@ -57,14 +48,14 @@ namespace BLL.Products
         public async Task<AnswerWithBackendDto<FavoriteDto>> GetFavoriteUser(GetFavoriteDto getFavoriteDto)
         {
             AnswerWithBackendDto<FavoriteDto> answerWithBackendDto = new();
-            var items = Adapters.FavoriteAdapter.ConvertFromEntityToFavoriteDto
+            var items = FavoriteAdapter.ConvertFromEntityToFavoriteDto
                 (await _favoriteRepository.GetFavoritesUser(getFavoriteDto.IdUser));
             if (items.Count==0) 
             {
                 answerWithBackendDto.AddErrorLog("Ошибка. Отсутвуют позиции.");
                 return answerWithBackendDto;
             }
-            answerWithBackendDto.AddObject(Adapters.FavoriteAdapter.ConvertFromEntityToFavoriteDto
+            answerWithBackendDto.AddObject(FavoriteAdapter.ConvertFromEntityToFavoriteDto
                 (await _favoriteRepository.GetFavoritesUser(getFavoriteDto.IdUser)));
             return answerWithBackendDto;
         }

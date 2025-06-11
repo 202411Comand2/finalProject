@@ -1,8 +1,7 @@
-﻿using DAL.Abstractions;
-using Domain.Entities;
+﻿using FavoriteService.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL.Repositories
+namespace FavoriteService.DAL
 {
     
     public class FavoriteRepository : BaseRepository<Favorite>

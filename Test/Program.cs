@@ -2,8 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using DAL.ConfigSettings;
-using DAL.Abstractions;
+using DAL.Platform;
 
 namespace Test
 {
@@ -42,7 +41,9 @@ namespace Test
             return new ServiceCollection()
                         .AddSingleton(config)
                         .AddSingleton<ISecretsSettings, SecretsSettings>()
+                        .AddSingleton<IAppSettings, AppSettings>()
                         .AddSingleton<IContextManager, ContextManager>()
+                        .AddSingleton<IRabbitMQService, RabbitMQService>()
                         .AddTransient<IBLLShopServiceTest, BLLShopServiceTest>()
                         .AddTransient<IBLLIdentityServiceTests, BLLIdentityServiceTests>()
                         .AddTransient<AppTest>();

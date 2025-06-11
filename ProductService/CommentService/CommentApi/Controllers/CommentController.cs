@@ -1,16 +1,15 @@
-﻿using BLL.Dto;
-using BLL.Dto.Comment;
-using BLL.Products.Abstractions;
+﻿using CommentService.BLL;
 using Microsoft.AspNetCore.Mvc;
+using SupperBackEnd.Dto;
 
 namespace API.Controllers.Product
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CommentController(ICommentService commentService) : ControllerBase()
+    public class CommentController(ICommentMainService commentService) : ControllerBase()
     {
 
-        ICommentService _commentService = commentService;
+        ICommentMainService _commentService = commentService;
 
         /// <summary>
         /// Добавить новый рейтинг

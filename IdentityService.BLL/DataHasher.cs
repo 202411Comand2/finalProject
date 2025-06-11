@@ -1,7 +1,4 @@
-﻿using IdentityService.BLL.Abstractions;
-using System.Security.Cryptography;
-
-namespace IdentityService.BLL
+﻿namespace IdentityService.BLL
 {
 	public class DataHasher : IHasher
 	{

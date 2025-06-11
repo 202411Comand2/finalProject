@@ -1,12 +1,6 @@
-﻿using BLL.Dto.Cluster;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ClusterService.Domain;
 
-namespace BLL.Adapters
+namespace ClusterService.BLL
 {
     public class ClusterAdapter
     {

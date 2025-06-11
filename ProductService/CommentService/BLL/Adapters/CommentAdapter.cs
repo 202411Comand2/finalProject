@@ -1,12 +1,8 @@
-﻿using BLL.Dto.Comment;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace BLL.Adapters
+using CommentService.Domain;
+
+namespace CommentService.BLL
 {
     /// <summary>
     /// Класс адаптер, который служит для преобразования комментариев в DTO и Entitie

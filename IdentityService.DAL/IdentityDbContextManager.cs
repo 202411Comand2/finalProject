@@ -1,7 +1,5 @@
-﻿using IdentityService.DAL.Abstractions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 
 namespace IdentityService.DAL
 {

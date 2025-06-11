@@ -1,6 +1,4 @@
-﻿using BLL.ProductService;
-
-namespace Test
+﻿namespace Test
 {
     public interface IBLLShopServiceTest
     {

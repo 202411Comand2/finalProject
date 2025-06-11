@@ -1,9 +1,7 @@
-﻿using DAL.Abstractions;
-using Domain.Entities;
+﻿using ClusterService.Domain;
 using Microsoft.EntityFrameworkCore;
-using System.Xml.Linq;
 
-namespace DAL.Repositories
+namespace ClusterService.DAL
 {
     public class ClusterRepository : BaseRepository<Cluster>
     {

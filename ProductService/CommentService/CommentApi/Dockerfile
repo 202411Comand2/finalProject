@@ -13,10 +13,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ProductService/CommentService/CommentApi/CommentApi.csproj", "ProductService/CommentService/CommentApi/"]
-COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEndDto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
-COPY ["ProductService/CommentService/BLL/BLL.csproj", "ProductService/CommentService/BLL/"]
-COPY ["ProductService/CommentService/DAL/DAL.csproj", "ProductService/CommentService/DAL/"]
-COPY ["ProductService/CommentService/Domain/Domain.csproj", "ProductService/CommentService/Domain/"]
+COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEnd.Dto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
+COPY ["ProductService/CommentService/BLL/CommentService.BLL.csproj", "ProductService/CommentService/BLL/"]
+COPY ["ProductService/CommentService/DAL/CommentServce.DAL.csproj", "ProductService/CommentService/DAL/"]
+COPY ["DAL/Platform.DAL.csproj", "DAL/"]
+COPY ["ProductService/CommentService/Domain/CommentService.Domain.csproj", "ProductService/CommentService/Domain/"]
 RUN dotnet restore "./ProductService/CommentService/CommentApi/CommentApi.csproj"
 COPY . .
 WORKDIR "/src/ProductService/CommentService/CommentApi"

@@ -1,5 +1,4 @@
-﻿
-namespace Models.Product
+﻿namespace Client.Models
 {
     public class DeleteProductDto
     {
