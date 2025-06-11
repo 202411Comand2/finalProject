@@ -1,4 +1,4 @@
-﻿namespace DAL.ConfigSettings
+﻿namespace CartService.DAL.ConfigSettings
 {
     /// <summary>
     /// Интерфейс общих настроек приложения

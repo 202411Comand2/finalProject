@@ -1,4 +1,4 @@
-﻿namespace DAL.Abstractions
+﻿namespace CartService.DAL.Abstractions
 {
 	public interface IContextManager
 	{

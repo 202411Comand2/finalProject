@@ -1,7 +1,7 @@
-﻿using BLL.Dto;
-using Domain.Entities;
+﻿using OrderService.BLL.Dto;
+using OrderService.Domain.Entities;
 
-namespace BLL.Adapters
+namespace OrderService.BLL.Adapters
 {
     public class OrderAdapter
     {

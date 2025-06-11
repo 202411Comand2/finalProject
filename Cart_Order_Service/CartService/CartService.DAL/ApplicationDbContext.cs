@@ -1,7 +1,7 @@
-﻿using Domain.Entities;
+﻿using CartService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL
+namespace CartService.DAL
 {
     public class ApplicationDbContext : DbContext
     {

@@ -1,4 +1,4 @@
-﻿namespace BLL.Dto
+﻿namespace CartService.BLL.Dto
 {
     public class GetCartDto
     {

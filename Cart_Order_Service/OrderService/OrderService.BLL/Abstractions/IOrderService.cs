@@ -1,8 +1,8 @@
-﻿using BLL.Dto;
-using Domain.Enums;
-using SupperBackEndDto;
+﻿using OrderService.BLL.Dto;
+using OrderService.Domain.Enums;
+using SupperBackEnd.Dto;
 
-namespace BLL.Abstractions
+namespace OrderService.BLL.Abstractions
 {
     public interface IOrderService
     {

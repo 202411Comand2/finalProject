@@ -1,7 +1,7 @@
-﻿using BLL.Dto;
-using Domain.Entities;
+﻿using CartService.BLL.Dto;
+using CartService.Domain.Entities;
 
-namespace BLL.Adapters
+namespace CartService.BLL.Adapters
 {
     public class CartAdapter
     {

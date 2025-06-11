@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\OrderService\OrderService.DAL\OrderService.DAL.csproj" />
-    <ProjectReference Include="..\..\SupperBackEndDto\SupperBackEndDto.csproj" />
+    <ProjectReference Include="..\..\..\SupperBackEnd.Dto\SupperBackEnd.Dto.csproj" />
+    <ProjectReference Include="..\OrderService.DAL\OrderService.DAL.csproj" />
     <ProjectReference Include="..\OrderService.Domain\OrderService.Domain.csproj" />
   </ItemGroup>
 

@@ -1,8 +1,7 @@
-﻿using DAL.Abstractions;
-using DAL.ConfigSettings;
+﻿using CartService.DAL.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL
+namespace CartService.DAL
 {
     public class ContextManager : IContextManager
     {

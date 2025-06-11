@@ -1,11 +1,11 @@
-using BLL;
-using BLL.Abstractions;
-using DAL;
-using DAL.Abstractions;
-using DAL.ConfigSettings;
 using Microsoft.OpenApi.Models;
+using OrderService.BLL.Abstractions;
+using OrderService.DAL;
+using OrderService.DAL.Abstractions;
+using OrderService.DAL.ConfigSettings;
+using Platform.DAL;
 
-namespace CartApi
+namespace OrderApi
 {
     public class Program
     {
@@ -22,7 +22,7 @@ namespace CartApi
             services.AddSingleton<IContextManager, ContextManager>();
             services.AddSingleton<IAppSettings, AppSettings>();
             services.AddSingleton<ISecretsSettings, SecretsSettings>();
-            services.AddTransient<ICartService, CartService>();
+            services.AddTransient<IOrderService, OrderService.BLL.OrderService>();
 
 
             // Добавляем сервисы
@@ -37,16 +37,6 @@ namespace CartApi
                     Description = "Пример API с Swagger",
                     Contact = new OpenApiContact { Name = "Dev", Email = "dev@example.com" }
                 });
-
-                //// Добавляем JWT-аутентификацию (опционально)
-                //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                //{
-                //    Description = "JWT Authorization header. Example: \"Bearer {token}\"",
-                //    Name = "Authorization",
-                //    In = ParameterLocation.Header,
-                //    Type = SecuritySchemeType.ApiKey,
-                //    Scheme = "Bearer"
-                //});
             });
 
             var app = builder.Build();

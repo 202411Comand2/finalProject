@@ -1,6 +1,6 @@
-﻿using Domain.Enums;
+﻿using OrderService.Domain.Enums;
 
-namespace BLL.Dto
+namespace OrderService.BLL.Dto
 {
     public class AddOrderDto
     {

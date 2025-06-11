@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace DAL.ConfigSettings
+namespace CartService.DAL.ConfigSettings
 {
     public class AppSettings : IAppSettings
     {

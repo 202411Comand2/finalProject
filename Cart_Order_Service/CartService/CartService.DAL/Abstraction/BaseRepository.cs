@@ -1,7 +1,7 @@
-﻿using Domain.Abstractions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Platform.DAL;
 
-namespace DAL.Abstractions
+namespace CartService.DAL.Abstractions
 {
     public abstract class BaseRepository<T> : IRepository<T> where T : class
     {

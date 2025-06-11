@@ -1,7 +1,7 @@
-﻿using BLL.Dto;
-using SupperBackEndDto;
+﻿using CartService.BLL.Dto;
+using SupperBackEnd.Dto;
 
-namespace BLL.Abstractions
+namespace CartService.BLL.Abstractions
 {
     public interface ICartService
     {

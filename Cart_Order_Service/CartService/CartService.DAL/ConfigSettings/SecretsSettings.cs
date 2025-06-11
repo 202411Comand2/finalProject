@@ -1,6 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CartService.DAL.Abstractions;
+using Microsoft.Extensions.Configuration;
 
-namespace DAL.ConfigSettings
+namespace CartService.DAL.ConfigSettings
 {
     /// <summary>
     /// Конфиденциальные настройки приложения

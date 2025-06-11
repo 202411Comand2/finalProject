@@ -1,12 +1,11 @@
-﻿using BLL.Abstractions;
-using BLL.Dto;
-using DAL.Abstractions;
-using DAL.Repositories;
-using Domain.Entities;
-using SupperBackEndDto;
-using System.Threading;
+﻿using CartService.BLL.Abstractions;
+using CartService.BLL.Dto;
+using CartService.DAL.Abstractions;
+using CartService.DAL.Repositories;
+using CartService.Domain.Entities;
+using SupperBackEnd.Dto;
 
-namespace BLL
+namespace CartService.BLL
 {
     public class CartService : ICartService
     {

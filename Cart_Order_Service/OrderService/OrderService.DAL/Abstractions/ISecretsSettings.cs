@@ -1,4 +1,4 @@
-﻿namespace DAL.ConfigSettings
+﻿namespace OrderService.DAL.Abstractions
 {
     /// <summary>
     /// Интерфейс конфиденциальных настроек приложения

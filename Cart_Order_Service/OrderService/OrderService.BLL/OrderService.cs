@@ -1,12 +1,12 @@
-﻿using BLL.Abstractions;
-using BLL.Dto;
-using DAL.Abstractions;
-using DAL.Repositories;
-using Domain.Entities;
-using Domain.Enums;
-using SupperBackEndDto;
+﻿using OrderService.BLL.Abstractions;
+using OrderService.BLL.Dto;
+using OrderService.DAL.Abstractions;
+using OrderService.DAL.Repositories;
+using OrderService.Domain.Entities;
+using OrderService.Domain.Enums;
+using SupperBackEnd.Dto;
 
-namespace BLL
+namespace OrderService.BLL
 {
     public class OrderService : IOrderService
     {

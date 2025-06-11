@@ -1,7 +1,7 @@
-using BLL.Abstractions;
-using BLL.Dto;
+using CartService.BLL.Abstractions;
+using CartService.BLL.Dto;
 using Microsoft.AspNetCore.Mvc;
-using SupperBackEndDto;
+using SupperBackEnd.Dto;
 using System.Net;
 
 namespace CartApi.Controllers

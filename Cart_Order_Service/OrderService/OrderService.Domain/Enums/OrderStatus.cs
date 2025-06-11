@@ -1,4 +1,4 @@
-﻿namespace Domain.Enums
+﻿namespace OrderService.Domain.Enums
 {
     /// <summary>
     /// Состояние заказа

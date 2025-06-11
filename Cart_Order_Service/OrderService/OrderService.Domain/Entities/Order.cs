@@ -1,9 +1,9 @@
-﻿using Domain.Abstractions;
-using Domain.Enums;
+﻿using OrderService.Domain.Enums;
+using Platform.DAL;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain.Entities
+namespace OrderService.Domain.Entities
 {
     /// <summary>
     /// Таблица заказов

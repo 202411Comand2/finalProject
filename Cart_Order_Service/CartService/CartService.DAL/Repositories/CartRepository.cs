@@ -1,8 +1,8 @@
-﻿using DAL.Abstractions;
-using Domain.Entities;
+﻿using CartService.DAL.Abstractions;
+using CartService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL.Repositories
+namespace CartService.DAL.Repositories
 {
     public class CartRepository : BaseRepository<Cart>
     {

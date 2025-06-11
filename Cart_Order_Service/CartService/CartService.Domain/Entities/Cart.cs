@@ -1,8 +1,8 @@
-﻿using Domain.Abstractions;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Platform.DAL;
 
-namespace Domain.Entities
+namespace CartService.Domain.Entities
 {
     /// <summary>
     /// Корзина пользователя
