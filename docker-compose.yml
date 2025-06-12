@@ -34,6 +34,20 @@ services:
       dockerfile: ClusterAPI/Dockerfile
 
 
+  cartapi:
+    image: ${DOCKER_REGISTRY-}cartapi
+    build:
+      context: .
+      dockerfile: Cart_Order_Service/CartService/CartApi/Dockerfile
+
+
+  orderapi:
+    image: ${DOCKER_REGISTRY-}orderapi
+    build:
+      context: .
+      dockerfile: Cart_Order_Service/OrderService/OrderApi/Dockerfile
+
+
   ocelotwebapigr:
     image: ${DOCKER_REGISTRY-}ocelotwebapigr
     build:
