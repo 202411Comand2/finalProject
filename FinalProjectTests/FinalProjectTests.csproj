@@ -22,6 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cart_Order_Service\CartService\CartService.BLL\CartService.BLL.csproj" />
+    <ProjectReference Include="..\Cart_Order_Service\OrderService\OrderService.BLL\OrderService.BLL.csproj" />
     <ProjectReference Include="..\DAL\Platform.DAL.csproj" />
     <ProjectReference Include="..\ProductService\ClusterService\BLL\ClusterService.BLL.csproj" />
     <ProjectReference Include="..\ProductService\CommentService\BLL\CommentService.BLL.csproj" />
