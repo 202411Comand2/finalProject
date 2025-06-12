@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 

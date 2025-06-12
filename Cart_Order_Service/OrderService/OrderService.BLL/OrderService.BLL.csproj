@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SupperBackEnd.Dto\SupperBackEnd.Dto.csproj" />
+    <ProjectReference Include="..\OrderService.DAL\OrderService.DAL.csproj" />
+    <ProjectReference Include="..\OrderService.Domain\OrderService.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
