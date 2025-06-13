@@ -9,7 +9,8 @@
         "favoriteapi": "StartDebugging",
         "commentapi": "StartDebugging",
         "clusterapi": "StartDebugging",
-        "ocelotwebapigr": "StartDebugging"
+        "ocelotwebapigr": "StartDebugging",
+        "authapi": "StartDebugging"
       }
     }
   }

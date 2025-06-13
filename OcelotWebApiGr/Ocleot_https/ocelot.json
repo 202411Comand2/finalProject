@@ -1,6 +1,19 @@
 {
   "Routes": [
     {
+      "DownstreamPathTemplate": "/api/auth/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7085
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/auth/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "UpstreamHttpMethod": [ "POST", "GET" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/Product/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -11,7 +24,7 @@
       ],
       "UpstreamPathTemplate": "/gateway/Product/{everything}",
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "UpstreamHttpMethod": [ "GET"]
+      "UpstreamHttpMethod": [ "GET" ]
       // ssl проверка, отключена, иначе ошибки
     },
 
