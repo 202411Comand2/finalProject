@@ -30,14 +30,11 @@ namespace AuthApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id) => Ok($"Auth {id}");
 
-
-        //[HttpGet("validate")]
-        //[Authorize]
-        //public IActionResult ValidateToken()
-        //{
-        //    return Ok(new { isValid = true });
-        //}
-
+        /// <summary>
+        /// Авторизация пользователя
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] AuthUserDto model)
         {
@@ -47,12 +44,8 @@ namespace AuthApi.Controllers
             try
             {
                 // Получаем настройки JWT из конфигурации
-                //var jwtSettings = _configuration.GetSection("JwtSettings");
-                //var secretKey = jwtSettings["SecretKey"];
-                //var user = AuthenticateUser(model);
                 AnswerWithBackendDto<UserDto>
                 user = await _authService.AuthUser(model);
-
 
                 if (user.ObjectDto is null)
                 {
@@ -61,26 +54,8 @@ namespace AuthApi.Controllers
                 }
                 var token = CreateToken(user.ObjectDto);
 
-                //var claims = new List<Claim>
-                //{
-                //    new Claim(ClaimTypes.NameIdentifier, user.ObjectDto.Id.ToString()),
-                //    new Claim(ClaimTypes.Name, user.ObjectDto.Name),
-                //    new Claim(ClaimTypes.Role, "role admin")
-                //};
-
-                //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-                //var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-                //var token = new JwtSecurityToken(
-                //    issuer: jwtSettings["Issuer"],
-                //    audience: jwtSettings["Audience"],
-                //    claims: claims,
-                //    expires: DateTime.Now.AddHours(1),
-                //    signingCredentials: creds);
                 Console.WriteLine($"token user {token}");
-
                 return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
-
             }
             catch (Exception ex)
             {
@@ -88,21 +63,30 @@ namespace AuthApi.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Регистрация пользователя
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] AddUserDto model)
         {
             AnswerWithBackendDto<UserDto> result = new();
+            Console.WriteLine($"Зашёл в сервис регистрации\nLogin {model.Login} Password {model.Password}");
             try
             {
                 AnswerWithBackendDto<UserDto>
                 user = await _authService.RegisterUser(model);
 
-
                 if (user.ObjectDto is null)
-                    return BadRequest(user.ErrorLog); // Возвращаем 401 если аутентификация не прошла
+                {
+                    Console.WriteLine($"Не получилось зарегистрировать пользователя");
 
+                    return BadRequest(user.ErrorLog); // Возвращаем 401 если аутентификация не прошла
+                }
                 var token = CreateToken(user.ObjectDto);
+                Console.WriteLine($"Токен получен {token}");
+
                 return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
             }
             catch (Exception ex)
@@ -111,7 +95,12 @@ namespace AuthApi.Controllers
             }
         }
 
-
+        /// <summary>
+        /// получения информация и пользователе после авторизации
+        /// Работает с токеном jwt
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("GetUserId")]
         public async Task<ActionResult<string>> GetUserId([FromQuery] int id)
         {
@@ -123,7 +112,7 @@ namespace AuthApi.Controllers
                 {
                     switch (idUser)
                     {
-                        case -2:
+                        case -2: //токен просрочен
                             return Unauthorized(new ApiResponse<AuthUserDto>(false, null, "Token is missing"));
                         case -3:
                             return Unauthorized(new ApiResponse<AuthUserDto>(false, null, "Invalid token claims"));
@@ -236,67 +225,6 @@ namespace AuthApi.Controllers
             return token;
         }
 
-
-
-
-
-        private User AuthenticateUser(AuthUserDto model)
-        {
-
-            // Здесь должна быть реальная проверка в базе данных
-            if (model.Login == "admin" && model.Password == "admin123")
-                return new User { Id = 1, Username = "admin", Role = "Admin" };
-
-            if (model.Login == "user" && model.Password == "user123")
-                return new User { Id = 2, Username = "user", Role = "User" };
-
-            return null;
-        }
+       
     }
-
-    // Модели данных
-    public class LoginModel
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-    }
-
-    public class User
-    {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string Role { get; set; }
-    }
-    //[HttpPost("login")]
-    //public string GenerateToken(User user)
-    //{
-    //    var claims = new List<Claim>
-    //{
-    //    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-    //    new Claim(ClaimTypes.Name, user.Name),
-    //    new Claim("FullName", user.Surname),
-    //    new Claim("Email", user.Email),
-    //    new Claim("Email", user.Email)
-
-    //};
-    //    List<string> Roles = new List<string>() { "Admin", "USERS_IZE" }; // пока ручками оставлю, потом пойму, а нужны ли роли
-
-    //    claims.AddRange(Roles.Select(role => new Claim(ClaimTypes.Role, role)));
-
-    //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-    //    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-    //    var token = new JwtSecurityToken(
-    //        issuer: _configuration["Jwt:Issuer"],
-    //        audience: _configuration["Jwt:Audience"],
-    //        claims: claims,
-    //        expires: DateTime.Now.AddHours(1),
-    //        signingCredentials: creds);
-
-    //    return new JwtSecurityTokenHandler().WriteToken(token);
-
-    //}
-
-
-
 }

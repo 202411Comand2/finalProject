@@ -7,7 +7,7 @@ using AuthService.DAL;
 namespace AuthService.BLL
 {
     /// <summary>
-    /// Сервис по работе с магазином
+    /// Сервис по работе с авторизацией
     /// </summary>
     public class AuthMainService : IAuthMainService
     {
