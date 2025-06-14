@@ -64,7 +64,7 @@ namespace ShopService.BLL
             // await _shopRepository.DeleteShopWithProducts(shop);
             answerWithBackendDto.AddObject(ShopAdapter.ConvertFromEntitieToDTO(await _shopRepository.Update(shop)));
 
-            SendMessageToRabbitAsync(shop.Id, RoutingKeys.ShopDeleted);
+            SendMessageToRabbitAsync(shop.Id, RoutingKeys.ShopDeleted.ToString());
 
             return answerWithBackendDto;
         }
@@ -157,7 +157,7 @@ namespace ShopService.BLL
         /// </summary>
         /// <param name="shopId">Идентификатор магазина</param>
         /// <param name="routingKey">Ключ маршрутизации сообщения.</param>
-        private async void SendMessageToRabbitAsync(int shopId, RoutingKeys routingKey)
+        private async void SendMessageToRabbitAsync(int shopId, string routingKey)
         {
             await _messagePublisher.SendMessageAsync<ShopChangeMessage>(new ShopChangeMessage(shopId), routingKey, "shop.exchange");
         }

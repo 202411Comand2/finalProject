@@ -4,14 +4,17 @@ using OrderService.DAL.Abstractions;
 using OrderService.DAL.Repositories;
 using OrderService.Domain.Entities;
 using OrderService.Domain.Enums;
+//using Rabbit.Platform;
 using SupperBackEnd.Dto;
 
 namespace OrderService.BLL
 {
-    public class OrderService : IOrderService
+    public class OrderService(IContextManager contextManager//,
+        //IMessagePublisher messagePublisher
+        ) : IOrderService
     {
-        private readonly OrderRepository _orderRepository;
-        public OrderService(IContextManager contextManager) => _orderRepository = new OrderRepository(contextManager);
+        private readonly OrderRepository _orderRepository = new OrderRepository(contextManager);
+        //private readonly IMessagePublisher _messagePublisher = messagePublisher;
 
         /// <summary>
         /// Создание заказа
@@ -111,5 +114,14 @@ namespace OrderService.BLL
                 }
             });
         }
+
+
+        /*/// <summary>
+        /// Отправка сообщения в RabbitMQ о том, что статус был изменен
+        /// </summary>
+        private async void SendMessageToRabbitAsync(int shopId, string routingKey)
+        {
+            await _messagePublisher.SendMessageAsync<ShopChangeMessage>(new ShopChangeMessage(shopId), routingKey, "shop.exchange");
+        }*/
     }
 }

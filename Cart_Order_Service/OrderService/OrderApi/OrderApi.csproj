@@ -10,10 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Properties\rabbitSettings.json" />
     <Content Remove="Properties\secretsSettings.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Properties\rabbitSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\secretsSettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

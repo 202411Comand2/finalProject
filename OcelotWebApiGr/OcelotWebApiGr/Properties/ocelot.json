@@ -117,6 +117,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
+          //"Host": "localhost",
           "Host": "host.docker.internal",
           "Port": 7175
         }
@@ -134,6 +135,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
+          //"Host": "localhost",
           "Host": "host.docker.internal",
           "Port": 7042
         }

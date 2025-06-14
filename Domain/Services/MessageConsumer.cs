@@ -1,6 +1,7 @@
 ﻿using Platform.DAL;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System;
 using System.Text;
 using System.Text.Json;
 
@@ -22,7 +23,7 @@ namespace Rabbit.Platform
         }
 
         /// <inheritdoc />
-        public async Task ProcessMessageAsync<T>(Func<T, Task> handler, RoutingKeys routingKey, string exchange = "", string queue = "") where T : IMessage
+        public async Task ProcessMessageAsync<T>(Func<T, Task> handler, string routingKey, string exchange = "", string queue = "") where T : IMessage
         {
             var connection = await _rabbitMQService.CreateConnectionAsync();
             var channel = await connection.CreateChannelAsync();
@@ -39,7 +40,7 @@ namespace Rabbit.Platform
 
             await channel.ExchangeDeclareAsync(exchange, ExchangeType.Direct);
             await channel.QueueDeclareAsync(queue, true, false, false);
-            await channel.QueueBindAsync(queue, exchange, routingKey.ToString());
+            await channel.QueueBindAsync(queue, exchange, routingKey);
 
             var consumer = new AsyncEventingBasicConsumer(channel);
             consumer.ReceivedAsync += async (model, ea) =>
