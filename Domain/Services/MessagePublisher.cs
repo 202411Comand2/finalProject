@@ -19,7 +19,7 @@ namespace Rabbit.Platform
         }
 
         /// <inheritdoc />
-        public async Task SendMessageAsync<T>(T message, RoutingKeys routingKey, string exchangeName = "") where T : IMessage
+        public async Task SendMessageAsync<T>(T message, string routingKey, string exchangeName = "") where T : IMessage
         {
             using var connection = await _rabbitMQService.CreateConnectionAsync();
             using var channel = await connection.CreateChannelAsync();
@@ -34,7 +34,7 @@ namespace Rabbit.Platform
             var json = JsonSerializer.Serialize(message);
             var body = Encoding.UTF8.GetBytes(json);
 
-            await channel.BasicPublishAsync(exchangeName, routingKey.ToString(), body);
+            await channel.BasicPublishAsync(exchangeName, routingKey, body);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Rabbit.Platform
+﻿using Rabbit.Platform.Enums;
+
+namespace Rabbit.Platform
 {
     /// <summary>
     /// Интерфейс менеджера для получения сообщений из RabbitMQ.
@@ -14,6 +16,6 @@
         /// <param name="routingKey">Ключ маршрутизации сообщения.</param>
         /// <param name="handler">Обработчик сообщения.</param>
         /// <returns>Задача для ассинхронного получения и обработки сообщения.</returns>
-        Task ProcessMessageAsync<T>(Func<T, Task> handler, RoutingKeys routingKey, string exchange = "", string queue = "") where T : IMessage;
+        Task ProcessMessageAsync<T>(Func<T, Task> handler, string routingKey, string exchange = "", string queue = "") where T : IMessage;
     }
 }

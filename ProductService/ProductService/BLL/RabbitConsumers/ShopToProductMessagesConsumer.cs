@@ -19,7 +19,7 @@ namespace ProductService.BLL
         {
             await _consumer.ProcessMessageAsync<ShopChangeMessage>(
                 DeleteShopAllProduct,
-                RoutingKeys.ShopDeleted,
+                RoutingKeys.ShopDeleted.ToString(),
                 "shop.exchange",
                 "shop.queue"
             );

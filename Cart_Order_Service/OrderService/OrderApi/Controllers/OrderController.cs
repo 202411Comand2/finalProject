@@ -42,12 +42,12 @@ namespace OrderApi.Controllers
         /// Обновить статус текущего заказа
         /// </summary>
         [HttpDelete("DeleteProduct")]
-        public async Task<ActionResult<int>> DeleteProduct([FromBody] int id, OrderStatus orderStatus)
+        public async Task<ActionResult<int>> DeleteProduct([FromBody] int id)
         {
             AnswerWithBackendDto<OrderDto> result = new();
             try
             {
-                result = await _orderService.UpdateOrderStatus(id, orderStatus, _token);
+               // result = await _orderService.UpdateOrderStatus(id, _token);
             }
             catch (Exception ex)
             {
@@ -82,6 +82,29 @@ namespace OrderApi.Controllers
                 return BadRequest(result.ErrorLog);
             }
             return result.GetCollectionNotProblem();
+        }
+
+        /// <summary>
+        /// Обновить статус текущего заказа
+        /// </summary>
+        [HttpDelete("UpdateOrderStatus")]
+        public async Task<ActionResult<int>> UpdateOrderStatus([FromBody] int id, OrderStatus orderStatus)
+        {
+            AnswerWithBackendDto<OrderDto> result = new();
+            try
+            {
+                result = await _orderService.UpdateOrderStatus(id, orderStatus, _token);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            if (!result.DataReceived)
+            {
+                return BadRequest(result.ErrorLog);
+            }
+            return Ok(result.DataReceived);
         }
     }
 }
