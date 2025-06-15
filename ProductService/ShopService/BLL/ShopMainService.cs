@@ -26,6 +26,9 @@ namespace ShopService.BLL
             Shop shop = new Shop
             {
                 Name = addShopDto.Name,
+                Adress = addShopDto.Adress,
+                ContactInfo = addShopDto.ContactInfo,
+                Description = addShopDto.Description,
                 IsDelete = false,
             };
             answerWithBackendDto.AddObject(ShopAdapter.ConvertFromEntitieToDTO(await _shopRepository.Add(shop)));
@@ -102,24 +105,7 @@ namespace ShopService.BLL
         }
 
 
-        public async Task<AnswerWithBackendDto<ShopDto>> GetShopsInfo(GetShopsInfoDto shopDto)
-        {
-            AnswerWithBackendDto<ShopDto> answerWithBackendDto = new();
-
-            if (shopDto.ShopIds.Count == 0)
-            {
-                answerWithBackendDto.AddErrorLog("Была введена пустая коллекция");
-                return answerWithBackendDto;
-            }
-            var collectionShop = await _shopRepository.GetShopsByIds(shopDto.ShopIds);
-            if (collectionShop.Count == 0) 
-            {
-                answerWithBackendDto.AddErrorLog("По указанному массиву id не удалось найти магазины");
-                return answerWithBackendDto;
-            }
-            answerWithBackendDto.AddObject(ShopAdapter.ConvertFromToEntityShopDto(collectionShop));
-            return answerWithBackendDto;
-        }
+  
 
         public async Task<AnswerWithBackendDto<ShopDto>> RestoreStore(RestoreShopDto restoreShop)
         {
@@ -143,10 +129,37 @@ namespace ShopService.BLL
             return answerWithBackendDto;
         }
 
-
-        private async Task DeleteProduct() 
+        public async Task<AnswerWithBackendDto<ShopDto>> GetShopsInfo(GetShopsInfoDto shopDto)
         {
-        
+            AnswerWithBackendDto<ShopDto> answerWithBackendDto = new();
+
+            if (shopDto.ShopIds.Count == 0)
+            {
+                answerWithBackendDto.AddErrorLog("Была введена пустая коллекция");
+                return answerWithBackendDto;
+            }
+            var collectionShop = await _shopRepository.GetShopsByIds(shopDto.ShopIds);
+            if (collectionShop.Count == 0)
+            {
+                answerWithBackendDto.AddErrorLog("По указанному массиву id не удалось найти магазины");
+                return answerWithBackendDto;
+            }
+            answerWithBackendDto.AddObject(ShopAdapter.ConvertFromToEntityShopDto(collectionShop));
+            return answerWithBackendDto;
+        }
+
+        public async Task<AnswerWithBackendDto<ShopDto>> GetShopsInfo(int id)
+        {
+            AnswerWithBackendDto<ShopDto> answerWithBackendDto = new();
+
+            var shop = await _shopRepository.Get(id);
+            if (shop is null)
+            {
+                answerWithBackendDto.AddErrorLog("По указанному массиву id не удалось найти магазины");
+                return answerWithBackendDto;
+            }
+            answerWithBackendDto.AddObject(ShopAdapter.ConvertFromToEntityShopDto(shop));
+            return answerWithBackendDto;
         }
     }
 }

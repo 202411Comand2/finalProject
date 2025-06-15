@@ -50,6 +50,24 @@ namespace AuthService.BLL
             };
         }
 
+
+        public static User ConvertFromDTOToEntity(UpdateUserDto userDto)
+        {
+            return new User()
+            {
+                Id = userDto.Id,
+                Login = userDto.Login,
+                Name = userDto.Name,
+                Surname = userDto.Surname,
+                Patronymic = userDto.Patronymic,
+                Password = userDto.Password,
+                NumberPhone = userDto.NumberPhone,
+                Email = userDto.Email,
+                TelegramID = userDto.TelegramID
+            };
+        }
+
+
         public static User ConvertFromDTOToEntity(AddUserDto userDto)
         {
             return new User()

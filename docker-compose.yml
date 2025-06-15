@@ -55,3 +55,10 @@ services:
       context: .
       dockerfile: AuthService/AuthApi/Dockerfile
 
+
+  managersshopsapi:
+    image: ${DOCKER_REGISTRY-}managersshopsapi
+    build:
+      context: .
+      dockerfile: OwnerService/ManagersShopsApi/Dockerfile
+

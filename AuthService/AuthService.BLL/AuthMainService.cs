@@ -41,15 +41,32 @@ namespace AuthService.BLL
                     answerWithBackendDto.AddObject(UsersAdapter.ConvertFromEntitieToDTO (result));
                 }
                 return answerWithBackendDto;
-
             }
         }
 
-        public async Task<AnswerWithBackendDto<UserDto>> UpdateInfoUser(UserDto UserDto)
+        public async Task<AnswerWithBackendDto<UserDto>> UpdateInfoUser(UpdateUserDto UserDto)
         {
             AnswerWithBackendDto<UserDto> answerWithBackendDto = new();
+            var oldNice = await _authRepository.SearchUserNickName(UserDto.Login);
+            if (oldNice is not null && oldNice.Id!= UserDto.Id)
+            {
+                answerWithBackendDto.AddErrorLog($"Пользователь c таким nickName найден в системе!");
+                return answerWithBackendDto;
+            }
+            else
+            {
 
-            throw new NotImplementedException();
+                var result = await _authRepository.Update(UsersAdapter.ConvertFromDTOToEntity(UserDto));
+                if (result is null)
+                {
+                    answerWithBackendDto.AddErrorLog($"Не получилось обновить пользователя");
+                }
+                else
+                {
+                    answerWithBackendDto.AddObject(UsersAdapter.ConvertFromEntitieToDTO(result));
+                }
+                return answerWithBackendDto;
+            }
         }
 
         public async Task<AnswerWithBackendDto<UserDto>> AuthUser(AuthUserDto UserDto)

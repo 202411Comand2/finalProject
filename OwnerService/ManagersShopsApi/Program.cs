@@ -1,15 +1,16 @@
-using ClusterService.BLL;
-using ClusterService.DAL;
+
+using ManagersShopsService;
+using ManagersShopsService.BLL;
+using ManagersShopsService.DAL;
 using Microsoft.OpenApi.Models;
 using Platform.DAL;
 
-namespace ClusterAPI
+namespace ManagersShopsApi
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-
             var builder = WebApplication.CreateBuilder(args);
             var configuration = builder.Configuration;
             var services = builder.Services;
@@ -20,8 +21,7 @@ namespace ClusterAPI
             services.AddSingleton<IContextManager, ContextManager>();
             services.AddSingleton<IAppSettings, AppSettings>();
             services.AddSingleton<ISecretsSettings, SecretsSettings>();
-            services.AddTransient<IClusterMainService, ClusterService.BLL.ClusterMainService>();
-            services.AddTransient<ISearchClusterService, SearchClusterService>();
+            services.AddTransient<IManagersShopsMainService, ManagersShopsMainService>();
 
             // Добавляем сервисы
             builder.Services.AddControllers();
@@ -50,7 +50,6 @@ namespace ClusterAPI
             app.UseAuthorization();
             app.MapControllers();
             app.Run();
-
         }
     }
 }
