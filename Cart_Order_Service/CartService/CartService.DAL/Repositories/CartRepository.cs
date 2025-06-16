@@ -38,47 +38,23 @@ namespace CartService.DAL.Repositories
         }
 
         /// <summary>
-        /// Изменить количество в заказе
+        /// Получение товара из корзины
         /// </summary>
-        public async Task<Cart> UpdateCountProductInCart(int userId, int productId, int count)
+        public async Task<Cart> GetProductInCart(int idCart)
         {
             try
             {
                 using (var context = CreateDatabaseContext())
                 {
-                    Cart cart = await context.Carts.FirstOrDefaultAsync(x => x.UserId == userId && x.ProductId == productId);
-                    cart!.Count = count;
-                    await context.Carts.AddAsync(cart);
-                    await context.SaveChangesAsync();
-                    
-                    return cart;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Удаление товара из корзины
-        /// </summary>
-        public async Task<bool> DeleteProductFromCart(int userId, int productId)
-        {
-            try
-            {
-                using (var context = CreateDatabaseContext())
-                {
-                    Cart product = await context.Carts.FirstOrDefaultAsync(x => x.UserId == userId && x.ProductId == productId);
+                    Cart product = await context.Carts.FirstAsync(x => x.UserId == idCart);
 
                     if (product is not null)
                     {
-                        //await context.Carts.Remove(product);
                         await context.SaveChangesAsync();
-                        return true;
+                        return product;
                     }
 
-                    return false;
+                    return null;
                 }
             }
             catch (Exception ex)

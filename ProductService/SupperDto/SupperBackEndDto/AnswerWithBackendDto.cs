@@ -109,8 +109,6 @@ namespace SupperBackEnd.Dto
         ///// <returns></returns>
         //public string GetCollectionWithProblem() => Serialization(ObjectsDto);
 
-
-
         /// <summary>
         /// Добавить коллекцию объектов
         /// </summary>
@@ -149,8 +147,6 @@ namespace SupperBackEnd.Dto
                 ObjectsDto.Add(answerWithBackendDto);
             }
         }
-
-
 
         /// <summary>
         /// Добавить ошибку

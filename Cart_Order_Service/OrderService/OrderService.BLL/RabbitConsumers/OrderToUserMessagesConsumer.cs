@@ -29,7 +29,7 @@ namespace OrderService.BLL
 
         private async Task ChangeStatusOrderAsync(ChangeStatusOrderMessage message)
         {
-            await _orderService.UpdateOrderStatus(message.OrderId, message.Status);
+            //await _orderService.UpdateOrderStatus(message.OrderId, message.Status);
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

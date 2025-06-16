@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OrderService.BLL.Abstractions;
 using OrderService.BLL.Dto;
+using OrderService.BLL.Dto.Order;
 using OrderService.Domain.Enums;
 using SupperBackEnd.Dto;
 
@@ -9,102 +10,129 @@ namespace OrderApi.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class OrderController(IOrderService orderService, CancellationToken token) : ControllerBase()
+    public class OrderController(IOrderService orderService) : ControllerBase()
     {
         private readonly IOrderService _orderService = orderService;
-        private readonly CancellationToken _token = token;
 
         /// <summary>
         /// Создать заказ
         /// </summary>
         [HttpPost("AddProduct")]
-        public async Task<ActionResult<bool>> AddProduct([FromQuery] CreateOrderDto dto)
+        public async Task<ActionResult<string>> AddProduct([FromBody] AddOrderDto dto, CancellationToken cancellationToken)
         {
             AnswerWithBackendDto<OrderDto> result = new();
             try
             {
-                result = await _orderService.AddOrder(dto, _token);
+                result = await _orderService.AddOrderAsync(dto, cancellationToken);
+
+                if (!result.DataReceived)
+                {
+                    return BadRequest(result.ErrorLog);
+                }
+
+                return Ok($"Создана запись с Id: {result.ObjectDto.Id}");
             }
+
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
-            if (!result.DataReceived)
-            {
-                return BadRequest(result.ErrorLog);
-            }
-            return Ok(true);
         }
 
-
         /// <summary>
-        /// Обновить статус текущего заказа
+        /// Удалить заказ
         /// </summary>
-        [HttpDelete("DeleteProduct")]
-        public async Task<ActionResult<int>> DeleteProduct([FromBody] int id)
+        [HttpDelete("DeleteOrder")]
+        public async Task<ActionResult<string>> DeleteOrder([FromBody] DeleteOrderDto dto, CancellationToken cancellationToken)
         {
             AnswerWithBackendDto<OrderDto> result = new();
             try
             {
-               // result = await _orderService.UpdateOrderStatus(id, _token);
+                 result = await _orderService.DeleteOrderAsync(dto, cancellationToken);
+
+                if (!result.DataReceived)
+                {
+                    return BadRequest(result.ErrorLog);
+                }
+
+                return Ok($"Заказ удален. Товары перенесены в корзину");
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
-            if (!result.DataReceived)
-            {
-                return BadRequest(result.ErrorLog);
-            }
-            return Ok(result.DataReceived);
         }
 
         /// <summary>
-        /// Получить заказы пользователя
+        /// Получить все заказы пользователя
+        /// </summary>
+        [HttpGet("GetAllOrderUser")]
+        public async Task<ActionResult<string>> GetAllOrderUser([FromBody] GetAllOrderDto dto, CancellationToken cancellationToken)
+        {
+            AnswerWithBackendDto<OrderDto> result = new();
+            try
+            {
+                result = await _orderService.GetAllOrderUserAsync(dto, cancellationToken);
+
+                if (!result.DataReceived)
+                {
+                    return BadRequest(result.ErrorLog);
+                }
+
+                return result.GetCollectionNotProblem();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Получить заказ пользователя
         /// </summary>
         [HttpGet("GetOrderUser")]
-        public async Task<ActionResult<string>> GetOrderUser([FromBody] int userId)
+        public async Task<ActionResult<string>> GetOrderUser([FromBody] GetOrderDto dto, CancellationToken cancellationToken)
         {
             AnswerWithBackendDto<OrderDto> result = new();
             try
             {
-                result = await _orderService.GetOrderUser(userId, _token);
+                result = await _orderService.GetOrderUserAsync(dto, cancellationToken);
+
+                if (!result.DataReceived)
+                {
+                    return BadRequest(result.ErrorLog);
+                }
+
+                return result.GetCollectionNotProblem();
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
-            if (!result.DataReceived)
-            {
-                return BadRequest(result.ErrorLog);
-            }
-            return result.GetCollectionNotProblem();
         }
 
         /// <summary>
         /// Обновить статус текущего заказа
         /// </summary>
         [HttpDelete("UpdateOrderStatus")]
-        public async Task<ActionResult<int>> UpdateOrderStatus([FromBody] int id, OrderStatus orderStatus)
+        public async Task<ActionResult<int>> UpdateOrderStatus([FromBody] UpdateOrderDto dto, CancellationToken cancellationToken)
         {
             AnswerWithBackendDto<OrderDto> result = new();
             try
             {
-                result = await _orderService.UpdateOrderStatus(id, orderStatus, _token);
+                result = await _orderService.UpdateOrderStatusAsync(dto, cancellationToken);
+
+                if (!result.DataReceived)
+                {
+                    return BadRequest(result.ErrorLog);
+                }
+
+                return Ok(result.DataReceived);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
-            if (!result.DataReceived)
-            {
-                return BadRequest(result.ErrorLog);
-            }
-            return Ok(result.DataReceived);
         }
     }
 }

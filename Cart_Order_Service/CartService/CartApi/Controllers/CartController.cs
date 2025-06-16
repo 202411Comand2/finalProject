@@ -2,109 +2,109 @@ using CartService.BLL.Abstractions;
 using CartService.BLL.Dto;
 using Microsoft.AspNetCore.Mvc;
 using SupperBackEnd.Dto;
-using System.Net;
 
 namespace CartApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [ProducesResponseType<ProblemDetails>((int)HttpStatusCode.BadRequest)]
-    [ProducesResponseType<ProblemDetails>((int)HttpStatusCode.NotFound)]
     public class CartController(ICartService cartService) : ControllerBase()
     {
         private readonly ICartService _cartService = cartService;
 
         /// <summary>
-        /// Добавить товар в корзину/обновить количество
+        /// Добавить товар в корзину
         /// </summary>
         [HttpPost("AddProduct")]
-        [ProducesResponseType<int>((int)HttpStatusCode.OK)]
-        public async Task<ActionResult<int>> AddProduct([FromQuery] AddCartDto dto, CancellationToken cancellationToken)
+        public async Task<ActionResult<string>> AddProduct([FromQuery] AddCartDto dto, CancellationToken cancellationToken)
         {
             AnswerWithBackendDto<CartDto> result = new();
             try
             {
-                result = await _cartService.AddCartProduct(dto, cancellationToken);
+                result = await _cartService.AddCartProductAsync(dto, cancellationToken);
+
+                if (!result.DataReceived)
+                {
+                    return BadRequest(result.ErrorLog);
+                }
+
+                return Ok($"Создана запись с Id: {result.ObjectDto.Id}");
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
-            if (!result.DataReceived)
-            {
-                return BadRequest(result.ErrorLog);
-            }
-            return Ok(result.ObjectDto.Id);
-
-            /*
-             public async Task<Results<Ok<FlsCardDataDto>, ProblemHttpResult>>
-            public async Task<Results<Ok, Created, ProblemHttpResult>>
-             * 
-           if (fls is null)
-            {
-                return TypedResults.Problem($"ФЛС с ид. {query.FlsId} не найден", statusCode: (int)HttpStatusCode.NotFound);
-            }
-            catch (ArgumentException ex)
-            {
-                return TypedResults.Problem(ex.Message, statusCode: (int)HttpStatusCode.BadRequest);
-            }
-            return TypedResults.Ok(fls);
-
-            При создании/изменении
-            
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.Created)]
-            return dkp.Id is null ? TypedResults.Created() : TypedResults.Ok();
-            return TypedResults.Created();
-             * */
         }
-
 
         /// <summary>
         /// Удалить товар из корзины
         /// </summary>
         [HttpDelete("DeleteProduct")]
-        public async Task<ActionResult<int>> DeleteProduct([FromBody] int id)
+        public async Task<ActionResult> DeleteProduct([FromQuery] DeleteCartDto dto, CancellationToken cancellationToken)
         {
             AnswerWithBackendDto<CartDto> result = new();
             try
             {
-                result = await _cartService.DeleteProduct(id);
+                result = await _cartService.DeleteProductAsync(dto, cancellationToken);
+
+                if (!result.DataReceived)
+                {
+                    return BadRequest(result.ErrorLog);
+                }
+
+                return Ok($"Товар удален из корзины");
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
-            if (!result.DataReceived)
-            {
-                return BadRequest(result.ErrorLog);
-            }
-            return Ok(result.DataReceived);
         }
 
         /// <summary>
         /// Получить корзину пользователя
         /// </summary>
         [HttpGet("GetCartUser")]
-        public async Task<ActionResult<string>> GetCartUser([FromBody] int userId)
+        public async Task<ActionResult<string>> GetCartUser([FromQuery] GetCartDto dto, CancellationToken cancellationToken)
         {
             AnswerWithBackendDto<CartDto> result = new();
             try
             {
-                result = await _cartService.GetCartUser(userId);
+                result = await _cartService.GetCartUserAsync(dto, cancellationToken);
+
+                if (!result.DataReceived)
+                {
+                    return BadRequest(result.ErrorLog);
+                }
+
+                return result.GetCollectionNotProblem();
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
 
-            if (!result.DataReceived)
+        /// <summary>
+        /// Обновить количество товара в корзину
+        /// </summary>
+        [HttpPut("UpdateProduct")]
+        public async Task<ActionResult<string>> UpdateProduct([FromQuery] UpdateCartDto dto, CancellationToken cancellationToken)
+        {
+            AnswerWithBackendDto<CartDto> result = new();
+            try
             {
-                return BadRequest(result.ErrorLog);
+                result = await _cartService.UpdateProductAsync(dto, cancellationToken);
+
+                if (!result.DataReceived)
+                {
+                    return BadRequest(result.ErrorLog);
+                }
+
+                return Ok($"Количество обновлено, Id: {result.ObjectDto.Id}");
             }
-            return result.GetCollectionNotProblem();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

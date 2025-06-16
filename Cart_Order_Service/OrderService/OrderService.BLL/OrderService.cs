@@ -1,9 +1,8 @@
 ﻿using OrderService.BLL.Abstractions;
-using OrderService.BLL.Dto;
+using OrderService.BLL.Dto.Order;
 using OrderService.DAL.Abstractions;
 using OrderService.DAL.Repositories;
 using OrderService.Domain.Entities;
-using OrderService.Domain.Enums;
 //using Rabbit.Platform;
 using SupperBackEnd.Dto;
 
@@ -19,34 +18,48 @@ namespace OrderService.BLL
         /// <summary>
         /// Создание заказа
         /// </summary>
-        public async Task<AnswerWithBackendDto<OrderDto>> AddOrder(CreateOrderDto addOrderDto, CancellationToken token)
+        public async Task<AnswerWithBackendDto<OrderDto>> AddOrderAsync(AddOrderDto dto, CancellationToken cancellationToken)
         {
             return await Task.Run(async () =>
             {
                 try
                 {
                     AnswerWithBackendDto<OrderDto> answerWithBackendDto = new();
-                    Order order;
-
-                    foreach (var item in addOrderDto.AddOrder)
+                    var order = new Order()
                     {
-                        order = new Order()
+                        DateCreated = DateTime.Now,
+                        ArriveDate = DateTime.Now.AddDays(5),
+                        UserId = dto.UserId,
+                        ShippingMethod = dto.ShippingMethod,
+                        PaymentMethod = dto.PaymentMethod,
+                        OrderStatus = dto.OrderStatus,
+                        ArriveAddress = dto.ArriveAddress,
+                    };
+
+                    /*dto.OrderDetail.ForEach(x =>
+                    {
+                        var detail = new OrderDetail()
                         {
-                            DateCreated = DateTime.Now,
-                            Count = item.Count,
-                            ArriveDate = DateTime.Now.AddDays(5),
-                            UserId = item.UserId,
-                            ProductId = item.ProductId,
-                            ShippingMethod = item.ShippingMethod,
-                            PaymentMethod = item.PaymentMethod,
-                            OrderStatus = item.OrderStatus,
-                            ArriveAddress = item.ArriveAddress,
+                            //OrderId = order.Id,
+                            ProductId = x.ProductId,
+                            Price = x.Price,
+                            Count = x.Count,
                         };
-                        answerWithBackendDto.AddObject(
-                            Adapters.OrderAdapter.ConvertFromEntityToOrderDto(
-                                await _orderRepository.Add(order))
-                            );
-                    }
+
+                        order.OrderDetailId.Add(detail);
+                    });*/
+
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    answerWithBackendDto.AddObject(
+                        Adapters.OrderAdapter.ConvertFromEntitieToDTO(
+                            await _orderRepository.Add(order))
+                    );
+
+                    /*answerWithBackendDto.AddObject(
+                        Adapters.OrderAdapter.ConvertFromEntitieToDTO(
+                            await _orderRepository.Add(order.OrderDetailId))
+                    );*/
 
                     return answerWithBackendDto;
                 }
@@ -60,20 +73,35 @@ namespace OrderService.BLL
         /// <summary>
         /// Обновление состояния заказа
         /// </summary>
-        public async Task<AnswerWithBackendDto<OrderDto>> UpdateOrderStatus(int id, OrderStatus orderStatus, CancellationToken token)
+        public async Task<AnswerWithBackendDto<OrderDto>> UpdateOrderStatusAsync(UpdateOrderDto dto, CancellationToken cancellationToken)
         {
             return await Task.Run(async () =>
             {
                 try
                 {
                     AnswerWithBackendDto<OrderDto> answerWithBackendDto = new();
-                    Order order;
 
-                    var userOrder = await _orderRepository.GetCurrentOrder(id);
-                    if (userOrder is not null)
+                    var order = await _orderRepository.Get(dto.IdOrder);
+                    
+                    if (order is null)
                     {
-                        order = await _orderRepository.UpdateStatusAsync(id, orderStatus);
-                    }
+                        answerWithBackendDto.AddErrorLog("Ошибка. Не найдена данная позиция");
+                        return answerWithBackendDto;
+                    }                    
+
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    await _orderRepository.Delete(order);
+
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    order!.OrderStatus = dto.OrderStatus;
+                    order!.DateOrderStatus = DateTime.Now;
+
+                    answerWithBackendDto.AddObject(
+                        Adapters.OrderAdapter.ConvertFromEntitieToDTO(
+                            await _orderRepository.Add(order))
+                        );
 
                     return answerWithBackendDto;
                 }
@@ -85,9 +113,9 @@ namespace OrderService.BLL
         }
 
         /// <summary>
-        /// Получить корзину пользователя
+        /// Получить заказы пользователя
         /// </summary>
-        public async Task<AnswerWithBackendDto<OrderDto>> GetOrderUser(int userId, CancellationToken token)
+        public async Task<AnswerWithBackendDto<OrderDto>> GetAllOrderUserAsync(GetAllOrderDto dto, CancellationToken cancellationToken)
         {
             return await Task.Run(async () =>
             {
@@ -95,7 +123,8 @@ namespace OrderService.BLL
                 {
                     AnswerWithBackendDto<OrderDto> answerWithBackendDto = new();
 
-                    var items = Adapters.OrderAdapter.ConvertFromEntityToOrderDto(await _orderRepository.GetListOrders(userId));
+                    var items = Adapters.OrderAdapter.ConvertFromEntitieToDTO(
+                        await _orderRepository.GetListOrders(dto.IdUser));
 
                     if (items is null)
                     {
@@ -103,8 +132,9 @@ namespace OrderService.BLL
                         return answerWithBackendDto;
                     }
 
-                    answerWithBackendDto.AddObject(Adapters.OrderAdapter.ConvertFromEntityToOrderDto
-                        (await _orderRepository.Get(userId)));
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    answerWithBackendDto.AddObject(items);
 
                     return answerWithBackendDto;
                 }
@@ -115,6 +145,73 @@ namespace OrderService.BLL
             });
         }
 
+        /// <summary>
+        /// Получить один заказ пользователя
+        /// </summary>
+        public async Task<AnswerWithBackendDto<OrderDto>> GetOrderUserAsync(GetOrderDto dto, CancellationToken cancellationToken)
+        {
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    AnswerWithBackendDto<OrderDto> answerWithBackendDto = new();
+
+                    var items = Adapters.OrderAdapter.ConvertFromEntitieToDTO(
+                        await _orderRepository.GetListOrders(dto.IdOrder));
+
+                    if (items is null)
+                    {
+                        answerWithBackendDto.AddErrorLog("Ошибка получения заказа пользователя");
+                        return answerWithBackendDto;
+                    }
+
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    answerWithBackendDto.AddObject(items);
+
+                    return answerWithBackendDto;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            });
+        }
+
+        /// <summary>
+        /// Удаление заказа
+        /// </summary>
+        public async Task<AnswerWithBackendDto<OrderDto>> DeleteOrderAsync(DeleteOrderDto dto, CancellationToken cancellationToken)
+        {
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    AnswerWithBackendDto<OrderDto> answerWithBackendDto = new();
+
+                    Order order = await _orderRepository.GetOrder(dto.IdOrder);
+
+                    if (order is null)
+                    {
+                        answerWithBackendDto.AddErrorLog("Ошибка. Не найдена данная позиция");
+                        return answerWithBackendDto;
+                    }
+
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    await _orderRepository.Delete(order);
+                    answerWithBackendDto.DataReceived = true;
+                    answerWithBackendDto.ObjectDto = null;
+
+                    return answerWithBackendDto;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            },
+            cancellationToken);
+        }
 
         /*/// <summary>
         /// Отправка сообщения в RabbitMQ о том, что статус был изменен
