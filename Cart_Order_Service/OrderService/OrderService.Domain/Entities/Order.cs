@@ -18,28 +18,16 @@ namespace OrderService.Domain.Entities
         public int Id { get; set; }
 
         /*/// <summary>
-        /// Id позиции товара
-        /// </summary>
-        [Required, Column("product_id")]
-        public int ProductId { get; set; }*/
-
-        /// <summary>
         /// Id позиции магазина
         /// </summary>
         [Required, Column("shop_id")]
-        public int ShopId { get; set; }
+        public int ShopId { get; set; }*/
 
         /// <summary>
         /// Дата создания заказа
         /// </summary>
         [Column("date_create")]
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
-
-        /// <summary>
-        /// Количество позиций в заказе
-        /// </summary>
-        [Required, Column("сount")]
-        public int Count { get; set; }
 
         /// <summary>
         /// Дата прибытия
@@ -66,15 +54,21 @@ namespace OrderService.Domain.Entities
         public string ArriveAddress { get; set; }
 
         /// <summary>
-        /// Состояние заказа
+        /// Статус заказа
         /// </summary>
-        [Column("state")]
+        [Column("OrderStatus")]
         public OrderStatus OrderStatus { get; set; }
+
+        /// <summary>
+        /// Дата установки статуса заказа
+        /// </summary>
+        [Column("date_status")]
+        public DateTime DateOrderStatus { get; set; }
+
 
         #region связи
 
         public int UserId { get; set; }
-        public int ProductId { get; set; }
 
         #endregion
 

@@ -1,22 +1,22 @@
-﻿using OrderService.BLL.Dto.Order;
+﻿using OrderService.BLL.Dto.OrderDetail;
 using OrderService.Domain.Entities;
 
 namespace OrderService.BLL.Adapters
 {
-    public class OrderAdapter
+    public class OrderDetailAdapter
     {
         /// <summary>
         /// Преобразовать из List<Entitie> в List<Dto></Dto>
         /// </summary>
-        public static List<OrderDto> ConvertFromEntitieToDTO(List<Order> items)
+        public static List<OrderDetailDto> ConvertFromEntitieToDTO(List<OrderDetail> items)
         {
-            List<OrderDto> orderDto = new();
-            foreach (Order entitie in items)
+            List<OrderDetailDto> orderDto = new();
+            foreach (OrderDetail entitie in items)
             {
-                orderDto.Add(new OrderDto()
+                orderDto.Add(new OrderDetailDto()
                 {
                     Id = entitie.Id,
-                    UserId = entitie.UserId,
+                    ParentId = entitie.OrderId,
                 });
             }
             return orderDto;
@@ -26,24 +26,24 @@ namespace OrderService.BLL.Adapters
         /// <summary>
         /// Преобразовать из Entitie в Dto
         /// </summary>
-        public static OrderDto ConvertFromEntitieToDTO(Order entitie)
+        public static OrderDetailDto ConvertFromEntitieToDTO(OrderDetail entitie)
         {
-            return new OrderDto()
+            return new OrderDetailDto()
             {
                 Id = entitie.Id,
-                UserId = entitie.UserId,                
+                ParentId = entitie.OrderId,                
             };
         }
 
         /// <summary>
         /// Преобразовать из Dto в Entitie 
         /// </summary>
-        public static Order ConvertFromDTOToEntity(OrderDto dto)
+        public static OrderDetail ConvertFromDTOToEntity(OrderDetailDto dto)
         {
-            return new Order
+            return new OrderDetail
             {
                 Id = dto.Id,
-                UserId = dto.UserId,
+                OrderId = dto.ParentId,
             };
         }
     }

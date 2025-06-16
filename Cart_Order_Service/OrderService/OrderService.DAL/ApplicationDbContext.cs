@@ -7,6 +7,7 @@ namespace OrderService.DAL
     {
         #region Tables 
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
         #endregion
 

@@ -13,7 +13,7 @@
         /// <summary>
         /// Ожидает оплату
         /// </summary>
-        AwaitingPayment = 1,
+        ReturnedPayment = 1,
 
         /// <summary>
         /// Передан в доставку

@@ -1,4 +1,4 @@
-﻿namespace OrderService.BLL.Dto
+﻿namespace OrderService.BLL.Dto.Order
 {
     public class DeleteOrderDto
     {

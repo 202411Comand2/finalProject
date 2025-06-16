@@ -63,9 +63,9 @@ namespace OrderService.DAL.Repositories
 
 
         /// <summary>
-        /// Получить текущий заказ
+        /// Получить заказ
         /// </summary>
-        public async Task<Order> GetCurrentOrder(int id)
+        public async Task<Order> GetOrder(int id)
         {
             try
             {

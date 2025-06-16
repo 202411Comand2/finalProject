@@ -112,30 +112,28 @@
         "TtlSeconds": 60
       }
     },
-    {
+    { //Cart
       "DownstreamPathTemplate": "/api/Cart/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          //"Host": "localhost",
           "Host": "host.docker.internal",
           "Port": 7175
         }
       ],
       "UpstreamPathTemplate": "/gateway/Cart/{everything}",
       "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE"],
       "FileCacheOptions": {
         "TtlSeconds": 60
       }
 
     },
-    {
+    { //Order
       "DownstreamPathTemplate": "/api/Order/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          //"Host": "localhost",
           "Host": "host.docker.internal",
           "Port": 7042
         }

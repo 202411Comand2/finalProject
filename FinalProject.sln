@@ -112,6 +112,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SupperBackEnd.Dto", "Supper
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartApi", "Cart_Order_Service\CartService\CartApi\CartApi.csproj", "{9C73A536-9A6D-4F4A-B5B5-2A10D503CBF1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerComposeYml", "DockerComposeYml", "{4A9536E8-E1D5-4EDD-8836-C30094222162}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "YmlVera", "YmlVera", "{AC3F6EFE-DD3A-4D90-B5D6-BB020343D299}"
+	ProjectSection(SolutionItems) = preProject
+		DockerComposeYml\YmlVera\docker-compose.yml = DockerComposeYml\YmlVera\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "YmlIlya", "YmlIlya", "{DB207576-A499-4490-8974-20E03D0FDE9B}"
+	ProjectSection(SolutionItems) = preProject
+		DockerComposeYml\YmlIlya\docker-compose.yml = DockerComposeYml\YmlIlya\docker-compose.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -325,6 +337,8 @@ Global
 		{9B3680C6-EEBE-4EB8-844A-35420B10BBCF} = {7D208FF3-4BF7-4A35-9754-BD45EC9FAB92}
 		{17FF9785-79D8-4AC7-9D85-4207D6D379EC} = {E49652B3-6BF9-454C-B657-0C55FBB32D7F}
 		{9C73A536-9A6D-4F4A-B5B5-2A10D503CBF1} = {7D208FF3-4BF7-4A35-9754-BD45EC9FAB92}
+		{AC3F6EFE-DD3A-4D90-B5D6-BB020343D299} = {4A9536E8-E1D5-4EDD-8836-C30094222162}
+		{DB207576-A499-4490-8974-20E03D0FDE9B} = {4A9536E8-E1D5-4EDD-8836-C30094222162}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47C6B020-09D3-4DF7-8460-95200C811308}

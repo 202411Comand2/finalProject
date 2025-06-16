@@ -1,4 +1,5 @@
-﻿using Platform.DAL;
+﻿using OrderService.Domain.Enums;
+using Platform.DAL;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,17 +16,6 @@ namespace OrderService.Domain.Entities
       /// </summary>
         [Key, Column("id"), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        /// <summary>
-        /// Id заказа, к которому идёт эта позиция
-        /// </summary>
-        [Required,Column("order_id")]
-        public int OrderId { get; set; }
-
-        /// <summary>
-        /// Id позиции товара
-        /// </summary>
-        [Required, Column("product_id")]
-        public int ProductId { get; set; }
 
         /// <summary>
         /// Количество позиций в заказе
@@ -40,23 +30,16 @@ namespace OrderService.Domain.Entities
         public decimal Price { get; set; }
 
         /// <summary>
-        /// Id позиции магазина
+        /// Статус позиции в заказе
         /// </summary>
-        [Required, Column("shop_id")]
-        public int ShopId { get; set; }
-      
-       
+        [Required, Column("StatusPosition")]
+        public StatusPosition StatusPosition { get; set; }
+
         #region
 
-        [ForeignKey(nameof(OrderId))]
-        public Order Order { get; set; }
+        public int OrderId { get; set; }
+        public int ProductId { get; set; }
 
-
-        /*[ForeignKey(nameof(ProductId))]
-        public Product product { get; set; }
-
-        [ForeignKey(nameof(ShopId))]
-        public Shop shop { get; set; }*/
         #endregion
 
         /// <summary>

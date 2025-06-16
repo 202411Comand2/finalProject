@@ -1,4 +1,4 @@
-﻿using OrderService.BLL.Dto;
+﻿using OrderService.BLL.Dto.Order;
 using RestSharp;
 
 namespace FinalProjectTests.Order
@@ -67,14 +67,14 @@ namespace FinalProjectTests.Order
 
             var Dto = new GetOrderDto()
             {
-                IdUser = 1
+                IdOrder = 1
             };
 
-            request.AddQueryParameter("IdUser", Dto.IdUser);
+            request.AddQueryParameter("IdOrder", Dto.IdOrder);
             var response = client.Execute(request);
 
             if (response.IsSuccessful)
-                Console.WriteLine($"Заказы пользователя {Dto.IdUser}: {response.Content}");
+                Console.WriteLine($"Заказы пользователя {Dto.IdOrder}: {response.Content}");
             else
                 Console.WriteLine($"Ошибка получения данных по заказам пользователя: {response.ErrorMessage}");
         }
