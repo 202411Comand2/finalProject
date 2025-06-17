@@ -60,3 +60,10 @@ services:
       context: .
       dockerfile: OcelotWebApiGr/Ocleot_https/Dockerfile
 
+
+  authapi:
+    image: ${DOCKER_REGISTRY-}authapi
+    build:
+      context: .
+      dockerfile: AuthService/AuthApi/Dockerfile
+

@@ -1,4 +1,5 @@
 ﻿using Client.Models;
+using Client.Models.Auth;
 using System.Text;
 using System.Text.Json;
 
@@ -12,7 +13,11 @@ namespace ClientConsole
         };
         static async Task Main()
         {
-           
+
+            Console.WriteLine("Сервис авторизации");
+            await auth();
+            
+
             Console.WriteLine("\nСервис Продуктов:\n");
             await ProductService();
             //Console.WriteLine("\nСервис магазинов:\n");
@@ -33,6 +38,39 @@ namespace ClientConsole
              return;
 
         }
+
+        private static async Task auth() 
+        {
+
+            #region Post 
+            // Добаление продукта
+            AuthUserDto addProductDto = new();
+            addProductDto.Login = "string";
+            addProductDto.Password = "string";
+
+            // 2. Подготавливаем данные (объект → JSON)
+            string json = JsonSerializer.Serialize(addProductDto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            // 3. Отправляем POST-запрос
+            var response = await client.PostAsync("/gateway/auth/login", content);
+
+
+            int idResponseObject = -1; //запысываем id объекта чтобы его изменить
+
+            // 4. Проверяем ответ
+            if (response.IsSuccessStatusCode)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Ответ сервера id созданного объекта: {responseBody}");
+                int.TryParse(responseBody, out idResponseObject);
+            }
+            else
+            {
+                Console.WriteLine($"Ошибка: {response.StatusCode}");
+            }
+            #endregion
+        }
+
 
         /// <summary>
         /// Написание запроса для productService

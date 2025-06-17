@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace ClusterService.DAL
+namespace AuthService.DAL
 {
-	public class ContextManager : IContextManager
+    public class ContextManager : IContextManager
 	{
         /// <summary>
         /// Перезаписать бд,путём удаления старой бд и замена на новую
