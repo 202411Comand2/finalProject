@@ -46,12 +46,17 @@ services:
     build:
       context: .
       dockerfile: Cart_Order_Service/OrderService/OrderApi/Dockerfile
+  # ocelotwebapigr:
+  #   image: ${DOCKER_REGISTRY-}ocelotwebapigr
+  #   build:
+  #     context: .
+  #     dockerfile: OcelotWebApiGr/OcelotWebApiGr/Dockerfile
 
 
-  ocelotwebapigr:
-    image: ${DOCKER_REGISTRY-}ocelotwebapigr
+
+  ocleot_https:
+    image: ${DOCKER_REGISTRY-}ocleothttps
     build:
       context: .
-      dockerfile: OcelotWebApiGr/OcelotWebApiGr/Dockerfile
-
+      dockerfile: OcelotWebApiGr/Ocleot_https/Dockerfile
 

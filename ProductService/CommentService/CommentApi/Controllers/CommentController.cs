@@ -11,6 +11,10 @@ namespace API.Controllers.Product
 
         ICommentMainService _commentService = commentService;
 
+
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id) => Ok($"Product {id}");
         /// <summary>
         /// Добавить новый рейтинг
         /// </summary>
