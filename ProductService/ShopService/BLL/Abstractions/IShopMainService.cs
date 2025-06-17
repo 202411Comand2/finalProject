@@ -41,5 +41,13 @@ namespace ShopService.BLL
         /// <param name="shopDto">Коллекция id магазинов</param>
         /// <returns></returns>
         public Task<AnswerWithBackendDto<ShopDto>> GetShopsInfo(GetShopsInfoDto shopDto);
+
+
+        /// <summary>
+        /// Получить магазин по id 
+        /// </summary>
+        /// <param name="shopDto">Коллекция id магазинов</param>
+        /// <returns></returns>
+        public Task<AnswerWithBackendDto<ShopDto>> GetShopsInfo(int id);
     }
 }

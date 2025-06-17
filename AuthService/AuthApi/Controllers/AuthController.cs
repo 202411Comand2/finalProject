@@ -1,9 +1,6 @@
 ﻿using AuthService.BLL;
 using AuthService.BLL.Dto;
-using AuthService.Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SupperBackEnd.Dto;
 using SupperBackEnd.ServerResponseEND;
@@ -132,6 +129,54 @@ namespace AuthApi.Controllers
             }
         }
 
+
+        [HttpPost("Update")]
+        public async Task<ActionResult<string>> UpdateInfoUser(UpdateUserDto model)
+        {
+
+            try
+            {
+                Console.WriteLine("Пользователь зашёл в изменения профиля");
+                // Получаем токен из заголовка
+                int idUser = ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+                try
+                {
+                    switch (idUser)
+                    {
+                        case -2: //токен просрочен
+                            Console.WriteLine("Token is missing");
+                            return Unauthorized(new ApiResponse<AuthUserDto>(false, null, "Token is missing"));
+                        case -3:
+                            Console.WriteLine("Invalid token claims");
+                            return Unauthorized(new ApiResponse<AuthUserDto>(false, null, "Invalid token claims"));
+                        default:
+                            Console.WriteLine("Данные обновлены!");
+                            model.Id = idUser;
+                            var userInfo = await _authService.UpdateInfoUser(model);
+                            if (userInfo.DataReceived == true)
+                            {
+                                return Ok(new ApiResponse<UserDto>(true, userInfo.ObjectDto, null));
+                            }
+                            else 
+                            {
+                                return BadRequest(new ApiResponse<AuthUserDto>(false, null, userInfo.ErrorLog));
+                            }
+                      }
+                }
+                catch (SecurityTokenException ex)
+                {
+                    return Unauthorized(new ApiResponse<AuthUserDto>(false, null, $"Invalid token: {ex.Message}"));
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<AuthUserDto>(false, null, ex.Message));
+            }
+        }
+
+        #region вспомогательные ф-и
+
+
         /// <summary>
         /// Проверка токена от frontEnd
         /// </summary>
@@ -225,6 +270,6 @@ namespace AuthApi.Controllers
             return token;
         }
 
-       
+        #endregion
     }
 }

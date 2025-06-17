@@ -16,6 +16,9 @@ namespace ShopService.BLL
                 Id = shop.Id,
                 Name = shop.Name,
                 IsDelete = shop.IsDelete,
+                Description = shop.Description,
+                ContactInfo = shop.ContactInfo,
+                Adress = shop.Adress,
             };
         }
 
@@ -31,6 +34,9 @@ namespace ShopService.BLL
                 Id = shopDto.Id,
                 Name = shopDto.Name,
                 IsDelete = shopDto.IsDelete,
+                Description = shopDto.Description,
+                ContactInfo = shopDto.ContactInfo,
+                Adress = shopDto.Adress,
             };
         }
         /// <summary>
@@ -45,6 +51,9 @@ namespace ShopService.BLL
                 Id = shop.Id,
                 Name = shop.Name,
                 IsDelete = shop.IsDelete,
+                Description = shop.Description,
+                ContactInfo = shop.ContactInfo,
+                Adress = shop.Adress,
             };
         }
         /// <summary>
@@ -62,6 +71,9 @@ namespace ShopService.BLL
                     Id = shop.Id,
                     Name = shop.Name,
                     IsDelete = shop.IsDelete,
+                    Description = shop.Description,
+                    ContactInfo = shop.ContactInfo,
+                    Adress = shop.Adress,
                 });
             }
             return shopDtos;

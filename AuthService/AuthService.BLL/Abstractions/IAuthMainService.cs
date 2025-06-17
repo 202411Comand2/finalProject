@@ -21,7 +21,7 @@ namespace AuthService.BLL
         /// </summary>
         /// <param name="UserDto">Нужно передать UserDto</param>
         /// <returns>Удалось ли обновить магазин</returns>
-        public Task<AnswerWithBackendDto<UserDto>> UpdateInfoUser(UserDto UserDto);
+        public Task<AnswerWithBackendDto<UserDto>> UpdateInfoUser(UpdateUserDto UserDto);
 
         /// <summary>
         /// Авторизация пользователя

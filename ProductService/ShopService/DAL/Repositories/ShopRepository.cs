@@ -126,40 +126,6 @@ namespace ShopService.DAL
 
         }
 
-        ////TODO не задача данного сервиса
-
-        /// <summary>
-        /// Проверить является ли пользователем владельцем магазина
-        /// </summary>
-        /// <param name="idUser"></param>
-        /// <param name="nameShop"></param>
-        /// <returns></returns>
-        public async Task<Shop?> CheckOwnerShopUser(int id)
-        {
-            return null;
-
-            //var shop = await GetShopId(id);
-            //if (shop is not null)
-            //{
-            //    // Проверяем магазин на наличие в бд
-            //    using (var context = CreateDatabaseContext())
-            //    {
-            //        var s = await (
-            //            from o in context.ShopOwners
-            //            join c in context.Shops on o.ShopId equals c.Id
-            //            where   c.Id == shop.Id
-            //            select c).FirstOrDefaultAsync();
-            //        return s;
-            //    }
-            //}
-            //else
-            //{
-            //    return null;
-            //}
-        }
-
-      
-
         /// <summary>
         /// Вернуть список магазинов
         /// </summary>

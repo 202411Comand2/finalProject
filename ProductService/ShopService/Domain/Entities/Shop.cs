@@ -28,6 +28,28 @@ namespace ShopService.Domain
         [Required, Column("is_delete")]
         public bool IsDelete { get; set; } = false;
 
+
+        /// <summary>
+        /// Описание магазина
+        /// </summary>
+        [Required, Column("description")]
+        public string Description { get; set; } = string.Empty;
+
+
+        /// <summary>
+        /// Контактная инфомрация о магазине
+        /// </summary>
+        [Required, Column("contact_info")]
+        public string ContactInfo { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Адресс магазина
+        /// </summary>
+        [Required, Column("adress")]
+        public string Adress { get; set; } = string.Empty;
+
+
+
         /// <summary>
         /// Вернуть Id объекта
         /// </summary>

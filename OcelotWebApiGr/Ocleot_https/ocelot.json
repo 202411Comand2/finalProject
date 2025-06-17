@@ -156,8 +156,23 @@
       "FileCacheOptions": {
         "TtlSeconds": 60
       }
+    },
+    { // Owner
+      "DownstreamPathTemplate": "/api/Owner/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7237
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Owner/{everything}", // http://localhost:5010/gateway/shop/1
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
     }
-
 
 
 

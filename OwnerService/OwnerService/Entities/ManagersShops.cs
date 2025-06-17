@@ -7,16 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Platform.DAL;
 
-namespace AuthService.Domain.Entities
+namespace OwnerService.Domain.Entities
 {
     /// <summary>
     /// Комментарии пользователей
     /// </summary>
     [Table("ManagersShops")]
-    public class Comment : IDbEntity
+    public class ManagersShops : IDbEntity
     {
         /// <summary>
-        /// Id магазина
+        /// Id записи
         /// </summary>
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -26,7 +26,7 @@ namespace AuthService.Domain.Entities
         /// id магазина
         /// </summary>
         [Required, Column("shop_id")]
-        public int ShopID { get; set; }
+        public int ShopId { get; set; }
 
 
         /// <summary>
@@ -35,6 +35,11 @@ namespace AuthService.Domain.Entities
         [Required, Column("user_id")]
         public int UserId { get; set; }
 
+        /// <summary>
+        /// Название магазина
+        /// </summary>
+        [Required, Column("name_shop")]
+        public string NameShop { get; set; } = string.Empty;
 
 
         /// <summary>

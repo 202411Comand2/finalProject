@@ -4,10 +4,9 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dd3231fe-c91f-4ac0-af35-4fc794065ebb</UserSecretsId>
+    <UserSecretsId>ba3ae9d9-b6c9-471f-8282-c3c7153117f1</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
-    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,8 +27,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ProductService\SupperDto\SupperBackEndDto\SupperBackEnd.Dto.csproj" />
-    <ProjectReference Include="..\AuthService.BLL\AuthService.BLL.csproj" />
-    <ProjectReference Include="..\AuthService.Domain\AuthService.Domain.csproj" />
+    <ProjectReference Include="..\ManagersShopsService.BLL\ManagersShopsService.BLL.csproj" />
+    <ProjectReference Include="..\ManagersShopsService.DAL\ManagersShopsService.DAL.csproj" />
   </ItemGroup>
+
+ 
 
 </Project>
