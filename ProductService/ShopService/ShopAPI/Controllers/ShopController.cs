@@ -109,9 +109,13 @@ namespace API.Controllers.Product
             }
             return Ok(true);
         }
-
-        [HttpPost("GetInfo")]
-        public async Task<ActionResult<string>> GetInfo([FromBody] GetShopsInfoDto shopDto)
+        /// <summary>
+        /// Получить список магазинов по указанным id
+        /// </summary>
+        /// <param name="shopDto"></param>
+        /// <returns></returns>
+        [HttpPost("GetInfoList")]
+        public async Task<ActionResult<string>> GetInfoList([FromBody] GetShopsInfoDto shopDto)
         {
             AnswerWithBackendDto<ShopDto> result = new();
             try
@@ -128,6 +132,32 @@ namespace API.Controllers.Product
                 return NotFound(result.ErrorLog);
             }
             return result.GetCollectionNotProblem();
+        }
+
+
+        /// <summary>
+        /// Получить список магазинов по указанным id
+        /// </summary>
+        /// <param name="shopDto"></param>
+        /// <returns></returns>
+        [HttpGet("GetInfo")]
+        public async Task<ActionResult<string>> GetInfo([FromQuery] int id)
+        {
+            AnswerWithBackendDto<ShopDto> result = new();
+            try
+            {
+                result = await _shopService.GetShopsInfo(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            if (!result.DataReceived)
+            {
+                return NotFound(result.ErrorLog);
+            }
+            return Ok(result.ObjectDto);
         }
     }
 }

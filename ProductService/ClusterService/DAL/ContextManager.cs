@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Platform.DAL;
 
 namespace ClusterService.DAL
 {

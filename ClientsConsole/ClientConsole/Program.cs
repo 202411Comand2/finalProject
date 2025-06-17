@@ -1,4 +1,5 @@
 ﻿using Client.Models;
+using Client.Models.Auth;
 using System.Text;
 using System.Text.Json;
 
@@ -8,31 +9,68 @@ namespace ClientConsole
     {
         static private HttpClient? client = new HttpClient()
         {
-            BaseAddress = new Uri("http://host.docker.internal:5010")
+            BaseAddress = new Uri("https://localhost:5011")
         };
         static async Task Main()
         {
-           
+
+            Console.WriteLine("Сервис авторизации");
+            await auth();
+            
+
             Console.WriteLine("\nСервис Продуктов:\n");
             await ProductService();
-            Console.WriteLine("\nСервис магазинов:\n");
-            await ShopService();
-            Console.WriteLine("\nСервис избранного:\n");
-            await FavoriteService();
-            Console.WriteLine("\nСервис комментов:\n");
-            await CommentService();
+            //Console.WriteLine("\nСервис магазинов:\n");
+            //await ShopService();
+            //Console.WriteLine("\nСервис избранного:\n");
+            //await FavoriteService();
+            //Console.WriteLine("\nСервис комментов:\n");
+            //await CommentService();
 
-            Console.WriteLine("\nСервис кластеров:\n");
-            await ClusterService();
+            //Console.WriteLine("\nСервис кластеров:\n");
+            //await ClusterService();
 
 
-            Console.ForegroundColor = ConsoleColor.Red;
+            //Console.ForegroundColor = ConsoleColor.Red;
             
-            Console.WriteLine("Чтобы выйти нажмите любую клавишу");
-            Console.ReadKey();
+            //Console.WriteLine("Чтобы выйти нажмите любую клавишу");
+           Console.ReadKey();
              return;
 
         }
+
+        private static async Task auth() 
+        {
+
+            #region Post 
+            // Добаление продукта
+            AuthUserDto addProductDto = new();
+            addProductDto.Login = "string";
+            addProductDto.Password = "string";
+
+            // 2. Подготавливаем данные (объект → JSON)
+            string json = JsonSerializer.Serialize(addProductDto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            // 3. Отправляем POST-запрос
+            var response = await client.PostAsync("/gateway/auth/login", content);
+
+
+            int idResponseObject = -1; //запысываем id объекта чтобы его изменить
+
+            // 4. Проверяем ответ
+            if (response.IsSuccessStatusCode)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Ответ сервера id созданного объекта: {responseBody}");
+                int.TryParse(responseBody, out idResponseObject);
+            }
+            else
+            {
+                Console.WriteLine($"Ошибка: {response.StatusCode}");
+            }
+            #endregion
+        }
+
 
         /// <summary>
         /// Написание запроса для productService
@@ -54,6 +92,13 @@ namespace ClientConsole
             var response1 = await client.GetAsync($"gateway/Product/GetProductsByCluster?ClusterId={cluster}");
             await response1.Content.ReadAsStringAsync();
             Console.WriteLine("Получить по id кластеру " + await response1.Content.ReadAsStringAsync() + "\n");
+
+
+            string id = "1";
+            response = await client.GetAsync($"gateway/Product/GetProductsByCluster?id={id}");
+            await response.Content.ReadAsStringAsync();
+            Console.WriteLine("Получить по id магазину " + await response.Content.ReadAsStringAsync() + "\n");
+            return;
             #endregion
 
             #region Post 

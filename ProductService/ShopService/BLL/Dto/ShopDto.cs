@@ -15,5 +15,22 @@
         /// Магазин удалён
         /// </summary>
         public bool IsDelete { get; set; } = false;
+
+        /// <summary>
+        /// Описание магазина
+        /// </summary>
+        public string Description { get; set; } = string.Empty;
+
+
+        /// <summary>
+        /// Контактная инфомрация о магазине
+        /// </summary>
+        public string ContactInfo { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Адресс магазина
+        /// </summary>
+        public string Adress { get; set; } = string.Empty;
+
     }
 }

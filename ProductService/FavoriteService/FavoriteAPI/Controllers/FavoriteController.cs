@@ -12,7 +12,8 @@ namespace API.Controllers.Product
     {
         private readonly IFavoriteProductService _favoriteProductService = favoriteProductService;
 
-
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id) => Ok($"Product {id}");
         /// <summary>
         /// Добавить товар в избранное
         /// </summary>

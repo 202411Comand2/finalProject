@@ -35,17 +35,6 @@ namespace ClusterAPI
                     Description = "Пример API с Swagger",
                     Contact = new OpenApiContact { Name = "Dev", Email = "dev@example.com" }
                 });
-
-                //Для разговора с Глебом
-                //// Добавляем JWT-аутентификацию (опционально)
-                //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                //{
-                //    Description = "JWT Authorization header. Example: \"Bearer {token}\"",
-                //    Name = "Authorization",
-                //    In = ParameterLocation.Header,
-                //    Type = SecuritySchemeType.ApiKey,
-                //    Scheme = "Bearer"
-                //});
             });
 
             var app = builder.Build();
