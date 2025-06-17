@@ -8,28 +8,28 @@ namespace ClientConsole
     {
         static private HttpClient? client = new HttpClient()
         {
-            BaseAddress = new Uri("https://host.docker.internal:5011")
+            BaseAddress = new Uri("https://localhost:5011")
         };
         static async Task Main()
         {
            
             Console.WriteLine("\nСервис Продуктов:\n");
             await ProductService();
-            Console.WriteLine("\nСервис магазинов:\n");
-            await ShopService();
-            Console.WriteLine("\nСервис избранного:\n");
-            await FavoriteService();
-            Console.WriteLine("\nСервис комментов:\n");
-            await CommentService();
+            //Console.WriteLine("\nСервис магазинов:\n");
+            //await ShopService();
+            //Console.WriteLine("\nСервис избранного:\n");
+            //await FavoriteService();
+            //Console.WriteLine("\nСервис комментов:\n");
+            //await CommentService();
 
-            Console.WriteLine("\nСервис кластеров:\n");
-            await ClusterService();
+            //Console.WriteLine("\nСервис кластеров:\n");
+            //await ClusterService();
 
 
-            Console.ForegroundColor = ConsoleColor.Red;
+            //Console.ForegroundColor = ConsoleColor.Red;
             
-            Console.WriteLine("Чтобы выйти нажмите любую клавишу");
-            Console.ReadKey();
+            //Console.WriteLine("Чтобы выйти нажмите любую клавишу");
+           Console.ReadKey();
              return;
 
         }
@@ -54,6 +54,13 @@ namespace ClientConsole
             var response1 = await client.GetAsync($"gateway/Product/GetProductsByCluster?ClusterId={cluster}");
             await response1.Content.ReadAsStringAsync();
             Console.WriteLine("Получить по id кластеру " + await response1.Content.ReadAsStringAsync() + "\n");
+
+
+            string id = "1";
+            response = await client.GetAsync($"gateway/Product/GetProductsByCluster?id={id}");
+            await response.Content.ReadAsStringAsync();
+            Console.WriteLine("Получить по id магазину " + await response.Content.ReadAsStringAsync() + "\n");
+            return;
             #endregion
 
             #region Post 

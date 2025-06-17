@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductService.BLL;
 using SupperBackEnd.Dto;
+using SupperBackEnd.ServerResponseEND;
 
 namespace API.Controllers.Product
 {
@@ -147,5 +148,25 @@ namespace API.Controllers.Product
             return result.GetCollectionNotProblem();
         }
 
+        [HttpGet("GetProductsById")]
+        public async Task<ActionResult<string>> GetProductId([FromQuery] int id )
+        {
+            try
+            {
+                var result = await _productService.GetProductById(id);
+
+                if (!result.DataReceived)
+                {
+                    return Ok(new ApiResponse<ProductDto>(false, null, result.ErrorLog));
+                }
+
+                return Ok(new ApiResponse<ProductDto>(true, result.ObjectDto, null));
+                
+            }
+            catch (Exception ex)
+            {
+                return Ok(new ApiResponse<ProductDto>(false, null, ex.Message));
+            }
+        }
     }
 }

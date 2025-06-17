@@ -23,7 +23,7 @@
         "Action": "Start"
       },
       {
-        "Path": "OcelotWebApiGr\\OcelotWebApiGr\\OcelotWebApiGr.csproj",
+        "Path": "OcelotWebApiGr\\Ocleot_https\\Ocleot_https.csproj",
         "Action": "Start"
       }
     ]

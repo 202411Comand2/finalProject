@@ -58,5 +58,12 @@ namespace ProductService.BLL
         /// <param name="shopId">Идентификатор магазина.</param>
         /// <returns>Задачу на удаление продуктов из магазина.</returns>
         public Task DeleteShopAllProductsAsync(int shopId);
+
+        /// <summary>
+        /// Получить информацию о продукте по id 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<AnswerWithBackendDto<ProductDto>> GetProductById(int id);
     }
 }
