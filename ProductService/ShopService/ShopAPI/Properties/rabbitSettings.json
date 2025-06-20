@@ -1,9 +1,9 @@
 {
-  "RabbitMQ": {
-    "HostName": "localhost",
-    "UserName": "ShopAdmin",
-    "Password": "Shop_admin",
-    "DefaultExchangeName": "shop.exchange",
-    "DefaultQueueName": "shop.queue"
+  "RabbitSettings": {
+    "RabbitHostName": "host.docker.internal",
+    "RabbitUserName": "admin",
+    "RabbitUserPassword": "secret"
+    //"DefaultExchangeName": "shop.exchange",
+    //"DefaultQueueName": "shop.queue"
   }
 }

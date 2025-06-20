@@ -34,9 +34,9 @@ namespace Rabbit.Platform
             
             var factory = new ConnectionFactory()
             {
-                HostName = _hostname,
-                UserName = _username,
-                Password = _password
+                HostName = "host.docker.internal",
+                UserName = "admin",
+                Password = "secret"
             };
 
             _connection = await factory.CreateConnectionAsync();
