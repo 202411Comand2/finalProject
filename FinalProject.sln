@@ -110,9 +110,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartApi", "Cart_Order_Service\CartService\CartApi\CartApi.csproj", "{9C73A536-9A6D-4F4A-B5B5-2A10D503CBF1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerComposeYml", "DockerComposeYml", "{4A9536E8-E1D5-4EDD-8836-C30094222162}"
-	ProjectSection(SolutionItems) = preProject
-		script_add_cluster.txt = script_add_cluster.txt
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "YmlVera", "YmlVera", "{AC3F6EFE-DD3A-4D90-B5D6-BB020343D299}"
 	ProjectSection(SolutionItems) = preProject
@@ -121,7 +118,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "YmlVera", "YmlVera", "{AC3F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "YmlIlya", "YmlIlya", "{DB207576-A499-4490-8974-20E03D0FDE9B}"
 	ProjectSection(SolutionItems) = preProject
-		DockerComposeYml\YmlIlya\docker-compose.yml = DockerComposeYml\YmlIlya\docker-compose.yml
+		..\Docker-education\FinalProject\bd_load\docker-compose.yml = ..\Docker-education\FinalProject\bd_load\docker-compose.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth_Owner_Service", "Auth_Owner_Service", "{CC1A6DD2-A51E-472C-B30C-344455EDB8D7}"
