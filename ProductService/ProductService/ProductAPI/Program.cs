@@ -25,6 +25,7 @@ namespace ProductAPI
             services.AddTransient<IProductMainService, ProductMainService>();
             services.AddSingleton<IRabbitSettings, RabbitSettings>();
             services.AddSingleton<IRabbitMQService, RabbitMQService>();
+            services.AddSingleton<IMessagePublisher, MessagePublisher>();
             services.AddSingleton<IMessageConsumer, MessageConsumer>();
             services.AddHostedService<ShopToProductMessagesConsumer>();
 

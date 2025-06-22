@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Properties\rabbitSettings.json" />
     <Content Remove="Properties\secretsSettings.json" />
   </ItemGroup>
 
@@ -19,12 +20,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Properties\rabbitSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\secretsSettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Domain\Rabbit.Platform.csproj" />
     <ProjectReference Include="..\CartService.BLL\CartService.BLL.csproj" />
     <ProjectReference Include="..\CartService.DAL\CartService.DAL.csproj" />
     <ProjectReference Include="..\CartService.Domain\CartService.Domain.csproj" />

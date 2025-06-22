@@ -4,6 +4,7 @@ using CartService.DAL.Abstractions;
 using CartService.DAL.ConfigSettings;
 using Microsoft.OpenApi.Models;
 using Platform.DAL;
+using Rabbit.Platform;
 
 namespace CartApi
 {
@@ -17,12 +18,17 @@ namespace CartApi
             var services = builder.Services;
 
             configuration.AddJsonFile("Properties/secretsSettings.json");
+            configuration.AddJsonFile("Properties/rabbitSettings.json");
 
             services.Configure<RedisOptions>(configuration.GetSection(nameof(RedisOptions)));
             services.AddSingleton<IContextManager, ContextManager>();
             services.AddSingleton<IAppSettings, AppSettings>();
             services.AddSingleton<ISecretsSettings, SecretsSettings>();
             services.AddTransient<ICartService, CartService.BLL.CartService>();
+            services.AddSingleton<IRabbitSettings, RabbitSettings>();
+            services.AddSingleton<IRabbitMQService, RabbitMQService>();
+            services.AddSingleton<IMessagePublisher, MessagePublisher>();
+            services.AddSingleton<IMessageConsumer, MessageConsumer>();
 
 
             // Добавляем сервисы

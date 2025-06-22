@@ -2,6 +2,7 @@ using CommentService.DAL;
 using CommentService.BLL;
 using Microsoft.OpenApi.Models;
 using Platform.DAL;
+using Rabbit.Platform;
 
 namespace CommentApi
 {
@@ -15,6 +16,7 @@ namespace CommentApi
             var services = builder.Services;
 
             configuration.AddJsonFile("Properties/secretsSettings.json");
+            configuration.AddJsonFile("Properties/rabbitSettings.json");
 
             services.Configure<RedisOptions>(configuration.GetSection(nameof(RedisOptions)));
             services.AddSingleton<IContextManager, ContextManager>();
@@ -22,6 +24,10 @@ namespace CommentApi
             services.AddSingleton<ISecretsSettings, SecretsSettings>();
             services.AddTransient<ICommentMainService, CommentService.BLL.CommentMainService>();
             services.AddTransient<ICommentReplyService, CommentReplyService>();
+            services.AddSingleton<IRabbitSettings, RabbitSettings>();
+            services.AddSingleton<IRabbitMQService, RabbitMQService>();
+            services.AddSingleton<IMessagePublisher, MessagePublisher>();
+            services.AddSingleton<IMessageConsumer, MessageConsumer>();
 
             // Добавляем сервисы
             builder.Services.AddControllers();

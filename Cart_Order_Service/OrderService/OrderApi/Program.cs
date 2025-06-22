@@ -5,6 +5,7 @@ using OrderService.DAL;
 using OrderService.DAL.Abstractions;
 using OrderService.DAL.ConfigSettings;
 using Platform.DAL;
+using Rabbit.Platform;
 //using Rabbit.Platform;
 
 namespace OrderApi
@@ -19,15 +20,16 @@ namespace OrderApi
             var services = builder.Services;
 
             configuration.AddJsonFile("Properties/secretsSettings.json");
-            //configuration.AddJsonFile("Properties/rabbitSettings.json");
+            configuration.AddJsonFile("Properties/rabbitSettings.json");
 
             services.Configure<RedisOptions>(configuration.GetSection(nameof(RedisOptions)));
             services.AddSingleton<IContextManager, ContextManager>();
             services.AddSingleton<IAppSettings, AppSettings>();
             services.AddSingleton<ISecretsSettings, SecretsSettings>();
-            //services.AddSingleton<IRabbitSettings, RabbitSettings>();
-            //services.AddSingleton<IRabbitMQService, RabbitMQService>();
-            //services.AddSingleton<IMessageConsumer, MessageConsumer>();
+            services.AddSingleton<IRabbitSettings, RabbitSettings>();
+            services.AddSingleton<IRabbitMQService, RabbitMQService>();
+            services.AddSingleton<IMessagePublisher, MessagePublisher>();
+            services.AddSingleton<IMessageConsumer, MessageConsumer>();
             services.AddTransient<IOrderService, OrderService.BLL.OrderService>();
             //services.AddHostedService<OrderToUserMessagesConsumer>();
 

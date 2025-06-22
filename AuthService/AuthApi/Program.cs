@@ -10,6 +10,8 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Platform.DAL;
+using Rabbit.Platform;
 
 
 namespace AuthApi
@@ -21,13 +23,18 @@ namespace AuthApi
             var builder = WebApplication.CreateBuilder(args);
             var configuration = builder.Configuration;
             configuration.AddJsonFile("Properties/secretsSettings.json");
-           
+            configuration.AddJsonFile("Properties/rabbitSettings.json");
+
             var services = builder.Services;
 
             services.AddSingleton<IContextManager, ContextManager>();
             services.AddSingleton<IAppSettings, AppSettings>();
             services.AddSingleton<ISecretsSettings, SecretsSettings>();
             services.AddTransient<IAuthMainService, AuthMainService>();
+            services.AddSingleton<IRabbitSettings, RabbitSettings>();
+            services.AddSingleton<IRabbitMQService, RabbitMQService>();
+            services.AddSingleton<IMessagePublisher, MessagePublisher>();
+            services.AddSingleton<IMessageConsumer, MessageConsumer>();
 
 
             builder.Services.AddControllers();

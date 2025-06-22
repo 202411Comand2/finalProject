@@ -25,7 +25,8 @@ namespace ShopAPI
             services.AddTransient<IShopMainService, ShopMainService>();
             services.AddSingleton<IRabbitSettings, RabbitSettings>();
             services.AddSingleton<IRabbitMQService, RabbitMQService>();
-            services.AddSingleton<IMessagePublisher, MessagePublisher>(); 
+            services.AddSingleton<IMessagePublisher, MessagePublisher>();
+            services.AddSingleton<IMessageConsumer, MessageConsumer>();
 
             // Добавляем сервисы
             builder.Services.AddControllers();
