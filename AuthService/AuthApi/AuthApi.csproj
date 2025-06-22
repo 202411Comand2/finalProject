@@ -11,10 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Properties\rabbitSettings.json" />
     <Content Remove="Properties\secretsSettings.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Properties\rabbitSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\secretsSettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -27,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Domain\Rabbit.Platform.csproj" />
     <ProjectReference Include="..\..\ProductService\SupperDto\SupperBackEndDto\SupperBackEnd.Dto.csproj" />
     <ProjectReference Include="..\AuthService.BLL\AuthService.BLL.csproj" />
     <ProjectReference Include="..\AuthService.Domain\AuthService.Domain.csproj" />
