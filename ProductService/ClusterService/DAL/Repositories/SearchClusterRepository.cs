@@ -20,11 +20,12 @@ namespace ClusterService.DAL
         {
             using (var context = CreateDatabaseContext())
             {
+                return false;
                 //пакетное создание объектов для увеличение скорости и уменьшения задержки
-                var tagEntities = keyWords.Select(t => new SearchCluster { KeyWord = t, ClusterId = idCluster }).ToList();
-                await context.searchClusters.AddRangeAsync(tagEntities); // Пакетное добавление
-                var sds = await context.SaveChangesAsync(); // Сохраняем изменения
-                return true;
+                //var tagEntities = keyWords.Select(t => new SearchCluster { KeyWord = t, ClusterId = idCluster }).ToList();
+                //await context.SearchClusters.AddRangeAsync(tagEntities); // Пакетное добавление
+                //var sds = await context.SaveChangesAsync(); // Сохраняем изменения
+                //return true;
             }
             return false;   
         }
@@ -38,7 +39,7 @@ namespace ClusterService.DAL
         {
             using (var context = CreateDatabaseContext())
             {
-                await context.searchClusters
+                await context.SearchClusters
                    .Where(e => ids.Contains(e.Id))
                    .ExecuteDeleteAsync();
                 return true;
@@ -54,8 +55,8 @@ namespace ClusterService.DAL
         {
             using (var context = CreateDatabaseContext())
             {
-               return await context.searchClusters
-                .Where(e => e.ClusterId == id).ToListAsync();
+                return null;// await context.SearchClusters
+               // .Where(e => e.ClusterId == id).ToListAsync();
             }
         }
         /// <summary>
@@ -67,27 +68,34 @@ namespace ClusterService.DAL
         {
             using (var context = CreateDatabaseContext())
             {
-                if (await context.searchClusters.Where(p => p.ClusterId == id).FirstOrDefaultAsync() != null)
-                {
-                    return true; 
-                }
-                else 
-                {
-                    return false;
-                }
+                //if (await context.SearchClusters.Where(p => p.ClusterId == id).FirstOrDefaultAsync() != null)
+                //{
+                //    return true; 
+                //}
+                //else 
+                //{
+                //    return false;
+                //}
+                return false;
             }
         }
 
-        public async Task<List<int>> СompleteМatch(string keyWord) 
+        public async Task<List<SearchCluster>> СompleteМatch(string keyWords) 
         {
             using (var context = CreateDatabaseContext())
             {
-                     return await context.searchClusters.Where(p => p.KeyWord == keyWord)
-                    .Select( p =>  p.ClusterId)
-                    //.Select( p => new { p.Id,p.ClusterId})
-                    .Distinct()
-                    .ToListAsync();
+                return await context.SearchClusters
+                    .Where(word => word.KeyWord.Contains(keyWords)).ToListAsync();
             }
+
+            //using (var context = CreateDatabaseContext())
+            //{
+            //         return await context.SearchClusters.Where(p => p.KeyWord == keyWord)
+            //        .Select( p =>  p.ClusterId)
+            //        //.Select( p => new { p.Id,p.ClusterId})
+            //        .Distinct()
+            //        .ToListAsync();
+            //}
         }
 
         

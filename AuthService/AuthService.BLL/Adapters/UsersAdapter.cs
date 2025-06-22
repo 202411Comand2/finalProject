@@ -28,7 +28,22 @@ namespace AuthService.BLL
                 TelegramID = user.TelegramID
             };
         }
-
+        /// <summary>
+        /// Преобразовать из Entitie в Dto
+        /// </summary>
+        /// <param name="shop">Магазин Entitie</param>
+        /// <returns>CommentDto</returns>
+        public static UserEasyDto ConvertFromEntitieToDTOEasy(User user)
+        {
+            return new UserEasyDto()
+            {
+                Id = user.Id,
+                Login = user.Login,
+                Name = user.Name,
+                Surname = user.Surname,
+                Patronymic = user.Patronymic,
+            };
+        }
         /// <summary>
         /// Преобразовать из Dto в Entitie 
         /// </summary>

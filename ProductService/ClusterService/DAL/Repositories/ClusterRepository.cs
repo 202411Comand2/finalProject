@@ -1,5 +1,6 @@
 ﻿using ClusterService.Domain;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace ClusterService.DAL
 {
@@ -18,11 +19,27 @@ namespace ClusterService.DAL
         {
             using (var context = CreateDatabaseContext())
             {
-                Cluster? cluster = await context.Clusters
+                Cluster? cluster = await context.Cluster
                     .FirstOrDefaultAsync(p => p.Name == name);
                 return cluster;
             }
         }
+
+        /// <summary>
+        /// Получить всё дочерние кластеры
+        /// </summary>
+        /// <param name="parentId"></param>
+        /// <returns></returns>
+        public async Task<List<Cluster>> GetChildClusterIdsOptimized(int parentId)
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                return await context.Cluster
+                .Where(c => c.ParentId == parentId)
+                .ToListAsync();
+            }
+        }
+
 
         /// <summary>
         /// Вернуть все корневые кластеры
@@ -32,7 +49,7 @@ namespace ClusterService.DAL
         {
             using (var context = CreateDatabaseContext())
             {
-                return await context.Clusters.Where(c => c.ParentId == -1).ToListAsync();
+                return await context.Cluster.Where(c => c.ParentId == -1).ToListAsync();
             }
         }
 
@@ -45,10 +62,28 @@ namespace ClusterService.DAL
         {
             using (var context = CreateDatabaseContext())
             {
-                return await context.Clusters.Where(c => c.ParentId == id).ToListAsync();
+                return await context.Cluster.Where(c => c.ParentId == id).ToListAsync();
             }
         }
 
+
+        /// <summary>
+        /// Вернуть список кластеров
+        /// </summary>
+        /// <param name="keyWord"></param>
+        /// <returns></returns>
+        public async Task<List<Cluster>> GetSearchCluster(string keyWord) 
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                return await context.SearchClusters
+                .Where(sc => sc.KeyWord.Contains(keyWord))
+                .SelectMany(sc => sc.Links)
+                .Select(l => l.Cluster)
+                .Distinct()
+                .ToListAsync();
+            }
+        }
 
 
 
@@ -61,7 +96,7 @@ namespace ClusterService.DAL
         {
             using (var context = CreateDatabaseContext())
             {
-                return await context.Clusters
+                return await context.Cluster
                 .Where(e => ids.Contains(e.Id)) 
                 .ToListAsync();
             }

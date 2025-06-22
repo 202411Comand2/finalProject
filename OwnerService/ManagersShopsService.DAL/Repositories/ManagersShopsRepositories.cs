@@ -23,6 +23,26 @@ namespace ManagersShopsService.DAL
                 return await context.ManagersShops.Where(p => p.UserId == id).ToListAsync();
             }
         }
+        /// <summary>
+        /// Получить менеджеров магазина
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<List<ManagersShops>> GetManager(int id)
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                return await context.ManagersShops.Where(p => p.ShopId == id).ToListAsync();
+            }
+        }
+
+        //public async Task<bool> DeleteManager(int idUser, int idShop) 
+        //{
+        //    using (var context = CreateDatabaseContext()) 
+        //    {
+        //        return  await context.ManagersShops.Where(p=>p.UserId==idUser && p.ShopId==idShop).ExecuteDeleteAsync();
+        //    }
+        //}
 
         ///// <summary>
         ///// Поиск пользователя в бд по nickname
