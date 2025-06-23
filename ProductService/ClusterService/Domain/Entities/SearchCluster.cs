@@ -20,12 +20,8 @@ namespace ClusterService.Domain
         [Required]
         public string KeyWord { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Id кластера
-        /// </summary>
-        [Required]
-        public int ClusterId { get; set; }
-
+        // Навигационное свойство для связи
+        public ICollection<Link> Links { get; set; } = new List<Link>();
         /// <summary>
         /// Вернуть Id объекта
         /// </summary>

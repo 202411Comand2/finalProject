@@ -43,5 +43,12 @@ namespace AuthService.BLL
         /// <returns></returns>
         public Task<AnswerWithBackendDto<UserDto>> GetInfoUser(int id);
 
+        /// <summary>
+        /// Получить информацию о пользователе (малое количество)
+        /// </summary>
+        /// <param name="id">id пользователя</param>
+        /// <returns></returns>
+        public Task<AnswerWithBackendDto<UserEasyDto>> GetInfoEasyUser(int id);
+
     }
 }

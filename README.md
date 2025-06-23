@@ -44,13 +44,19 @@
 * [Сервис кластер](https://localhost:7222/swagger/index.html)
 * [Сервис корзины](https://localhost:7175/swagger/index.html)
 * [Сервис заказов](https://localhost:7042/swagger/index.html)
-* [Сервис gatway](http://localhost:5010/)
+* [Сервис gatway](https://localhost:5011/)
 
 
 ## ссылки для проверик ocelot
 
-* http://localhost:5010/gateway/Product/1 - текст работы сервиса с продуктами Product
-* http://localhost:5010/gateway/shop/1 - текст работы сервиса с shop* 
+* https://localhost:5011/gateway/Product/1 - текст работы сервиса с продуктами Product
+* https://localhost:5011/gateway/shop/1 - текст работы сервиса с shop* 
+* https://localhost:5011/gateway/Favorite/1 - текст работы сервиса с shop* 
+* https://localhost:5011/gateway/Comment/1 - текст работы сервиса с shop* 
+* https://localhost:5011/gateway/Cluster/1 - текст работы сервиса с shop* 
+
+* https://localhost:5011/gateway/shop/1 - текст работы сервиса с shop* 
+* https://localhost:5011/gateway/shop/1 - текст работы сервиса с shop* 
 
 
 ### Product API
@@ -166,6 +172,7 @@ deleteShopDto.Id = 1;
 http://localhost:5010/gateway/Shop/Delete
 
 ```
+
 ### Favorite  API
 
 ####  get (Получить всё избранные позиции пользователя)
@@ -181,7 +188,8 @@ http://localhost:5010/gateway/Shop/Delete
   //запрос
   http://localhost:5010/gateway/Favorite/Add"
 ```
-### Delete (избранной позиции)
+
+#### Delete (избранной позиции)
 
 ```C#
   // модель
@@ -246,7 +254,7 @@ delete удаление комметария со стороны магазин�
    http://localhost:5010/gateway/CommentReply/Update
 ```
 
-###     Cluster API
+###  Cluster API
 
 #### get
          

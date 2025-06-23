@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using IdentityService.DAL.Abstractions;
+using System.ComponentModel.DataAnnotations;
 
 namespace IdentityService.DAL
 {

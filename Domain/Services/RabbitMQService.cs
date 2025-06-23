@@ -9,19 +9,19 @@ namespace Rabbit.Platform
     public class RabbitMQService : IRabbitMQService
     {
         // Хост RabbitMQ.
-        private readonly string _hostname;
+        private readonly string _hostname = "host.docker.internal";
         // Пользователь для работы с RabbitMQ.
-        private readonly string _username;
+        private readonly string _username = "admin";
         // Пароль поьзователя для работы с RabbitMQ.
-        private readonly string _password;
+        private readonly string _password = "secret";
         // Соединение с RabbitMQ.
         private IConnection? _connection;
 
         public RabbitMQService(IRabbitSettings appSettings)
         {
-            _hostname = appSettings.RabbitHostName;
-            _username = appSettings.RabbitUserName;
-            _password = appSettings.RabbitUserPassword;
+            _hostname = "host.docker.internal";//appSettings.RabbitHostName;
+            _username = "admin";// appSettings.RabbitUserName;
+            _password = "secret";//appSettings.RabbitUserPassword;
         }
 
         /// <inheritdoc />
@@ -34,9 +34,9 @@ namespace Rabbit.Platform
             
             var factory = new ConnectionFactory()
             {
-                HostName = _hostname,
-                UserName = _username,
-                Password = _password
+                HostName = "host.docker.internal",
+                UserName = "admin",
+                Password = "secret"
             };
 
             _connection = await factory.CreateConnectionAsync();

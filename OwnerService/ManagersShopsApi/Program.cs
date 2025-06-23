@@ -1,8 +1,11 @@
-using ManagersShopsService;
+Ôªøusing ManagersShopsService;
 using ManagersShopsService.BLL;
 using ManagersShopsService.DAL;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Platform.DAL;
+using System.Text;
 using Rabbit.Platform;
 
 namespace ManagersShopsApi
@@ -18,7 +21,7 @@ namespace ManagersShopsApi
             configuration.AddJsonFile("Properties/secretsSettings.json");
             configuration.AddJsonFile("Properties/rabbitSettings.json");
 
-            services.Configure<RedisOptions>(configuration.GetSection(nameof(RedisOptions)));
+           // services.Configure<RedisOptions>(configuration.GetSection(nameof(RedisOptions)));
             services.AddSingleton<IContextManager, ContextManager>();
             services.AddSingleton<IAppSettings, AppSettings>();
             services.AddSingleton<ISecretsSettings, SecretsSettings>();
@@ -28,7 +31,18 @@ namespace ManagersShopsApi
             services.AddSingleton<IMessagePublisher, MessagePublisher>();
             services.AddSingleton<IMessageConsumer, MessageConsumer>();
 
-            // ƒÓ·‡‚ÎˇÂÏ ÒÂ‚ËÒ˚
+            // CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.WithOrigins("https://localhost:7100") // –ú–æ–π —Å–∞–π—Ç
+                          .AllowAnyMethod()
+                          .AllowAnyHeader()
+                          .AllowCredentials();
+                });
+            });
+            // –î–æ–±–∞–≤–ª—è–µ–º —Å–µ—Ä–≤–∏—Å—ã
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
@@ -37,14 +51,14 @@ namespace ManagersShopsApi
                 {
                     Title = "My API",
                     Version = "v1",
-                    Description = "œËÏÂ API Ò Swagger",
+                    Description = "–ü—Ä–∏–º–µ—Ä API —Å Swagger",
                     Contact = new OpenApiContact { Name = "Dev", Email = "dev@example.com" }
                 });
             });
 
             var app = builder.Build();
 
-            // Õ‡ÒÚÓÈÍ‡ middleware
+            // –ù–∞—Å—Ç—Ä–æ–π–∫–∞ middleware
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -52,6 +66,9 @@ namespace ManagersShopsApi
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowAll"); // ‚Üê –î–æ–ª–∂–Ω–æ –±—ã—Ç—å –¥–æ UseRouting()
+            app.UseRouting();
+            app.UseAuthentication(); // ‚Üê –î–æ–±–∞–≤–ª–µ–Ω–æ
             app.UseAuthorization();
             app.MapControllers();
             app.Run();
