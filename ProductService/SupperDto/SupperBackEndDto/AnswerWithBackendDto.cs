@@ -64,6 +64,8 @@ namespace SupperBackEnd.Dto
         static private string Serialization(List<T> objectDro) => JsonSerializer.Serialize(objectDro);
 
 
+
+
         private AnswerWithBackendDto<T> _adapter(AnswerWithBackendDto<T> obj)
         {
             return obj;

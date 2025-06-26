@@ -33,9 +33,10 @@ namespace ClusterService.Domain
             return Id;
         }
 
-        #region
-        public ICollection<int> Products { get; set; } = new List<int>();
-        #endregion
+        // Навигационное свойство для связи
+        public ICollection<Link> Links { get; set; } = new List<Link>();
 
     }
 }
+
+

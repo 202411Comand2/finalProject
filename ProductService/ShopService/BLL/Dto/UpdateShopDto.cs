@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public string? NewName { get; set; }
+        public string? Name { get; set; }
 
 
         /// <summary>
@@ -21,7 +21,7 @@
         /// <summary>
         /// Адресс магазина
         /// </summary>
-        public string Adress { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
 
     }
 }

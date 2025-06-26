@@ -82,35 +82,24 @@ namespace ShopService.BLL
         {
             AnswerWithBackendDto<ShopDto> requst = new();
             Shop shop = await _shopRepository.Get(addShopDto.Id);
-
-            if (string.IsNullOrEmpty(addShopDto.NewName))
+           
+            if (string.IsNullOrEmpty(addShopDto.Name))
             {//название null или пустое
                 requst.AddErrorLog("Новое имя, которое вы задали пустое!");
                 return requst;
             }
-            if (shop is null)
-            { //  В бд такого магазина нет
-                requst.AddErrorLog("По указанному Вами id не удалось найти магазин, принадлежащий Вам!");
-                return requst;
-            }
 
-            if (shop.Name == addShopDto.NewName)
+            if (shop.Name != addShopDto.Name)
             {
-                requst.AddErrorLog("Указанное вами новое название магазина = старому!");
-                return requst;
+                if (await _shopRepository.CheckNameShop(addShopDto.Name)) 
+                {
+                    requst.AddErrorLog("Новое имя, которое вы задали занято!");
+                    return requst;
+                }
             }
-
-            if (await _shopRepository.GetIdByStoreName(addShopDto.NewName) == -1)
-            {
-                shop.Name = addShopDto.NewName;
                 requst.AddObject(ShopAdapter.ConvertFromEntitieToDTO(await _shopRepository.Update(shop)));
                 return requst;
-            }
-            else
-            { // название занято
-                requst.AddErrorLog("Указанное вами новое имя магазина занято!");
-                return requst;
-            }
+           
         }
 
 
