@@ -22,7 +22,7 @@ namespace ProductService.DAL
             using (var context = CreateDatabaseContext())
             {
               
-                return await context.Products.Where(p => p.ShopId == shopId).ToListAsync();
+                return await context.Products.Where(p => p.ShopId == shopId && p.IsDeleted == false).ToListAsync();
             }
         }
 
@@ -64,7 +64,7 @@ namespace ProductService.DAL
             using (var context = CreateDatabaseContext())
             {
                 return await context.Products
-                    .Include(cl => cl.ClusterID)
+                    .Include(cl => cl.ClusterId)
                     .Include(sh => sh.ShopId)
                     .Where(p => p.Id == idProduct).FirstOrDefaultAsync();
             }

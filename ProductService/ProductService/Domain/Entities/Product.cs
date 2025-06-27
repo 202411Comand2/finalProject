@@ -74,8 +74,8 @@ namespace ProductService.Domain
         /// </summary>
         [Column("amount_of_comments")]
         public int AmountOfComments { get; set; }
-
-
+        
+       
         /// <summary>
         /// Вернуть Id объекта
         /// </summary>
@@ -86,8 +86,9 @@ namespace ProductService.Domain
         }
 
         #region связи на таблицы (id таблиц)
+        [Column("shop_id")]
         public int ShopId { get; set; } = new int();
-        public int ClusterID { get; set; } = new int();
+     
         //public ICollection<int> ClustersID { get; set; } = new List<int>();
 
         #endregion

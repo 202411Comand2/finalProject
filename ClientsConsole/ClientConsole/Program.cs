@@ -1,5 +1,7 @@
 ﻿using Client.Models;
 using Client.Models.Auth;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 
@@ -7,6 +9,7 @@ namespace ClientConsole
 {
     internal class Program
     {
+        
         static private HttpClient? client = new HttpClient()
         {
             BaseAddress = new Uri("https://localhost:5011")
@@ -14,12 +17,12 @@ namespace ClientConsole
         static async Task Main()
         {
 
-            Console.WriteLine("Сервис авторизации");
-            await auth();
-            
+            //Console.WriteLine("Сервис авторизации");
+            //await auth();
 
-            Console.WriteLine("\nСервис Продуктов:\n");
-            await ProductService();
+
+            //Console.WriteLine("\nСервис Продуктов:\n");
+            //await ProductService();
             //Console.WriteLine("\nСервис магазинов:\n");
             //await ShopService();
             //Console.WriteLine("\nСервис избранного:\n");
@@ -29,13 +32,14 @@ namespace ClientConsole
 
             //Console.WriteLine("\nСервис кластеров:\n");
             //await ClusterService();
+          
 
 
             //Console.ForegroundColor = ConsoleColor.Red;
-            
+
             //Console.WriteLine("Чтобы выйти нажмите любую клавишу");
-           Console.ReadKey();
-             return;
+            Console.ReadKey();
+            return;
 
         }
 
@@ -434,7 +438,7 @@ namespace ClientConsole
 
         }
 
-
+      
         private static async Task ClusterService() 
         {
             #region Post

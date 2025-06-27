@@ -3,19 +3,10 @@ using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Provider.Polly;
+using System.Text;
 
 namespace Ocleot_https
 {
-    //public class DebuggingHandler : DelegatingHandler
-    //{
-    //    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-    //    {
-    //        Console.WriteLine($"Request: {request.Method} {request.RequestUri}");
-    //        var response = await base.SendAsync(request, cancellationToken);
-    //        Console.WriteLine($"Response: {response.StatusCode}");
-    //        return response;
-    //    }
-    //}
     public class Program
     {
         public static void Main(string[] args)
@@ -33,44 +24,31 @@ namespace Ocleot_https
                           .AllowAnyHeader();
                 });
             });
-            //builder.Host.ConfigureLogging((hostingContext, logging) =>
-            //{
-            //    logging.AddConsole();
-            //    logging.AddDebug();
-            //    logging.SetMinimumLevel(LogLevel.Trace);
-            //});
-
-            //builder.Services.AddOcelot()
-            //    .AddDelegatingHandler<DebuggingHandler>(true);
-
+            
             // Конфигурация Ocelot
             builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 
-            // Настройка аутентификации
-            // Настройка аутентификации JWT
+            // Настройка JWT аутентификации (как оказалось нужна для работы с авторизацией)
+            var jwtSettings = builder.Configuration.GetSection("JwtSettings");
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer("Bearer", options =>
+            .AddJwtBearer(options =>
             {
-                options.Authority = "https://your-identity-server.com";
-                options.Audience = "api-resource";
-                options.RequireHttpsMetadata = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    // Дополнительные параметры при необходимости
-                    // ValidIssuer = "https://your-identity-server.com",
-                    // ValidAudience = "api-resource",
-                    // IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-secret-key"))
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidAudience = jwtSettings["Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
                 };
             });
-
             // Добавление Ocelot
             builder.Services.AddOcelot(builder.Configuration)
                             .AddPolly();
@@ -86,12 +64,14 @@ namespace Ocleot_https
 
             var app = builder.Build();
 
+
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseCors("AllowAll");
-
+            app.UseAuthentication(); // Важно: до UseOcelot иначе не рабоатет **** !
+            app.UseAuthorization();
             app.UseOcelot().Wait();
 
             app.Run();

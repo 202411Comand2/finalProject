@@ -108,7 +108,19 @@ namespace ManagersShopsService.BLL
 
         public async Task<AnswerWithBackendDto<DeleteManagersShopsDto>> DeleteManagersShopsDto(DeleteManagersShopsDto model)
         {
-            throw new NotImplementedException();
+            AnswerWithBackendDto<DeleteManagersShopsDto> answerWithBackendDto = new();
+            var modelEntites = await _managersShopsRepositories.Delete(ManagersShopsAdapter.ConvertFromDTOToEntity(model));
+            if (!modelEntites)
+            {
+                answerWithBackendDto.AddErrorLog($"not delete: {model.UserId}");
+                return answerWithBackendDto;
+            }
+            else
+            {
+                // answerWithBackendDto.AddObject(ManagersShopsAdapter.ConvertFromEntitieToDTO(modelEntites));
+                answerWithBackendDto.DataReceived = true;
+                return answerWithBackendDto;
+            }
         }
 
 
@@ -128,6 +140,24 @@ namespace ManagersShopsService.BLL
                // answerWithBackendDto.AddObject(ManagersShopsAdapter.ConvertFromEntitieToDTO(modelEntites));
                 return answerWithBackendDto;
             }
+        }
+
+        public async Task<AnswerWithBackendDto<GetManagersShopsDto>> GetManagersShopsDto(int idShop)
+        {
+            AnswerWithBackendDto<GetManagersShopsDto> answerWithBackendDto = new();
+            var items = await _managersShopsRepositories.GetManager(idShop);
+
+            if (items == null)
+            {
+                answerWithBackendDto.AddErrorLog("Произошла ошибка при обращении к бд.");
+            }
+            if (items?.Count == 0)
+            {
+                answerWithBackendDto.AddErrorLog($"Данные отсутствуют.");
+            }
+            answerWithBackendDto.AddObject(ManagersShopsAdapter.ConvertFromEntitieToDTO(items));
+            return answerWithBackendDto;
+
         }
 
         public async Task<AnswerWithBackendDto<GetManagersShopsDto>> GetShop(int UserId)
