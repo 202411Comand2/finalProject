@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>90393b6c-ed99-442e-83c5-964ff8a5746a</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Properties\rabbitSettings.json" />
+    <Content Remove="Properties\secretsSettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Properties\rabbitSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\secretsSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Domain\Rabbit.Platform.csproj" />
+    <ProjectReference Include="..\..\SupperDto\SupperBackEndDto\SupperBackEnd.Dto.csproj" />
+    <ProjectReference Include="..\BLL\CommentService.BLL.csproj" />
+    <ProjectReference Include="..\DAL\CommentServce.DAL.csproj" />
+    <ProjectReference Include="..\Domain\CommentService.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

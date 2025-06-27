@@ -1,0 +1,9 @@
+{
+  "RabbitMQ": {
+    "HostName": "localhost",
+    "UserName": "OrderAdmin",
+    "Password": "Order_admin",
+    "DefaultExchangeName": "order.exchange",
+    "DefaultQueueName": "order.queue"
+  }
+}

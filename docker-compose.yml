@@ -1,0 +1,76 @@
+services:
+  productapi:
+    image: ${DOCKER_REGISTRY-}productapi
+    build:
+      context: .
+      dockerfile: ProductService/ProductService/ProductAPI/Dockerfile
+ 
+
+  shopapi:
+    image: ${DOCKER_REGISTRY-}shopapi
+    build:
+      context: .
+      dockerfile: ProductService/ShopService/ShopAPI/Dockerfile
+
+
+  favoriteapi:
+    image: ${DOCKER_REGISTRY-}favoriteapi
+    build:
+      context: .
+      dockerfile: ProductService/FavoriteService/FavoriteAPI/Dockerfile
+
+
+  commentapi:
+    image: ${DOCKER_REGISTRY-}commentapi
+    build:
+      context: .
+      dockerfile: ProductService/CommentService/CommentApi/Dockerfile
+
+
+  clusterapi:
+    image: ${DOCKER_REGISTRY-}clusterapi
+    build:
+      context: .
+      dockerfile: ClusterAPI/Dockerfile
+
+
+  cartapi:
+    image: ${DOCKER_REGISTRY-}cartapi
+    build:
+      context: .
+      dockerfile: Cart_Order_Service/CartService/CartApi/Dockerfile
+
+
+  orderapi:
+    image: ${DOCKER_REGISTRY-}orderapi
+    build:
+      context: .
+      dockerfile: Cart_Order_Service/OrderService/OrderApi/Dockerfile
+  # ocelotwebapigr:
+  #   image: ${DOCKER_REGISTRY-}ocelotwebapigr
+  #   build:
+  #     context: .
+  #     dockerfile: OcelotWebApiGr/OcelotWebApiGr/Dockerfile
+
+
+
+  ocleot_https:
+    image: ${DOCKER_REGISTRY-}ocleothttps
+    build:
+      context: .
+      dockerfile: OcelotWebApiGr/Ocleot_https/Dockerfile
+
+
+  authapi:
+    image: ${DOCKER_REGISTRY-}authapi
+    build:
+      context: .
+      dockerfile: AuthService/AuthApi/Dockerfile
+
+
+  managersshopsapi:
+    image: ${DOCKER_REGISTRY-}managersshopsapi
+    build:
+      context: .
+      dockerfile: OwnerService/ManagersShopsApi/Dockerfile
+
