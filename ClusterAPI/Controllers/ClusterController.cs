@@ -1,4 +1,5 @@
 ﻿using ClusterService.BLL;
+using ClusterService.Domain;
 using Microsoft.AspNetCore.Mvc;
 using SupperBackEnd.Dto;
 
@@ -18,6 +19,7 @@ namespace API.Controllers.Product
         [HttpPost("add")]
         public async Task<ActionResult<int>> Add([FromBody] AddClusterDto clusterDto)
         {
+            Console.WriteLine(clusterDto.Name + " " + clusterDto.NameParentCluseter);
             AnswerWithBackendDto<ClusterDto> result = new();
             try
             {
@@ -127,13 +129,58 @@ namespace API.Controllers.Product
         /// <summary>
         /// Получить дочерние элементы кластера
         /// </summary>
-        [HttpGet("GetChildrenElements")]
-        public async Task<ActionResult> GetChildrenElements([FromQuery] GetClusterDto getClusterDto)
+        //[HttpGet("GetChildrenElements")]
+        //public async Task<ActionResult> GetChildrenElements([FromQuery] GetClusterDto getClusterDto)
+        //{
+        //    AnswerWithBackendDto<ClusterDto> result = new();
+        //    try
+        //    {
+        //        result = await _clusterService.GetChildrenElementsCluster(getClusterDto);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+
+        //    if (!result.DataReceived)
+        //    {
+        //        return BadRequest(result.ErrorLog);
+        //    }
+        //    return Ok(result.GetCollectionWithProblem());
+        //}
+
+        [HttpGet("SerchClusterKeyWord")]
+        public async Task<ActionResult> SearchProducts([FromQuery] string keyWord)
+        {
+            AnswerWithBackendDto<ClusterDto> result = new();
+
+            try
+            {
+
+                result = await _clusterService.SerchCluster(keyWord);
+               
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            if (!result.DataReceived)
+            {
+                return NotFound();
+            }
+            string s = result.GetCollectionWithProblem();
+            return new JsonResult(result.GetCollectionWithProblem());
+        }
+
+
+        [HttpGet("GetChildrenCluster")]
+        public async Task<ActionResult> GetChildrenElements([FromQuery] int id)
         {
             AnswerWithBackendDto<ClusterDto> result = new();
             try
             {
-                result = await _clusterService.GetChildrenElementsCluster(getClusterDto);
+                result = await _clusterService.GetChildrenElementsCluster(id);
             }
             catch (Exception ex)
             {

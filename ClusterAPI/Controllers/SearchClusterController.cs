@@ -108,6 +108,7 @@ namespace API.Controllers.Product
             (List<Cluster>,List<int>) result ;
             try
             {
+                
                 result = await _searchClusterService.SearchProducts(keyWord);
                // var s = await _productService.GetProductsByCluster(result.Item2);
                // searchClusterProductDto.SearchClusterProductConnect(result.Item1,s);

@@ -110,6 +110,20 @@ namespace AuthService.BLL
             }
         }
 
-
+        public async Task<AnswerWithBackendDto<UserEasyDto>> GetInfoEasyUser(int id)
+        {
+            AnswerWithBackendDto<UserEasyDto> answerWithBackendDto = new();
+            var auth = await _authRepository.Get(id);
+            if (auth is null)
+            {
+                answerWithBackendDto.AddErrorLog($"Auth User: {id}");
+                return answerWithBackendDto;
+            }
+            else
+            {
+                answerWithBackendDto.AddObject(UsersAdapter.ConvertFromEntitieToDTOEasy(auth));
+                return answerWithBackendDto;
+            }
+        }
     }
 }

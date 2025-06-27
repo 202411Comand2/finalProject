@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Platform.DAL
 {
@@ -21,12 +22,12 @@ namespace Platform.DAL
 
         public RabbitSettings(IConfiguration config) 
         {
-            var section = config.GetRequiredSection("RabbitMQ");
-            RabbitHostName = section.GetValue<string>("HostName");
-            RabbitUserName = section.GetValue<string>("UserName");
-            RabbitUserPassword = section.GetValue<string>("Password");
-            RabbitDefaultExchangeName = section.GetValue<string>("DefaultExchangeName");
-            RabbitDefaultQueueName = section.GetValue<string>("DefaultQueueName");
+            //var section = config.GetRequiredSection("RabbitMQ");
+            RabbitHostName = "host.docker.internal";// section.GetValue<string>("HostName");
+            RabbitUserName = "admin";// section.GetValue<string>("UserName");
+            RabbitUserPassword = "secret";//section.GetValue<string>("Password");
+            RabbitDefaultExchangeName = "shop.exchange";// section.GetValue<string>("DefaultExchangeName");
+            RabbitDefaultQueueName = "shop.queue";// section.GetValue<string>("DefaultQueueName");
         }
     }
 }

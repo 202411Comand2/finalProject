@@ -45,6 +45,13 @@ namespace OwnerService.Domain.Entities
         /// <summary>
         /// Роль пользователя
         /// </summary>
+        [Required, MaxLength(100), Column("user_name")]
+        public string UserName { get; set; } = string.Empty;
+
+
+        /// <summary>
+        /// Роль пользователя
+        /// </summary>
         [Required, MaxLength(100), Column("role_user")]
         public string RoleUser { get; set; } = string.Empty;
 

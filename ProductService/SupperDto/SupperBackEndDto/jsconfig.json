@@ -1,15 +1,8 @@
 {
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
-    }
-  },
   "JwtSettings": {
     "SecretKey": "your-very-secure-key-32-chars-minimum",
     "Issuer": "AuthService",
     "Audience": "ProductService",
     "ExpiryInMinutes": 60
-  },
-  "AllowedHosts": "*"
+  }
 }

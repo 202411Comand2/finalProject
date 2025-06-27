@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using OwnerService.Domain.Entities;
 using ManagersShopsService.BLL.Dto;
+using AuthService.BLL.Dto;
 
 namespace ManagersShopsService.BLL
 {
@@ -20,7 +21,8 @@ namespace ManagersShopsService.BLL
               UserId = model.UserId,
               RoleUser = model.RoleUser,
               NameShop = model.NameShop,
-              ShopId = model.ShopId
+              ShopId = model.ShopId,
+                UserName = model.UserName
             };
         }
 
@@ -36,7 +38,8 @@ namespace ManagersShopsService.BLL
                 UserId = model.UserId,
                 RoleUser = model.RoleUser,
                 NameShop = model.NameShop,
-                ShopId = model.ShopId
+                ShopId = model.ShopId,
+                UserName=model.UserName
             };
         }
 
@@ -47,6 +50,7 @@ namespace ManagersShopsService.BLL
             {
                 UserId = model.UserId,
                 ShopId = model.ShopId,
+                Id=model.UserId
             };
         }
 
@@ -58,6 +62,10 @@ namespace ManagersShopsService.BLL
                 UserId = model.UserId,
                 ShopId = model.ShopId,
                 NameShop = model.NameShop,
+                UserName = model.UserName,
+                RoleUser = model.RoleUser,
+                Id = model.Id
+
             };
         }
 
@@ -71,7 +79,11 @@ namespace ManagersShopsService.BLL
                     UserId = item.UserId,
                     ShopId = item.ShopId,
                     NameShop = item.NameShop,
-                 });
+                    UserName = item.UserName,
+                    RoleUser = item.RoleUser,
+                    Id=item.Id
+
+                });
             }
             return list;
         }

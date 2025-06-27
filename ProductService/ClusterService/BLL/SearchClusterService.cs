@@ -66,14 +66,15 @@ namespace ClusterService.BLL
 
         public async Task<(List<Cluster>, List<int>)> SearchProducts(string keyWord)
         {
-            List<int> s = await _clusterSearchRepository.СompleteМatch(keyWord);
-            List<Cluster> clusterCollection= await _clusterRepository.GetArrayCluster(s);
-            List<int> clusterId = new List<int>();
-            foreach (Cluster cluster in clusterCollection) 
-            {
-                clusterId.Add(cluster.Id);
-            }
-            return (clusterCollection, clusterId);
+            return (null,null);
+           // List<SearchCluster> s = await _clusterSearchRepository.СompleteМatch(keyWord);
+           //// List<Cluster> clusterCollection= await _clusterRepository.GetArrayCluster(s);
+           // List<int> clusterId = new List<int>();
+           // foreach (Cluster cluster in clusterCollection) 
+           // {
+           //     clusterId.Add(cluster.Id);
+           // }
+           // return (clusterCollection, clusterId);
         }
     }
 }
