@@ -1,5 +1,6 @@
 ﻿using AuthService.BLL;
 using AuthService.BLL.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SupperBackEnd.Dto;
@@ -93,13 +94,39 @@ namespace AuthApi.Controllers
         }
 
         /// <summary>
+        /// Получить упрощённую информацию о плльзователе
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AllowAnonymous]  // Только этот метод доступен без токена
+        [HttpGet("GetSerchUser")]
+        public async Task<IActionResult> GetSerchUser([FromQuery] int id)
+        {
+            try
+            {
+                var userInfo = await _authService.GetInfoEasyUser(id);
+                if (userInfo.DataReceived) 
+                {
+                     return Ok( userInfo.ObjectDto);
+                }else
+                { return BadRequest(); }    
+            }
+            catch
+            {
+                return Unauthorized();
+            }
+        }
+
+
+
+        /// <summary>
         /// получения информация и пользователе после авторизации
         /// Работает с токеном jwt
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("GetUserId")]
-        public async Task<ActionResult<string>> GetUserId([FromQuery] int id)
+        public async Task<ActionResult<string>> GetUserId()
         {
             try
             {
@@ -110,17 +137,17 @@ namespace AuthApi.Controllers
                     switch (idUser)
                     {
                         case -2: //токен просрочен
-                            return Unauthorized(new ApiResponse<AuthUserDto>(false, null, "Token is missing"));
+                            return Unauthorized( "Token is missing");
                         case -3:
-                            return Unauthorized(new ApiResponse<AuthUserDto>(false, null, "Invalid token claims"));
+                            return Unauthorized( "Invalid token claims");
                         default:
                             var userInfo = await _authService.GetInfoUser(idUser);
-                            return Ok(new ApiResponse<UserDto>(true, userInfo.ObjectDto, null));
+                            return Ok(userInfo.ObjectDto);
                     }
                 }
                 catch (SecurityTokenException ex)
                 {
-                    return Unauthorized(new ApiResponse<AuthUserDto>(false, null, $"Invalid token: {ex.Message}"));
+                    return Unauthorized( $"Invalid token: {ex.Message}");
                 }
             }
             catch (Exception ex)
@@ -157,11 +184,11 @@ namespace AuthApi.Controllers
                             {
                                 return Ok(new ApiResponse<UserDto>(true, userInfo.ObjectDto, null));
                             }
-                            else 
+                            else
                             {
                                 return BadRequest(new ApiResponse<AuthUserDto>(false, null, userInfo.ErrorLog));
                             }
-                      }
+                    }
                 }
                 catch (SecurityTokenException ex)
                 {

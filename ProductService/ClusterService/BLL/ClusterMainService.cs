@@ -98,36 +98,6 @@ namespace ClusterService.BLL
 
             }
         }
-
-
-        //public async Task<List<Cluster>> GetChildrenElementsCluster(int clusterId)
-        //{
-        //    Cluster cluster = await _clusterSearchRepository.Get(clusterId);
-        //    if (cluster is null)
-        //    {
-        //        //если такого кластера нет
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return await _clusterSearchRepository.GeElementsClaster(clusterId);
-        //    }
-        //}
-
-        //public async Task<List<Cluster>> GetChildrenElementsCluster(string nameCluster)
-        //{
-        //    Cluster cluster = await _clusterSearchRepository.GetNameCluster(nameCluster);
-
-        //    if (cluster is null)
-        //    {//"Ошибка. Не найден кластер по имени"
-        //        return null;
-        //    }
-        //    return await _clusterSearchRepository.GeElementsClaster(cluster.ClusterId);
-        //}
-
-
-
-
         public async Task<AnswerWithBackendDto<ClusterDto>> GetChildrenElementsCluster(GetClusterDto getClusterDto)
         {
             AnswerWithBackendDto<ClusterDto> result = new();
@@ -149,58 +119,6 @@ namespace ClusterService.BLL
             }
             return result;
         }
-
-
-
-        //public async Task<bool> UpdateNameCluster(int clasterId, string newNameClaster)
-        //{
-        //    Cluster cluster = await _clusterSearchRepository.Get(clasterId);
-        //    Cluster clusterNewName = await _clusterSearchRepository.GetNameCluster(newNameClaster);
-
-        //    if (cluster is null)
-        //    {
-        //        return false; //не получилось изменить название классификатора. Не получилось найти указанный кластер в базе
-        //    }
-        //    else
-        //    {
-        //        if (clusterNewName is null)
-        //        {
-        //            cluster.Name = newNameClaster;
-        //            await _clusterSearchRepository.Update(cluster);
-        //            return true;// "Кластер изменён";
-        //        }
-        //        else
-        //        {
-        //            return false;// "не получилось изменить название классификатора. Имя этого кластера занято!";
-        //        }
-        //    }
-        //}
-
-        //public async Task<bool> UpdateNameCluster(string oldNameClaster, string newNameClaster)
-        //{
-        //    Cluster cluster = await _clusterSearchRepository.GetNameCluster(oldNameClaster);
-        //    Cluster clusterNewName = await _clusterSearchRepository.GetNameCluster(newNameClaster);
-
-        //    if (cluster is null)
-        //    {
-        //        return false;// "не получилось изменить название классификатора. Не получилось найти указанный кластер в базе";
-        //    }
-        //    else
-        //    {
-
-        //        if (clusterNewName is null)
-        //        {
-        //            cluster.Name = newNameClaster;
-        //            await _clusterSearchRepository.Update(cluster);
-        //            return true;//"Кластер изменён";
-        //        }
-        //        else
-        //        {
-        //            return false;// "не получилось изменить название классификатора. Имя этого кластера занято!";
-        //        }
-        //    }
-        //}
-
         public async Task<AnswerWithBackendDto<ClusterDto>> UpdateNameCluster(UpdateCluseterDto updateCluseterDto)
         {
             AnswerWithBackendDto<ClusterDto> result = new();
@@ -253,76 +171,6 @@ namespace ClusterService.BLL
                 return result;
             }
         }
-
-        //public async Task<bool> UpdatePositionCluster(int clusterId, int parentId)
-        //{
-        //    Cluster cluster = await _clusterSearchRepository.Get(clusterId);
-        //    if (cluster is null)
-        //    {
-        //        return false;//Ошибка. Не найден кластер по id
-        //    }
-        //    else
-        //    {
-        //        if (parentId == cluster.ParentId)
-        //        {
-        //            return false;// "Изменения не нужны, так как перемещения не произошло.";
-        //        }
-        //        if (parentId == -1)
-        //        {
-        //            cluster.ParentId = -1;
-        //            await _clusterSearchRepository.Update(cluster);
-        //            return true;// "Изменения были приняты иерархия была изменена";
-        //        }
-
-        //        Cluster clusterParent = await _clusterSearchRepository.Get(parentId);
-        //        if (clusterParent is not null)
-        //        {
-        //            cluster.ParentId = parentId;
-        //            await _clusterSearchRepository.Update(cluster);
-        //            return true; //"Изменения были приняты иерархия была изменена";
-        //        }
-        //        else
-        //        {
-        //            return false;// "Ошибка. Родительский кластер не найден!";
-        //        }
-        //    }
-        //}
-
-        //public async Task<bool> UpdatePositionCluster(string nameCluster, int parentId)
-        //{
-        //    Cluster cluster = await _clusterSearchRepository.GetNameCluster(nameCluster);
-
-        //    if (cluster is null)
-        //    {
-        //        return false;// "Ошибка. Не найден кластер по id";
-        //    }
-        //    else
-        //    {
-        //        if (parentId == cluster.ParentId)
-        //        {
-        //            return true;// "Изменения не нужны, так как перемещения не произошло.";
-        //        }
-        //        if (parentId == -1)
-        //        {
-        //            cluster.ParentId = -1;
-        //            await _clusterSearchRepository.Update(cluster);
-        //            return true;// "Изменения были приняты иерархия была изменена";
-        //        }
-
-        //        Cluster clusterParent = await _clusterSearchRepository.Get(parentId);
-        //        if (clusterParent is not null)
-        //        {
-        //            cluster.ParentId = parentId;
-        //            await _clusterSearchRepository.Update(cluster);
-        //            return true;// "Изменения были приняты иерархия была изменена";
-        //        }
-        //        else
-        //        {
-        //            return false;//"Ошибка. Родительский кластер не найден!";
-        //        }
-        //    }
-        //}
-
         public async Task<AnswerWithBackendDto<ClusterDto>> GetAllElementsCluster()
         {
             AnswerWithBackendDto<ClusterDto> result = new();
@@ -330,11 +178,56 @@ namespace ClusterService.BLL
             result.AddObject(ClusterAdapter.ConvertFromEntitieToDTO( (List<Cluster>)await _clusterRepository.GetAll()));
             return result;
         }
-
         public async Task<AnswerWithBackendDto<ClusterDto>> GetRootElementsCluster()
         {
             AnswerWithBackendDto<ClusterDto> result = new();
             result.AddObject(ClusterAdapter.ConvertFromEntitieToDTO((List<Cluster>)await _clusterRepository.GetRootElementsClaster()));
+            return result;
+        }
+
+        public async Task<AnswerWithBackendDto<ClusterDto>> GetChildrenElementsCluster(int id)
+        {
+            AnswerWithBackendDto<ClusterDto> result = new();
+            //List <Cluster> cluster = await _clusterRepository.GetChildClusterIdsOptimized(id);
+            //if (cluster is null)
+            //{//"Ошибка. Не найден кластер по имени"
+            //    result.AddErrorLog("Ошибка. Не найден кластер по id");
+            //    return result;
+            //}
+          
+            var items = ClusterAdapter.ConvertFromEntitieToDTO((List<Cluster>)await _clusterRepository.GetChildClusterIdsOptimized(id));
+            if (items is null)
+            {
+                result.AddErrorLog("У указанно кластера отсутствуют дочерние объекты");
+            }
+            else
+            {
+                result.AddObject(items);
+
+            }
+            return result;
+        }
+
+        public async Task<AnswerWithBackendDto<ClusterDto>> SerchCluster(string keyWord)
+        {
+            AnswerWithBackendDto<ClusterDto> result = new();
+            //List<Cluster> cluster = await _clusterRepository.GetSearchCluster(keyWord);
+            //if (cluster is null)
+            //{//"Ошибка. Не найден кластер по имени"
+            //    result.AddErrorLog("Ошибка. Не найден кластер по id");
+            //    return result;
+            //}
+
+            var items = ClusterAdapter.ConvertFromEntitieToDTO((List<Cluster>)await _clusterRepository.GetSearchCluster(keyWord));
+            if (items is null)
+            {
+                result.AddErrorLog("У указанно кластера отсутствуют дочерние объекты");
+            }
+            else
+            {
+                result.AddObject(items);
+
+            }
             return result;
         }
     }

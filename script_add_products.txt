@@ -1,0 +1,95 @@
+-- Скрипт для создания товаров в магазине 
+
+-- Очистка таблицы продуктов (если нужно)
+-- TRUNCATE TABLE "Products" RESTART IDENTITY CASCADE;
+
+-- Вставка товаров для магазина с ID = 1 (Яблоки - cluster_id = 3)
+INSERT INTO "Products" (
+    "is_deleted", "model_number", "name", "description", 
+    "cluster_id", "price", "barcode", "average_rating", "amount_of_comments", "shop_id"
+) VALUES
+(false, 'APPLE-RED-001', 'Яблоко Красное', 'Сочные красные яблоки сорта Ред Делишес', 3, 89.90, 100000000001, 4.5, 12, 1),
+(false, 'APPLE-GREEN-002', 'Яблоко Зеленое', 'Ароматные зеленые яблоки сорта Гренни Смит', 3, 99.90, 100000000002, 4.7, 8, 1),
+(false, 'APPLE-GOLD-003', 'Яблоко Голден', 'Сладкие золотистые яблоки сорта Голден Делишес', 3, 109.90, 100000000003, 4.8, 15, 1);
+
+-- Вставка товаров для магазина с ID = 1 (Бананы - cluster_id = 4)
+INSERT INTO "Products" (
+    "is_deleted", "model_number", "name", "description", 
+    "cluster_id", "price", "barcode", "average_rating", "amount_of_comments", "shop_id"
+) VALUES
+(false, 'BANANA-REG-011', 'Бананы', 'Спелые сладкие бананы премиум качества', 4, 69.90, 100000000011, 4.6, 25, 1),
+(false, 'BANANA-MINI-012', 'Бананы Мини', 'Небольшие сладкие бананы мини размера', 4, 89.90, 100000000012, 4.8, 15, 1);
+
+-- Вставка товаров для магазина с ID = 2 (Апельсины - cluster_id = 5)
+INSERT INTO "Products" (
+    "is_deleted", "model_number", "name", "description", 
+    "cluster_id", "price", "barcode", "average_rating", "amount_of_comments", "shop_id"
+) VALUES
+(false, 'ORANGE-REG-021', 'Апельсины', 'Сочные апельсины с тонкой кожурой', 5, 129.90, 100000000021, 4.5, 22, 2),
+(false, 'ORANGE-RED-022', 'Апельсины Красные', 'Апельсины сорта Моро с красной мякотью', 5, 159.90, 100000000022, 4.8, 16, 2),
+(false, 'ORANGE-JAF-023', 'Апельсины Яффа', 'Крупные сладкие апельсины из Израиля', 5, 179.90, 100000000023, 4.9, 20, 2);
+
+-- Вставка товаров для магазина с ID = 2 (Виноград - cluster_id = 6)
+INSERT INTO "Products" (
+    "is_deleted", "model_number", "name", "description", 
+    "cluster_id", "price", "barcode", "average_rating", "amount_of_comments", "shop_id"
+) VALUES
+(false, 'GRAPE-GREEN-031', 'Виноград Зеленый', 'Сладкий зеленый виноград без косточек', 6, 299.90, 100000000031, 4.7, 18, 2),
+(false, 'GRAPE-RED-032', 'Виноград Красный', 'Ароматный красный виноград с косточками', 6, 279.90, 100000000032, 4.6, 12, 2);
+
+-- Вставка товаров для магазина с ID = 3 (Киви - cluster_id = 7)
+INSERT INTO "Products" (
+    "is_deleted", "model_number", "name", "description", 
+    "cluster_id", "price", "barcode", "average_rating", "amount_of_comments", "shop_id"
+) VALUES
+(false, 'KIWI-GREEN-041', 'Киви Зеленый', 'Классические зеленые киви с кисло-сладким вкусом', 7, 29.90, 100000000041, 4.5, 20, 3),
+(false, 'KIWI-GOLD-042', 'Киви Золотой', 'Сладкие золотые киви с нежной мякотью', 7, 39.90, 100000000042, 4.8, 18, 3),
+(false, 'KIWI-BIO-043', 'Киви Био', 'Органические киви без химической обработки', 7, 49.90, 100000000043, 4.7, 12, 3);
+
+-- Вставка товаров для магазина с ID = 3 (Морковь - cluster_id = 8)
+INSERT INTO "Products" (
+    "is_deleted", "model_number", "name", "description", 
+    "cluster_id", "price", "barcode", "average_rating", "amount_of_comments", "shop_id"
+) VALUES
+(false, 'CARROT-REG-051', 'Морковь', 'Свежая молодая морковь', 8, 49.90, 100000000051, 4.2, 10, 3),
+(false, 'CARROT-BABY-052', 'Морковь Детская', 'Нежная молодая морковь небольшого размера', 8, 69.90, 100000000052, 4.5, 12, 3);
+
+-- Вставка товаров для магазина с ID = 4 (Картофель - cluster_id = 9)
+INSERT INTO "Products" (
+    "is_deleted", "model_number", "name", "description", 
+    "cluster_id", "price", "barcode", "average_rating", "amount_of_comments", "shop_id"
+) VALUES
+(false, 'POTATO-WHT-061', 'Картофель Белый', 'Картофель белых сортов для варки', 9, 39.90, 100000000061, 4.1, 12, 4),
+(false, 'POTATO-RED-062', 'Картофель Красный', 'Картофель красных сортов для жарки', 9, 49.90, 100000000062, 4.3, 10, 4),
+(false, 'POTATO-YNG-063', 'Картофель Молодой', 'Молодой картофель с нежной кожурой', 9, 69.90, 100000000063, 4.6, 18, 4);
+
+-- Вставка товаров для магазина с ID = 4 (Огурцы - cluster_id = 10)
+INSERT INTO "Products" (
+    "is_deleted", "model_number", "name", "description", 
+    "cluster_id", "price", "barcode", "average_rating", "amount_of_comments", "shop_id"
+) VALUES
+(false, 'CUCUMBER-REG-071', 'Огурцы', 'Свежие грунтовые огурцы', 10, 89.90, 100000000071, 4.3, 15, 4),
+(false, 'CUCUMBER-LONG-072', 'Огурцы Длинные', 'Длинные салатные огурцы', 10, 99.90, 100000000072, 4.5, 12, 4);
+
+-- Вставка товаров для магазина с ID = 5 (Помидоры - cluster_id = 11)
+INSERT INTO "Products" (
+    "is_deleted", "model_number", "name", "description", 
+    "cluster_id", "price", "barcode", "average_rating", "amount_of_comments", "shop_id"
+) VALUES
+(false, 'TOMATO-RED-081', 'Помидоры Красные', 'Классические красные помидоры', 11, 149.90, 100000000081, 4.5, 20, 5),
+(false, 'TOMATO-CHER-082', 'Помидоры Черри', 'Сладкие помидоры черри', 11, 199.90, 100000000082, 4.8, 25, 5),
+(false, 'TOMATO-BEEF-083', 'Помидоры Биф', 'Крупные мясистые помидоры', 11, 179.90, 100000000083, 4.7, 18, 5);
+
+-- Вставка товаров для магазина с ID = 5 (Лук - cluster_id = 12)
+INSERT INTO "Products" (
+    "is_deleted", "model_number", "name", "description", 
+    "cluster_id", "price", "barcode", "average_rating", "amount_of_comments", "shop_id"
+) VALUES
+(false, 'ONION-REG-091', 'Лук Репчатый', 'Классический репчатый лук', 12, 29.90, 100000000091, 4.0, 10, 5),
+(false, 'ONION-RED-092', 'Лук Красный', 'Красный салатный лук', 12, 39.90, 100000000092, 4.3, 8, 5);
+
+-- Создание индексов для ускорения поиска
+CREATE INDEX IF NOT EXISTS idx_products_shop_id ON "Products" ("shop_id");
+CREATE INDEX IF NOT EXISTS idx_products_cluster_id ON "Products" ("cluster_id");
+CREATE INDEX IF NOT EXISTS idx_products_name ON "Products" USING GIN ("Name" gin_trgm_ops);
+CREATE INDEX IF NOT EXISTS idx_products_model_number ON "Products" ("ModelNumber");

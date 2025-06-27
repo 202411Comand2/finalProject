@@ -29,7 +29,7 @@ namespace ManagersShopsService
         /// </summary>
         /// <param name="id">id магазина</param>
         /// <returns></returns>
-        public Task<AnswerWithBackendDto<GetManagersShopsDto>> GetManagersShopsDto(GetManagersShopsDto model);
+        public Task<AnswerWithBackendDto<GetManagersShopsDto>> GetManagersShopsDto(int idShop);
 
         /// <summary>
         /// Получить магазины, к который есть доступ у пользователя
