@@ -1,0 +1,8 @@
+{
+  "JwtSettings": {
+    "SecretKey": "your-very-secure-key-32-chars-minimum",
+    "Issuer": "AuthService",
+    "Audience": "ProductService",
+    "ExpiryInMinutes": 60
+  }
+}

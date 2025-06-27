@@ -1,0 +1,9 @@
+{
+  "RabbitSettings": {
+    "RabbitHostName": "host.docker.internal",
+    "RabbitUserName": "admin",
+    "RabbitUserPassword": "secret",
+    "DefaultExchangeName": "shop.exchange",
+    "DefaultQueueName": "shop.queue"
+  }
+}

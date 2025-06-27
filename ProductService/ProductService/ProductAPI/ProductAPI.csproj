@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>946ff860-d5ba-41f5-832d-f83dd86c43fd</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Properties\rabbitSettings.json" />
+    <Content Remove="Properties\secretsSettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Properties\rabbitSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\secretsSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.15" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SupperDto\SupperBackEndDto\SupperBackEnd.Dto.csproj" />
+    <ProjectReference Include="..\BLL\ProductService.BLL.csproj" />
+    <ProjectReference Include="..\DAL\ProductService.DAL.csproj" />
+    <ProjectReference Include="..\Domain\ProductService.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
