@@ -14,7 +14,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ClusterAPI/ClusterAPI.csproj", "ClusterAPI/"]
 COPY ["ProductService/ClusterService/BLL/ClusterService.BLL.csproj", "ProductService/ClusterService/BLL/"]
-COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEnd.Dto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
+COPY ["SupperBackEndDto/SupperBackEnd.Dto.csproj", "SupperBackEndDto/"]
 COPY ["ProductService/ClusterService/DAL/ClusterService.DAL.csproj", "ProductService/ClusterService/DAL/"]
 COPY ["DAL/Platform.DAL.csproj", "DAL/"]
 COPY ["ProductService/ClusterService/Domain/ClusterService.Domain.csproj", "ProductService/ClusterService/Domain/"]

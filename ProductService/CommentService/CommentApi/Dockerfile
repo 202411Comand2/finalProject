@@ -13,7 +13,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ProductService/CommentService/CommentApi/CommentApi.csproj", "ProductService/CommentService/CommentApi/"]
-COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEnd.Dto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
+COPY ["SupperBackEndDto/SupperBackEndDto.csproj", "SupperBackEndDto/"]
 COPY ["ProductService/CommentService/BLL/CommentService.BLL.csproj", "ProductService/CommentService/BLL/"]
 COPY ["ProductService/CommentService/DAL/CommentServce.DAL.csproj", "ProductService/CommentService/DAL/"]
 COPY ["DAL/Platform.DAL.csproj", "DAL/"]

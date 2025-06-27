@@ -10,15 +10,14 @@ namespace CartService.BLL.Adapters
         /// </summary>
         /// <param name="Carts">коллекция избранных позиций Entitie</param>
         /// <returns>Comment</returns>
-        public static CartDto ConvertFromEntityToCartDto(Cart cart) 
+        public static UpdateCartDto ConvertFromEntityToCartDto(Cart cart)
         {
-            return new CartDto
+            return new UpdateCartDto
             {
-                Id = cart.Id,
-                ProductId = cart.ProductId,
-                UserId = cart.UserId
+                IdCart = cart.Id,
+                Count = cart.Count,
             };
-      }
+        }
 
         /// <summary>
         /// Преобразовать коллекцию из Entitie в CartDto 
@@ -38,6 +37,38 @@ namespace CartService.BLL.Adapters
                 });
             }
             return shopDtos;
+        }
+
+        /// <summary>
+        /// Преобразовать из Dto в Entitie 
+        /// </summary>
+        public static Cart ConvertFromDTOToEntity(AddCartDto dto)
+        {
+            return new Cart()
+            {
+                UserId = dto.UserId,
+                Count = dto.Count,
+                ProductId = dto.ProductId,
+                Price = dto.Price,
+                Discount = dto.Discount,
+                DateCreated =dto.DateCreated,
+            };
+        }
+
+        /// <summary>
+        /// Преобразовать из Entitie в Dto
+        /// </summary>
+        public static AddCartDto ConvertFromEntitieToDTO(Cart dto)
+        {
+            return new AddCartDto()
+            {
+                UserId = dto.UserId,
+                Count = dto.Count,
+                ProductId = dto.ProductId,
+                Price = dto.Price,
+                Discount = dto.Discount,
+                DateCreated = dto.DateCreated,
+            };
         }
     }
 }

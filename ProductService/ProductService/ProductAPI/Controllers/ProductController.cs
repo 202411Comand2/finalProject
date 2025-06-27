@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Platform.DAL.Validatoin;
 using ProductService.BLL;
 using SupperBackEnd.Dto;
-using SupperBackEnd.ServerResponseEND;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+
 
 namespace API.Controllers.Product
 {
@@ -33,7 +34,7 @@ namespace API.Controllers.Product
         public async Task<IActionResult> Add([FromBody] AddProductDto product)
         {
             Console.WriteLine("Зашел в сервис добавление товара");
-            int idUser = ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+            int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
             switch (idUser)
             {
                 case -2: //токен просрочен
@@ -71,7 +72,7 @@ namespace API.Controllers.Product
         public async Task<ActionResult<int>> Update([FromBody] UpdateProductDto product)
         {
             Console.WriteLine("Зашел в сервис обновление товара");
-            int idUser = ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+            int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
             switch (idUser)
             {
                 case -2: //токен просрочен
@@ -103,7 +104,7 @@ namespace API.Controllers.Product
         public async Task<ActionResult<int>> Delete([FromBody] DeleteProductDto product)
         {
             Console.WriteLine("Зашел в сервис удаления товара");
-            int idUser = ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+            int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
             switch (idUser)
             {
                 case -2: //токен просрочен

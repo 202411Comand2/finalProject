@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityService.BLL", "Iden
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityService.DAL", "IdentityService.DAL\IdentityService.DAL.csproj", "{920FA22C-7F80-4A21-9FFE-940CE3BAB56E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalProjectTests", "FinalProjectTests\FinalProjectTests.csproj", "{CC25D49E-126D-4D2B-8EA0-6BE7C9BE8072}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProjectTests", "FinalProjectTests\FinalProjectTests.csproj", "{CC25D49E-126D-4D2B-8EA0-6BE7C9BE8072}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ShopService", "ShopService", "{489ED704-F1A4-4BB9-90C5-C36446F4412E}"
 EndProject
@@ -71,8 +71,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommentServce.DAL", "Produc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommentService.Domain", "ProductService\CommentService\Domain\CommentService.Domain.csproj", "{97365969-56E3-4337-88F6-62766B913204}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SupperBackEnd.Dto", "ProductService\SupperDto\SupperBackEndDto\SupperBackEnd.Dto.csproj", "{28D409E5-3512-4785-BAED-9779014C06F9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client.Console", "ClientsConsole\ClientConsole\Client.Console.csproj", "{93580A89-F24D-4850-A77B-F364722B6BE0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{7656E577-291E-4EC5-BD43-D60E2C6E7931}"
@@ -101,7 +99,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartService.BLL", "Cart_Ord
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{43B26D1C-6D55-4F06-93A0-3A6078ABECB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ocleot_https", "OcelotWebApiGr\Ocleot_https\Ocleot_https.csproj", "{FF0A3040-E68D-43DC-8F7D-A0FAC788828D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ocleot_https", "OcelotWebApiGr\Ocleot_https\Ocleot_https.csproj", "{FF0A3040-E68D-43DC-8F7D-A0FAC788828D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService.DAL", "Cart_Order_Service\OrderService\OrderService.DAL\OrderService.DAL.csproj", "{17FF9785-79D8-4AC7-9D85-4207D6D379EC}"
 EndProject
@@ -127,21 +125,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthService", "AuthService"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OwnerService", "OwnerService", "{A04F3FCC-983F-4926-894D-9293C2D6D025}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Domain", "AuthService\AuthService.Domain\AuthService.Domain.csproj", "{2A7122FF-ED4A-4150-9396-F201591DD114}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Domain", "AuthService\AuthService.Domain\AuthService.Domain.csproj", "{2A7122FF-ED4A-4150-9396-F201591DD114}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagersShopsService.Domain", "OwnerService\OwnerService\ManagersShopsService.Domain.csproj", "{B1832265-36D3-456E-ABBE-8D64F9F990EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManagersShopsService.Domain", "OwnerService\OwnerService\ManagersShopsService.Domain.csproj", "{B1832265-36D3-456E-ABBE-8D64F9F990EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.DAL", "AuthService\AuthService.DAL\AuthService.DAL.csproj", "{D40BA5D0-E565-44EC-A8EE-CA05E01DC6D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.DAL", "AuthService\AuthService.DAL\AuthService.DAL.csproj", "{D40BA5D0-E565-44EC-A8EE-CA05E01DC6D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.BLL", "AuthService\AuthService.BLL\AuthService.BLL.csproj", "{FE66DF59-43F2-45AA-9B30-559BE1181027}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.BLL", "AuthService\AuthService.BLL\AuthService.BLL.csproj", "{FE66DF59-43F2-45AA-9B30-559BE1181027}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthApi", "AuthService\AuthApi\AuthApi.csproj", "{BC416770-A896-47D8-96F5-C3CC4DDBE30F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthApi", "AuthService\AuthApi\AuthApi.csproj", "{BC416770-A896-47D8-96F5-C3CC4DDBE30F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagersShopsApi", "OwnerService\ManagersShopsApi\ManagersShopsApi.csproj", "{74259DA4-08B0-4F54-9B09-2FFAED7C840A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManagersShopsApi", "OwnerService\ManagersShopsApi\ManagersShopsApi.csproj", "{74259DA4-08B0-4F54-9B09-2FFAED7C840A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagersShopsService.BLL", "OwnerService\ManagersShopsService.BLL\ManagersShopsService.BLL.csproj", "{B7F96550-C181-4F1D-BA52-63230AEA4D0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManagersShopsService.BLL", "OwnerService\ManagersShopsService.BLL\ManagersShopsService.BLL.csproj", "{B7F96550-C181-4F1D-BA52-63230AEA4D0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagersShopsService.DAL", "OwnerService\ManagersShopsService.DAL\ManagersShopsService.DAL.csproj", "{0963D652-18D9-49CC-9F46-04D2EF35FA03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManagersShopsService.DAL", "OwnerService\ManagersShopsService.DAL\ManagersShopsService.DAL.csproj", "{0963D652-18D9-49CC-9F46-04D2EF35FA03}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts_expample_bd", "scripts_expample_bd", "{3F1F71B9-A6C9-4E6D-92AE-564912CFC910}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts_expample_bd", "scripts_expample_bd", "{3F1F71B9-A6C9-4E6D-92AE-564912CFC910}"
 	ProjectSection(SolutionItems) = preProject
@@ -259,10 +259,6 @@ Global
 		{97365969-56E3-4337-88F6-62766B913204}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97365969-56E3-4337-88F6-62766B913204}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97365969-56E3-4337-88F6-62766B913204}.Release|Any CPU.Build.0 = Release|Any CPU
-		{28D409E5-3512-4785-BAED-9779014C06F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28D409E5-3512-4785-BAED-9779014C06F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28D409E5-3512-4785-BAED-9779014C06F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{28D409E5-3512-4785-BAED-9779014C06F9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{93580A89-F24D-4850-A77B-F364722B6BE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{93580A89-F24D-4850-A77B-F364722B6BE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93580A89-F24D-4850-A77B-F364722B6BE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -380,7 +376,6 @@ Global
 		{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6} = {39D8B114-5FB5-4B68-85B7-9F8719276E5D}
 		{51FA61BF-A125-49D6-9BE0-D71D3BC0180D} = {39D8B114-5FB5-4B68-85B7-9F8719276E5D}
 		{97365969-56E3-4337-88F6-62766B913204} = {39D8B114-5FB5-4B68-85B7-9F8719276E5D}
-		{28D409E5-3512-4785-BAED-9779014C06F9} = {2E8B78B6-AD6A-477C-90BB-5E974F4A945A}
 		{93580A89-F24D-4850-A77B-F364722B6BE0} = {7656E577-291E-4EC5-BD43-D60E2C6E7931}
 		{7D2DE4DA-C160-4A33-BF25-A210369D7839} = {7656E577-291E-4EC5-BD43-D60E2C6E7931}
 		{E49652B3-6BF9-454C-B657-0C55FBB32D7F} = {463BAC36-4B2E-4DB0-B70D-85ED062E4857}

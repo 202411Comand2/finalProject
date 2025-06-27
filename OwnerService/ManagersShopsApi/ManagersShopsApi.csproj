@@ -30,8 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DAL\Platform.DAL.csproj" />
     <ProjectReference Include="..\..\Domain\Rabbit.Platform.csproj" />
-    <ProjectReference Include="..\..\ProductService\SupperDto\SupperBackEndDto\SupperBackEnd.Dto.csproj" />
     <ProjectReference Include="..\ManagersShopsService.BLL\ManagersShopsService.BLL.csproj" />
     <ProjectReference Include="..\ManagersShopsService.DAL\ManagersShopsService.DAL.csproj" />
   </ItemGroup>

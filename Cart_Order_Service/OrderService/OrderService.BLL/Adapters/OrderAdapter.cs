@@ -21,20 +21,7 @@ namespace OrderService.BLL.Adapters
             }
             return orderDto;
         }
-
-
-        /// <summary>
-        /// Преобразовать из Entitie в Dto
-        /// </summary>
-        public static OrderDto ConvertFromEntitieToDTO(Order entitie)
-        {
-            return new OrderDto()
-            {
-                Id = entitie.Id,
-                UserId = entitie.UserId,                
-            };
-        }
-
+        
         /// <summary>
         /// Преобразовать из Dto в Entitie 
         /// </summary>
@@ -44,6 +31,59 @@ namespace OrderService.BLL.Adapters
             {
                 Id = dto.Id,
                 UserId = dto.UserId,
+            };
+        }
+
+        /// <summary>
+        /// Преобразовать из Dto в Entitie 
+        /// </summary>
+        public static Order ConvertFromDTOToEntity(AddOrderDto dto)
+        {
+            return new Order()
+            {
+                UserId = dto.UserId,
+                ShippingMethod = dto.ShippingMethod,
+                PaymentMethod = dto.PaymentMethod,
+                ArriveAddress = dto.ArriveAddress,
+                OrderStatus = dto.OrderStatus,
+            };
+        }
+
+        /// <summary>
+        /// Преобразовать из Entitie в Dto
+        /// </summary>
+        public static AddOrderDto ConvertFromEntitieToDTO(Order dto)
+        {
+            return new AddOrderDto()
+            {
+                UserId = dto.UserId,
+                ShippingMethod = dto.ShippingMethod,
+                PaymentMethod = dto.PaymentMethod,
+                ArriveAddress = dto.ArriveAddress,
+                OrderStatus = dto.OrderStatus,
+            };
+        }
+
+        /// <summary>
+        /// Преобразовать из Entitie в Dto
+        /// </summary>
+        public static UpdateOrderDto ConvertFromEntitieToDtoUpdate(Order dto)
+        {
+            return new UpdateOrderDto()
+            {
+                IdOrder = dto.Id,
+                OrderStatus = dto.OrderStatus,
+            };
+        }
+
+        /// <summary>
+        /// Преобразовать из Entitie в Dto
+        /// </summary>
+        public static GetOrderDto ConvertFromEntitieToDtoGet(Order dto)
+        {
+            return new GetOrderDto()
+            {
+                IdOrder = dto.Id,
             };
         }
     }

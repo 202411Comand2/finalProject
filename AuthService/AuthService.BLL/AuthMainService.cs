@@ -1,8 +1,6 @@
 ﻿using AuthService.BLL.Dto;
-using SupperBackEnd.Dto;
-using AuthService.Domain.Entities;
-using AuthService.BLL;
 using AuthService.DAL;
+using SupperBackEnd.Dto;
 
 namespace AuthService.BLL
 {

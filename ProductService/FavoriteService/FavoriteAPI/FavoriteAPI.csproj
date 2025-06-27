@@ -31,7 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Domain\Rabbit.Platform.csproj" />
-    <ProjectReference Include="..\..\SupperDto\SupperBackEndDto\SupperBackEnd.Dto.csproj" />
     <ProjectReference Include="..\BLL\FavoriteService.BLL.csproj" />
     <ProjectReference Include="..\DAL\FavoriteService.DAL.csproj" />
     <ProjectReference Include="..\Domain\FavoriteService.Domain.csproj" />

@@ -6,7 +6,7 @@ services:
     container_name: ShopService_5001
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pass
+      POSTGRES_PASSWORD: password1
       POSTGRES_DB: ShopService
     ports:
       - "5001:5432"  # Первая БД на стандартном порту # нельзя на стандартном порту
@@ -18,7 +18,7 @@ services:
     container_name: ProductsService_5000
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pass
+      POSTGRES_PASSWORD: password2
       POSTGRES_DB: ProductsService
     ports:
       - "5000:5432"  # Вторая БД на порту 5000
@@ -30,7 +30,7 @@ services:
     container_name: FavoriteService_5002
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pass
+      POSTGRES_PASSWORD: password3
       POSTGRES_DB: FavoriteService
     ports:
       - "5002:5432"  # Третья БД на порту 5002
@@ -42,7 +42,7 @@ services:
     container_name: CommentService_5003
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pass
+      POSTGRES_PASSWORD: password4
       POSTGRES_DB: CommentService
     ports:
       - "5003:5432"  # Четвертая БД на порту 5435
@@ -54,7 +54,7 @@ services:
     container_name: ClusterService_5004
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pass
+      POSTGRES_PASSWORD: password5
       POSTGRES_DB: ClusterService
     ports:
       - "5004:5432"  # Пятая БД на порту 5436
@@ -63,11 +63,11 @@ services:
 
   postgres6:
     image: postgres:14
-    container_name: CartsService_5006
+    container_name: CartService_5006
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: CartsService
+      POSTGRES_PASSWORD: mypassword1
+      POSTGRES_DB: CartService
     ports:
       - "5006:5432"  
     volumes:
@@ -75,15 +75,40 @@ services:
 
   postgres7:
     image: postgres:14
-    container_name: OrdersService_5007
+    container_name: OrderService_5007
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: OrdersService
+      POSTGRES_PASSWORD: mypassword1
+      POSTGRES_DB: OrderService
     ports:
       - "5007:5432" 
     volumes:
       - postgres_data7:/var/lib/postgresql/data
+
+  postgres8:
+    image: postgres:14
+    container_name: AuthService_5008
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password6
+      POSTGRES_DB: AuthService
+    ports:
+      - "5008:5432"  # Пятая БД на порту 5436
+    volumes:
+      - postgres_data8:/var/lib/postgresql/data
+      #- ./dumps/auth_dump.sql:/docker-entrypoint-initdb.d/auth_init.sql
+
+  postgres9:
+    image: postgres:14
+    container_name: OwnerShop_5009
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password7
+      POSTGRES_DB: OwnerShop
+    ports:
+      - "5009:5432"  # Пятая БД на порту 5436
+    volumes:
+      - postgres_data9:/var/lib/postgresql/data
 
 volumes:
   postgres_data1:
@@ -93,3 +118,5 @@ volumes:
   postgres_data5:
   postgres_data6:
   postgres_data7:
+  postgres_data8:
+  postgres_data9:
