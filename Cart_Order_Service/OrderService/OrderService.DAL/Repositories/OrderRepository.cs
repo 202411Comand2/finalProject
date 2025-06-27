@@ -14,21 +14,6 @@ namespace OrderService.DAL.Repositories
         }
 
         /// <summary>
-        /// Добавить заказ
-        /// </summary>
-        public override Task<Order> Add(Order order)
-        {
-            try
-            {
-                return base.Add(order);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Отменить заказ
         /// </summary>
         public async Task<bool> DeleteOrder(int orderId)
@@ -83,7 +68,7 @@ namespace OrderService.DAL.Repositories
         /// <summary>
         /// Изменить статус заказа
         /// </summary>
-        public async Task<Order> UpdateStatusAsync(int id, OrderStatus orderStatus)
+        public async Task<Order> UpdateStatusAsync(int id, int orderStatus)
         {
             try
             {

@@ -33,7 +33,7 @@ namespace OrderService.Domain.Entities
         /// Статус позиции в заказе
         /// </summary>
         [Required, Column("StatusPosition")]
-        public StatusPosition StatusPosition { get; set; }
+        public int StatusPosition { get; set; }
 
         #region
 

@@ -4,7 +4,6 @@ using ManagersShopsService.DAL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Platform.DAL;
 using System.Text;
 
 namespace ManagersShopsApi
@@ -18,7 +17,6 @@ namespace ManagersShopsApi
             var services = builder.Services;
 
             configuration.AddJsonFile("Properties/secretsSettings.json");
-            configuration.AddJsonFile("Properties/rabbitSettings.json");
 
            // services.Configure<RedisOptions>(configuration.GetSection(nameof(RedisOptions)));
             services.AddSingleton<IContextManager, ContextManager>();

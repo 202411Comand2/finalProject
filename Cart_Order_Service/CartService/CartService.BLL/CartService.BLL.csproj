@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ProductService\SupperDto\SupperBackEndDto\SupperBackEnd.Dto.csproj" />
+    <ProjectReference Include="..\..\..\SupperBackEnd.Dto\SupperBackEnd.Dto.csproj" />
     <ProjectReference Include="..\CartService.DAL\CartService.DAL.csproj" />
     <ProjectReference Include="..\CartService.Domain\CartService.Domain.csproj" />
   </ItemGroup>

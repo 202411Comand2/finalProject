@@ -64,7 +64,7 @@ namespace OrderService.DAL.Repositories
         /// <summary>
         /// Изменить статус позиции в заказе
         /// </summary>
-        public async Task<OrderDetail> UpdateStatusAsync(int id, StatusPosition statusPosition)
+        public async Task<OrderDetail> UpdateStatusAsync(int id, int statusPosition)
         {
             try
             {

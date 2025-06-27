@@ -12,21 +12,6 @@ namespace CartService.DAL.Repositories
         }
 
         /// <summary>
-        /// Добавление товара в корзину
-        /// </summary>
-        public override Task<Cart> Add(Cart cart)
-        {
-            try
-            {
-                return base.Add(cart);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Получение списка товаров в корзине
         /// </summary>
         public async Task<List<Cart>> GetListProducts(int userId)

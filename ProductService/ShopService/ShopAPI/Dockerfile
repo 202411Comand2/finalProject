@@ -13,7 +13,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ProductService/ShopService/ShopAPI/ShopAPI.csproj", "ProductService/ShopService/ShopAPI/"]
-COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEnd.Dto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
+COPY ["SupperBackEndDto/SupperBackEndDto.csproj", "SupperBackEndDto/"]
 COPY ["ProductService/ShopService/BLL/ShopService.BLL.csproj", "ProductService/ShopService/BLL/"]
 COPY ["ProductService/ShopService/DAL/ShopService.DAL.csproj", "ProductService/ShopService/DAL/"]
 COPY ["ProductService/ShopService/Domain/ShopService.Domain.csproj", "ProductService/ShopService/Domain/"]

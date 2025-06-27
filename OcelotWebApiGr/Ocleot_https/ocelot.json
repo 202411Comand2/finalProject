@@ -179,9 +179,51 @@
           "Port": 7237
         }
       ],
-      "UpstreamPathTemplate": "/gateway/Owner/{everything}", 
+      "UpstreamPathTemplate": "/gateway/Owner/{everything}",
       "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
-      "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ], 
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ],
+      "AuthenticationOptions": { //аутефикация
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    },
+    // Cart
+    {
+      "DownstreamPathTemplate": "/api/Cart/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7175
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Cart/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ],
+      "AuthenticationOptions": { //аутефикация
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    },
+    // Order
+    {
+      "DownstreamPathTemplate": "/api/Order/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7042
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Order/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ],
       "AuthenticationOptions": { //аутефикация
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
@@ -190,6 +232,7 @@
         "TtlSeconds": 60
       }
     }
+
 
 
 

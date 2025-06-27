@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SupperDto\SupperBackEndDto\SupperBackEnd.Dto.csproj" />
+    <ProjectReference Include="..\..\..\SupperBackEnd.Dto\SupperBackEnd.Dto.csproj" />
     <ProjectReference Include="..\DAL\FavoriteService.DAL.csproj" />
     <ProjectReference Include="..\Domain\FavoriteService.Domain.csproj" />
   </ItemGroup>

@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using OrderService.BLL.Abstractions;
 using OrderService.BLL.Dto;
 using OrderService.BLL.Dto.Order;
 using OrderService.Domain.Enums;
+using Platform.DAL.Validatoin;
+using SupperBackEnd.Dto;
 using SupperBackEnd.Dto;
 
 namespace OrderApi.Controllers
@@ -10,129 +15,263 @@ namespace OrderApi.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class OrderController(IOrderService orderService) : ControllerBase()
+    public class OrderController : ControllerBase
     {
-        private readonly IOrderService _orderService = orderService;
+        private readonly IConfiguration _configuration;
+        private readonly IOrderService _orderService;
+
+        public OrderController(IConfiguration configuration, IOrderService orderService)
+        {
+            _configuration = configuration;
+            _orderService = orderService;
+        }
 
         /// <summary>
         /// Создать заказ
         /// </summary>
+        [Authorize]
         [HttpPost("AddProduct")]
-        public async Task<ActionResult<string>> AddProduct([FromBody] AddOrderDto dto, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddProduct([FromBody] AddOrderDto dto, CancellationToken cancellationToken)
         {
-            AnswerWithBackendDto<OrderDto> result = new();
             try
             {
-                result = await _orderService.AddOrderAsync(dto, cancellationToken);
+                // Получаем токен из заголовка
+                int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+                Console.WriteLine($"Получаем данные из токена id {idUser}");
 
-                if (!result.DataReceived)
+                if (idUser > 0)
                 {
-                    return BadRequest(result.ErrorLog);
+                    dto.UserId = idUser;
                 }
 
-                return Ok($"Создана запись с Id: {result.ObjectDto.Id}");
+                try
+                {
+                    switch (idUser)
+                    {
+                        case -2: //токен просрочен
+                            Console.WriteLine("Token is missing");
+                            return Unauthorized(new ApiResponse<AddOrderDto>(false, null, "Token is missing"));
+                        case -3:
+                            Console.WriteLine("Invalid token claims");
+                            return Unauthorized(new ApiResponse<AddOrderDto>(false, null, "Invalid token claims"));
+                        default:
+                            Console.WriteLine("Пользователь был добавен в магазин");
+                            dto.UserId = idUser;
+                            var userInfo = await _orderService.AddOrder(dto, cancellationToken);
+                         
+                            if (userInfo.DataReceived == true)
+                            {
+                                return Ok(new ApiResponse<AddOrderDto>(true, userInfo.ObjectDto, null));
+                            }
+                            else
+                            {
+                                return BadRequest(new ApiResponse<AddOrderDto>(false, null, userInfo.ErrorLog));
+                            }
+                    }
+                }
+                catch (SecurityTokenException ex)
+                {
+                    return Unauthorized(new ApiResponse<AddOrderDto>(false, null, $"Invalid token: {ex.Message}"));
+                }
             }
-
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, new ApiResponse<AddOrderDto>(false, null, ex.Message));
             }
         }
 
         /// <summary>
         /// Удалить заказ
         /// </summary>
+        [Authorize]
         [HttpDelete("DeleteOrder")]
-        public async Task<ActionResult<string>> DeleteOrder([FromBody] DeleteOrderDto dto, CancellationToken cancellationToken)
-        {
-            AnswerWithBackendDto<OrderDto> result = new();
-            try
+        public async Task<IActionResult> DeleteOrder([FromBody] DeleteOrderDto dto, CancellationToken cancellationToken)
             {
-                 result = await _orderService.DeleteOrderAsync(dto, cancellationToken);
-
-                if (!result.DataReceived)
+                try
                 {
-                    return BadRequest(result.ErrorLog);
+                    // Получаем токен из заголовка
+                    int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+                    Console.WriteLine($"Получаем данные из токена id {idUser}");
+
+                    try
+                    {
+                        switch (idUser)
+                        {
+                            case -2: //токен просрочен
+                                Console.WriteLine("Token is missing");
+                                return Unauthorized(new ApiResponse<DeleteOrderDto>(false, null, "Token is missing"));
+                            case -3:
+                                Console.WriteLine("Invalid token claims");
+                                return Unauthorized(new ApiResponse<DeleteOrderDto>(false, null, "Invalid token claims"));
+                            default:
+                                Console.WriteLine("Пользователь был добавен в магазин");
+                                var result = await _orderService.DeleteOrderAsync(dto, cancellationToken);
+                               
+                                if (result.DataReceived == true)
+                                {
+                                    return Ok(new ApiResponse<DeleteOrderDto>(true, result.ObjectDto, null));
+                                }
+                                else
+                                {
+                                    return BadRequest(new ApiResponse<DeleteOrderDto>(false, null, result.ErrorLog));
+                                }
+                        }
+                    }
+                    catch (SecurityTokenException ex)
+                    {
+                        return Unauthorized(new ApiResponse<DeleteOrderDto>(false, null, $"Invalid token: {ex.Message}"));
+                    }
                 }
-
-                return Ok($"Заказ удален. Товары перенесены в корзину");
+                catch (Exception ex)
+                {
+                    return StatusCode(500, new ApiResponse<DeleteOrderDto>(false, null, ex.Message));
+                }
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
 
-        /// <summary>
-        /// Получить все заказы пользователя
-        /// </summary>
+            /// <summary>
+            /// Получить все заказы пользователя
+            /// </summary>
+            [Authorize]
         [HttpGet("GetAllOrderUser")]
-        public async Task<ActionResult<string>> GetAllOrderUser([FromBody] GetAllOrderDto dto, CancellationToken cancellationToken)
-        {
-            AnswerWithBackendDto<OrderDto> result = new();
-            try
-            {
-                result = await _orderService.GetAllOrderUserAsync(dto, cancellationToken);
-
-                if (!result.DataReceived)
+        public async Task<IActionResult> GetAllOrderUser(CancellationToken cancellationToken)
                 {
-                    return BadRequest(result.ErrorLog);
+                    try
+                    {
+                        // Получаем токен из заголовка
+                        int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+                        Console.WriteLine($"Получаем данные из токена id {idUser}");
+
+                        try
+                        {
+                            switch (idUser)
+                            {
+                                case -2: //токен просрочен
+                                    Console.WriteLine("Token is missing");
+                                    return Unauthorized( "Token is missing");
+                                case -3:
+                                    Console.WriteLine("Invalid token claims");
+                                    return Unauthorized("Invalid token claims");
+                                default:
+                                    Console.WriteLine("Пользователь был добавен в магазин");
+                                    var result = await _orderService.GetAllOrderUserAsync(idUser, cancellationToken);
+
+                                    if (result.DataReceived == true)
+                                    {
+                                        return Ok();
+                                    }
+                                    else
+                                    {
+                                        return BadRequest(result.ErrorLog);
+                                    }
+                            }
+                        }
+                        catch (SecurityTokenException ex)
+                        {
+                            return Unauthorized($"Invalid token: {ex.Message}");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        return StatusCode(500, ex.Message);
+                    }
                 }
 
-                return result.GetCollectionNotProblem();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Получить заказ пользователя
-        /// </summary>
+                /// <summary>
+                /// Получить заказ пользователя
+                /// </summary>
+                [Authorize]
         [HttpGet("GetOrderUser")]
-        public async Task<ActionResult<string>> GetOrderUser([FromBody] GetOrderDto dto, CancellationToken cancellationToken)
-        {
-            AnswerWithBackendDto<OrderDto> result = new();
-            try
-            {
-                result = await _orderService.GetOrderUserAsync(dto, cancellationToken);
+        public async Task<IActionResult> GetOrderUser([FromBody] GetOrderDto dto, CancellationToken cancellationToken)
+                    {
+                        try
+                        {
+                            // Получаем токен из заголовка
+                            int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+                            Console.WriteLine($"Получаем данные из токена id {idUser}");
 
-                if (!result.DataReceived)
-                {
-                    return BadRequest(result.ErrorLog);
-                }
+                            try
+                            {
+                                switch (idUser)
+                                {
+                                    case -2: //токен просрочен
+                                        Console.WriteLine("Token is missing");
+                                        return Unauthorized(new ApiResponse<GetOrderDto>(false, null, "Token is missing"));
+                                    case -3:
+                                        Console.WriteLine("Invalid token claims");
+                                        return Unauthorized(new ApiResponse<GetOrderDto>(false, null, "Invalid token claims"));
+                                    default:
+                                        Console.WriteLine("Пользователь был добавен в магазин");
+                                        
+                                        var result = await _orderService.GetOrderUserAsync(dto, cancellationToken);
 
-                return result.GetCollectionNotProblem();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+                                        if (result.DataReceived == true)
+                                        {
+                                            return Ok(new ApiResponse<GetOrderDto>(true, result.ObjectDto, null));
+                                        }
+                                        else
+                                        {
+                                            return BadRequest(new ApiResponse<GetOrderDto>(false, null, result.ErrorLog));
+                                        }
+                                }
+                            }
+                            catch (SecurityTokenException ex)
+                            {
+                                return Unauthorized(new ApiResponse<GetOrderDto>(false, null, $"Invalid token: {ex.Message}"));
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            return StatusCode(500, new ApiResponse<GetOrderDto>(false, null, ex.Message));
+                        }
+                    }
 
-        /// <summary>
-        /// Обновить статус текущего заказа
-        /// </summary>
+                    /// <summary>
+                    /// Обновить статус текущего заказа
+                    /// </summary>
+                    [Authorize]
         [HttpDelete("UpdateOrderStatus")]
-        public async Task<ActionResult<int>> UpdateOrderStatus([FromBody] UpdateOrderDto dto, CancellationToken cancellationToken)
-        {
-            AnswerWithBackendDto<OrderDto> result = new();
-            try
-            {
-                result = await _orderService.UpdateOrderStatusAsync(dto, cancellationToken);
+        public async Task<IActionResult> UpdateOrderStatus([FromBody] UpdateOrderDto dto, CancellationToken cancellationToken)
+                        {
+                            try
+                            {
+                                // Получаем токен из заголовка
+                                int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+                                Console.WriteLine($"Получаем данные из токена id {idUser}");
 
-                if (!result.DataReceived)
-                {
-                    return BadRequest(result.ErrorLog);
-                }
+                                try
+                                {
+                                    switch (idUser)
+                                    {
+                                        case -2: //токен просрочен
+                                            Console.WriteLine("Token is missing");
+                                            return Unauthorized(new ApiResponse<UpdateOrderDto>(false, null, "Token is missing"));
+                                        case -3:
+                                            Console.WriteLine("Invalid token claims");
+                                            return Unauthorized(new ApiResponse<UpdateOrderDto>(false, null, "Invalid token claims"));
+                                        default:
+                                            Console.WriteLine("Пользователь был добавен в магазин");
+                                            
+                                            var result = await _orderService.UpdateOrderStatusAsync(dto, cancellationToken);
 
-                return Ok(result.DataReceived);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-    }
+                                            if (result.DataReceived == true)
+                                            {
+                                                return Ok(new ApiResponse<UpdateOrderDto>(true, result.ObjectDto, null));
+                                            }
+                                            else
+                                            {
+                                                return BadRequest(new ApiResponse<UpdateOrderDto>(false, null, result.ErrorLog));
+                                            }
+                                    }
+                                }
+                                catch (SecurityTokenException ex)
+                                {
+                                    return Unauthorized(new ApiResponse<UpdateOrderDto>(false, null, $"Invalid token: {ex.Message}"));
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                return StatusCode(500, new ApiResponse<UpdateOrderDto>(false, null, ex.Message));
+                            }
+                        }
+                    }
 }

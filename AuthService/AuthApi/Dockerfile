@@ -13,7 +13,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["AuthService/AuthApi/AuthApi.csproj", "AuthService/AuthApi/"]
-COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEnd.Dto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
+COPY ["SupperBackEndDto/SupperBackEnd.Dto.csproj", "SupperBackEndDto/"]
 COPY ["AuthService/AuthService.BLL/AuthService.BLL.csproj", "AuthService/AuthService.BLL/"]
 COPY ["AuthService/AuthService.DAL/AuthService.DAL.csproj", "AuthService/AuthService.DAL/"]
 COPY ["AuthService/AuthService.Domain/AuthService.Domain.csproj", "AuthService/AuthService.Domain/"]

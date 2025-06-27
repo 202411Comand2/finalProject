@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -13,6 +13,10 @@
   <ItemGroup>
     <Content Remove="Properties\rabbitSettings.json" />
     <Content Remove="Properties\secretsSettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="API.http" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SupperDto\SupperBackEndDto\SupperBackEnd.Dto.csproj" />
+    <ProjectReference Include="..\..\..\SupperBackEnd.Dto\SupperBackEnd.Dto.csproj" />
     <ProjectReference Include="..\BLL\ProductService.BLL.csproj" />
     <ProjectReference Include="..\DAL\ProductService.DAL.csproj" />
     <ProjectReference Include="..\Domain\ProductService.Domain.csproj" />

@@ -16,7 +16,7 @@ COPY ["OwnerService/ManagersShopsApi/ManagersShopsApi.csproj", "OwnerService/Man
 COPY ["ProductService/CommentService/DAL/CommentServce.DAL.csproj", "ProductService/CommentService/DAL/"]
 COPY ["DAL/Platform.DAL.csproj", "DAL/"]
 COPY ["ProductService/CommentService/Domain/CommentService.Domain.csproj", "ProductService/CommentService/Domain/"]
-COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEnd.Dto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
+COPY ["SupperBackEndDto/SupperBackEndDto.csproj", "SupperBackEndDto/"]
 RUN dotnet restore "./OwnerService/ManagersShopsApi/ManagersShopsApi.csproj"
 COPY . .
 WORKDIR "/src/OwnerService/ManagersShopsApi"

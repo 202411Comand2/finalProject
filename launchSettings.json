@@ -9,8 +9,11 @@
         "favoriteapi": "StartDebugging",
         "commentapi": "StartDebugging",
         "clusterapi": "StartDebugging",
-        "ocelotwebapigr": "StartDebugging",
-        "authapi": "StartDebugging"
+        "orderapi": "StartDebugging",
+        "cartapi": "StartDebugging",
+        "authapi": "StartDebugging",
+        "managersshopsapi": "StartDebugging",
+        "ocelotwebapigr": "StartDebugging"
       }
     }
   }

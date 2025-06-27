@@ -1,19 +1,10 @@
 ﻿using ManagersShopsService;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using SupperBackEnd.Dto;
-using System.Security.Claims;
-using System.Text;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using ManagersShopsService.BLL.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using ManagersShopsService.BLL.Dto;
-using SupperBackEnd.User;
-using SupperBackEnd.ServerResponseEND;
-using Microsoft.AspNetCore.Authorization;
+using Platform.DAL.Validatoin;
+using SupperBackEnd.Dto;
 
 namespace ManagersShopsApi.Controllers
 {
@@ -30,9 +21,10 @@ namespace ManagersShopsApi.Controllers
         private readonly IManagersShopsMainService _managersShopsMainService;
 
 
+
+
         [HttpGet("{id}")]
         public IActionResult GetById(int id) => Ok($"Auth {id}");
-
 
         /// <summary>
         /// Добавить пользователя Владельца
@@ -48,7 +40,7 @@ namespace ManagersShopsApi.Controllers
             try
             {
                 // Получаем токен из заголовка
-                int idUser = ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+                int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
                 Console.WriteLine($"Получаем данные из токена id {idUser}");
                 if (idUser > 0) 
                 {
@@ -103,7 +95,7 @@ namespace ManagersShopsApi.Controllers
             try
             {
                 // Получаем токен из заголовка
-                int idUser = ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+                int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
                 Console.WriteLine($"Получаем данные из токена id {idUser}");
                 try
                 {
@@ -149,11 +141,10 @@ namespace ManagersShopsApi.Controllers
         [HttpGet("GetShop")]
         public async Task<ActionResult<string>> GetShop() 
         {
-            AnswerWithBackendDto<AddManagersShopsDto> result = new();
             try
             {
                 // Получаем токен из заголовка
-                int idUser = ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+                int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
                 Console.WriteLine($"Получаем данные из токена id {idUser}");
                 try
                 {
@@ -166,10 +157,7 @@ namespace ManagersShopsApi.Controllers
                             Console.WriteLine("Invalid token claims");
                             return Unauthorized("Invalid token claims");
                         default:
-                            Console.WriteLine("Возращаю список магазинов");
-                           
-                          
-
+                            Console.WriteLine("Возращаю список магазинов");   
                             var userInfo = await _managersShopsMainService.GetShop(idUser);
                             if (userInfo.DataReceived == true)
                             {
@@ -196,10 +184,9 @@ namespace ManagersShopsApi.Controllers
         [HttpGet("GetManager")]
         public async Task<ActionResult> GetManager([FromQuery] int idShop) 
         {
-            AnswerWithBackendDto<AddManagersShopsDto> result = new();
             try
             {
-                int idUser = ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+                int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
                 Console.WriteLine($"Получаем данные из токена id {idUser}");
                 try
                 {
@@ -222,7 +209,7 @@ namespace ManagersShopsApi.Controllers
                             {
                                 return BadRequest(userInfo.ErrorLog);
                             }
-                  }
+                    }
                 }
                 catch (SecurityTokenException ex)
                 {
@@ -243,7 +230,7 @@ namespace ManagersShopsApi.Controllers
             Console.WriteLine($"Удаление менеджера");
             try
             {
-                int idUser = ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+                int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
                 Console.WriteLine($"Получаем данные из токена id {idUser}");
                 try
                 {
@@ -279,72 +266,5 @@ namespace ManagersShopsApi.Controllers
             }
         }
 
-
-        #region вспомогательные ф-и
-
-
-        /// <summary>
-        /// Проверка токена от frontEnd
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns>-1 означает, что валидация не была пройдена</returns>
-        private int ValidationToken(string authHeader)
-        {
-            try
-            {
-                // Получаем настройки JWT из конфигурации
-                var jwtSettings = _configuration.GetSection("JwtSettings");
-                var secretKey = jwtSettings["SecretKey"];
-
-                if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
-                {
-                    return -2;
-                }
-
-                var token = authHeader.Substring("Bearer ".Length).Trim();
-
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-
-                // Параметры валидации (должны совпадать с параметрами при генерации токена)
-                var validationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = jwtSettings["Issuer"],
-                    ValidateAudience = true,
-                    ValidAudience = jwtSettings["Audience"],
-                    ValidateLifetime = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
-                    ValidateIssuerSigningKey = true,
-
-                };
-
-                var handler = new JwtSecurityTokenHandler();
-                SecurityToken validatedToken;
-
-                try
-                {
-                    // Валидация токена
-                    var principal = handler.ValidateToken(token, validationParameters, out validatedToken);
-
-                    var userId = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-                    if (string.IsNullOrEmpty(userId))
-                    {
-                        return -3;
-                    }
-                    return Convert.ToInt32(userId);
-                }
-                catch
-                {
-
-                }
-            }
-            catch
-            {
-            }
-            return -1;
-        }
-      
-        #endregion
     }
 }

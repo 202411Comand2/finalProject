@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Platform.DAL.Validatoin;
 using ShopService.BLL;
 using SupperBackEnd.Dto;
 using System.IdentityModel.Tokens.Jwt;
@@ -32,7 +33,7 @@ namespace API.Controllers.Product
         public async Task<ActionResult<int>> Add([FromBody] AddShopDto shopDto)
         {
             Console.WriteLine("Зашел в сервис создания магазина");
-            int idUser = ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+            int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
             switch (idUser)
             {
                 case -2: //токен просрочен
@@ -93,7 +94,7 @@ namespace API.Controllers.Product
         public async Task<ActionResult<int>> UpdateName(UpdateShopDto updateShopDto)
         {
             Console.WriteLine("Зашел в сервис обновления магазина");
-            int idUser = ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+            int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
             switch (idUser)
             {
                 case -2: //токен просрочен
