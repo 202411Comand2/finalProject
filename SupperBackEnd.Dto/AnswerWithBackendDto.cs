@@ -64,6 +64,8 @@ namespace SupperBackEnd.Dto
         static private string Serialization(List<T> objectDro) => JsonSerializer.Serialize(objectDro);
 
 
+
+
         private AnswerWithBackendDto<T> _adapter(AnswerWithBackendDto<T> obj)
         {
             return obj;
@@ -109,8 +111,6 @@ namespace SupperBackEnd.Dto
         ///// <returns></returns>
         //public string GetCollectionWithProblem() => Serialization(ObjectsDto);
 
-
-
         /// <summary>
         /// Добавить коллекцию объектов
         /// </summary>
@@ -149,8 +149,6 @@ namespace SupperBackEnd.Dto
                 ObjectsDto.Add(answerWithBackendDto);
             }
         }
-
-
 
         /// <summary>
         /// Добавить ошибку

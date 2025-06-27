@@ -7,9 +7,9 @@ namespace OrderService.BLL.Dto.Order
         public int UserId { get; set; }
         public int ProductId { get; set; }
         public int Count { get; set; }
-        public ShippingMethod ShippingMethod { get; set; }
-        public PaymentMethod PaymentMethod { get; set; }
+        public int ShippingMethod { get; set; }
+        public int PaymentMethod { get; set; }
         public string ArriveAddress { get; set; }
-        public OrderStatus OrderStatus { get; set; }
+        public int OrderStatus { get; set; }
     }
 }

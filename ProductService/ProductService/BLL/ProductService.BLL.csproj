@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Domain\Rabbit.Platform.csproj" />
-    <ProjectReference Include="..\..\SupperDto\SupperBackEndDto\SupperBackEnd.Dto.csproj" />
+    <ProjectReference Include="..\..\..\SupperBackEnd.Dto\SupperBackEnd.Dto.csproj" />
     <ProjectReference Include="..\DAL\ProductService.DAL.csproj" />
     <ProjectReference Include="..\Domain\ProductService.Domain.csproj" />
   </ItemGroup>

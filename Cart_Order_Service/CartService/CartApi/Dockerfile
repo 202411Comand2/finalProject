@@ -12,23 +12,23 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Cart_Order_Service/CartService/CartService.CartApi/CartService.CartApi.csproj", "Cart_Order_Service/CartService/CartService.CartApi/"]
+COPY ["Cart_Order_Service/CartService/CartApi/CartApi.csproj", "Cart_Order_Service/CartService/CartApi/"]
 COPY ["Cart_Order_Service/CartService/CartService.BLL/CartService.BLL.csproj", "Cart_Order_Service/CartService/CartService.BLL/"]
-COPY ["Cart_Order_Service/SupperBackEndDto/SupperBackEndDto.csproj", "Cart_Order_Service/SupperBackEndDto/"]
+COPY ["SupperBackEndDto/SupperBackEndDto.csproj", "SupperBackEndDto/"]
 COPY ["Cart_Order_Service/CartService/CartService.DAL/CartService.DAL.csproj", "Cart_Order_Service/CartService/CartService.DAL/"]
 COPY ["Cart_Order_Service/CartService/CartService.Domain/CartService.Domain.csproj", "Cart_Order_Service/CartService/CartService.Domain/"]
-RUN dotnet restore "./Cart_Order_Service/CartService/CartService.CartApi/CartService.CartApi.csproj"
+RUN dotnet restore "./Cart_Order_Service/CartService/CartApi/CartApi.csproj"
 COPY . .
-WORKDIR "/src/Cart_Order_Service/CartService/CartService.CartApi"
-RUN dotnet build "./CartService.CartApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Cart_Order_Service/CartService/CartApi"
+RUN dotnet build "./CartApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./CartService.CartApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./CartApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "CartService.CartApi.dll"]
+ENTRYPOINT ["dotnet", "CartApi.dll"]

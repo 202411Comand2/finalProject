@@ -39,13 +39,13 @@ namespace OrderService.Domain.Entities
         /// Способ доставки
         /// </summary>
         [Column("shipping_method")]
-        public ShippingMethod ShippingMethod { get; set; }
+        public int ShippingMethod { get; set; }
 
         /// <summary>
         /// Способ оплаты
         /// </summary>
         [Column("payment_method")]
-        public PaymentMethod PaymentMethod { get; set; }
+        public int PaymentMethod { get; set; }
 
         /// <summary>
         /// Адрес доставки
@@ -57,7 +57,7 @@ namespace OrderService.Domain.Entities
         /// Статус заказа
         /// </summary>
         [Column("OrderStatus")]
-        public OrderStatus OrderStatus { get; set; }
+        public int OrderStatus { get; set; }
 
         /// <summary>
         /// Дата установки статуса заказа

@@ -6,6 +6,6 @@ namespace OrderService.BLL.Dto.Order
     {
         public int IdOrder { get; set; }
 
-        public OrderStatus OrderStatus { get; set; }
+        public int OrderStatus { get; set; }
     }
 }

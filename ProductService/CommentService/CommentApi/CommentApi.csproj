@@ -31,7 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Domain\Rabbit.Platform.csproj" />
-    <ProjectReference Include="..\..\SupperDto\SupperBackEndDto\SupperBackEnd.Dto.csproj" />
     <ProjectReference Include="..\BLL\CommentService.BLL.csproj" />
     <ProjectReference Include="..\DAL\CommentServce.DAL.csproj" />
     <ProjectReference Include="..\Domain\CommentService.Domain.csproj" />

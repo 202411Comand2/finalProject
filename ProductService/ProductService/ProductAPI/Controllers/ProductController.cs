@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+using Platform.DAL.Validatoin;
 using ProductService.BLL;
 using SupperBackEnd.Dto;
-using SupperBackEnd.ServerResponseEND;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace API.Controllers.Product
 {
@@ -33,7 +29,7 @@ namespace API.Controllers.Product
         public async Task<IActionResult> Add([FromBody] AddProductDto product)
         {
             Console.WriteLine("Зашел в сервис добавление товара");
-            int idUser = ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+            int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
             switch (idUser)
             {
                 case -2: //токен просрочен
@@ -71,7 +67,7 @@ namespace API.Controllers.Product
         public async Task<ActionResult<int>> Update([FromBody] UpdateProductDto product)
         {
             Console.WriteLine("Зашел в сервис обновление товара");
-            int idUser = ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+            int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
             switch (idUser)
             {
                 case -2: //токен просрочен
@@ -103,7 +99,7 @@ namespace API.Controllers.Product
         public async Task<ActionResult<int>> Delete([FromBody] DeleteProductDto product)
         {
             Console.WriteLine("Зашел в сервис удаления товара");
-            int idUser = ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+            int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
             switch (idUser)
             {
                 case -2: //токен просрочен
@@ -209,70 +205,5 @@ namespace API.Controllers.Product
                 return Ok(new ApiResponse<ProductDto>(false, null, ex.Message));
             }
         }
-
-
-        /// <summary>
-        /// Проверка токена от frontEnd
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns>-1 означает, что валидация не была пройдена</returns>
-        private int ValidationToken(string authHeader)
-        {
-            try
-            {
-                // Получаем настройки JWT из конфигурации
-                var jwtSettings = _configuration.GetSection("JwtSettings");
-                var secretKey = jwtSettings["SecretKey"];
-
-                if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
-                {
-                    return -2;
-                }
-
-                var token = authHeader.Substring("Bearer ".Length).Trim();
-
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-
-                // Параметры валидации (должны совпадать с параметрами при генерации токена)
-                var validationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = jwtSettings["Issuer"],
-                    ValidateAudience = true,
-                    ValidAudience = jwtSettings["Audience"],
-                    ValidateLifetime = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
-                    ValidateIssuerSigningKey = true,
-
-                };
-
-                var handler = new JwtSecurityTokenHandler();
-                SecurityToken validatedToken;
-
-                try
-                {
-                    // Валидация токена
-                    var principal = handler.ValidateToken(token, validationParameters, out validatedToken);
-
-                    var userId = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-                    if (string.IsNullOrEmpty(userId))
-                    {
-                        return -3;
-                    }
-                    return Convert.ToInt32(userId);
-                }
-                catch
-                {
-
-                }
-            }
-            catch
-            {
-            }
-            return -1;
-        }
-
-
     }
 }

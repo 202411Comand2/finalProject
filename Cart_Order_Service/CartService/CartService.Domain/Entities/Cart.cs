@@ -17,12 +17,6 @@ namespace CartService.Domain.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        /*/// <summary>
-        /// Id позиции товара
-        /// </summary>
-        [Required, Column("product_id")]
-        public int ProductId { get; set; }*/
-
         /// <summary>
         /// Количество товара
         /// </summary>
