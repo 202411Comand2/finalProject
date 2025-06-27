@@ -1,0 +1,209 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/auth/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7085
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/auth/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "UpstreamHttpMethod": [ "POST", "GET" ]
+    },
+    //Product
+    {
+      "DownstreamPathTemplate": "/api/Product/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7186
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Product/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "UpstreamHttpMethod": [ "GET" ]
+      // ssl проверка, отключена, иначе ошибки
+    },
+    // product auth
+    {
+      "DownstreamPathTemplate": "/api/Product/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7186
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Product/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "UpstreamHttpMethod": [ "POST", "PUT", "DELETE" ],
+      // ssl проверка, отключена, иначе ошибки
+      "AuthenticationOptions": { //аутефикация
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+
+    //Shop
+    {
+      "DownstreamPathTemplate": "/api/Shop/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7171
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Shop/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    //Shop auth
+    {
+      "DownstreamPathTemplate": "/api/Shop/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7171
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Shop/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "POST", "PUT", "DELETE" ],
+      "AuthenticationOptions": { //аутефикация
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+
+    //Favorite
+    {
+      "DownstreamPathTemplate": "/api/Favorite/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7052
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Favorite/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    },
+
+
+    //cluster
+    {
+      "DownstreamPathTemplate": "/api/Cluster/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7222
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Cluster/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    },
+    //SearchCluster
+    {
+      "DownstreamPathTemplate": "/api/SearchCluster/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7222
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/SearchCluster/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    },
+
+    // comment
+    {
+      "DownstreamPathTemplate": "/api/Comment/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Comment/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    },
+    // CommentReply
+    {
+      "DownstreamPathTemplate": "/api/CommentReply/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/CommentReply/{everything}", // http://localhost:5010/gateway/shop/1
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ], // http://localhost:5010/gateway/Product/GetAll подумать над разделением
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    },
+    // Owner
+    {
+      "DownstreamPathTemplate": "/api/Owner/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7237
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Owner/{everything}", 
+      "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ], 
+      "AuthenticationOptions": { //аутефикация
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
+    }
+
+
+
+
+
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://your-gateway-domain.com",
+    "CorsPolicy": {
+      "AllowedOrigins": [ "https://your-frontend.com", "http://localhost:3000" ],
+      "AllowedMethods": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
+      "AllowedHeaders": [ "Authorization", "Content-Type", "X-Requested-With" ],
+      "AllowCredentials": true,
+      "ExposedHeaders": [ "X-Custom-Header" ]
+    }
+  }
+}

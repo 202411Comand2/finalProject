@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "productapi": "StartDebugging",
+        "shopapi": "StartDebugging",
+        "favoriteapi": "StartDebugging",
+        "commentapi": "StartDebugging",
+        "clusterapi": "StartDebugging",
+        "ocelotwebapigr": "StartDebugging",
+        "authapi": "StartDebugging"
+      }
+    }
+  }
+}

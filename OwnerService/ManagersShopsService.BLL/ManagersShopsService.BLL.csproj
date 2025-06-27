@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ProductService\SupperDto\SupperBackEndDto\SupperBackEnd.Dto.csproj" />
+    <ProjectReference Include="..\ManagersShopsService.DAL\ManagersShopsService.DAL.csproj" />
+    <ProjectReference Include="..\OwnerService\ManagersShopsService.Domain.csproj" />
+  </ItemGroup>
+
+  
+
+</Project>

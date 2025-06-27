@@ -1,0 +1,35 @@
+# См. статью по ссылке https://aka.ms/customizecontainer, чтобы узнать как настроить контейнер отладки и как Visual Studio использует этот Dockerfile для создания образов для ускорения отладки.
+
+# Этот этап используется при запуске из VS в быстром режиме (по умолчанию для конфигурации отладки)
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER $APP_UID
+WORKDIR /app
+EXPOSE 8080
+EXPOSE 8081
+
+
+# Этот этап используется для сборки проекта службы
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
+COPY ["ProductService/CommentService/CommentApi/CommentApi.csproj", "ProductService/CommentService/CommentApi/"]
+COPY ["ProductService/SupperDto/SupperBackEndDto/SupperBackEnd.Dto.csproj", "ProductService/SupperDto/SupperBackEndDto/"]
+COPY ["ProductService/CommentService/BLL/CommentService.BLL.csproj", "ProductService/CommentService/BLL/"]
+COPY ["ProductService/CommentService/DAL/CommentServce.DAL.csproj", "ProductService/CommentService/DAL/"]
+COPY ["DAL/Platform.DAL.csproj", "DAL/"]
+COPY ["ProductService/CommentService/Domain/CommentService.Domain.csproj", "ProductService/CommentService/Domain/"]
+RUN dotnet restore "./ProductService/CommentService/CommentApi/CommentApi.csproj"
+COPY . .
+WORKDIR "/src/ProductService/CommentService/CommentApi"
+RUN dotnet build "./CommentApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
+# Этот этап используется для публикации проекта службы, который будет скопирован на последний этап
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./CommentApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+# Этот этап используется в рабочей среде или при запуске из VS в обычном режиме (по умолчанию, когда конфигурация отладки не используется)
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "CommentApi.dll"]
