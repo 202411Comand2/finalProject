@@ -19,7 +19,7 @@ namespace CartService.BLL.Abstractions
         /// <summary>
         /// Получить корзину пользователя
         /// </summary>
-        public Task<AnswerWithBackendDto<CartDto>> GetCartUserAsync(GetCartDto dto, CancellationToken token = default);
+        public Task<AnswerWithBackendDto<CartDto>> GetCartUserAsync(int idUser); //, CancellationToken token = default);
 
         /// <summary>
         /// Обновить товар в корзине

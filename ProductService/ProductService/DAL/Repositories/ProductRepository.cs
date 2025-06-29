@@ -70,5 +70,20 @@ namespace ProductService.DAL
             }
         }
 
+        /// <summary>
+        /// Получить продукт со связими (many to many)
+        /// </summary>
+        public async Task<List<Product>> GetProductsByListProducts(int idProducts)
+        {
+            using (var context = CreateDatabaseContext())
+            {
+                return await context.Products
+                    .Include(cl => cl.ClusterId)
+                    .Include(sh => sh.ShopId)
+                    .Where(p => p.Id == idProducts)
+                    .ToListAsync();
+            }
+        }
+
     }
 }

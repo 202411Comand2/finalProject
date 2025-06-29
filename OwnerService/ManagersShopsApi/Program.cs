@@ -23,6 +23,7 @@ namespace ManagersShopsApi
             services.AddSingleton<IAppSettings, AppSettings>();
             services.AddSingleton<ISecretsSettings, SecretsSettings>();
             services.AddTransient<IManagersShopsMainService, ManagersShopsMainService>();
+
             // Аутентификация
             // Настройка JWT аутентификации
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");

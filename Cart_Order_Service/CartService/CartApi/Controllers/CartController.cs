@@ -9,7 +9,7 @@ using SupperBackEnd.Dto;
 namespace CartApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/Cart")]
     public class CartController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -25,8 +25,8 @@ namespace CartApi.Controllers
         /// Добавить товар в корзину
         /// </summary>
         [Authorize]
-        [HttpPost("AddProduct")]
-        public async Task<IActionResult> AddProduct([FromBody] AddCartDto dto, CancellationToken cancellationToken)
+        [HttpPost("AddCartProduct")]
+        public async Task<IActionResult> AddCartProduct([FromBody] AddCartDto dto, CancellationToken cancellationToken)
         {
             try
             {
@@ -128,7 +128,7 @@ namespace CartApi.Controllers
         /// </summary>
         [Authorize]
         [HttpGet("GetCartUser")]
-        public async Task<ActionResult> GetCartUser([FromBody] GetCartDto dto, CancellationToken cancellationToken)
+        public async Task<ActionResult> GetCartUser()//([FromBody] GetCartDto dto)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace CartApi.Controllers
                             return Unauthorized("Invalid token claims");
                         default:
                             Console.WriteLine("Возращаю список менеджеров");
-                            var userInfo = await _cartService.GetCartUserAsync(dto, cancellationToken);
+                            var userInfo = await _cartService.GetCartUserAsync(idUser);
                             if (userInfo.DataReceived == true)
                             {
                                 return Ok(userInfo.GetCollectionNotProblem());

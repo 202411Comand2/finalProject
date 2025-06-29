@@ -82,7 +82,7 @@ namespace CartService.BLL
         /// <summary>
         /// Получить корзину пользователя
         /// </summary>
-        public async Task<AnswerWithBackendDto<CartDto>> GetCartUserAsync(GetCartDto dto, CancellationToken cancellationToken)
+        public async Task<AnswerWithBackendDto<CartDto>> GetCartUserAsync(int idUser) //, CancellationToken cancellationToken)
         {
             return await Task.Run(async () =>
             {
@@ -90,8 +90,8 @@ namespace CartService.BLL
                 {
                     AnswerWithBackendDto<CartDto> answerWithBackendDto = new();
 
-                    var items = Adapters.CartAdapter.ConvertFromEntityToCartDto(
-                        await _cartRepository.GetListProducts(dto.IdUser));
+                    var items = CartAdapter.ConvertFromEntityToCartDto(
+                        await _cartRepository.GetListProducts(idUser));
 
                     if (items.Count == 0)
                     {
@@ -99,7 +99,7 @@ namespace CartService.BLL
                         return answerWithBackendDto;
                     }
 
-                    cancellationToken.ThrowIfCancellationRequested();
+                    //cancellationToken.ThrowIfCancellationRequested();
 
                     answerWithBackendDto.AddObject(items);
 
@@ -109,8 +109,8 @@ namespace CartService.BLL
                 {
                     throw;
                 }
-            },
-            cancellationToken);
+            }//, cancellationToken
+            );
         }
 
         /// <summary>

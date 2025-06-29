@@ -233,5 +233,23 @@ namespace ProductService.BLL
             answerWithBackendDto.AddObject(ProductAdapter.ConvertToDTOProduct(items));
             return answerWithBackendDto;
         }
+
+        
+        public async Task<AnswerWithBackendDto<ProductDto>> GetProductByListId(int idProducts)
+        {
+            AnswerWithBackendDto<ProductDto> answerWithBackendDto = new();
+            //List<int> ids = idProducts.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+            var items = await _productRepository.GetProductsByListProducts(idProducts);
+            if (items == null)
+            {
+                answerWithBackendDto.AddErrorLog("Произошла ошибка при обращении к бд.");
+            }
+            if (items?.Count == 0)
+            {
+                answerWithBackendDto.AddErrorLog($"Данные отсутствуют.");
+            }
+            answerWithBackendDto.AddObject(ProductAdapter.ConvertToDTOProduct(items));
+            return answerWithBackendDto;
+        }
     }
 }

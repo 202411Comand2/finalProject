@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using Platform.DAL.Validatoin;
 using ProductService.BLL;
 using SupperBackEnd.Dto;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-
+using System.Web.Http;
+using AuthorizeAttribute = Microsoft.AspNetCore.Authorization.AuthorizeAttribute;
+using FromBodyAttribute = Microsoft.AspNetCore.Mvc.FromBodyAttribute;
+using HttpDeleteAttribute = Microsoft.AspNetCore.Mvc.HttpDeleteAttribute;
+using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
+using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
+using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
+using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace API.Controllers.Product
 {
@@ -99,6 +102,7 @@ namespace API.Controllers.Product
                     return Ok(result.DataReceived);
             }
         }
+       
         [Authorize]
         [HttpDelete("Delete")]
         public async Task<ActionResult<int>> Delete([FromBody] DeleteProductDto product)
@@ -211,69 +215,24 @@ namespace API.Controllers.Product
             }
         }
 
-
-        /// <summary>
-        /// Проверка токена от frontEnd
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns>-1 означает, что валидация не была пройдена</returns>
-        private int ValidationToken(string authHeader)
+        [HttpGet("GetProductsByIds")]
+        public async Task<ActionResult<string>> GetProductsByIds([FromUri] int productIds)
         {
+            AnswerWithBackendDto<ProductDto> result = new();
             try
             {
-                // Получаем настройки JWT из конфигурации
-                var jwtSettings = _configuration.GetSection("JwtSettings");
-                var secretKey = jwtSettings["SecretKey"];
-
-                if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
-                {
-                    return -2;
-                }
-
-                var token = authHeader.Substring("Bearer ".Length).Trim();
-
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-
-                // Параметры валидации (должны совпадать с параметрами при генерации токена)
-                var validationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = jwtSettings["Issuer"],
-                    ValidateAudience = true,
-                    ValidAudience = jwtSettings["Audience"],
-                    ValidateLifetime = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
-                    ValidateIssuerSigningKey = true,
-
-                };
-
-                var handler = new JwtSecurityTokenHandler();
-                SecurityToken validatedToken;
-
-                try
-                {
-                    // Валидация токена
-                    var principal = handler.ValidateToken(token, validationParameters, out validatedToken);
-
-                    var userId = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-                    if (string.IsNullOrEmpty(userId))
-                    {
-                        return -3;
-                    }
-                    return Convert.ToInt32(userId);
-                }
-                catch
-                {
-
-                }
+                result = await _productService.GetProductByListId(productIds);
             }
-            catch
+            catch (Exception ex)
             {
+                return BadRequest(ex.Message);
             }
-            return -1;
+            if (!result.DataReceived)
+            {
+                return BadRequest(result.ErrorLog);
+            }
+            return result.GetCollectionNotProblem();
         }
-
-
+        
     }
 }

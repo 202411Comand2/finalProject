@@ -202,7 +202,7 @@
       ],
       "UpstreamPathTemplate": "/gateway/Cart/{everything}",
       "DangerousAcceptAnyServerCertificateValidator": true, // ssl проверка, отключена, иначе ошибки
-      "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ],
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
       "AuthenticationOptions": { //аутефикация
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
@@ -213,7 +213,7 @@
     },
     // Order
     {
-      "DownstreamPathTemplate": "/api/Order/{everything}",
+      "DownstreamPathTemplate": "/gateway/Order/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -232,11 +232,6 @@
         "TtlSeconds": 60
       }
     }
-
-
-
-
-
 
   ],
   "GlobalConfiguration": {
