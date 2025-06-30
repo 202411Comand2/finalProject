@@ -20,8 +20,7 @@ namespace ProductAPI
             // Конфигурация
             builder.Configuration
                 .AddJsonFile("Properties/secretsSettings.json")
-                //.AddJsonFile("Properties/rabbitSettings.json")
-                ;
+                .AddJsonFile("Properties/rabbitSettings.json");
 
             builder.Services.Configure<RedisOptions>(configuration.GetSection(nameof(RedisOptions)));
             // Сервисы
@@ -30,11 +29,10 @@ namespace ProductAPI
                 .AddSingleton<IAppSettings, AppSettings>()
                 .AddSingleton<ISecretsSettings, SecretsSettings>()
                 .AddTransient<IProductMainService, ProductMainService>()
-                //.AddSingleton<IRabbitSettings, RabbitSettings>()
-                //.AddSingleton<IRabbitMQService, RabbitMQService>()
-                //.AddSingleton<IMessageConsumer, MessageConsumer>()
-                //.AddHostedService<ShopToProductMessagesConsumer>()
-                ;
+                .AddSingleton<IRabbitSettings, RabbitSettings>()
+                .AddSingleton<IRabbitMQService, RabbitMQService>()
+                .AddSingleton<IMessageConsumer, MessageConsumer>()
+                .AddHostedService<ShopToProductMessagesConsumer>();
 
             // Аутентификация
             // Настройка JWT аутентификации

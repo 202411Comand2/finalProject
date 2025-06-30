@@ -214,25 +214,5 @@ namespace API.Controllers.Product
                 return Ok(new ApiResponse<ProductDto>(false, null, ex.Message));
             }
         }
-
-        [HttpGet("GetProductsByIds")]
-        public async Task<ActionResult<string>> GetProductsByIds([FromUri] int productIds)
-        {
-            AnswerWithBackendDto<ProductDto> result = new();
-            try
-            {
-                result = await _productService.GetProductByListId(productIds);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            if (!result.DataReceived)
-            {
-                return BadRequest(result.ErrorLog);
-            }
-            return result.GetCollectionNotProblem();
-        }
-        
     }
 }

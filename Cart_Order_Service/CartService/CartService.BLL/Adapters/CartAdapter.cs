@@ -14,7 +14,7 @@ namespace CartService.BLL.Adapters
         {
             return new UpdateCartDto
             {
-                IdCart = cart.Id,
+                Id = cart.Id,
                 Count = cart.Count,
             };
         }
@@ -34,6 +34,7 @@ namespace CartService.BLL.Adapters
                     Id = Cart.Id,
                     ProductId = Cart.ProductId,
                     UserId = Cart.UserId,
+                    Count = Cart.Count,
                 });
             }
             return shopDtos;
@@ -58,16 +59,16 @@ namespace CartService.BLL.Adapters
         /// <summary>
         /// Преобразовать из Entitie в Dto
         /// </summary>
-        public static AddCartDto ConvertFromEntitieToDTO(Cart dto)
+        public static CartDto ConvertFromEntitieToDTO(Cart dto)
         {
-            return new AddCartDto()
+            return new CartDto()
             {
                 UserId = dto.UserId,
                 Count = dto.Count,
                 ProductId = dto.ProductId,
-                Price = dto.Price,
+                /*Price = dto.Price,
                 Discount = dto.Discount,
-                DateCreated = dto.DateCreated,
+                DateCreated = dto.DateCreated,*/
             };
         }
     }

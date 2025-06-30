@@ -16,13 +16,13 @@ namespace CartService.BLL
         /// <summary>
         /// Добавление продукта в корзину
         /// </summary>
-        public async Task<AnswerWithBackendDto<AddCartDto>> AddCartProductAsync(AddCartDto dto, CancellationToken cancellationToken)
+        public async Task<AnswerWithBackendDto<CartDto>> AddCartProductAsync(AddCartDto dto)//, CancellationToken cancellationToken)
         { 
             return await Task.Run(async () =>
             {
                try
                 {
-                    AnswerWithBackendDto<AddCartDto> answerWithBackendDto = new();
+                    AnswerWithBackendDto<CartDto> answerWithBackendDto = new();
                     var modelEntites = await _cartRepository.Add(CartAdapter.ConvertFromDTOToEntity(dto));
                     if (modelEntites is null)
                     {
@@ -40,14 +40,15 @@ namespace CartService.BLL
                 {
                     throw;
                 }
-            },
-            cancellationToken);
+            }
+            //, cancellationToken            
+            );
         }
 
         /// <summary>
         /// Удаление продукта из корзины
         /// </summary>
-        public async Task<AnswerWithBackendDto<CartDto>> DeleteProductAsync(DeleteCartDto dto, CancellationToken cancellationToken)
+        public async Task<AnswerWithBackendDto<CartDto>> DeleteProductAsync(DeleteCartDto dto)//, CancellationToken cancellationToken)
         {
             return await Task.Run(async () => 
             {
@@ -55,7 +56,7 @@ namespace CartService.BLL
                 { 
                     AnswerWithBackendDto<CartDto> answerWithBackendDto = new();
 
-                    Cart product = await _cartRepository.GetProductInCart(dto.IdCart);
+                    Cart product = await _cartRepository.GetProductInCart(dto.Id);
 
                     if (product is null)
                     {
@@ -63,7 +64,7 @@ namespace CartService.BLL
                         return answerWithBackendDto;
                     }
 
-                    cancellationToken.ThrowIfCancellationRequested();
+                    //cancellationToken.ThrowIfCancellationRequested();
 
                     await _cartRepository.Delete(product);
                     answerWithBackendDto.DataReceived = true;
@@ -75,8 +76,9 @@ namespace CartService.BLL
                 {
                     throw;
                 }
-            },
-            cancellationToken);
+            }
+            //, cancellationToken
+            );
         }
 
         /// <summary>
@@ -116,7 +118,7 @@ namespace CartService.BLL
         /// <summary>
         /// Обновить продукт в корзине
         /// </summary>
-        public async Task<AnswerWithBackendDto<UpdateCartDto>> UpdateProductAsync(UpdateCartDto dto, CancellationToken cancellationToken)
+        public async Task<AnswerWithBackendDto<UpdateCartDto>> UpdateProductAsync(UpdateCartDto dto) //, CancellationToken cancellationToken)
         {
             return await Task.Run(async () =>
             {
@@ -124,7 +126,7 @@ namespace CartService.BLL
                 {
                     AnswerWithBackendDto<UpdateCartDto> answerWithBackendDto = new();
 
-                    Cart product = await _cartRepository.GetProductInCart(dto.IdCart);
+                    Cart product = await _cartRepository.GetProductInCart(dto.Id);
 
                     if (product is null)
                     {
@@ -132,13 +134,13 @@ namespace CartService.BLL
                         return answerWithBackendDto;
                     }
 
-                    cancellationToken.ThrowIfCancellationRequested();
+                    //cancellationToken.ThrowIfCancellationRequested();
 
                     await _cartRepository.Delete(product);
 
-                    cancellationToken.ThrowIfCancellationRequested();
+                    //cancellationToken.ThrowIfCancellationRequested();
 
-                    product!.Count += dto.Count;
+                    product!.Count = dto.Count;
 
                     answerWithBackendDto.AddObject(CartAdapter.ConvertFromEntityToCartDto(await _cartRepository.Add(product)));
 
@@ -148,8 +150,9 @@ namespace CartService.BLL
                 {
                     throw;
                 }
-            },
-            cancellationToken);
+            }
+            //, cancellationToken
+            );
         }
     }
 }

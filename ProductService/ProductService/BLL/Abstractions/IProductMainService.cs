@@ -65,10 +65,5 @@ namespace ProductService.BLL
         /// <param name="id"></param>
         /// <returns></returns>
         public Task<AnswerWithBackendDto<ProductDto>> GetProductById(int id);
-
-        /// <summary>
-        /// Получить информацию о продуктах по id продуктов
-        /// </summary>
-        public Task<AnswerWithBackendDto<ProductDto>> GetProductByListId(int id);
     }
 }
