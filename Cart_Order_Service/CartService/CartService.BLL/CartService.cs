@@ -80,6 +80,46 @@ namespace CartService.BLL
             //, cancellationToken
             );
         }
+        
+        /// <summary>
+        /// Удаление корзины
+        /// </summary>
+        public async Task<AnswerWithBackendDto<CartDto>> DeleteAllProductAsync(DeleteCartDto dto)//, CancellationToken cancellationToken)
+        {
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    AnswerWithBackendDto<CartDto> answerWithBackendDto = new();
+
+                    List<Cart> products = await _cartRepository.GetListProducts(dto.Id);
+
+                    if (products is null || products.Count == 0)
+                    {
+                        answerWithBackendDto.AddErrorLog("Ошибка. Не найдена данная позиция");
+                        return answerWithBackendDto;
+                    }
+
+                    foreach (var product in products)
+                    {
+                        //cancellationToken.ThrowIfCancellationRequested();
+
+                        await _cartRepository.Delete(product);
+                    }
+
+                    answerWithBackendDto.DataReceived = true;
+                    answerWithBackendDto.ObjectDto = null;
+
+                    return answerWithBackendDto;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
+            //, cancellationToken
+            );
+        }
 
         /// <summary>
         /// Получить корзину пользователя

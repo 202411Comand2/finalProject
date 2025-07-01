@@ -42,7 +42,8 @@ namespace OrderService.DAL.Repositories
         {
             using (var context = CreateDatabaseContext())
             {
-                return await context.Orders.Where(p => p.UserId == userId).ToListAsync();
+                var t = await context.Orders.Where(p => p.UserId == userId).ToListAsync();
+                return t;
             }
         }
 

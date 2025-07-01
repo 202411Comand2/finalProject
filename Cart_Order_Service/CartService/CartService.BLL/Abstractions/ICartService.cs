@@ -15,6 +15,11 @@ namespace CartService.BLL.Abstractions
         /// Удалить товар из корзины
         /// </summary>
         public Task<AnswerWithBackendDto<CartDto>> DeleteProductAsync(DeleteCartDto dto);//, CancellationToken token = default);
+        
+        /// <summary>
+        /// Удалить корзину
+        /// </summary>
+        public Task<AnswerWithBackendDto<CartDto>> DeleteAllProductAsync(DeleteCartDto dto);//, CancellationToken token = default);
 
         /// <summary>
         /// Получить корзину пользователя

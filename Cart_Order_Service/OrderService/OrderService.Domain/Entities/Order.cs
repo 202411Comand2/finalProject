@@ -14,14 +14,8 @@ namespace OrderService.Domain.Entities
         /// <summary>
         /// Id заказа
         /// </summary>
-        [Key, Column("id"), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
-        /*/// <summary>
-        /// Id позиции магазина
-        /// </summary>
-        [Required, Column("shop_id")]
-        public int ShopId { get; set; }*/
 
         /// <summary>
         /// Дата создания заказа

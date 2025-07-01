@@ -124,13 +124,57 @@ namespace CartApi.Controllers
                 return StatusCode(500, new ApiResponse<DeleteCartDto>(false, null, ex.Message));
             }
         }
+        
+        /// <summary>
+        /// Удалить товар из корзины
+        /// </summary>
+        [Authorize]
+        [HttpDelete("DeleteAllProduct")]
+        public async Task<IActionResult> DeleteAllProduct([FromBody] DeleteCartDto dto)//, CancellationToken cancellationToken)
+        {
+            try
+            {
+                // Получаем токен из заголовка
+                int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+
+                try
+                {
+                    switch (idUser)
+                    {
+                        case -2: //токен просрочен
+                            return Unauthorized(new ApiResponse<DeleteCartDto>(false, null, "Token is missing"));
+                        case -3:
+                            return Unauthorized(new ApiResponse<DeleteCartDto>(false, null, "Invalid token claims"));
+                        default:
+                            var result = await _cartService.DeleteAllProductAsync(dto);//, cancellationToken);
+
+                            if (result.DataReceived == true)
+                            {
+                                return Ok();
+                            }
+                            else
+                            {
+                                return BadRequest(result.ErrorLog);
+                            }
+                    }
+                }
+                catch (SecurityTokenException ex)
+                {
+                    return Unauthorized(new ApiResponse<DeleteCartDto>(false, null, $"Invalid token: {ex.Message}"));
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<DeleteCartDto>(false, null, ex.Message));
+            }
+        }
 
         /// <summary>
         /// Получить корзину пользователя
         /// </summary>
         [Authorize]
         [HttpGet("GetCartUser")]
-        public async Task<ActionResult> GetCartUser()
+        public async Task<ActionResult> GetCartUser() //CancellationToken cancellationToken)
         {
             try
             {

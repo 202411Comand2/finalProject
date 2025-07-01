@@ -27,7 +27,7 @@ namespace CartService.BLL.Adapters
         public static List<CartDto> ConvertFromEntityToCartDto(List<Cart> carts)
         {
             List<CartDto> shopDtos = new List<CartDto>();
-            foreach (Cart Cart in carts)
+            foreach (var Cart in carts)
             {
                 shopDtos.Add(new CartDto
                 {
