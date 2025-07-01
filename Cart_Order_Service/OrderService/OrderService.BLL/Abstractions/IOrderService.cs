@@ -1,4 +1,5 @@
 ﻿using OrderService.BLL.Dto.Order;
+using OrderService.Domain.Entities;
 using SupperBackEnd.Dto;
 
 namespace OrderService.BLL.Abstractions

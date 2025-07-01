@@ -37,7 +37,7 @@ namespace OrderService.DAL.Repositories
             {
                 using (var context = CreateDatabaseContext())
                 {
-                    var orderDetails = await context.OrderDetails.Where(x => x.Id == orderId).ToListAsync();
+                    //var orderDetails = await context.OrderDetails.Where(x => x.Id == orderId).ToListAsync();
 
                     //await context.OrderDetails.Remove(orderDetails);
                     await context.SaveChangesAsync();
@@ -57,7 +57,8 @@ namespace OrderService.DAL.Repositories
         {
             using (var context = CreateDatabaseContext())
             {
-                return await context.OrderDetails.Where(p => p.OrderId == orderId).ToListAsync();
+                //return await context.OrderDetails.Where(p => p.OrderId == orderId).ToListAsync();
+                return null;
             }
         }
 
@@ -70,12 +71,12 @@ namespace OrderService.DAL.Repositories
             {
                 using (var context = CreateDatabaseContext())
                 {
-                    OrderDetail orderDetail = await context.OrderDetails.FirstAsync(x => x.Id == id);
+                    /*OrderDetail orderDetail = await context.OrderDetails.FirstAsync(x => x.Id == id);
                     orderDetail!.StatusPosition = statusPosition;
                     await context.OrderDetails.AddAsync(orderDetail);
-                    await context.SaveChangesAsync();
+                    await context.SaveChangesAsync();*/
 
-                    return orderDetail;
+                    return null; // orderDetail;
                 }
             }
             catch (Exception)

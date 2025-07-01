@@ -11,12 +11,19 @@ namespace OrderService.BLL.Adapters
         public static List<OrderDto> ConvertFromEntitieToDTO(List<Order> items)
         {
             List<OrderDto> orderDto = new();
-            foreach (Order entitie in items)
+            foreach (var entitie in items)
             {
                 orderDto.Add(new OrderDto()
                 {
                     Id = entitie.Id,
                     UserId = entitie.UserId,
+                    DateCreated = entitie.DateCreated,
+                    ArriveDate = entitie.ArriveDate,
+                    ShippingMethod = entitie.ShippingMethod,
+                    PaymentMethod = entitie.PaymentMethod,
+                    ArriveAddress = entitie.ArriveAddress,
+                    OrderStatus = entitie.OrderStatus,
+                    DateOrderStatus = entitie.DateOrderStatus,
                 });
             }
             return orderDto;

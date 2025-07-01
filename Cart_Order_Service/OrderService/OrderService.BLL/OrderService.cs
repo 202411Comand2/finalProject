@@ -5,19 +5,16 @@ using OrderService.DAL.Abstractions;
 using OrderService.DAL.Repositories;
 using OrderService.Domain.Entities;
 using Rabbit.Platform;
-
-//using Rabbit.Platform;
 using SupperBackEnd.Dto;
 
 namespace OrderService.BLL
 {
-    public class OrderService(IContextManager contextManager//,
-        //IMessagePublisher messagePublisher
+    public class OrderService(IContextManager contextManager,
+        IMessagePublisher messagePublisher
         ) : IOrderService
     {
         private readonly OrderRepository _orderRepository = new OrderRepository(contextManager);
-        //private readonly IMessagePublisher _messagePublisher = messagePublisher;
-
+        private readonly IMessagePublisher _messagePublisher = messagePublisher;
 
         public async Task<AnswerWithBackendDto<AddOrderDto>> AddOrder(AddOrderDto dto, CancellationToken cancellationToken)
         {
@@ -68,7 +65,7 @@ namespace OrderService.BLL
                 {
                     throw;
                 }
-            });
+            }, cancellationToken);
         }
 
         /// <summary>
@@ -108,7 +105,7 @@ namespace OrderService.BLL
                 {
                     throw;
                 }
-            });
+            }, cancellationToken);
         }
 
         /// <summary>
@@ -141,7 +138,7 @@ namespace OrderService.BLL
                 {
                     throw;
                 }
-            });
+            }, cancellationToken);
         }
 
         /// <summary>
@@ -174,7 +171,7 @@ namespace OrderService.BLL
                 {
                     throw;
                 }
-            });
+            }, cancellationToken);
         }
 
         /// <summary>
@@ -215,9 +212,9 @@ namespace OrderService.BLL
         /// <summary>
         /// Отправка сообщения в RabbitMQ о том, что статус был изменен
         /// </summary>
-        /*private async void SendMessageToRabbitAsync(int shopId, string routingKey)
+        private async void SendMessageToRabbitAsync(int shopId, string routingKey)
         {
             await _messagePublisher.SendMessageAsync<ShopChangeMessage>(new ShopChangeMessage(shopId), routingKey, "shop.exchange");
-        }*/
+        }
     }
 }

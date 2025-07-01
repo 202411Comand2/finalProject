@@ -1,6 +1,4 @@
-﻿using OrderService.Domain.Enums;
-
-namespace OrderService.BLL.Dto.Order
+﻿namespace OrderService.BLL.Dto.Order
 {
     public class UpdateOrderDto
     {

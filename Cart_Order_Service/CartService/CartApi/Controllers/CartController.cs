@@ -26,39 +26,28 @@ namespace CartApi.Controllers
         /// </summary>
         //[Authorize]
         [HttpPost("AddCartProduct")]
-        public async Task<IActionResult> AddCartProduct([FromQuery] int productId) //, CancellationToken cancellationToken)
-        //public async Task<IActionResult> AddCartProduct([FromBody] AddCartDto dto, CancellationToken cancellationToken)
+         public async Task<IActionResult> AddCartProduct([FromBody] AddCartDto dto, CancellationToken cancellationToken)
         {
             try
             {
                 // Получаем токен из заголовка
-                /*int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+                int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
                 
                 if (idUser > 0)
                 {
                     dto.UserId = idUser;
-                }*/
+                }
 
                 try
                 {
-                    //switch (idUser)
+                    switch (idUser)
                     {
-                        /*case -2: //токен просрочен
+                        case -2: //токен просрочен
                             return Unauthorized(new ApiResponse<AddCartDto>(false, null, "Token is missing"));
                         case -3:
                             return Unauthorized(new ApiResponse<AddCartDto>(false, null, "Invalid token claims"));
-                        default:*/
-                            var dto = new AddCartDto()
-                            {
-                                UserId = 1,
-                                ProductId = productId,
-                                Price = 0,
-                                Discount = 0,
-                                Count = 1,
-                                DateCreated = DateTime.Now,
-                            };
-                            dto.UserId = 1;
-                            var userInfo = await _cartService.AddCartProductAsync(dto); //, cancellationToken);
+                        default:
+                            var userInfo = await _cartService.AddCartProductAsync(dto, cancellationToken);
                            
                             if (userInfo.DataReceived == true)
                             {
@@ -86,7 +75,7 @@ namespace CartApi.Controllers
         /// </summary>
         [Authorize]
         [HttpDelete("DeleteProduct")]
-        public async Task<IActionResult> DeleteProduct([FromBody] DeleteCartDto dto)//, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteProduct([FromBody] DeleteCartDto dto, CancellationToken cancellationToken)
         {
             try
             {
@@ -102,7 +91,51 @@ namespace CartApi.Controllers
                         case -3:
                             return Unauthorized(new ApiResponse<DeleteCartDto>(false, null, "Invalid token claims"));
                         default:
-                            var result = await _cartService.DeleteProductAsync(dto);//, cancellationToken);
+                            var result = await _cartService.DeleteProductAsync(dto, cancellationToken);
+
+                            if (result.DataReceived == true)
+                            {
+                                return Ok();
+                            }
+                            else
+                            {
+                                return BadRequest(result.ErrorLog);
+                            }
+                    }
+                }
+                catch (SecurityTokenException ex)
+                {
+                    return Unauthorized(new ApiResponse<DeleteCartDto>(false, null, $"Invalid token: {ex.Message}"));
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<DeleteCartDto>(false, null, ex.Message));
+            }
+        }
+        
+        /// <summary>
+        /// Удалить товар из корзины
+        /// </summary>
+        [Authorize]
+        [HttpDelete("DeleteAllProduct")]
+        public async Task<IActionResult> DeleteAllProduct([FromBody] DeleteCartDto dto, CancellationToken cancellationToken)
+        {
+            try
+            {
+                // Получаем токен из заголовка
+                int idUser = new Validation(_configuration).ValidationToken(Request.Headers["Authorization"].FirstOrDefault());
+
+                try
+                {
+                    switch (idUser)
+                    {
+                        case -2: //токен просрочен
+                            return Unauthorized(new ApiResponse<DeleteCartDto>(false, null, "Token is missing"));
+                        case -3:
+                            return Unauthorized(new ApiResponse<DeleteCartDto>(false, null, "Invalid token claims"));
+                        default:
+                            var result = await _cartService.DeleteAllProductAsync(dto, cancellationToken);
 
                             if (result.DataReceived == true)
                             {
@@ -130,7 +163,7 @@ namespace CartApi.Controllers
         /// </summary>
         [Authorize]
         [HttpGet("GetCartUser")]
-        public async Task<ActionResult> GetCartUser()
+        public async Task<ActionResult> GetCartUser(CancellationToken cancellationToken)
         {
             try
             {
@@ -172,7 +205,7 @@ namespace CartApi.Controllers
         /// </summary>
         [Authorize]
         [HttpPut("UpdateProduct")]
-        public async Task<IActionResult> UpdateProduct([FromBody] UpdateCartDto dto) //, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdateCartDto dto, CancellationToken cancellationToken)
         {
             try
             {
@@ -188,7 +221,7 @@ namespace CartApi.Controllers
                         case -3:
                             return Unauthorized(new ApiResponse<UpdateCartDto>(false, null, "Invalid token claims"));
                         default:
-                            var result = await _cartService.UpdateProductAsync(dto); //, cancellationToken);
+                            var result = await _cartService.UpdateProductAsync(dto, cancellationToken);
                             if (result.DataReceived == true)
                             {
                                 return Ok(new ApiResponse<UpdateCartDto>(true, result.ObjectDto, null));
