@@ -26,7 +26,7 @@ namespace OrderApi.Controllers
         /// </summary>
         [Authorize]
         [HttpPost("AddOrder")]
-        public async Task<IActionResult> AddOrder([FromBody] AddOrderDto dto) //, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddOrder([FromBody] AddOrderDto dto, CancellationToken cancellationToken)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace OrderApi.Controllers
                             return Unauthorized(new ApiResponse<AddOrderDto>(false, null, "Invalid token claims"));
                         default:
                             dto.UserId = idUser;
-                            var userInfo = await _orderService.AddOrder(dto);//, cancellationToken);
+                            var userInfo = await _orderService.AddOrder(dto, cancellationToken);
 
                             if (userInfo.DataReceived == true)
                             {
@@ -124,7 +124,7 @@ namespace OrderApi.Controllers
         /// </summary>
         [Authorize]
         [HttpGet("GetAllOrderUser")]
-        public async Task<IActionResult> GetAllOrderUser()//CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllOrderUser(CancellationToken cancellationToken)
         {
             try
             {
@@ -140,7 +140,7 @@ namespace OrderApi.Controllers
                         case -3:
                             return Unauthorized("Invalid token claims");
                         default:
-                            var userInfo = await _orderService.GetAllOrderUserAsync(idUser); //, cancellationToken);
+                            var userInfo = await _orderService.GetAllOrderUserAsync(idUser, cancellationToken);
                             if (userInfo.DataReceived == true)
                             {
                                 return Ok(userInfo.GetCollectionNotProblem());
@@ -211,7 +211,7 @@ namespace OrderApi.Controllers
         /// </summary>
         [Authorize]
         [HttpDelete("UpdateOrderStatus")]
-        public async Task<IActionResult> UpdateOrderStatus([FromBody] UpdateOrderDto dto)//, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateOrderStatus([FromBody] UpdateOrderDto dto, CancellationToken cancellationToken)
         {
             try
             {
@@ -227,7 +227,7 @@ namespace OrderApi.Controllers
                         case -3:
                             return Unauthorized(new ApiResponse<UpdateOrderDto>(false, null, "Invalid token claims"));
                         default:
-                            var result = await _orderService.UpdateOrderStatusAsync(dto); //, cancellationToken);
+                            var result = await _orderService.UpdateOrderStatusAsync(dto, cancellationToken);
 
                             if (result.DataReceived == true)
                             {

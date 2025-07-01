@@ -16,7 +16,7 @@ namespace CartService.BLL
         /// <summary>
         /// Добавление продукта в корзину
         /// </summary>
-        public async Task<AnswerWithBackendDto<CartDto>> AddCartProductAsync(AddCartDto dto)//, CancellationToken cancellationToken)
+        public async Task<AnswerWithBackendDto<CartDto>> AddCartProductAsync(AddCartDto dto, CancellationToken cancellationToken)
         { 
             return await Task.Run(async () =>
             {
@@ -40,15 +40,14 @@ namespace CartService.BLL
                 {
                     throw;
                 }
-            }
-            //, cancellationToken            
-            );
+            }, 
+            cancellationToken);
         }
 
         /// <summary>
         /// Удаление продукта из корзины
         /// </summary>
-        public async Task<AnswerWithBackendDto<CartDto>> DeleteProductAsync(DeleteCartDto dto)//, CancellationToken cancellationToken)
+        public async Task<AnswerWithBackendDto<CartDto>> DeleteProductAsync(DeleteCartDto dto, CancellationToken cancellationToken)
         {
             return await Task.Run(async () => 
             {
@@ -64,7 +63,7 @@ namespace CartService.BLL
                         return answerWithBackendDto;
                     }
 
-                    //cancellationToken.ThrowIfCancellationRequested();
+                    cancellationToken.ThrowIfCancellationRequested();
 
                     await _cartRepository.Delete(product);
                     answerWithBackendDto.DataReceived = true;
@@ -76,15 +75,14 @@ namespace CartService.BLL
                 {
                     throw;
                 }
-            }
-            //, cancellationToken
-            );
+            }, 
+            cancellationToken);
         }
         
         /// <summary>
         /// Удаление корзины
         /// </summary>
-        public async Task<AnswerWithBackendDto<CartDto>> DeleteAllProductAsync(DeleteCartDto dto)//, CancellationToken cancellationToken)
+        public async Task<AnswerWithBackendDto<CartDto>> DeleteAllProductAsync(DeleteCartDto dto, CancellationToken cancellationToken)
         {
             return await Task.Run(async () =>
             {
@@ -102,7 +100,7 @@ namespace CartService.BLL
 
                     foreach (var product in products)
                     {
-                        //cancellationToken.ThrowIfCancellationRequested();
+                        cancellationToken.ThrowIfCancellationRequested();
 
                         await _cartRepository.Delete(product);
                     }
@@ -117,14 +115,14 @@ namespace CartService.BLL
                     throw;
                 }
             }
-            //, cancellationToken
+            , cancellationToken
             );
         }
 
         /// <summary>
         /// Получить корзину пользователя
         /// </summary>
-        public async Task<AnswerWithBackendDto<CartDto>> GetCartUserAsync(int idUser) //, CancellationToken cancellationToken)
+        public async Task<AnswerWithBackendDto<CartDto>> GetCartUserAsync(int idUser, CancellationToken cancellationToken)
         {
             return await Task.Run(async () =>
             {
@@ -141,7 +139,7 @@ namespace CartService.BLL
                         return answerWithBackendDto;
                     }
 
-                    //cancellationToken.ThrowIfCancellationRequested();
+                    cancellationToken.ThrowIfCancellationRequested();
 
                     answerWithBackendDto.AddObject(items);
 
@@ -151,14 +149,14 @@ namespace CartService.BLL
                 {
                     throw;
                 }
-            }//, cancellationToken
+            }, cancellationToken
             );
         }
 
         /// <summary>
         /// Обновить продукт в корзине
         /// </summary>
-        public async Task<AnswerWithBackendDto<UpdateCartDto>> UpdateProductAsync(UpdateCartDto dto) //, CancellationToken cancellationToken)
+        public async Task<AnswerWithBackendDto<UpdateCartDto>> UpdateProductAsync(UpdateCartDto dto, CancellationToken cancellationToken)
         {
             return await Task.Run(async () =>
             {
@@ -174,11 +172,11 @@ namespace CartService.BLL
                         return answerWithBackendDto;
                     }
 
-                    //cancellationToken.ThrowIfCancellationRequested();
+                    cancellationToken.ThrowIfCancellationRequested();
 
                     await _cartRepository.Delete(product);
 
-                    //cancellationToken.ThrowIfCancellationRequested();
+                    cancellationToken.ThrowIfCancellationRequested();
 
                     product!.Count = dto.Count;
 
@@ -191,7 +189,7 @@ namespace CartService.BLL
                     throw;
                 }
             }
-            //, cancellationToken
+            , cancellationToken
             );
         }
     }
