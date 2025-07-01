@@ -1,15 +1,15 @@
 ﻿namespace CommentService.BLL
 {
     public class CommentDto
-    {     
+    {
         /// <summary>
         /// Id
         /// </summary>
         public int Id;
-        
+
         /// <summary>
-             /// id пользователя
-             /// </summary>
+        /// id пользователя
+        /// </summary>
         public int UserId { get; set; }
 
         /// <summary>
@@ -17,7 +17,7 @@
         /// </summary>
         public string UserName { get; set; }
 
-
+        public DateTime DateCreated { get; set; }
         /// <summary>
         /// id магазина
         /// </summary>
@@ -29,7 +29,7 @@
         /// <summary>
         /// id пользователя
         /// </summary>
-        public string TextComment { get; set; } = string.Empty;
+        public string Text { get; set; } = string.Empty;
         /// <summary>
         /// Оценка выставляемая пользователем за товар
         /// </summary>

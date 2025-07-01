@@ -1,4 +1,5 @@
 ﻿using CommentService.BLL;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SupperBackEnd.Dto;
 
@@ -6,13 +7,18 @@ namespace API.Controllers.Product
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CommentReplyController(ICommentReplyService commentReplyService) : ControllerBase()
     {
 
         ICommentReplyService _commentReplyService = commentReplyService;
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) => Ok($"Product {id}");
+        public IActionResult GetById(int id)
+        {
+            return Ok($"Product {id}");
+        }
+
         /// <summary>
         /// Добавить ответ на комментарий пользователя со стороны магазина (id комментария пользователя)
         /// </summary>
@@ -86,16 +92,15 @@ namespace API.Controllers.Product
 
     }
 }
-       
-
-
-    
 
 
 
-      
-    
 
 
 
-  
+
+
+
+
+
+

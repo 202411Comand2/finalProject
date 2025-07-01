@@ -16,17 +16,19 @@ namespace AuthApi.Controllers
     [Route("api/auth")]
     public class AuthController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
+        private readonly IAuthMainService _authService;
         public AuthController(IConfiguration configuration, IAuthMainService authService)
         {
             _configuration = configuration;
             _authService = authService;
         }
-        private readonly IConfiguration _configuration;
-        private readonly IAuthMainService _authService;
-
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) => Ok($"Auth {id}");
+        public IActionResult GetById(int id)
+        {
+            return Ok($"Auth {id}");
+        }
 
         /// <summary>
         /// Авторизация пользователя
@@ -57,6 +59,7 @@ namespace AuthApi.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return BadRequest(ex.Message);
             }
         }
@@ -89,6 +92,7 @@ namespace AuthApi.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return BadRequest(ex.Message);
             }
         }
@@ -105,11 +109,12 @@ namespace AuthApi.Controllers
             try
             {
                 var userInfo = await _authService.GetInfoEasyUser(id);
-                if (userInfo.DataReceived) 
+                if (userInfo.DataReceived)
                 {
-                     return Ok( userInfo.ObjectDto);
-                }else
-                { return BadRequest(); }    
+                    return Ok(userInfo.ObjectDto);
+                }
+                else
+                { return BadRequest(); }
             }
             catch
             {
@@ -137,9 +142,9 @@ namespace AuthApi.Controllers
                     switch (idUser)
                     {
                         case -2: //токен просрочен
-                            return Unauthorized( "Token is missing");
+                            return Unauthorized("Token is missing");
                         case -3:
-                            return Unauthorized( "Invalid token claims");
+                            return Unauthorized("Invalid token claims");
                         default:
                             var userInfo = await _authService.GetInfoUser(idUser);
                             return Ok(userInfo.ObjectDto);
@@ -147,7 +152,7 @@ namespace AuthApi.Controllers
                 }
                 catch (SecurityTokenException ex)
                 {
-                    return Unauthorized( $"Invalid token: {ex.Message}");
+                    return Unauthorized($"Invalid token: {ex.Message}");
                 }
             }
             catch (Exception ex)
@@ -281,7 +286,7 @@ namespace AuthApi.Controllers
             var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Name, user.Name),
+                    new Claim(ClaimTypes.Name, user.Login),
                     new Claim(ClaimTypes.Role, "role admin")
                 };
 

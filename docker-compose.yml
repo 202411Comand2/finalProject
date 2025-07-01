@@ -4,7 +4,6 @@ services:
     build:
       context: .
       dockerfile: ProductService/ProductService/ProductAPI/Dockerfile
- 
 
   shopapi:
     image: ${DOCKER_REGISTRY-}shopapi
@@ -12,13 +11,11 @@ services:
       context: .
       dockerfile: ProductService/ShopService/ShopAPI/Dockerfile
 
-
   favoriteapi:
     image: ${DOCKER_REGISTRY-}favoriteapi
     build:
       context: .
       dockerfile: ProductService/FavoriteService/FavoriteAPI/Dockerfile
-
 
   commentapi:
     image: ${DOCKER_REGISTRY-}commentapi
@@ -26,13 +23,11 @@ services:
       context: .
       dockerfile: ProductService/CommentService/CommentApi/Dockerfile
 
-
   clusterapi:
     image: ${DOCKER_REGISTRY-}clusterapi
     build:
       context: .
       dockerfile: ClusterAPI/Dockerfile
-
 
   cartapi:
     image: ${DOCKER_REGISTRY-}cartapi
@@ -40,19 +35,11 @@ services:
       context: .
       dockerfile: Cart_Order_Service/CartService/CartApi/Dockerfile
 
-
   orderapi:
     image: ${DOCKER_REGISTRY-}orderapi
     build:
       context: .
       dockerfile: Cart_Order_Service/OrderService/OrderApi/Dockerfile
-  # ocelotwebapigr:
-  #   image: ${DOCKER_REGISTRY-}ocelotwebapigr
-  #   build:
-  #     context: .
-  #     dockerfile: OcelotWebApiGr/OcelotWebApiGr/Dockerfile
-
-
 
   ocleot_https:
     image: ${DOCKER_REGISTRY-}ocleothttps
@@ -66,7 +53,6 @@ services:
     build:
       context: .
       dockerfile: AuthService/AuthApi/Dockerfile
-
 
   managersshopsapi:
     image: ${DOCKER_REGISTRY-}managersshopsapi

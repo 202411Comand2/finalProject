@@ -9,35 +9,37 @@ namespace CommentService.BLL
     /// </summary>
     public class CommentAdapter
     {
-        
+
         public static CommentDto ConvertToCommentDTO(Comment comment)
         {
             return new CommentDto()
             {
                 Id = comment.Id,
                 UserId = comment.UserId,
+                DateCreated = comment.DateCreated,
                 ShopId = comment.ShopId,
                 ProductId = comment.ProductId,
-                TextComment = comment.Text,
+                Text = comment.Text,
                 Estimation = comment.Estimation,
             };
         }
 
         public static List<CommentDto> ConvertToCommentDTO(List<Comment> ItemComment)
         {
-            List< CommentDto > itemsCommentDto = new List< CommentDto >();
-            foreach (var comment in ItemComment) 
+            List<CommentDto> itemsCommentDto = new List<CommentDto>();
+            foreach (var comment in ItemComment)
             {
                 itemsCommentDto.Add(new CommentDto()
                 {
                     Id = comment.Id,
                     UserId = comment.UserId,
                     UserName = comment.UserName,
+                    DateCreated = comment.DateCreated,
                     ShopId = comment.ShopId,
                     ProductId = comment.ProductId,
-                    TextComment = comment.Text,
+                    Text = comment.Text,
                     Estimation = comment.Estimation,
-                    
+
                 });
             }
             return itemsCommentDto;

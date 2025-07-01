@@ -1,26 +1,49 @@
 ﻿using CommentService.BLL;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SupperBackEnd.Dto;
+using System.Security.Claims;
 
 namespace API.Controllers.Product
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CommentController(ICommentMainService commentService) : ControllerBase()
+    public class CommentController(ICommentMainService commentService, ILogger<CommentController> logger) : ControllerBase()
     {
-
         ICommentMainService _commentService = commentService;
-
-
+        ILogger _logger = logger;
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) => Ok($"Product {id}");
+        [Authorize]
+        public IActionResult GetById(int id)
+        {
+            return Ok($"Product {id}");
+        }
+
         /// <summary>
         /// Добавить новый рейтинг
         /// </summary>
         [HttpPost("Add")]
+        [Authorize]
         public async Task<ActionResult<int>> Add([FromBody] AddCommentDto Dto)
         {
+            var username = User.Identity?.Name;
+            var nameIdentifier = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (nameIdentifier != null)
+            {
+                int temp = -1;
+                var isParsed = int.TryParse(nameIdentifier, out temp);
+                if (temp >= 0 && isParsed) Dto.UserId = temp;
+                else return BadRequest("Unable to read user id from token");
+            }
+            else return BadRequest("Unable to read user id from token");
+            if (username != null)
+            {
+                Dto.UserName = username;
+                _logger.LogInformation($"Никнейм был корректно извлечён из jwt ({username})");
+            }
+            else _logger.LogInformation("Что-то пошло не так при извлечении никнейма из jwt");
 
             AnswerWithBackendDto<CommentDto> result = new();
             try
@@ -43,7 +66,8 @@ namespace API.Controllers.Product
         /// Обновление комментария
         /// </summary>
         [HttpPut("Update")]
-        public async Task<ActionResult<string>> UpdateComment([FromBody] UpdateCommentDto Dto) 
+        [Authorize]
+        public async Task<ActionResult<string>> UpdateComment([FromBody] UpdateCommentDto Dto)
         {
             AnswerWithBackendDto<CommentDto> result = new();
             try
@@ -66,6 +90,7 @@ namespace API.Controllers.Product
         /// Удаление комментарий (скрыть IsDeleted = true)
         /// </summary>
         [HttpDelete("Delete")]
+        [Authorize]
         public async Task<ActionResult<int>> Delete([FromBody] DeleteCommentDto Dto)
         {
             AnswerWithBackendDto<CommentDto> result = new();

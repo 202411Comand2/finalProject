@@ -1,8 +1,11 @@
-using CommentService.DAL;
 using CommentService.BLL;
+using CommentService.DAL;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Platform.DAL;
 using Rabbit.Platform;
+using System.Text;
 
 namespace CommentApi
 {
@@ -41,17 +44,27 @@ namespace CommentApi
                     Description = "Пример API с Swagger",
                     Contact = new OpenApiContact { Name = "Dev", Email = "dev@example.com" }
                 });
-                //Для разговора с Глебом
-                //////// Добавляем JWT-аутентификацию (опционально)
-                //////c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                //////{
-                //////    Description = "JWT Authorization header. Example: \"Bearer {token}\"",
-                //////    Name = "Authorization",
-                //////    In = ParameterLocation.Header,
-                //////    Type = SecuritySchemeType.ApiKey,
-                //////    Scheme = "Bearer"
-                //////});
+            });
 
+            var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidAudience = jwtSettings["Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
+                };
             });
 
             var app = builder.Build();

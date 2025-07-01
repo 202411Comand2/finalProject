@@ -1,48 +1,895 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\kuzne\\source\\repos\\finalProject\\",
+  "WorkspaceRootPath": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Sdks\\Microsoft.Docker.Sdk\\build\\Microsoft.VisualStudio.Docker.Compose.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{A187189D-F4B6-4659-9583-5BD16985C8A5}|ProductService\\ShopService\\ShopAPI\\ShopAPI.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\shopservice\\shopapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A187189D-F4B6-4659-9583-5BD16985C8A5}|ProductService\\ShopService\\ShopAPI\\ShopAPI.csproj|solutionrelative:productservice\\shopservice\\shopapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\commentservice\\bll\\commentmainservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|solutionrelative:productservice\\commentservice\\bll\\commentmainservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\commentservice\\bll\\commentreplyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|solutionrelative:productservice\\commentservice\\bll\\commentreplyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\commentservice\\bll\\dto\\comment\\addcommentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|solutionrelative:productservice\\commentservice\\bll\\dto\\comment\\addcommentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\commentservice\\bll\\dto\\comment\\commentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|solutionrelative:productservice\\commentservice\\bll\\dto\\comment\\commentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FA3A80AD-E02D-4D87-A3E4-B9ED184CAFBF}|ProductService\\CommentService\\CommentApi\\CommentApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\commentservice\\commentapi\\controllers\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FA3A80AD-E02D-4D87-A3E4-B9ED184CAFBF}|ProductService\\CommentService\\CommentApi\\CommentApi.csproj|solutionrelative:productservice\\commentservice\\commentapi\\controllers\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FA3A80AD-E02D-4D87-A3E4-B9ED184CAFBF}|ProductService\\CommentService\\CommentApi\\CommentApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\commentservice\\commentapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FA3A80AD-E02D-4D87-A3E4-B9ED184CAFBF}|ProductService\\CommentService\\CommentApi\\CommentApi.csproj|solutionrelative:productservice\\commentservice\\commentapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FA3A80AD-E02D-4D87-A3E4-B9ED184CAFBF}|ProductService\\CommentService\\CommentApi\\CommentApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\commentservice\\commentapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{FA3A80AD-E02D-4D87-A3E4-B9ED184CAFBF}|ProductService\\CommentService\\CommentApi\\CommentApi.csproj|solutionrelative:productservice\\commentservice\\commentapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{610EF49C-3B52-46B5-A265-CFA534867B2E}|ClusterAPI\\ClusterAPI.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\clusterapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{610EF49C-3B52-46B5-A265-CFA534867B2E}|ClusterAPI\\ClusterAPI.csproj|solutionrelative:clusterapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BC416770-A896-47D8-96F5-C3CC4DDBE30F}|AuthService\\AuthApi\\AuthApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\authservice\\authapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BC416770-A896-47D8-96F5-C3CC4DDBE30F}|AuthService\\AuthApi\\AuthApi.csproj|solutionrelative:authservice\\authapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FA3A80AD-E02D-4D87-A3E4-B9ED184CAFBF}|ProductService\\CommentService\\CommentApi\\CommentApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\commentservice\\commentapi\\controllers\\commentreplycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FA3A80AD-E02D-4D87-A3E4-B9ED184CAFBF}|ProductService\\CommentService\\CommentApi\\CommentApi.csproj|solutionrelative:productservice\\commentservice\\commentapi\\controllers\\commentreplycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A7122FF-ED4A-4150-9396-F201591DD114}|AuthService\\AuthService.Domain\\AuthService.Domain.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\authservice\\authservice.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2A7122FF-ED4A-4150-9396-F201591DD114}|AuthService\\AuthService.Domain\\AuthService.Domain.csproj|solutionrelative:authservice\\authservice.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7935DA13-BF6E-4BC3-AEBF-42403ADAFA40}|IdentityService.API\\IdentityService.API.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\identityservice.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7935DA13-BF6E-4BC3-AEBF-42403ADAFA40}|IdentityService.API\\IdentityService.API.csproj|solutionrelative:identityservice.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7935DA13-BF6E-4BC3-AEBF-42403ADAFA40}|IdentityService.API\\IdentityService.API.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\identityservice.api\\services\\identityapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7935DA13-BF6E-4BC3-AEBF-42403ADAFA40}|IdentityService.API\\IdentityService.API.csproj|solutionrelative:identityservice.api\\services\\identityapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BC416770-A896-47D8-96F5-C3CC4DDBE30F}|AuthService\\AuthApi\\AuthApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\authservice\\authapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BC416770-A896-47D8-96F5-C3CC4DDBE30F}|AuthService\\AuthApi\\AuthApi.csproj|solutionrelative:authservice\\authapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FA3A80AD-E02D-4D87-A3E4-B9ED184CAFBF}|ProductService\\CommentService\\CommentApi\\CommentApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\commentservice\\commentapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{FA3A80AD-E02D-4D87-A3E4-B9ED184CAFBF}|ProductService\\CommentService\\CommentApi\\CommentApi.csproj|solutionrelative:productservice\\commentservice\\commentapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{610EF49C-3B52-46B5-A265-CFA534867B2E}|ClusterAPI\\ClusterAPI.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\clusterapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{610EF49C-3B52-46B5-A265-CFA534867B2E}|ClusterAPI\\ClusterAPI.csproj|solutionrelative:clusterapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BC416770-A896-47D8-96F5-C3CC4DDBE30F}|AuthService\\AuthApi\\AuthApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\authservice\\authapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{BC416770-A896-47D8-96F5-C3CC4DDBE30F}|AuthService\\AuthApi\\AuthApi.csproj|solutionrelative:authservice\\authapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BC416770-A896-47D8-96F5-C3CC4DDBE30F}|AuthService\\AuthApi\\AuthApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\authservice\\authapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{BC416770-A896-47D8-96F5-C3CC4DDBE30F}|AuthService\\AuthApi\\AuthApi.csproj|solutionrelative:authservice\\authapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BC416770-A896-47D8-96F5-C3CC4DDBE30F}|AuthService\\AuthApi\\AuthApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\authservice\\authapi\\properties\\rabbitsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{BC416770-A896-47D8-96F5-C3CC4DDBE30F}|AuthService\\AuthApi\\AuthApi.csproj|solutionrelative:authservice\\authapi\\properties\\rabbitsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BC416770-A896-47D8-96F5-C3CC4DDBE30F}|AuthService\\AuthApi\\AuthApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\authservice\\authapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{BC416770-A896-47D8-96F5-C3CC4DDBE30F}|AuthService\\AuthApi\\AuthApi.csproj|solutionrelative:authservice\\authapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A187189D-F4B6-4659-9583-5BD16985C8A5}|ProductService\\ShopService\\ShopAPI\\ShopAPI.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\shopservice\\shopapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A187189D-F4B6-4659-9583-5BD16985C8A5}|ProductService\\ShopService\\ShopAPI\\ShopAPI.csproj|solutionrelative:productservice\\shopservice\\shopapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{610EF49C-3B52-46B5-A265-CFA534867B2E}|ClusterAPI\\ClusterAPI.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\clusterapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{610EF49C-3B52-46B5-A265-CFA534867B2E}|ClusterAPI\\ClusterAPI.csproj|solutionrelative:clusterapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74259DA4-08B0-4F54-9B09-2FFAED7C840A}|OwnerService\\ManagersShopsApi\\ManagersShopsApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\ownerservice\\managersshopsapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74259DA4-08B0-4F54-9B09-2FFAED7C840A}|OwnerService\\ManagersShopsApi\\ManagersShopsApi.csproj|solutionrelative:ownerservice\\managersshopsapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE66DF59-43F2-45AA-9B30-559BE1181027}|AuthService\\AuthService.BLL\\AuthService.BLL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\authservice\\authservice.bll\\authmainservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE66DF59-43F2-45AA-9B30-559BE1181027}|AuthService\\AuthService.BLL\\AuthService.BLL.csproj|solutionrelative:authservice\\authservice.bll\\authmainservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\commentservice\\bll\\adapters\\commentadapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|solutionrelative:productservice\\commentservice\\bll\\adapters\\commentadapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\commentservice\\bll\\adapters\\replycommentadapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|solutionrelative:productservice\\commentservice\\bll\\adapters\\replycommentadapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\commentservice\\bll\\dto\\comment\\getallcommentsproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|solutionrelative:productservice\\commentservice\\bll\\dto\\comment\\getallcommentsproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\commentservice\\bll\\dto\\comment\\updatecommentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CF1EB6A-C17F-4DD1-8CC0-6402F57943A6}|ProductService\\CommentService\\BLL\\CommentService.BLL.csproj|solutionrelative:productservice\\commentservice\\bll\\dto\\comment\\updatecommentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97365969-56E3-4337-88F6-62766B913204}|ProductService\\CommentService\\Domain\\CommentService.Domain.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\commentservice\\domain\\entities\\comment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97365969-56E3-4337-88F6-62766B913204}|ProductService\\CommentService\\Domain\\CommentService.Domain.csproj|solutionrelative:productservice\\commentservice\\domain\\entities\\comment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B6BE19D-E75B-40B1-A817-6D5AF4FFD707}|ProductService\\ClusterService\\BLL\\ClusterService.BLL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\clusterservice\\bll\\searchclusterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B6BE19D-E75B-40B1-A817-6D5AF4FFD707}|ProductService\\ClusterService\\BLL\\ClusterService.BLL.csproj|solutionrelative:productservice\\clusterservice\\bll\\searchclusterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EEE47D4F-26BD-43CC-A1D6-99F2E9C5B51B}|docker-compose.dcproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{EEE47D4F-26BD-43CC-A1D6-99F2E9C5B51B}|docker-compose.dcproj|solutionrelative:docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EEE47D4F-26BD-43CC-A1D6-99F2E9C5B51B}|docker-compose.dcproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\docker-compose.override.yml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{EEE47D4F-26BD-43CC-A1D6-99F2E9C5B51B}|docker-compose.dcproj|solutionrelative:docker-compose.override.yml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74259DA4-08B0-4F54-9B09-2FFAED7C840A}|OwnerService\\ManagersShopsApi\\ManagersShopsApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\ownerservice\\managersshopsapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{74259DA4-08B0-4F54-9B09-2FFAED7C840A}|OwnerService\\ManagersShopsApi\\ManagersShopsApi.csproj|solutionrelative:ownerservice\\managersshopsapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7119401A-AD1A-429B-8C2F-19384D00641E}|Cart_Order_Service\\OrderService\\OrderApi\\OrderApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\cart_order_service\\orderservice\\orderapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{7119401A-AD1A-429B-8C2F-19384D00641E}|Cart_Order_Service\\OrderService\\OrderApi\\OrderApi.csproj|solutionrelative:cart_order_service\\orderservice\\orderapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D40BA5D0-E565-44EC-A8EE-CA05E01DC6D5}|AuthService\\AuthService.DAL\\AuthService.DAL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\authservice\\authservice.dal\\contextmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D40BA5D0-E565-44EC-A8EE-CA05E01DC6D5}|AuthService\\AuthService.DAL\\AuthService.DAL.csproj|solutionrelative:authservice\\authservice.dal\\contextmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE66DF59-43F2-45AA-9B30-559BE1181027}|AuthService\\AuthService.BLL\\AuthService.BLL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\authservice\\authservice.bll\\adapters\\usersadapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE66DF59-43F2-45AA-9B30-559BE1181027}|AuthService\\AuthService.BLL\\AuthService.BLL.csproj|solutionrelative:authservice\\authservice.bll\\adapters\\usersadapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE66DF59-43F2-45AA-9B30-559BE1181027}|AuthService\\AuthService.BLL\\AuthService.BLL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\authservice\\authservice.bll\\dto\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE66DF59-43F2-45AA-9B30-559BE1181027}|AuthService\\AuthService.BLL\\AuthService.BLL.csproj|solutionrelative:authservice\\authservice.bll\\dto\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE66DF59-43F2-45AA-9B30-559BE1181027}|AuthService\\AuthService.BLL\\AuthService.BLL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\authservice\\authservice.bll\\dto\\usereasydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE66DF59-43F2-45AA-9B30-559BE1181027}|AuthService\\AuthService.BLL\\AuthService.BLL.csproj|solutionrelative:authservice\\authservice.bll\\dto\\usereasydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D40BA5D0-E565-44EC-A8EE-CA05E01DC6D5}|AuthService\\AuthService.DAL\\AuthService.DAL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\authservice\\authservice.dal\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D40BA5D0-E565-44EC-A8EE-CA05E01DC6D5}|AuthService\\AuthService.DAL\\AuthService.DAL.csproj|solutionrelative:authservice\\authservice.dal\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE66DF59-43F2-45AA-9B30-559BE1181027}|AuthService\\AuthService.BLL\\AuthService.BLL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\authservice\\authservice.bll\\dto\\authuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE66DF59-43F2-45AA-9B30-559BE1181027}|AuthService\\AuthService.BLL\\AuthService.BLL.csproj|solutionrelative:authservice\\authservice.bll\\dto\\authuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CE3CE40A-6C44-451E-A7F1-5CC28AC8A1E6}|ProductService\\FavoriteService\\FavoriteAPI\\FavoriteAPI.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\favoriteservice\\favoriteapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{CE3CE40A-6C44-451E-A7F1-5CC28AC8A1E6}|ProductService\\FavoriteService\\FavoriteAPI\\FavoriteAPI.csproj|solutionrelative:productservice\\favoriteservice\\favoriteapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF0A3040-E68D-43DC-8F7D-A0FAC788828D}|OcelotWebApiGr\\Ocleot_https\\Ocleot_https.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\ocelotwebapigr\\ocleot_https\\ocelot.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{FF0A3040-E68D-43DC-8F7D-A0FAC788828D}|OcelotWebApiGr\\Ocleot_https\\Ocleot_https.csproj|solutionrelative:ocelotwebapigr\\ocleot_https\\ocelot.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D40BA5D0-E565-44EC-A8EE-CA05E01DC6D5}|AuthService\\AuthService.DAL\\AuthService.DAL.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\authservice\\authservice.dal\\repositories\\authrepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D40BA5D0-E565-44EC-A8EE-CA05E01DC6D5}|AuthService\\AuthService.DAL\\AuthService.DAL.csproj|solutionrelative:authservice\\authservice.dal\\repositories\\authrepositories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF0A3040-E68D-43DC-8F7D-A0FAC788828D}|OcelotWebApiGr\\Ocleot_https\\Ocleot_https.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\ocelotwebapigr\\ocleot_https\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{FF0A3040-E68D-43DC-8F7D-A0FAC788828D}|OcelotWebApiGr\\Ocleot_https\\Ocleot_https.csproj|solutionrelative:ocelotwebapigr\\ocleot_https\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF0A3040-E68D-43DC-8F7D-A0FAC788828D}|OcelotWebApiGr\\Ocleot_https\\Ocleot_https.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\ocelotwebapigr\\ocleot_https\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{FF0A3040-E68D-43DC-8F7D-A0FAC788828D}|OcelotWebApiGr\\Ocleot_https\\Ocleot_https.csproj|solutionrelative:ocelotwebapigr\\ocleot_https\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF0A3040-E68D-43DC-8F7D-A0FAC788828D}|OcelotWebApiGr\\Ocleot_https\\Ocleot_https.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\ocelotwebapigr\\ocleot_https\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF0A3040-E68D-43DC-8F7D-A0FAC788828D}|OcelotWebApiGr\\Ocleot_https\\Ocleot_https.csproj|solutionrelative:ocelotwebapigr\\ocleot_https\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7935DA13-BF6E-4BC3-AEBF-42403ADAFA40}|IdentityService.API\\IdentityService.API.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\identityservice.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{7935DA13-BF6E-4BC3-AEBF-42403ADAFA40}|IdentityService.API\\IdentityService.API.csproj|solutionrelative:identityservice.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7119401A-AD1A-429B-8C2F-19384D00641E}|Cart_Order_Service\\OrderService\\OrderApi\\OrderApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\cart_order_service\\orderservice\\orderapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{7119401A-AD1A-429B-8C2F-19384D00641E}|Cart_Order_Service\\OrderService\\OrderApi\\OrderApi.csproj|solutionrelative:cart_order_service\\orderservice\\orderapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9C73A536-9A6D-4F4A-B5B5-2A10D503CBF1}|Cart_Order_Service\\CartService\\CartApi\\CartApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\cart_order_service\\cartservice\\cartapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9C73A536-9A6D-4F4A-B5B5-2A10D503CBF1}|Cart_Order_Service\\CartService\\CartApi\\CartApi.csproj|solutionrelative:cart_order_service\\cartservice\\cartapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E39743F-2349-4BB8-B37A-63207F241CB5}|ProductService\\ProductService\\ProductAPI\\ProductAPI.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\productservice\\productapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1E39743F-2349-4BB8-B37A-63207F241CB5}|ProductService\\ProductService\\ProductAPI\\ProductAPI.csproj|solutionrelative:productservice\\productservice\\productapi\\properties\\secretssettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E39743F-2349-4BB8-B37A-63207F241CB5}|ProductService\\ProductService\\ProductAPI\\ProductAPI.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\productservice\\productservice\\productapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1E39743F-2349-4BB8-B37A-63207F241CB5}|ProductService\\ProductService\\ProductAPI\\ProductAPI.csproj|solutionrelative:productservice\\productservice\\productapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9C73A536-9A6D-4F4A-B5B5-2A10D503CBF1}|Cart_Order_Service\\CartService\\CartApi\\CartApi.csproj|c:\\users\\fpdcore\\source\\repos\\finalproject\\cart_order_service\\cartservice\\cartapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9C73A536-9A6D-4F4A-B5B5-2A10D503CBF1}|Cart_Order_Service\\CartService\\CartApi\\CartApi.csproj|solutionrelative:cart_order_service\\cartservice\\cartapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
-      "VerticalTabListWidth": 176,
+      "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "DockedWidth": 410,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Microsoft.VisualStudio.Docker.Compose.targets",
-              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Sdks\\Microsoft.Docker.Sdk\\build\\Microsoft.VisualStudio.Docker.Compose.targets",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Sdks\\Microsoft.Docker.Sdk\\build\\Microsoft.VisualStudio.Docker.Compose.targets",
-              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Sdks\\Microsoft.Docker.Sdk\\build\\Microsoft.VisualStudio.Docker.Compose.targets",
-              "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Sdks\\Microsoft.Docker.Sdk\\build\\Microsoft.VisualStudio.Docker.Compose.targets",
-              "ViewState": "AgIAAKABAAAAAAAAAAAhwK4BAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2025-06-26T16:07:38.097Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 1289,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\CommentApi\\Program.cs",
+              "RelativeDocumentMoniker": "ProductService\\CommentService\\CommentApi\\Program.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\CommentApi\\Program.cs",
+              "RelativeToolTip": "ProductService\\CommentService\\CommentApi\\Program.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAADsAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T15:31:50.919Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CommentController.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\CommentApi\\Controllers\\CommentController.cs",
+              "RelativeDocumentMoniker": "ProductService\\CommentService\\CommentApi\\Controllers\\CommentController.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\CommentApi\\Controllers\\CommentController.cs",
+              "RelativeToolTip": "ProductService\\CommentService\\CommentApi\\Controllers\\CommentController.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAYwFwAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T00:19:19.46Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CommentDto.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\Dto\\Comment\\CommentDto.cs",
+              "RelativeDocumentMoniker": "ProductService\\CommentService\\BLL\\Dto\\Comment\\CommentDto.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\Dto\\Comment\\CommentDto.cs",
+              "RelativeToolTip": "ProductService\\CommentService\\BLL\\Dto\\Comment\\CommentDto.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAuwB8AAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T02:01:41.277Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AddCommentDto.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\Dto\\Comment\\AddCommentDto.cs",
+              "RelativeDocumentMoniker": "ProductService\\CommentService\\BLL\\Dto\\Comment\\AddCommentDto.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\Dto\\Comment\\AddCommentDto.cs",
+              "RelativeToolTip": "ProductService\\CommentService\\BLL\\Dto\\Comment\\AddCommentDto.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T15:22:19.224Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CommentMainService.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\CommentMainService.cs",
+              "RelativeDocumentMoniker": "ProductService\\CommentService\\BLL\\CommentMainService.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\CommentMainService.cs",
+              "RelativeToolTip": "ProductService\\CommentService\\BLL\\CommentMainService.cs",
+              "ViewState": "AgIAAJ0AAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T01:09:10.454Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CommentReplyService.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\CommentReplyService.cs",
+              "RelativeDocumentMoniker": "ProductService\\CommentService\\BLL\\CommentReplyService.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\CommentReplyService.cs",
+              "RelativeToolTip": "ProductService\\CommentService\\BLL\\CommentReplyService.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T01:09:11.145Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\ShopService\\ShopAPI\\Program.cs",
+              "RelativeDocumentMoniker": "ProductService\\ShopService\\ShopAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\ShopService\\ShopAPI\\Program.cs",
+              "RelativeToolTip": "ProductService\\ShopService\\ShopAPI\\Program.cs",
+              "ViewState": "AgIAAFMAAAAAAAAAAAAAAEQAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T15:35:29.678Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\CommentApi\\appsettings.json",
+              "RelativeDocumentMoniker": "ProductService\\CommentService\\CommentApi\\appsettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\CommentApi\\appsettings.json",
+              "RelativeToolTip": "ProductService\\CommentService\\CommentApi\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-01T05:10:08.623Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthApi\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "AuthService\\AuthApi\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthApi\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "AuthService\\AuthApi\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAABcBAAAAAAAAAAAxwCcBAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T22:59:49.092Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthApi\\Program.cs",
+              "RelativeDocumentMoniker": "AuthService\\AuthApi\\Program.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthApi\\Program.cs",
+              "RelativeToolTip": "AuthService\\AuthApi\\Program.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAAACkAAABaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T22:04:51.223Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "IdentityApiService.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\IdentityService.API\\Services\\IdentityApiService.cs",
+              "RelativeDocumentMoniker": "IdentityService.API\\Services\\IdentityApiService.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\IdentityService.API\\Services\\IdentityApiService.cs",
+              "RelativeToolTip": "IdentityService.API\\Services\\IdentityApiService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T19:23:38.585Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\IdentityService.API\\Program.cs",
+              "RelativeDocumentMoniker": "IdentityService.API\\Program.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\IdentityService.API\\Program.cs",
+              "RelativeToolTip": "IdentityService.API\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T19:23:43.919Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.Domain\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "AuthService\\AuthService.Domain\\Entities\\User.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.Domain\\Entities\\User.cs",
+              "RelativeToolTip": "AuthService\\AuthService.Domain\\Entities\\User.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T19:34:20.217Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ClusterAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "ClusterAPI\\appsettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ClusterAPI\\appsettings.json",
+              "RelativeToolTip": "ClusterAPI\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-30T19:19:34.959Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CommentReplyController.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\CommentApi\\Controllers\\CommentReplyController.cs",
+              "RelativeDocumentMoniker": "ProductService\\CommentService\\CommentApi\\Controllers\\CommentReplyController.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\CommentApi\\Controllers\\CommentReplyController.cs",
+              "RelativeToolTip": "ProductService\\CommentService\\CommentApi\\Controllers\\CommentReplyController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T19:36:16.248Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "secretsSettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ClusterAPI\\Properties\\secretsSettings.json",
+              "RelativeDocumentMoniker": "ClusterAPI\\Properties\\secretsSettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ClusterAPI\\Properties\\secretsSettings.json",
+              "RelativeToolTip": "ClusterAPI\\Properties\\secretsSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T21:15:07.134Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthApi\\appsettings.json",
+              "RelativeDocumentMoniker": "AuthService\\AuthApi\\appsettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthApi\\appsettings.json",
+              "RelativeToolTip": "AuthService\\AuthApi\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T21:20:39.468Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "secretsSettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\CommentApi\\Properties\\secretsSettings.json",
+              "RelativeDocumentMoniker": "ProductService\\CommentService\\CommentApi\\Properties\\secretsSettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\CommentApi\\Properties\\secretsSettings.json",
+              "RelativeToolTip": "ProductService\\CommentService\\CommentApi\\Properties\\secretsSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T21:12:25.981Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "secretsSettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthApi\\Properties\\secretsSettings.json",
+              "RelativeDocumentMoniker": "AuthService\\AuthApi\\Properties\\secretsSettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthApi\\Properties\\secretsSettings.json",
+              "RelativeToolTip": "AuthService\\AuthApi\\Properties\\secretsSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T21:20:42.374Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "rabbitSettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthApi\\Properties\\rabbitSettings.json",
+              "RelativeDocumentMoniker": "AuthService\\AuthApi\\Properties\\rabbitSettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthApi\\Properties\\rabbitSettings.json",
+              "RelativeToolTip": "AuthService\\AuthApi\\Properties\\rabbitSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-30T19:16:25.505Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthApi\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "AuthService\\AuthApi\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthApi\\Properties\\launchSettings.json",
+              "RelativeToolTip": "AuthService\\AuthApi\\Properties\\launchSettings.json",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T22:52:09.019Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "secretsSettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\ShopService\\ShopAPI\\Properties\\secretsSettings.json",
+              "RelativeDocumentMoniker": "ProductService\\ShopService\\ShopAPI\\Properties\\secretsSettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\ShopService\\ShopAPI\\Properties\\secretsSettings.json",
+              "RelativeToolTip": "ProductService\\ShopService\\ShopAPI\\Properties\\secretsSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABRAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T21:05:07.09Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ClusterAPI\\Program.cs",
+              "RelativeDocumentMoniker": "ClusterAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ClusterAPI\\Program.cs",
+              "RelativeToolTip": "ClusterAPI\\Program.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwBsAAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T23:39:17.175Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\OwnerService\\ManagersShopsApi\\Program.cs",
+              "RelativeDocumentMoniker": "OwnerService\\ManagersShopsApi\\Program.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\OwnerService\\ManagersShopsApi\\Program.cs",
+              "RelativeToolTip": "OwnerService\\ManagersShopsApi\\Program.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T15:30:35.958Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "AuthMainService.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.BLL\\AuthMainService.cs",
+              "RelativeDocumentMoniker": "AuthService\\AuthService.BLL\\AuthMainService.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.BLL\\AuthMainService.cs",
+              "RelativeToolTip": "AuthService\\AuthService.BLL\\AuthMainService.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T22:31:15.591Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "CommentAdapter.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\Adapters\\CommentAdapter.cs",
+              "RelativeDocumentMoniker": "ProductService\\CommentService\\BLL\\Adapters\\CommentAdapter.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\Adapters\\CommentAdapter.cs",
+              "RelativeToolTip": "ProductService\\CommentService\\BLL\\Adapters\\CommentAdapter.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACQAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T02:02:26.593Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Comment.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\Domain\\Entities\\Comment.cs",
+              "RelativeDocumentMoniker": "ProductService\\CommentService\\Domain\\Entities\\Comment.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\Domain\\Entities\\Comment.cs",
+              "RelativeToolTip": "ProductService\\CommentService\\Domain\\Entities\\Comment.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T02:00:46.365Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "UpdateCommentDto.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\Dto\\Comment\\UpdateCommentDto.cs",
+              "RelativeDocumentMoniker": "ProductService\\CommentService\\BLL\\Dto\\Comment\\UpdateCommentDto.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\Dto\\Comment\\UpdateCommentDto.cs",
+              "RelativeToolTip": "ProductService\\CommentService\\BLL\\Dto\\Comment\\UpdateCommentDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T02:00:52.522Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "ReplyCommentAdapter.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\Adapters\\ReplyCommentAdapter.cs",
+              "RelativeDocumentMoniker": "ProductService\\CommentService\\BLL\\Adapters\\ReplyCommentAdapter.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\Adapters\\ReplyCommentAdapter.cs",
+              "RelativeToolTip": "ProductService\\CommentService\\BLL\\Adapters\\ReplyCommentAdapter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T02:02:51.644Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "GetAllCommentsProduct.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\Dto\\Comment\\GetAllCommentsProduct.cs",
+              "RelativeDocumentMoniker": "ProductService\\CommentService\\BLL\\Dto\\Comment\\GetAllCommentsProduct.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\CommentService\\BLL\\Dto\\Comment\\GetAllCommentsProduct.cs",
+              "RelativeToolTip": "ProductService\\CommentService\\BLL\\Dto\\Comment\\GetAllCommentsProduct.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T00:51:01.048Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "SearchClusterService.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\ClusterService\\BLL\\SearchClusterService.cs",
+              "RelativeDocumentMoniker": "ProductService\\ClusterService\\BLL\\SearchClusterService.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\ClusterService\\BLL\\SearchClusterService.cs",
+              "RelativeToolTip": "ProductService\\ClusterService\\BLL\\SearchClusterService.cs",
+              "ViewState": "AgIAAEIAAAAAAAAAAAA7wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T23:40:16.971Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "ContextManager.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.DAL\\ContextManager.cs",
+              "RelativeDocumentMoniker": "AuthService\\AuthService.DAL\\ContextManager.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.DAL\\ContextManager.cs",
+              "RelativeToolTip": "AuthService\\AuthService.DAL\\ContextManager.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAqwB8AAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T22:04:43.668Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "docker-compose.yml",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\docker-compose.yml",
+              "RelativeDocumentMoniker": "docker-compose.yml",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\docker-compose.yml",
+              "RelativeToolTip": "docker-compose.yml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
+              "WhenOpened": "2025-06-29T21:00:22.136Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "docker-compose.override.yml",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\docker-compose.override.yml",
+              "RelativeDocumentMoniker": "docker-compose.override.yml",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\docker-compose.override.yml",
+              "RelativeToolTip": "docker-compose.override.yml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
+              "WhenOpened": "2025-06-29T21:00:35.583Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "AuthUserDto.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.BLL\\Dto\\AuthUserDto.cs",
+              "RelativeDocumentMoniker": "AuthService\\AuthService.BLL\\Dto\\AuthUserDto.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.BLL\\Dto\\AuthUserDto.cs",
+              "RelativeToolTip": "AuthService\\AuthService.BLL\\Dto\\AuthUserDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T23:00:17.395Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "UserEasyDto.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.BLL\\Dto\\UserEasyDto.cs",
+              "RelativeDocumentMoniker": "AuthService\\AuthService.BLL\\Dto\\UserEasyDto.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.BLL\\Dto\\UserEasyDto.cs",
+              "RelativeToolTip": "AuthService\\AuthService.BLL\\Dto\\UserEasyDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T23:09:13.748Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "secretsSettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\OwnerService\\ManagersShopsApi\\Properties\\secretsSettings.json",
+              "RelativeDocumentMoniker": "OwnerService\\ManagersShopsApi\\Properties\\secretsSettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\OwnerService\\ManagersShopsApi\\Properties\\secretsSettings.json",
+              "RelativeToolTip": "OwnerService\\ManagersShopsApi\\Properties\\secretsSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T21:22:40.905Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "secretsSettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\Cart_Order_Service\\OrderService\\OrderApi\\Properties\\secretsSettings.json",
+              "RelativeDocumentMoniker": "Cart_Order_Service\\OrderService\\OrderApi\\Properties\\secretsSettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\Cart_Order_Service\\OrderService\\OrderApi\\Properties\\secretsSettings.json",
+              "RelativeToolTip": "Cart_Order_Service\\OrderService\\OrderApi\\Properties\\secretsSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T21:02:25.611Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "UserDto.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.BLL\\Dto\\UserDto.cs",
+              "RelativeDocumentMoniker": "AuthService\\AuthService.BLL\\Dto\\UserDto.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.BLL\\Dto\\UserDto.cs",
+              "RelativeToolTip": "AuthService\\AuthService.BLL\\Dto\\UserDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T23:09:16.982Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "UsersAdapter.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.BLL\\Adapters\\UsersAdapter.cs",
+              "RelativeDocumentMoniker": "AuthService\\AuthService.BLL\\Adapters\\UsersAdapter.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.BLL\\Adapters\\UsersAdapter.cs",
+              "RelativeToolTip": "AuthService\\AuthService.BLL\\Adapters\\UsersAdapter.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T23:09:18.524Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.DAL\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "AuthService\\AuthService.DAL\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.DAL\\ApplicationDbContext.cs",
+              "RelativeToolTip": "AuthService\\AuthService.DAL\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T22:46:25.378Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "ocelot.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\OcelotWebApiGr\\Ocleot_https\\ocelot.json",
+              "RelativeDocumentMoniker": "OcelotWebApiGr\\Ocleot_https\\ocelot.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\OcelotWebApiGr\\Ocleot_https\\ocelot.json",
+              "RelativeToolTip": "OcelotWebApiGr\\Ocleot_https\\ocelot.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T22:44:32.608Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "secretsSettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\FavoriteService\\FavoriteAPI\\Properties\\secretsSettings.json",
+              "RelativeDocumentMoniker": "ProductService\\FavoriteService\\FavoriteAPI\\Properties\\secretsSettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\FavoriteService\\FavoriteAPI\\Properties\\secretsSettings.json",
+              "RelativeToolTip": "ProductService\\FavoriteService\\FavoriteAPI\\Properties\\secretsSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T21:12:00.06Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "AuthRepositories.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.DAL\\Repositories\\AuthRepositories.cs",
+              "RelativeDocumentMoniker": "AuthService\\AuthService.DAL\\Repositories\\AuthRepositories.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\AuthService\\AuthService.DAL\\Repositories\\AuthRepositories.cs",
+              "RelativeToolTip": "AuthService\\AuthService.DAL\\Repositories\\AuthRepositories.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T22:46:26.582Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\OcelotWebApiGr\\Ocleot_https\\appsettings.json",
+              "RelativeDocumentMoniker": "OcelotWebApiGr\\Ocleot_https\\appsettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\OcelotWebApiGr\\Ocleot_https\\appsettings.json",
+              "RelativeToolTip": "OcelotWebApiGr\\Ocleot_https\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T22:45:59.993Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\OcelotWebApiGr\\Ocleot_https\\Program.cs",
+              "RelativeDocumentMoniker": "OcelotWebApiGr\\Ocleot_https\\Program.cs",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\OcelotWebApiGr\\Ocleot_https\\Program.cs",
+              "RelativeToolTip": "OcelotWebApiGr\\Ocleot_https\\Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T22:44:44.18Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\OcelotWebApiGr\\Ocleot_https\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "OcelotWebApiGr\\Ocleot_https\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\OcelotWebApiGr\\Ocleot_https\\appsettings.Development.json",
+              "RelativeToolTip": "OcelotWebApiGr\\Ocleot_https\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T21:20:33.03Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\IdentityService.API\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "IdentityService.API\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\IdentityService.API\\Properties\\launchSettings.json",
+              "RelativeToolTip": "IdentityService.API\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T21:20:23.482Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\Cart_Order_Service\\OrderService\\OrderApi\\appsettings.json",
+              "RelativeDocumentMoniker": "Cart_Order_Service\\OrderService\\OrderApi\\appsettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\Cart_Order_Service\\OrderService\\OrderApi\\appsettings.json",
+              "RelativeToolTip": "Cart_Order_Service\\OrderService\\OrderApi\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T21:19:29.422Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "secretsSettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\ProductService\\ProductAPI\\Properties\\secretsSettings.json",
+              "RelativeDocumentMoniker": "ProductService\\ProductService\\ProductAPI\\Properties\\secretsSettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\ProductService\\ProductAPI\\Properties\\secretsSettings.json",
+              "RelativeToolTip": "ProductService\\ProductService\\ProductAPI\\Properties\\secretsSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T21:04:20.646Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "secretsSettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\Cart_Order_Service\\CartService\\CartApi\\Properties\\secretsSettings.json",
+              "RelativeDocumentMoniker": "Cart_Order_Service\\CartService\\CartApi\\Properties\\secretsSettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\Cart_Order_Service\\CartService\\CartApi\\Properties\\secretsSettings.json",
+              "RelativeToolTip": "Cart_Order_Service\\CartService\\CartApi\\Properties\\secretsSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAB4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T21:01:49.019Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\ProductService\\ProductAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "ProductService\\ProductService\\ProductAPI\\appsettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\ProductService\\ProductService\\ProductAPI\\appsettings.json",
+              "RelativeToolTip": "ProductService\\ProductService\\ProductAPI\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T21:09:57.404Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\Cart_Order_Service\\CartService\\CartApi\\appsettings.json",
+              "RelativeDocumentMoniker": "Cart_Order_Service\\CartService\\CartApi\\appsettings.json",
+              "ToolTip": "C:\\Users\\fpdcore\\source\\repos\\finalProject\\Cart_Order_Service\\CartService\\CartApi\\appsettings.json",
+              "RelativeToolTip": "Cart_Order_Service\\CartService\\CartApi\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-29T21:01:45.574Z"
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:4:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{ca8cc5c7-0231-406a-95cd-aa5ed6ac0190}"
             }
           ]
         }
