@@ -156,13 +156,13 @@ namespace CartService.BLL
         /// <summary>
         /// Обновить продукт в корзине
         /// </summary>
-        public async Task<AnswerWithBackendDto<UpdateCartDto>> UpdateProductAsync(UpdateCartDto dto, CancellationToken cancellationToken)
+        public async Task<AnswerWithBackendDto<CartDto>> UpdateProductAsync(UpdateCartDto dto, CancellationToken cancellationToken)
         {
             return await Task.Run(async () =>
             {
                 try
                 {
-                    AnswerWithBackendDto<UpdateCartDto> answerWithBackendDto = new();
+                    AnswerWithBackendDto<CartDto> answerWithBackendDto = new();
 
                     Cart product = await _cartRepository.GetProductInCart(dto.Id);
 

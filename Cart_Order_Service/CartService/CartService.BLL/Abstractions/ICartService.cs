@@ -29,7 +29,7 @@ namespace CartService.BLL.Abstractions
         /// <summary>
         /// Обновить товар в корзине
         /// </summary>
-        public Task<AnswerWithBackendDto<UpdateCartDto>> UpdateProductAsync(UpdateCartDto dto, CancellationToken token = default);
+        public Task<AnswerWithBackendDto<CartDto>> UpdateProductAsync(UpdateCartDto dto, CancellationToken token = default);
 
         
     }

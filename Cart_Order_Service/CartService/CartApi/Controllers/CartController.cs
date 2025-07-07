@@ -217,29 +217,29 @@ namespace CartApi.Controllers
                     switch (idUser)
                     {
                         case -2: //токен просрочен
-                            return Unauthorized(new ApiResponse<UpdateCartDto>(false, null, "Token is missing"));
+                            return Unauthorized(new ApiResponse<CartDto>(false, null, "Token is missing"));
                         case -3:
-                            return Unauthorized(new ApiResponse<UpdateCartDto>(false, null, "Invalid token claims"));
+                            return Unauthorized(new ApiResponse<CartDto>(false, null, "Invalid token claims"));
                         default:
                             var result = await _cartService.UpdateProductAsync(dto, cancellationToken);
                             if (result.DataReceived == true)
                             {
-                                return Ok(new ApiResponse<UpdateCartDto>(true, result.ObjectDto, null));
+                                return Ok(new ApiResponse<CartDto>(true, result.ObjectDto, null));
                             }
                             else
                             {
-                                return BadRequest(new ApiResponse<UpdateCartDto>(false, null, result.ErrorLog));
+                                return BadRequest(new ApiResponse<CartDto>(false, null, result.ErrorLog));
                             }
                     }
                 }
                 catch (SecurityTokenException ex)
                 {
-                    return Unauthorized(new ApiResponse<UpdateCartDto>(false, null, $"Invalid token: {ex.Message}"));
+                    return Unauthorized(new ApiResponse<CartDto>(false, null, $"Invalid token: {ex.Message}"));
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new ApiResponse<AddCartDto>(false, null, ex.Message));
+                return StatusCode(500, new ApiResponse<CartDto>(false, null, ex.Message));
             }
         }
     }

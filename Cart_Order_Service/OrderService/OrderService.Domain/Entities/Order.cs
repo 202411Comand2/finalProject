@@ -27,7 +27,7 @@ namespace OrderService.Domain.Entities
         /// Дата прибытия
         /// </summary>
         [Column("arrive_date")]
-        public DateTime ArriveDate { get; set; }
+        public DateTime ArriveDate { get; set; } = DateTime.UtcNow.AddDays(5);
 
         /// <summary>
         /// Способ доставки
@@ -57,7 +57,7 @@ namespace OrderService.Domain.Entities
         /// Дата установки статуса заказа
         /// </summary>
         [Column("date_status")]
-        public DateTime DateOrderStatus { get; set; }
+        public DateTime DateOrderStatus { get; set; } = DateTime.UtcNow;
 
 
         #region связи

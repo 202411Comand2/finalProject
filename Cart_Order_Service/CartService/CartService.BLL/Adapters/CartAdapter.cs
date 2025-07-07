@@ -10,9 +10,9 @@ namespace CartService.BLL.Adapters
         /// </summary>
         /// <param name="Carts">коллекция избранных позиций Entitie</param>
         /// <returns>Comment</returns>
-        public static UpdateCartDto ConvertFromEntityToCartDto(Cart cart)
+        public static CartDto ConvertFromEntityToCartDto(Cart cart)
         {
-            return new UpdateCartDto
+            return new CartDto
             {
                 Id = cart.Id,
                 Count = cart.Count,

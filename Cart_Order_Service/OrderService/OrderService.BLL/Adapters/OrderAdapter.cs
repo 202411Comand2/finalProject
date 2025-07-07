@@ -28,13 +28,13 @@ namespace OrderService.BLL.Adapters
             }
             return orderDto;
         }
-        
+
         /// <summary>
         /// Преобразовать из Dto в Entitie 
         /// </summary>
-        public static Order ConvertFromDTOToEntity(OrderDto dto)
+        public static OrderDto ConvertFromDTOToEntity(OrderDto dto)
         {
-            return new Order
+            return new OrderDto
             {
                 Id = dto.Id,
                 UserId = dto.UserId,
@@ -59,9 +59,9 @@ namespace OrderService.BLL.Adapters
         /// <summary>
         /// Преобразовать из Entitie в Dto
         /// </summary>
-        public static AddOrderDto ConvertFromEntitieToDTO(Order dto)
+        public static OrderDto ConvertFromEntitieToDTO(OrderDto dto)
         {
-            return new AddOrderDto()
+            return new OrderDto()
             {
                 UserId = dto.UserId,
                 ShippingMethod = dto.ShippingMethod,
@@ -74,11 +74,11 @@ namespace OrderService.BLL.Adapters
         /// <summary>
         /// Преобразовать из Entitie в Dto
         /// </summary>
-        public static UpdateOrderDto ConvertFromEntitieToDtoUpdate(Order dto)
+        public static OrderDto ConvertFromEntitieToDtoUpdate(OrderDto dto)
         {
-            return new UpdateOrderDto()
+            return new OrderDto()
             {
-                IdOrder = dto.Id,
+                Id = dto.Id,
                 OrderStatus = dto.OrderStatus,
             };
         }
@@ -86,11 +86,19 @@ namespace OrderService.BLL.Adapters
         /// <summary>
         /// Преобразовать из Entitie в Dto
         /// </summary>
-        public static GetOrderDto ConvertFromEntitieToDtoGet(Order dto)
+        public static OrderDto ConvertFromEntitieToDtoGet(Order dto)
         {
-            return new GetOrderDto()
+            return new OrderDto()
             {
-                IdOrder = dto.Id,
+                Id = dto.Id,
+                UserId = dto.UserId,
+                DateCreated = dto.DateCreated,
+                ArriveDate = dto.ArriveDate,
+                ShippingMethod = dto.ShippingMethod,
+                PaymentMethod = dto.PaymentMethod,
+                ArriveAddress = dto.ArriveAddress,
+                OrderStatus = dto.OrderStatus,
+                DateOrderStatus = dto.DateOrderStatus,
             };
         }
     }

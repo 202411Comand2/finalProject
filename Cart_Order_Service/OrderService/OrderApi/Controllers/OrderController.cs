@@ -57,22 +57,22 @@ namespace OrderApi.Controllers
 
                             if (userInfo.DataReceived == true)
                             {
-                                return Ok(new ApiResponse<AddOrderDto>(true, userInfo.ObjectDto, null));
+                                return Ok(new ApiResponse<OrderDto>(true, userInfo.ObjectDto, null));
                             }
                             else
                             {
-                                return BadRequest(new ApiResponse<AddOrderDto>(false, null, userInfo.ErrorLog));
+                                return BadRequest(new ApiResponse<OrderDto>(false, null, userInfo.ErrorLog));
                             }
                     }
                 }
                 catch (SecurityTokenException ex)
                 {
-                    return Unauthorized(new ApiResponse<AddOrderDto>(false, null, $"Invalid token: {ex.Message}"));
+                    return Unauthorized(new ApiResponse<OrderDto>(false, null, $"Invalid token: {ex.Message}"));
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new ApiResponse<AddOrderDto>(false, null, ex.Message));
+                return StatusCode(500, new ApiResponse<OrderDto>(false, null, ex.Message));
             }
         }
 
@@ -95,41 +95,41 @@ namespace OrderApi.Controllers
                     {
                         case -2: //токен просрочен
                             Console.WriteLine("Token is missing");
-                            return Unauthorized(new ApiResponse<DeleteOrderDto>(false, null, "Token is missing"));
+                            return Unauthorized(new ApiResponse<OrderDto>(false, null, "Token is missing"));
                         case -3:
                             Console.WriteLine("Invalid token claims");
-                            return Unauthorized(new ApiResponse<DeleteOrderDto>(false, null, "Invalid token claims"));
+                            return Unauthorized(new ApiResponse<OrderDto>(false, null, "Invalid token claims"));
                         default:
                             Console.WriteLine("Пользователь был добавен в магазин");
                             var result = await _orderService.DeleteOrderAsync(dto, cancellationToken);
 
                             if (result.DataReceived == true)
                             {
-                                return Ok(new ApiResponse<DeleteOrderDto>(true, result.ObjectDto, null));
+                                return Ok(new ApiResponse<OrderDto>(true, result.ObjectDto, null));
                             }
                             else
                             {
-                                return BadRequest(new ApiResponse<DeleteOrderDto>(false, null, result.ErrorLog));
+                                return BadRequest(new ApiResponse<OrderDto>(false, null, result.ErrorLog));
                             }
                     }
                 }
                 catch (SecurityTokenException ex)
                 {
-                    return Unauthorized(new ApiResponse<DeleteOrderDto>(false, null, $"Invalid token: {ex.Message}"));
+                    return Unauthorized(new ApiResponse<OrderDto>(false, null, $"Invalid token: {ex.Message}"));
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new ApiResponse<DeleteOrderDto>(false, null, ex.Message));
+                return StatusCode(500, new ApiResponse<OrderDto>(false, null, ex.Message));
             }
         }
         
         /// <summary>
         /// Получить все заказы пользователя
         /// </summary>
-       // [Authorize]
+        [Authorize]
         [HttpGet("GetAllOrderUser")]
-        public async Task<IActionResult> GetAllOrderUser()//CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllOrderUser(CancellationToken cancellationToken)
         {
             try
             {
@@ -145,7 +145,7 @@ namespace OrderApi.Controllers
                         case -3:
                             return Unauthorized("Invalid token claims");
                         default:
-                            var userInfo = await _orderService.GetAllOrderUserAsync(idUser,new CancellationToken());
+                            var userInfo = await _orderService.GetAllOrderUserAsync(idUser, cancellationToken);
                             if (userInfo.DataReceived == true)
                             {
                                 return Ok(userInfo.GetCollectionNotProblem());
@@ -184,30 +184,30 @@ namespace OrderApi.Controllers
                     switch (idUser)
                     {
                         case -2: //токен просрочен
-                            return Unauthorized(new ApiResponse<GetOrderDto>(false, null, "Token is missing"));
+                            return Unauthorized(new ApiResponse<OrderDto>(false, null, "Token is missing"));
                         case -3:
-                            return Unauthorized(new ApiResponse<GetOrderDto>(false, null, "Invalid token claims"));
+                            return Unauthorized(new ApiResponse<OrderDto>(false, null, "Invalid token claims"));
                         default:
                             var result = await _orderService.GetOrderUserAsync(dto, cancellationToken);
 
                             if (result.DataReceived == true)
                             {
-                                return Ok(new ApiResponse<GetOrderDto>(true, result.ObjectDto, null));
+                                return Ok(new ApiResponse<OrderDto>(true, result.ObjectDto, null));
                             }
                             else
                             {
-                                return BadRequest(new ApiResponse<GetOrderDto>(false, null, result.ErrorLog));
+                                return BadRequest(new ApiResponse<OrderDto>(false, null, result.ErrorLog));
                             }
                     }
                 }
                 catch (SecurityTokenException ex)
                 {
-                    return Unauthorized(new ApiResponse<GetOrderDto>(false, null, $"Invalid token: {ex.Message}"));
+                    return Unauthorized(new ApiResponse<OrderDto>(false, null, $"Invalid token: {ex.Message}"));
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new ApiResponse<GetOrderDto>(false, null, ex.Message));
+                return StatusCode(500, new ApiResponse<OrderDto>(false, null, ex.Message));
             }
         }
 
@@ -228,30 +228,30 @@ namespace OrderApi.Controllers
                     switch (idUser)
                     {
                         case -2: //токен просрочен
-                            return Unauthorized(new ApiResponse<UpdateOrderDto>(false, null, "Token is missing"));
+                            return Unauthorized(new ApiResponse<OrderDto>(false, null, "Token is missing"));
                         case -3:
-                            return Unauthorized(new ApiResponse<UpdateOrderDto>(false, null, "Invalid token claims"));
+                            return Unauthorized(new ApiResponse<OrderDto>(false, null, "Invalid token claims"));
                         default:
                             var result = await _orderService.UpdateOrderStatusAsync(dto, cancellationToken);
 
                             if (result.DataReceived == true)
                             {
-                                return Ok(new ApiResponse<UpdateOrderDto>(true, result.ObjectDto, null));
+                                return Ok(new ApiResponse<OrderDto>(true, result.ObjectDto, null));
                             }
                             else
                             {
-                                return BadRequest(new ApiResponse<UpdateOrderDto>(false, null, result.ErrorLog));
+                                return BadRequest(new ApiResponse<OrderDto>(false, null, result.ErrorLog));
                             }
                     }
                 }
                 catch (SecurityTokenException ex)
                 {
-                    return Unauthorized(new ApiResponse<UpdateOrderDto>(false, null, $"Invalid token: {ex.Message}"));
+                    return Unauthorized(new ApiResponse<OrderDto>(false, null, $"Invalid token: {ex.Message}"));
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new ApiResponse<UpdateOrderDto>(false, null, ex.Message));
+                return StatusCode(500, new ApiResponse<OrderDto>(false, null, ex.Message));
             }
         }
     }
