@@ -12,6 +12,11 @@ namespace OrderApi.Controllers
     [Route("api/Order")]
     public class OrderController : ControllerBase
     {
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id) => Ok($"Product {id}");
+
+
         private readonly IConfiguration _configuration;
         private readonly IOrderService _orderService;
 
@@ -122,9 +127,9 @@ namespace OrderApi.Controllers
         /// <summary>
         /// Получить все заказы пользователя
         /// </summary>
-        [Authorize]
+       // [Authorize]
         [HttpGet("GetAllOrderUser")]
-        public async Task<IActionResult> GetAllOrderUser(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllOrderUser()//CancellationToken cancellationToken)
         {
             try
             {
@@ -140,7 +145,7 @@ namespace OrderApi.Controllers
                         case -3:
                             return Unauthorized("Invalid token claims");
                         default:
-                            var userInfo = await _orderService.GetAllOrderUserAsync(idUser, cancellationToken);
+                            var userInfo = await _orderService.GetAllOrderUserAsync(idUser,new CancellationToken());
                             if (userInfo.DataReceived == true)
                             {
                                 return Ok(userInfo.GetCollectionNotProblem());

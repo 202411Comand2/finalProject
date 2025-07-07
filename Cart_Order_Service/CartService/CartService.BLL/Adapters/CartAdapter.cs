@@ -52,7 +52,7 @@ namespace CartService.BLL.Adapters
                 ProductId = dto.ProductId,
                 Price = dto.Price,
                 Discount = dto.Discount,
-                DateCreated =dto.DateCreated,
+                DateCreated = dto.DateCreated,
             };
         }
 
